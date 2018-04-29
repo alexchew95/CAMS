@@ -211,7 +211,7 @@
 
 
   <!--Modal for View User Info -Start -->
-  <div class="loader"></div>
+  <div class="custom-loader"></div>
   <form id="userInfoForm" class="modal">
     <div class="my-3 my-md-5">
       <div class="container">
@@ -305,9 +305,11 @@
                       <input type="number" class="form-control" id="txtEmContactNo" placeholder="Emergency Contact Number" value="">
                     </div>
                   </div>
+                  <input type="hidden" id="txtUserId">
+
                   <div class="card-footer text-right">
                     <button class="btn btn-primary">Close</button>
-                    <button type="submit" class="btn btn-primary">Update Info</button>
+                    <button id="btnUpdateInfo" class="btn btn-primary">Update Info</button>
                   </div>
                 </div>
               </div>
@@ -322,7 +324,7 @@
     function viewUserInfo(userId) {
 
       $('#userInfoForm').modal();
-      $(".loader").show();
+      $(".custom-loader").show();
       //TODO: to combine all DD requests into one
       loadUserInfo(userId);
 
@@ -337,7 +339,7 @@
       $.ajax({
         type: "GET",
         dataType: 'JSON',
-        url: "http://localhost/moneyflot-ci/api/clientPersonalDD",
+        url: "https://moneyflot-restu-ci.herokuapp.com/api/clientPersonalDD",
         success: function (data) {
           raceDD = data.raceDD;
           nationalityDD = data.nationalityDD;
@@ -359,7 +361,7 @@
       $.ajax({
         type: "GET",
         dataType: 'JSON',
-        url: "http://localhost/moneyflot-ci/api/clientContactDD",
+        url: "https://moneyflot-restu-ci.herokuapp.com/api/clientContactDD",
         success: function (data) {
           emContactRelDD = data.emergencyContactRelationDD;
           $.each(emContactRelDD, function (key, value) {
@@ -369,14 +371,14 @@
       });
     }
     function loadUserInfo(userId) {
-
       $.ajax({
         type: "POST",
         dataType: 'JSON',
         data: { "userId": userId },
-        url: "http://localhost/moneyflot-ci/api/adm_loadUserInfo",
+        url: "https://moneyflot-restu-ci.herokuapp.com/api/adm_loadUserInfo",
         success: function (data) {
           $userInfo = data.userInfo;
+          $contactInfo = data.contactInfo;
           $.each($userInfo, function (key, value) {
             //$("#txtName").val() = value.name;
             document.getElementById('txtName').value = value.name;
@@ -388,8 +390,16 @@
             $("#nationalityDD").val(value.nationality);
             $("#maritalDD").val(value.maritalStatus);
             $("#genderDD").val(value.gender);
+            $("#txtUserId").val(value.userId);
           });
-          $(".loader").hide(); 
+          $.each($contactInfo, function (key, value) {
+            //Contact Info
+            $("#txtMobileNo").val(value.mobileNo);
+            $("#txtEmContactName").val(value.emergencyContactName);
+            $("#txtEmContactNo").val(value.emergencyContactNo);
+            $("#emContactRelDD").val(value.emergencyContactRelation);
+            $(".custom-loader").hide();
+          });
         }
       });
     }
@@ -397,14 +407,14 @@
   <script>
     //When the page has loaded.
     $(document).ready(function () {
-      
+
       //Load all DD
       getUserPersonalDD(); //User Personal Info DD
       getUserContactDD(); //Emergency ContactDD
       //Perform Ajax request.
       //TODO: set the type to POST and send token for authentication
       $.ajax({
-        url: 'http://localhost/moneyflot-ci/api/adm_listAllUsers',
+        url: 'https://moneyflot-restu-ci.herokuapp.com/api/adm_listAllUsers',
         type: 'get',
         dataType: 'json',
         success: function (data) {
@@ -424,13 +434,44 @@
             $('tbody').append('<tr><td>' + this.userId + '</td><td>' + this.name + '</td><td>' +
               this.email + '</td><td>' + this.approvalStatus +
               '</td><td><div onclick="viewUserInfo(' + this.userId + ')"><i class="fe fe-edit-2"></i></div></td></tr>')
-            $(".loader").hide();
+            $(".custom-loader").hide();
           });
         },
         error: function (xhr, ajaxOptions, thrownError) {
           var errorMsg = 'Ajax request failed: ' + xhr.responseText;
           $('#content').html(errorMsg);
         }
+      });
+
+      $("#btnUpdateInfo").click(function () {
+        $.ajax({
+          url: 'https://moneyflot-restu-ci.herokuapp.com/api/adm_updateUserInfo',
+          type: 'POST',
+          data: {
+            "userId": $("#txtUserId").val(),
+            "name": $("#txtName").val(),
+            "IC": $("#txtIC").val(),
+            "email": $("#txtEmail").val(),
+            "mobileNo": $("#txtMobileNo").val(),
+            "raceCode": $("#raceDD").val(),
+            "nationalityCode": $("#nationalityDD").val(),
+            "dob": $("#txtDOB").val(),
+            "genderCode": $("#genderDD").val(),
+            "maritalCode": $("#maritalDD").val(),
+            "emContactName": $("#txtEmContactName").val(),
+            "emContactRel": $("#emContactRelDD").val(),
+            "emContactNo": $("#txtEmContactNo").val(),
+          },
+          dataType: 'JSON',
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            console.log(errorMsg);
+          }
+        });
+
       });
 
     });
