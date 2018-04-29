@@ -289,27 +289,28 @@
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                       <label class="form-label">Emergency Contact Name</label>
-                      <input type="text" class="form-control" id="txtEmContactName" placeholder="Home Address" value="">
+                      <input type="text" class="form-control" id="txtEmergencyContactName" placeholder="Home Address" value="">
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                       <label class="form-label">Emergency Contact Relationship</label>
-                      <select class="form-control custom-select" id="emContactRelDD">
+                      <select class="form-control custom-select" id="emergencyContactRelationDD">
                       </select>
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                       <label class="form-label">Emergency Contact Number</label>
-                      <input type="number" class="form-control" id="txtEmContactNo" placeholder="Emergency Contact Number" value="">
+                      <input type="number" class="form-control" id="txtEmergencyContactNo" placeholder="Emergency Contact Number" value="">
                     </div>
                   </div>
                   <input type="hidden" id="txtUserId">
 
                   <div class="card-footer text-right">
                     <button class="btn btn-primary">Close</button>
-                    <button id="btnUpdateInfo" class="btn btn-primary">Update Info</button>
+                    <button class="btn btn-primary" id="btnApproveUser">Approve</button>
+                    <button class="btn btn-primary" id="btnUpdateInfo">Update Info</button>
                   </div>
                 </div>
               </div>
@@ -363,9 +364,9 @@
         dataType: 'JSON',
         url: "https://moneyflot-restu-ci.herokuapp.com/api/clientContactDD",
         success: function (data) {
-          emContactRelDD = data.emergencyContactRelationDD;
-          $.each(emContactRelDD, function (key, value) {
-            $('#emContactRelDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          emergencyContactRelationDD = data.emergencyContactRelationDD;
+          $.each(emergencyContactRelationDD, function (key, value) {
+            $('#emergencyContactRelationDD').append('<option value="' + value.code + '">' + value.description + '</option>');
           });
         }
       });
@@ -395,9 +396,9 @@
           $.each($contactInfo, function (key, value) {
             //Contact Info
             $("#txtMobileNo").val(value.mobileNo);
-            $("#txtEmContactName").val(value.emergencyContactName);
-            $("#txtEmContactNo").val(value.emergencyContactNo);
-            $("#emContactRelDD").val(value.emergencyContactRelation);
+            $("#txtEmergencyContactName").val(value.emergencyContactName);
+            $("#txtEmergencyContactNo").val(value.emergencyContactNo);
+            $("#emergencyContactRelationDD").val(value.emergencyContactRelation);
             $(".custom-loader").hide();
           });
         }
@@ -458,9 +459,9 @@
             "dob": $("#txtDOB").val(),
             "genderCode": $("#genderDD").val(),
             "maritalCode": $("#maritalDD").val(),
-            "emContactName": $("#txtEmContactName").val(),
-            "emContactRel": $("#emContactRelDD").val(),
-            "emContactNo": $("#txtEmContactNo").val(),
+            "emergencyContactName": $("#txtEmergencyContactName").val(),
+            "emergencyContactRelation": $("#emergencyContactRelationDD").val(),
+            "emergencyContactNo": $("#txtEmergencyContactNo").val(),
           },
           dataType: 'JSON',
           success: function (data) {
@@ -473,7 +474,23 @@
         });
 
       });
-
+      $("#btnApproveUser").click(function () {
+        $.ajax({
+          url: 'https://moneyflot-restu-ci.herokuapp.com/api/adm_approveUser',
+          type: 'POST',
+          data: {
+            "userId": $("#txtUserId").val(),
+          },
+          dataType: 'JSON',
+          success: function (data) {
+            console.log(data);
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            console.log(errorMsg);
+          }
+        });
+      });
     });
   </script>
 </body>
