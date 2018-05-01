@@ -275,12 +275,12 @@
                       </select>
                     </div>
                   </div>
-
+                  <hr>
                   <div class="col-sm-6 col-md-6"></div>
                   <div class="col-sm-12 col-md-12">
                     <div class="form-group">
                       <label class="form-label">Emergency Contact Name</label>
-                      <input type="text" class="form-control" id="txtEmergencyContactName" placeholder="Home Address" value="">
+                      <input type="text" class="form-control" id="txtEmergencyContactName" placeholder="Emergency Contact Name" value="">
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-6">
@@ -296,6 +296,121 @@
                       <input type="number" class="form-control" id="txtEmergencyContactNo" placeholder="Emergency Contact Number" value="">
                     </div>
                   </div>
+
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Type Of Home</label>
+                      <select class="form-control custom-select" id="typeOfHomeDD">
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6"></div>
+                  <div class="col-sm-12 col-md-12">
+                    <div class="form-group">
+                      <label class="form-label">Address</label>
+                      <input type="text" class="form-control" id="txtHomeAddress" placeholder="Address 1" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">Zip Code</label>
+                      <input type="number" class="form-control" id="txtHomeZipCode" placeholder="Zip code" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">City</label>
+                      <input type="text" class="form-control" id="txtHomeCity" placeholder="City" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">State</label>
+                      <select class="form-control custom-select" id="homeStateDD"></select>
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">Country</label>
+                      <select class="form-control custom-select" id="homeCountryDD"></select>
+                    </div>
+                  </div>
+
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Monthly Gross Income</label>
+                      <input type="number" class="form-control" id="txtMonthlyGrossIncome" placeholder="Monthly Gross Income" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Total Monthly Loan/Credit Card Repayment</label>
+                      <input type="number" class="form-control" id="txtTotalMonthlyLoan" placeholder="Total Monthly Loan/Credit Card Repayment"
+                        value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Employment Type</label>
+                      <select class="form-control custom-select" id="empTypeDD"></select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Employment Status</label>
+                      <select class="form-control custom-select" id="empStatusDD"></select>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Work Phone</label>
+                      <input type="number" class="form-control" id="txtWorkPhone" placeholder="Work Phone" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Company Name</label>
+                      <input type="text" class="form-control" id="txtCompanyName" placeholder="Company Name" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Date Joined</label>
+                      <input type="text" class="form-control" id="txtDateJoined" placeholder="Date Joined" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                      <label class="form-label">Company Address</label>
+                      <input type="text" class="form-control" id="txtCompanyAddress" placeholder="Company Address" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">Zip Code</label>
+                      <input type="number" class="form-control" id="txtCompanyZipCode" placeholder="Zip code" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">City</label>
+                      <input type="text" class="form-control" id="txtCompanyCity" placeholder="City" value="">
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">State</label>
+                      <select class="form-control custom-select" id="companyStateDD"></select>
+
+                    </div>
+                  </div>
+                  <div class="col-sm-3 col-md-3">
+                    <div class="form-group">
+                      <label class="form-label">Country</label>
+                      <select class="form-control custom-select" id="companyCountryDD"></select>
+                    </div>
+                  </div>
+
                   <input type="hidden" id="txtUserId">
 
                   <div class="card-footer text-right">
@@ -311,194 +426,284 @@
         </div>
       </div>
     </div>
-  <!--Modal for View User Info -End -->
-  <script type="text/javascript">
+    <!--Modal for View User Info -End -->
+    <script type="text/javascript">
 
-    // var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
-    var APIUrl = 'http://localhost/moneyflot-ci/api/';
+      // var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+      var APIUrl = 'http://localhost/moneyflot-ci/api/';
 
-    function viewUserInfo(userId) {
+      function viewUserInfo(userId) {
 
-      $('#userInfoForm').modal();
-      $(".custom-loader").show();
-      //TODO: to combine all DD requests into one
-      loadUserInfo(userId);
+        $('#userInfoForm').modal();
+        $(".custom-loader").show();
+        //TODO: to combine all DD requests into one
+        loadUserInfo(userId);
 
-    }
+      }
 
-    function closeModal() {
-      $.modal.close();
-    }
+      function closeModal() {
+        $.modal.close();
+      }
 
-    /* get Dropdown */
-    function getUserPersonalDD() {
-      $.ajax({
-        type: "GET",
-        dataType: 'JSON',
-        url: APIUrl + "clientPersonalDD",
-        success: function (data) {
-          raceDD = data.raceDD;
-          nationalityDD = data.nationalityDD;
-          maritalDD = data.maritalDD;
-          $.each(raceDD, function (key, value) {
-            $('#raceDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-          });
-          $.each(nationalityDD, function (key, value) {
-            $('#nationalityDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-          });
-          $.each(maritalDD, function (key, value) {
-            $('#maritalDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-          });
+      function closeAndReload() {
+        $.modal.close();
+        window.location.reload();
+      }
 
-        }
+      /* get Dropdown */
+      function getUserPersonalDD() {
+        $.ajax({
+          type: "GET",
+          dataType: 'JSON',
+          url: APIUrl + "clientPersonalDD",
+          success: function (data) {
+            raceDD = data.raceDD;
+            nationalityDD = data.nationalityDD;
+            maritalDD = data.maritalDD;
+            $.each(raceDD, function (key, value) {
+              $('#raceDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+            $.each(nationalityDD, function (key, value) {
+              $('#nationalityDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+            $.each(maritalDD, function (key, value) {
+              $('#maritalDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+
+          }
+        });
+      }
+      function getUserContactDD() {
+        $.ajax({
+          type: "GET",
+          dataType: 'JSON',
+          url: APIUrl + "clientContactDD",
+          success: function (data) {
+            emergencyContactRelationDD = data.emergencyContactRelationDD;
+            $.each(emergencyContactRelationDD, function (key, value) {
+              $('#emergencyContactRelationDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+          }
+        });
+      }
+      function getUserAddressDD() {
+        $.ajax({
+          type: "GET",
+          dataType: 'JSON',
+          url: APIUrl + "clientAddressDD",
+          success: function (data) {
+            typeHomeDD = data.typeHomeDD;
+            stateDD = data.stateDD;
+            countryDD = data.countryDD;
+            $.each(typeHomeDD, function (key, value) {
+              $('#typeOfHomeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+            $.each(stateDD, function (key, value) {
+              $('#homeStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+              $('#companyStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+            $.each(countryDD, function (key, value) {
+              $('#homeCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+              $('#companyCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+          }
+        });
+      }
+      function getEmploymentDD() {
+        $.ajax({
+          type: "GET",
+          dataType: 'JSON',
+          url: APIUrl + "clientEmploymentDD",
+          success: function (data) {
+            empTypeDD = data.empTypeDD;
+            empStatusDD = data.empStatusDD;
+            $.each(empTypeDD, function (key, value) {
+              $('#empTypeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+            $.each(empStatusDD, function (key, value) {
+              $('#empStatusDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            });
+          }
+        });
+      }
+
+
+      $("#btnUpdateInfo").click(function () {
+        $.ajax({
+          url: APIUrl + 'adm_updateUserInfo',
+          type: 'POST',
+          data: {
+            userId: $("#txtUserId").val(),
+            name: $("#txtName").val(),
+            IC: $("#txtIC").val(),
+            email: $("#txtEmail").val(),
+            mobileNo: $("#txtMobileNo").val(),
+            raceCode: $("#raceDD").val(),
+            nationalityCode: $("#nationalityDD").val(),
+            dob: $("#txtDOB").val(),
+            genderCode: $("#genderDD").val(),
+            maritalCode: $("#maritalDD").val(),
+            emergencyContactName: $("#txtEmergencyContactName").val(),
+            emergencyContactRelationCode: $("#emergencyContactRelationDD").val(),
+            emergencyContactNo: $("#txtEmergencyContactNo").val(),
+            typeOfHome: $("#typeOfHomeDD").val(),
+            addr: $("#txtHomeAddress").val(),
+            postcode: $("#txtHomeZipCode").val(),
+            city: $("#txtHomeCity").val(),
+            state: $("#homeStateDD").val(),
+            country: $("#homeCountryDD").val(),
+            monthlyGrossIncome: $("#txtMonthlyGrossIncome").val(),
+            totalMonthlyLoan: $("#txtTotalMonthlyLoan").val(),
+            employmentType: $("#empTypeDD").val(),
+            employmentStatus: $("#empStatusDD").val(),
+            workPhone: $("#txtWorkPhone").val(),
+            companyName: $("#txtCompanyName").val(),
+            joinedDate: $("#txtDateJoined").val(),
+            workAddress: $("#txtCompanyAddress").val(),
+            workPostcode: $("#txtCompanyZipCode").val(),
+            workCity: $("#txtCompanyCity").val(),
+            workState: $("#companyStateDD").val(),
+            workCountry: $("#companyCountryDD").val()
+          },
+          dataType: 'JSON',
+          success: function (data) {
+            console.log(data);
+            closeAndReload();
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            console.log(errorMsg);
+          }
+        });
+
       });
-    }
-    function getUserContactDD() {
-      $.ajax({
-        type: "GET",
-        dataType: 'JSON',
-        url: APIUrl + "clientContactDD",
-        success: function (data) {
-          emergencyContactRelationDD = data.emergencyContactRelationDD;
-          $.each(emergencyContactRelationDD, function (key, value) {
-            $('#emergencyContactRelationDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-          });
-        }
-      });
-    }
 
-
-    $("#btnUpdateInfo").click(function () {
-      $.ajax({
-        url: APIUrl + 'adm_updateUserInfo',
-        type: 'POST',
-        data: {
-          userId: $("#txtUserId").val(),
-          name: $("#txtName").val(),
-          IC: $("#txtIC").val(),
-          email: $("#txtEmail").val(),
-          mobileNo: $("#txtMobileNo").val(),
-          raceCode: $("#raceDD").val(),
-          nationalityCode: $("#nationalityDD").val(),
-          dob: $("#txtDOB").val(),
-          genderCode: $("#genderDD").val(),
-          maritalCode: $("#maritalDD").val(),
-          emergencyContactName: $("#txtEmergencyContactName").val(),
-          emergencyContactRelationCode: $("#emergencyContactRelationDD").val(),
-          emergencyContactNo: $("#txtEmergencyContactNo").val(),
-        },
-        dataType: 'JSON',
-        success: function (data) {
-          console.log(data);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          console.log(errorMsg);
-        }
+      $("#btnApproveUser").click(function () {
+        $.ajax({
+          url: APIUrl + 'adm_approveUser',
+          type: 'POST',
+          data: {
+            "userId": $("#txtUserId").val(),
+          },
+          dataType: 'JSON',
+          success: function (data) {
+            console.log(data);
+            closeAndReload();
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            console.log(errorMsg);
+          }
+        });
       });
 
-    });
-
-    $("#btnApproveUser").click(function () {
-      $.ajax({
-        url: APIUrl + 'adm_approveUser',
-        type: 'POST',
-        data: {
-          "userId": $("#txtUserId").val(),
-        },
-        dataType: 'JSON',
-        success: function (data) {
-          console.log(data);
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          console.log(errorMsg);
-        }
+      $("#btnCloseModal").click(function () {
+        closeModal();
       });
-    });
 
-    $("#btnCloseModal").click(function () {
-      closeModal();
-    });
+      function loadUserInfo(userId) {
+        $.ajax({
+          type: "POST",
+          dataType: 'JSON',
+          data: { "userId": userId },
+          url: APIUrl + "adm_loadUserInfo",
+          success: function (data) {
+            $userInfo = data.userInfo;
+            $contactInfo = data.contactInfo;
+            $jobInfo = data.jobInfo;
+            $financialInfo = data.financialInfo;
+            $.each($userInfo, function (key, value) {
+              $("#txtName").val(value.name);
+              $("#txtIC").val(value.IC);
+              $("#txtEmail").val(value.email);
+              $("#txtDOB").val(value.dob);
+              $("#raceDD").val(value.race);
+              $("#nationalityDD").val(value.nationality);
+              $("#maritalDD").val(value.maritalStatus);
+              $("#genderDD").val(value.gender);
+              $("#txtUserId").val(value.userId);
+            });
+            $.each($contactInfo, function (key, value) {
+              //Contact Info
+              $("#txtMobileNo").val(value.mobileNo);
+              $("#txtEmergencyContactName").val(value.emergencyContactName);
+              $("#txtEmergencyContactNo").val(value.emergencyContactNo);
+              $("#emergencyContactRelationDD").val(value.emergencyContactRelation);
+              $("#typeOfHomeDD").val(value.typeOfHome);
+              $("#txtHomeAddress").val(value.addr);
+              $("#txtHomeZipCode").val(value.postcode);
+              $("#txtHomeCity").val(value.city);
+              $("#homeStateDD").val(value.state);
+              $("#homeCountryDD").val(value.country);
+            });
+            $.each($jobInfo, function (key, value) {
+              //Job Info
+              $("#txtCompanyName").val(value.companyName);
+              $("#empTypeDD").val(value.employmentType);
+              $("#empStatusDD").val(value.employmentStatus);
+              $("#txtDateJoined").val(value.joinedDate);
+              $("#txtCompanyAddress").val(value.workAddress);
+              $("#txtCompanyCity").val(value.workCity);
+              $("#companyCountryDD").val(value.workCountry);
+              $("#companyStateDD").val(value.workState);
+              $("#txtWorkPhone").val(value.workPhone);
+              $("#txtCompanyZipCode").val(value.workPostcode);
+            });
+            $.each($financialInfo, function (key, value) {
+              //Contact Info
+              $("#txtMonthlyGrossIncome").val(value.monthlyGrossIncome);
+              $("#txtTotalMonthlyLoan").val(value.totalMonthlyLoan);
 
-    function loadUserInfo(userId) {
-      $.ajax({
-        type: "POST",
-        dataType: 'JSON',
-        data: { "userId": userId },
-        url: APIUrl + "adm_loadUserInfo",
-        success: function (data) {
-          $userInfo = data.userInfo;
-          $contactInfo = data.contactInfo;
-          $.each($userInfo, function (key, value) {
-            //$("#txtName").val() = value.name;
-            document.getElementById('txtName').value = value.name;
-            document.getElementById('txtIC').value = value.IC;
-            document.getElementById('txtEmail').value = value.email;
-            document.getElementById('txtIC').value = value.IC;
-            document.getElementById('txtDOB').value = value.dob;
-            $("#raceDD").val(value.race);
-            $("#nationalityDD").val(value.nationality);
-            $("#maritalDD").val(value.maritalStatus);
-            $("#genderDD").val(value.gender);
-            $("#txtUserId").val(value.userId);
-          });
-          $.each($contactInfo, function (key, value) {
-            //Contact Info
-            $("#txtMobileNo").val(value.mobileNo);
-            $("#txtEmergencyContactName").val(value.emergencyContactName);
-            $("#txtEmergencyContactNo").val(value.emergencyContactNo);
-            $("#emergencyContactRelationDD").val(value.emergencyContactRelation);
-
-          });
-          $(".custom-loader").hide();
-        }
-      });
-    }
-
-    //When the page has loaded.
-    $(document).ready(function () {
-
-      //Load all DD
-      getUserPersonalDD(); //User Personal Info DD
-      getUserContactDD(); //Emergency ContactDD
-      //Perform Ajax request.
-      //TODO: set the type to POST and send token for authentication
-      $.ajax({
-        url: APIUrl + 'adm_listAllUsers',
-        type: 'get',
-        dataType: 'json',
-        success: function (data) {
-          //If the success function is execute,
-          //then the Ajax request was successful.
-          //Add the data we received in our Ajax
-          //request to the "content" div.
-          $(data.allUsers).each(function () {
-            if (this.approvalStatus === "0") {
-              this.approvalStatus = "Not Approved";
-            }
-            else {
-              this.approvalStatus = "Approved";
-            }
-            $('tbody').append('<tr><td>' + this.userId + '</td><td>' + this.name + '</td><td>' +
-              this.email + '</td><td>' + this.approvalStatus +
-              '</td><td><div onclick="viewUserInfo(' + this.userId + ')"><i class="fe fe-edit-2"></i></div></td></tr>')
+            });
             $(".custom-loader").hide();
-          });
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          $('#content').html(errorMsg);
-        }
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            $('#content').html(errorMsg);
+          }
+        });
+      }
+
+      //When the page has loaded.
+      $(document).ready(function () {
+        //Load all DD
+        getUserPersonalDD(); //User Personal Info DD
+        getUserContactDD(); //Emergency ContactDD
+        getUserAddressDD(); //User Address DD
+        getEmploymentDD();  //Employment tDD
+        //Perform Ajax request.
+        //TODO: set the type to POST and send token for authentication
+        $.ajax({
+          url: APIUrl + 'adm_listAllUsers',
+          type: 'get',
+          dataType: 'json',
+          success: function (data) {
+            //If the success function is execute,
+            //then the Ajax request was successful.
+            //Add the data we received in our Ajax
+            //request to the "content" div.
+            $(data.allUsers).each(function () {
+              if (this.approvalStatus === "0") {
+                this.approvalStatus = "Not Approved";
+              }
+              else {
+                this.approvalStatus = "Approved";
+              }
+              $('tbody').append('<tr><td>' + this.userId + '</td><td>' + this.name + '</td><td>' +
+                this.email + '</td><td>' + this.approvalStatus +
+                '</td><td><div onclick="viewUserInfo(' + this.userId + ')"><i class="fe fe-edit-2"></i></div></td></tr>')
+              $(".custom-loader").hide();
+            });
+          },
+          error: function (xhr, ajaxOptions, thrownError) {
+            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+            $('#content').html(errorMsg);
+          }
+        });
       });
 
 
-
-
-    });
-
-
-  </script>
+    </script>
 </body>
 
 </html>
