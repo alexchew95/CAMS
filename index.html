@@ -203,7 +203,7 @@
 
   <!--Modal for View User Info -Start -->
   <div class="custom-loader"></div>
-  <div id="userInfoForm" class="modal">
+  <form id="userInfoForm" class="modal">
     <div class="my-3 my-md-5">
       <div class="container">
         <div class="row">
@@ -217,19 +217,19 @@
                   <div class="col-md-8">
                     <div class="form-group">
                       <label class="form-label">Name</label>
-                      <input type="text" class="form-control" id="txtName" placeholder="Name" value="">
+                      <input type="text" class="form-control" id="txtName" placeholder="Name" value="" required>
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
                       <label class="form-label">IC</label>
-                      <input type="text" class="form-control" id="txtIC" placeholder="IC" value="">
+                      <input type="text" class="form-control" id="txtIC" placeholder="IC" value="" required="true">
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-6">
                     <div class="form-group">
                       <label class="form-label">Email</label>
-                      <input type="email" class="form-control" id="txtEmail" placeholder="Email" value="">
+                      <input type="email" class="form-control" id="txtEmail" placeholder="Email" value="" required="true">
                     </div>
                   </div>
                   <div class="col-sm-6 col-md-6">
@@ -416,7 +416,7 @@
                   <div class="card-footer text-right">
                     <button class="btn btn-primary" id="btnCloseModal">Close</button>
                     <button class="btn btn-primary" id="btnApproveUser">Approve</button>
-                    <button href="#0" class="btn btn-primary" id="btnUpdateInfo">Update Info</button>
+                    <button type="submit" class="btn btn-primary" id="btnUpdateInfo">Update Info</button>
 
                   </div>
                 </div>
@@ -425,7 +425,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </form>
     <!--Modal for View User Info -End -->
     <script type="text/javascript">
 
@@ -433,12 +433,10 @@
       var APIUrl = 'http://localhost/moneyflot-ci/api/';
 
       function viewUserInfo(userId) {
-
         $('#userInfoForm').modal();
         $(".custom-loader").show();
         //TODO: to combine all DD requests into one
         loadUserInfo(userId);
-
       }
 
       function closeModal() {
@@ -527,8 +525,15 @@
         });
       }
 
-
-      $("#btnUpdateInfo").click(function () {
+      function resetTextbox() {
+        $('input[type="text"]').val('');
+        $('input[type="number"]').val('');
+        $('.custom-select').val('');
+      }
+      $( "#userInfoForm" ).submit(function( event ) {
+     // $("#btnUpdateInfo").click(function () {
+        event.preventDefault();
+        $(".custom-loader").show();
         $.ajax({
           url: APIUrl + 'adm_updateUserInfo',
           type: 'POST',
@@ -568,6 +573,9 @@
           dataType: 'JSON',
           success: function (data) {
             console.log(data);
+            
+          },
+          complete: function(data){
             closeAndReload();
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -575,7 +583,7 @@
             console.log(errorMsg);
           }
         });
-
+        
       });
 
       $("#btnApproveUser").click(function () {
@@ -602,6 +610,7 @@
       });
 
       function loadUserInfo(userId) {
+        resetTextbox();
         $.ajax({
           type: "POST",
           dataType: 'JSON',
