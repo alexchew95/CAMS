@@ -19,7 +19,8 @@ paths: {
 'vector-map-de': 'assets/js/vendors/jquery-jvectormap-de-merc',
 'vector-map-world': 'assets/js/vendors/jquery-jvectormap-world-mill',
 'circle-progress': 'assets/js/vendors/circle-progress.min',
-}
+'bcrypt': 'node_modules/bcryptjs/dist/bcrypt.min'
+},
 });
 window.tabler = {
 colors: {

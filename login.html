@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
   <script src="./assets/js/require.min.js"></script>
+  <script src="https://code.jquery.com/jquery.min.js"></script>
   <script>
     requirejs.config({
       baseUrl: '.'
@@ -28,6 +29,7 @@
   <!-- Dashboard Core -->
   <link href="./assets/css/dashboard.css" rel="stylesheet" />
   <script src="./assets/js/dashboard.js"></script>
+
   <!-- c3.js Charts Plugin -->
   <link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
   <script src="./assets/plugins/charts-c3/plugin.js"></script>
@@ -36,6 +38,8 @@
   <script src="./assets/plugins/maps-google/plugin.js"></script>
   <!-- Input Mask Plugin -->
   <script src="./assets/plugins/input-mask/plugin.js"></script>
+
+
 </head>
 
 <body class="">
@@ -54,12 +58,15 @@
                 <div class="card-title">Admin Login</div>
                 <div class="form-group">
                   <label class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                  <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
+                  <input type="password" class="form-control" id="txtPwd" placeholder="Password">
+                </div>                    
+                      <label id="lblMessages" class="text-danger"></label>
+
+              </div>
                 <div class="form-footer">
                   <button type="submit" id="btnLogin" class="btn btn-primary btn-block">Sign in</button>
                 </div>
@@ -71,27 +78,55 @@
     </div>
   </div>
   <script>
-    var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
-    $(document).ready(function () {
-      $("#btnLogin").click(function () {
+    //var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+    var APIUrl = 'http://localhost/moneyflot-ci/api/';
+
+
+
+    $("#btnLogin").click(function () {
+      event.preventDefault();
+      //reset label msg
+      $("#lblMessages").text("");
+      require(['bcrypt'], function (bcrypt) {
+
+        const saltRounds = 10;
+        const myPlaintextPassword = $("#txtPwd").val()
+        //salt = bcrypt.genSaltSync(saltRounds);
+        salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
+        console.log(salt);
+        hash = bcrypt.hashSync(myPlaintextPassword, salt);
+
         $.ajax({
+
           url: APIUrl + 'login',
           type: 'POST',
+
           data: {
             "email": $("#txtEmail").val(),
-            "pwd": $("#txtPwd").val(),
-            "loginType": "admin"
+            "password": hash,
+            "loginType": 'admin'
           },
           dataType: 'JSON',
           success: function (data) {
-            console.log(data);
+            localStorage.setItem('token', data.token);
+            window.location = "index.html";
+          },
+          statusCode: {
+            401: function (request, status, error) {
+              console.log("401 - Login incorrect");
+              console.log(error);
+              $("#lblMessages").text("Login Incorrect - Please try again");            }
           },
           error: function (xhr, ajaxOptions, thrownError) {
             var errorMsg = 'Ajax request failed: ' + xhr.responseText;
             console.log(errorMsg);
           }
         });
+        console.log(localStorage);
       });
+    });
+
+    $(document).ready(function () {
     });
   </script>
 </body>
