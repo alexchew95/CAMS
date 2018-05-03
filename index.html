@@ -55,8 +55,9 @@
               <img src="./demo/brand/moneyflot-logotype-h100.png" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
-
-
+              <div class="nav-item d-none d-md-flex">
+                <a class="btn btn-danger btn-outline-primary" id="btnLogout" target="_blank">Logout</a>
+              </div>
               <div class="dropdown">
                 <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                   <span class="ml-2 d-none d-lg-block">
@@ -85,7 +86,6 @@
                   <a href="./index.html" class="nav-link active">
                     <i class="fe fe-home"></i> Home</a>
                 </li>
-
               </ul>
             </div>
           </div>
@@ -425,295 +425,320 @@
           </div>
         </div>
       </div>
-    </form>
-    <!--Modal for View User Info -End -->
-    <script type="text/javascript">
+  </form>
+  <!--Modal for View User Info -End -->
+  <script type="text/javascript">
+    window.onload = checkAdminLogin;
 
-      // var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
-      var APIUrl = 'http://localhost/moneyflot-ci/api/';
+    token = localStorage.getItem("token");
 
-      function viewUserInfo(userId) {
-        $('#userInfoForm').modal();
-        $(".custom-loader").show();
-        //TODO: to combine all DD requests into one
-        loadUserInfo(userId);
+    function checkAdminLogin() {
+      if (!token) {
+        window.location = "login.html";
       }
+    }
+    var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+    //var APIUrl = 'http://localhost/moneyflot-ci/api/';
 
-      function closeModal() {
-        $.modal.close();
-      }
+    function viewUserInfo(userId) {
+      $('#userInfoForm').modal();
+      $(".custom-loader").show();
+      //TODO: to combine all DD requests into one
+      loadUserInfo(userId);
+    }
 
-      function closeAndReload() {
-        $.modal.close();
-        window.location.reload();
-      }
+    function closeModal() {
+      $.modal.close();
+    }
 
-      /* get Dropdown */
-      function getUserPersonalDD() {
-        $.ajax({
-          type: "GET",
-          dataType: 'JSON',
-          url: APIUrl + "clientPersonalDD",
-          success: function (data) {
-            raceDD = data.raceDD;
-            nationalityDD = data.nationalityDD;
-            maritalDD = data.maritalDD;
-            $.each(raceDD, function (key, value) {
-              $('#raceDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-            $.each(nationalityDD, function (key, value) {
-              $('#nationalityDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-            $.each(maritalDD, function (key, value) {
-              $('#maritalDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
+    function closeAndReload() {
+      $.modal.close();
+      window.location.reload();
+    }
 
-          }
-        });
-      }
-      function getUserContactDD() {
-        $.ajax({
-          type: "GET",
-          dataType: 'JSON',
-          url: APIUrl + "clientContactDD",
-          success: function (data) {
-            emergencyContactRelationDD = data.emergencyContactRelationDD;
-            $.each(emergencyContactRelationDD, function (key, value) {
-              $('#emergencyContactRelationDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-          }
-        });
-      }
-      function getUserAddressDD() {
-        $.ajax({
-          type: "GET",
-          dataType: 'JSON',
-          url: APIUrl + "clientAddressDD",
-          success: function (data) {
-            typeHomeDD = data.typeHomeDD;
-            stateDD = data.stateDD;
-            countryDD = data.countryDD;
-            $.each(typeHomeDD, function (key, value) {
-              $('#typeOfHomeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-            $.each(stateDD, function (key, value) {
-              $('#homeStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-              $('#companyStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-            $.each(countryDD, function (key, value) {
-              $('#homeCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-              $('#companyCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-          }
-        });
-      }
-      function getEmploymentDD() {
-        $.ajax({
-          type: "GET",
-          dataType: 'JSON',
-          url: APIUrl + "clientEmploymentDD",
-          success: function (data) {
-            empTypeDD = data.empTypeDD;
-            empStatusDD = data.empStatusDD;
-            $.each(empTypeDD, function (key, value) {
-              $('#empTypeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-            $.each(empStatusDD, function (key, value) {
-              $('#empStatusDD').append('<option value="' + value.code + '">' + value.description + '</option>');
-            });
-          }
-        });
-      }
+    /* get Dropdown */
+    function getUserPersonalDD() {
+      $.ajax({
+        type: "GET",
+        dataType: 'JSON',
+        url: APIUrl + "clientPersonalDD",
+        success: function (data) {
+          raceDD = data.raceDD;
+          nationalityDD = data.nationalityDD;
+          maritalDD = data.maritalDD;
+          $.each(raceDD, function (key, value) {
+            $('#raceDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+          $.each(nationalityDD, function (key, value) {
+            $('#nationalityDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+          $.each(maritalDD, function (key, value) {
+            $('#maritalDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
 
-      function resetTextbox() {
-        $('input[type="text"]').val('');
-        $('input[type="number"]').val('');
-        $('.custom-select').val('');
-      }
+        }
+      });
+    }
+    function getUserContactDD() {
+      $.ajax({
+        type: "GET",
+        dataType: 'JSON',
+        url: APIUrl + "clientContactDD",
+        success: function (data) {
+          emergencyContactRelationDD = data.emergencyContactRelationDD;
+          $.each(emergencyContactRelationDD, function (key, value) {
+            $('#emergencyContactRelationDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+        }
+      });
+    }
+    function getUserAddressDD() {
+      $.ajax({
+        type: "GET",
+        dataType: 'JSON',
+        url: APIUrl + "clientAddressDD",
+        success: function (data) {
+          typeHomeDD = data.typeHomeDD;
+          stateDD = data.stateDD;
+          countryDD = data.countryDD;
+          $.each(typeHomeDD, function (key, value) {
+            $('#typeOfHomeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+          $.each(stateDD, function (key, value) {
+            $('#homeStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            $('#companyStateDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+          $.each(countryDD, function (key, value) {
+            $('#homeCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+            $('#companyCountryDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+        }
+      });
+    }
+    function getEmploymentDD() {
+      $.ajax({
+        type: "GET",
+        dataType: 'JSON',
+        url: APIUrl + "clientEmploymentDD",
+        success: function (data) {
+          empTypeDD = data.empTypeDD;
+          empStatusDD = data.empStatusDD;
+          $.each(empTypeDD, function (key, value) {
+            $('#empTypeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+          $.each(empStatusDD, function (key, value) {
+            $('#empStatusDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+          });
+        }
+      });
+    }
+
+    function resetTextbox() {
+      $('input[type="text"]').val('');
+      $('input[type="number"]').val('');
+      $('.custom-select').val('');
+    }
+
+    $("#userInfoForm").submit(function (event) {
+      // $("#btnUpdateInfo").click(function () {
+      event.preventDefault();
+      $(".custom-loader").show();
+      $.ajax({
+        url: APIUrl + 'adm_updateUserInfo',
+        type: 'POST',
+        data: {
+          userId: $("#txtUserId").val(),
+          name: $("#txtName").val(),
+          IC: $("#txtIC").val(),
+          email: $("#txtEmail").val(),
+          mobileNo: $("#txtMobileNo").val(),
+          raceCode: $("#raceDD").val(),
+          nationalityCode: $("#nationalityDD").val(),
+          dob: $("#txtDOB").val(),
+          genderCode: $("#genderDD").val(),
+          maritalCode: $("#maritalDD").val(),
+          emergencyContactName: $("#txtEmergencyContactName").val(),
+          emergencyContactRelationCode: $("#emergencyContactRelationDD").val(),
+          emergencyContactNo: $("#txtEmergencyContactNo").val(),
+          typeOfHome: $("#typeOfHomeDD").val(),
+          addr: $("#txtHomeAddress").val(),
+          postcode: $("#txtHomeZipCode").val(),
+          city: $("#txtHomeCity").val(),
+          state: $("#homeStateDD").val(),
+          country: $("#homeCountryDD").val(),
+          monthlyGrossIncome: $("#txtMonthlyGrossIncome").val(),
+          totalMonthlyLoan: $("#txtTotalMonthlyLoan").val(),
+          employmentType: $("#empTypeDD").val(),
+          employmentStatus: $("#empStatusDD").val(),
+          workPhone: $("#txtWorkPhone").val(),
+          companyName: $("#txtCompanyName").val(),
+          joinedDate: $("#txtDateJoined").val(),
+          workAddress: $("#txtCompanyAddress").val(),
+          workPostcode: $("#txtCompanyZipCode").val(),
+          workCity: $("#txtCompanyCity").val(),
+          workState: $("#companyStateDD").val(),
+          workCountry: $("#companyCountryDD").val()
+        },
+        dataType: 'JSON',
+        success: function (data) {
+          console.log(data);
+
+        },
+        complete: function (data) {
+          closeAndReload();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+          console.log(errorMsg);
+        }
+      });
+
+    });
+
+    $("#btnApproveUser").click(function () {
+      $.ajax({
+        url: APIUrl + 'adm_approveUser',
+        type: 'POST',
+        data: {
+          "userId": $("#txtUserId").val(),
+        },
+        dataType: 'JSON',
+        success: function (data) {
+          console.log(data);
+          closeAndReload();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+          console.log(errorMsg);
+        }
+      });
+    });
+
+    $("#btnLogout").click(function () {
+      localStorage.clear();
+      window.location = "login.html";
+    });
+
+    $("#btnCloseModal").click(function () {
+      closeModal();
+    });
+
+    function loadUserInfo(userId) {
+      resetTextbox();
+      $.ajax({
+        type: "POST",
+        dataType: 'JSON',
+        data: { "userId": userId },
+        url: APIUrl + "adm_loadUserInfo",
+        success: function (data) {
+          $userInfo = data.userInfo;
+          $contactInfo = data.contactInfo;
+          $jobInfo = data.jobInfo;
+          $financialInfo = data.financialInfo;
+          $.each($userInfo, function (key, value) {
+            $("#txtName").val(value.name);
+            $("#txtIC").val(value.IC);
+            $("#txtEmail").val(value.email);
+            $("#txtDOB").val(value.dob);
+            $("#raceDD").val(value.race);
+            $("#nationalityDD").val(value.nationality);
+            $("#maritalDD").val(value.maritalStatus);
+            $("#genderDD").val(value.gender);
+            $("#txtUserId").val(value.userId);
+          });
+          $.each($contactInfo, function (key, value) {
+            //Contact Info
+            $("#txtMobileNo").val(value.mobileNo);
+            $("#txtEmergencyContactName").val(value.emergencyContactName);
+            $("#txtEmergencyContactNo").val(value.emergencyContactNo);
+            $("#emergencyContactRelationDD").val(value.emergencyContactRelation);
+            $("#typeOfHomeDD").val(value.typeOfHome);
+            $("#txtHomeAddress").val(value.addr);
+            $("#txtHomeZipCode").val(value.postcode);
+            $("#txtHomeCity").val(value.city);
+            $("#homeStateDD").val(value.state);
+            $("#homeCountryDD").val(value.country);
+          });
+          $.each($jobInfo, function (key, value) {
+            //Job Info
+            $("#txtCompanyName").val(value.companyName);
+            $("#empTypeDD").val(value.employmentType);
+            $("#empStatusDD").val(value.employmentStatus);
+            $("#txtDateJoined").val(value.joinedDate);
+            $("#txtCompanyAddress").val(value.workAddress);
+            $("#txtCompanyCity").val(value.workCity);
+            $("#companyCountryDD").val(value.workCountry);
+            $("#companyStateDD").val(value.workState);
+            $("#txtWorkPhone").val(value.workPhone);
+            $("#txtCompanyZipCode").val(value.workPostcode);
+          });
+          $.each($financialInfo, function (key, value) {
+            //Contact Info
+            $("#txtMonthlyGrossIncome").val(value.monthlyGrossIncome);
+            $("#txtTotalMonthlyLoan").val(value.totalMonthlyLoan);
+
+          });
+          $(".custom-loader").hide();
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+          $('#content').html(errorMsg);
+        }
+      });
+    }
+
+    //When the page has loaded.
+    $(document).ready(function () {
+      //var token = localStorage.getItem("token");
+      //Load all DD
       
-      $( "#userInfoForm" ).submit(function( event ) {
-     // $("#btnUpdateInfo").click(function () {
-        event.preventDefault();
-        $(".custom-loader").show();
-        $.ajax({
-          url: APIUrl + 'adm_updateUserInfo',
-          type: 'POST',
-          data: {
-            userId: $("#txtUserId").val(),
-            name: $("#txtName").val(),
-            IC: $("#txtIC").val(),
-            email: $("#txtEmail").val(),
-            mobileNo: $("#txtMobileNo").val(),
-            raceCode: $("#raceDD").val(),
-            nationalityCode: $("#nationalityDD").val(),
-            dob: $("#txtDOB").val(),
-            genderCode: $("#genderDD").val(),
-            maritalCode: $("#maritalDD").val(),
-            emergencyContactName: $("#txtEmergencyContactName").val(),
-            emergencyContactRelationCode: $("#emergencyContactRelationDD").val(),
-            emergencyContactNo: $("#txtEmergencyContactNo").val(),
-            typeOfHome: $("#typeOfHomeDD").val(),
-            addr: $("#txtHomeAddress").val(),
-            postcode: $("#txtHomeZipCode").val(),
-            city: $("#txtHomeCity").val(),
-            state: $("#homeStateDD").val(),
-            country: $("#homeCountryDD").val(),
-            monthlyGrossIncome: $("#txtMonthlyGrossIncome").val(),
-            totalMonthlyLoan: $("#txtTotalMonthlyLoan").val(),
-            employmentType: $("#empTypeDD").val(),
-            employmentStatus: $("#empStatusDD").val(),
-            workPhone: $("#txtWorkPhone").val(),
-            companyName: $("#txtCompanyName").val(),
-            joinedDate: $("#txtDateJoined").val(),
-            workAddress: $("#txtCompanyAddress").val(),
-            workPostcode: $("#txtCompanyZipCode").val(),
-            workCity: $("#txtCompanyCity").val(),
-            workState: $("#companyStateDD").val(),
-            workCountry: $("#companyCountryDD").val()
-          },
-          dataType: 'JSON',
-          success: function (data) {
-            console.log(data);
-            
-          },
-          complete: function(data){
-            closeAndReload();
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-            console.log(errorMsg);
-          }
-        });
-        
-      });
-
-      $("#btnApproveUser").click(function () {
-        $.ajax({
-          url: APIUrl + 'adm_approveUser',
-          type: 'POST',
-          data: {
-            "userId": $("#txtUserId").val(),
-          },
-          dataType: 'JSON',
-          success: function (data) {
-            console.log(data);
-            closeAndReload();
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-            console.log(errorMsg);
-          }
-        });
-      });
-
-      $("#btnCloseModal").click(function () {
-        closeModal();
-      });
-
-      function loadUserInfo(userId) {
-        resetTextbox();
-        $.ajax({
-          type: "POST",
-          dataType: 'JSON',
-          data: { "userId": userId },
-          url: APIUrl + "adm_loadUserInfo",
-          success: function (data) {
-            $userInfo = data.userInfo;
-            $contactInfo = data.contactInfo;
-            $jobInfo = data.jobInfo;
-            $financialInfo = data.financialInfo;
-            $.each($userInfo, function (key, value) {
-              $("#txtName").val(value.name);
-              $("#txtIC").val(value.IC);
-              $("#txtEmail").val(value.email);
-              $("#txtDOB").val(value.dob);
-              $("#raceDD").val(value.race);
-              $("#nationalityDD").val(value.nationality);
-              $("#maritalDD").val(value.maritalStatus);
-              $("#genderDD").val(value.gender);
-              $("#txtUserId").val(value.userId);
-            });
-            $.each($contactInfo, function (key, value) {
-              //Contact Info
-              $("#txtMobileNo").val(value.mobileNo);
-              $("#txtEmergencyContactName").val(value.emergencyContactName);
-              $("#txtEmergencyContactNo").val(value.emergencyContactNo);
-              $("#emergencyContactRelationDD").val(value.emergencyContactRelation);
-              $("#typeOfHomeDD").val(value.typeOfHome);
-              $("#txtHomeAddress").val(value.addr);
-              $("#txtHomeZipCode").val(value.postcode);
-              $("#txtHomeCity").val(value.city);
-              $("#homeStateDD").val(value.state);
-              $("#homeCountryDD").val(value.country);
-            });
-            $.each($jobInfo, function (key, value) {
-              //Job Info
-              $("#txtCompanyName").val(value.companyName);
-              $("#empTypeDD").val(value.employmentType);
-              $("#empStatusDD").val(value.employmentStatus);
-              $("#txtDateJoined").val(value.joinedDate);
-              $("#txtCompanyAddress").val(value.workAddress);
-              $("#txtCompanyCity").val(value.workCity);
-              $("#companyCountryDD").val(value.workCountry);
-              $("#companyStateDD").val(value.workState);
-              $("#txtWorkPhone").val(value.workPhone);
-              $("#txtCompanyZipCode").val(value.workPostcode);
-            });
-            $.each($financialInfo, function (key, value) {
-              //Contact Info
-              $("#txtMonthlyGrossIncome").val(value.monthlyGrossIncome);
-              $("#txtTotalMonthlyLoan").val(value.totalMonthlyLoan);
-
-            });
+      getUserPersonalDD(); //User Personal Info DD
+      getUserContactDD(); //Emergency ContactDD
+      getUserAddressDD(); //User Address DD
+      getEmploymentDD();  //Employment tDD
+      //Perform Ajax request.
+      //TODO: set the type to POST and send token for authentication
+      $.ajax({
+        url: APIUrl + 'adm_listAllUsers',
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function (xhr) {   //Include the bearer token in header
+          xhr.setRequestHeader("Authorization",token);
+          console.log(token);
+        },
+        success: function (data) {
+          //If the success function is execute,
+          //then the Ajax request was successful.
+          //Add the data we received in our Ajax
+          //request to the "content" div.
+          $(data.allUsers).each(function () {
+            if (this.approvalStatus === "0") {
+              this.approvalStatus = "Not Approved";
+            }
+            else {
+              this.approvalStatus = "Approved";
+            }
+            $('tbody').append('<tr><td>' + this.userId + '</td><td>' + this.name + '</td><td>' +
+              this.email + '</td><td>' + this.approvalStatus +
+              '</td><td><div onclick="viewUserInfo(' + this.userId + ')"><i class="fe fe-edit-2"></i></div></td></tr>')
             $(".custom-loader").hide();
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-            $('#content').html(errorMsg);
-          }
-        });
-      }
+          });
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+          $('#content').html(errorMsg);
+        }
+      }).done(function (response) {
+        console.log("DONE");
+      }).fail(function (err) {
+        console.log("err");
 
-      //When the page has loaded.
-      $(document).ready(function () {
-        //Load all DD
-        getUserPersonalDD(); //User Personal Info DD
-        getUserContactDD(); //Emergency ContactDD
-        getUserAddressDD(); //User Address DD
-        getEmploymentDD();  //Employment tDD
-        //Perform Ajax request.
-        //TODO: set the type to POST and send token for authentication
-        $.ajax({
-          url: APIUrl + 'adm_listAllUsers',
-          type: 'get',
-          dataType: 'json',
-          success: function (data) {
-            //If the success function is execute,
-            //then the Ajax request was successful.
-            //Add the data we received in our Ajax
-            //request to the "content" div.
-            $(data.allUsers).each(function () {
-              if (this.approvalStatus === "0") {
-                this.approvalStatus = "Not Approved";
-              }
-              else {
-                this.approvalStatus = "Approved";
-              }
-              $('tbody').append('<tr><td>' + this.userId + '</td><td>' + this.name + '</td><td>' +
-                this.email + '</td><td>' + this.approvalStatus +
-                '</td><td><div onclick="viewUserInfo(' + this.userId + ')"><i class="fe fe-edit-2"></i></div></td></tr>')
-              $(".custom-loader").hide();
-            });
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-            $('#content').html(errorMsg);
-          }
-        });
       });
+    });
 
 
-    </script>
+
+  </script>
 </body>
 
 </html>
