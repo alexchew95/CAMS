@@ -91,7 +91,7 @@
         const myPlaintextPassword = $("#txtPwd").val()
         //salt = bcrypt.genSaltSync(saltRounds);
         salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
-        console.log(salt);
+        //console.log(salt);
         hash = bcrypt.hashSync(myPlaintextPassword, salt);
 
         $.ajax({
@@ -111,8 +111,8 @@
           },
           statusCode: {
             401: function (request, status, error) {
-              console.log("401 - Login incorrect");
-              console.log(error);
+              //console.log("401 - Login incorrect");
+              //console.log(error);
               $("#lblMessages").text("Login Incorrect - Please try again");            }
           },
           error: function (xhr, ajaxOptions, thrownError) {
@@ -120,7 +120,7 @@
             console.log(errorMsg);
           }
         });
-        console.log(localStorage);
+        //console.log(localStorage);
       });
     });
 

@@ -592,7 +592,7 @@
         },
         dataType: 'JSON',
         success: function (data) {
-          console.log(data);
+         // consoleconsole.log(data);
 
         },
         complete: function (data) {
@@ -600,7 +600,7 @@
         },
         error: function (xhr, ajaxOptions, thrownError) {
           var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          console.log(errorMsg);
+         // console.log(errorMsg);
         }
       });
 
@@ -615,12 +615,12 @@
         },
         dataType: 'JSON',
         success: function (data) {
-          console.log(data);
+          //console.log(data);
           closeAndReload();
         },
         error: function (xhr, ajaxOptions, thrownError) {
           var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          console.log(errorMsg);
+          //console.log(errorMsg);
         }
       });
     });
@@ -715,7 +715,7 @@
         dataType: 'json',
         beforeSend: function (xhr) {   //Include the bearer token in header
           xhr.setRequestHeader("Authorization",token);
-          console.log(token);
+          //console.log(token);
         },
         success: function (data) {
           //If the success function is execute,
@@ -740,9 +740,9 @@
           $('#content').html(errorMsg);
         }
       }).done(function (response) {
-        console.log("DONE");
+        //console.log("DONE");
       }).fail(function (err) {
-        console.log("err");
+        //console.log("err");
 
       });
     });
