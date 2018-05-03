@@ -430,6 +430,17 @@
   <script type="text/javascript">
     window.onload = checkAdminLogin;
 
+
+       var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+      //var APIUrl = 'http://localhost/moneyflot-ci/api/';
+
+      function viewUserInfo(userId) {
+        $('#userInfoForm').modal();
+        $(".custom-loader").show();
+        //TODO: to combine all DD requests into one
+        loadUserInfo(userId);
+      }
+
     token = localStorage.getItem("token");
 
     function checkAdminLogin() {
