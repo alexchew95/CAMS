@@ -783,7 +783,10 @@
               "docType": "NRIC",
               "docURL": S3Key
             });
-
+            posting.done(function (data) {
+              alert ("Upload Complete!");
+              closeModal();
+            });
           }
         })
       }
