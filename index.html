@@ -303,31 +303,31 @@
                 <div class="col-sm-6 col-md-6"></div>
                 <div class="col-sm-12 col-md-12">
                   <div class="form-group">
-                    <label class="form-label">Address</label>
+                    <label class="form-label">Home Address</label>
                     <input type="text" class="form-control" id="txtHomeAddress" placeholder="Address 1" value="">
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">Zip Code</label>
+                    <label class="form-label">Home Zip Code</label>
                     <input type="number" class="form-control" id="txtHomeZipCode" placeholder="Zip code" value="">
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">City</label>
+                    <label class="form-label">Home City</label>
                     <input type="text" class="form-control" id="txtHomeCity" placeholder="City" value="">
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">State</label>
+                    <label class="form-label">Home State</label>
                     <select class="form-control custom-select" id="homeStateDD"></select>
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">Country</label>
+                    <label class="form-label">Home Country</label>
                     <select class="form-control custom-select" id="homeCountryDD"></select>
                   </div>
                 </div>
@@ -383,26 +383,26 @@
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">Zip Code</label>
+                    <label class="form-label">Company Zip Code</label>
                     <input type="number" class="form-control" id="txtCompanyZipCode" placeholder="Zip code" value="">
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">City</label>
+                    <label class="form-label">Company City</label>
                     <input type="text" class="form-control" id="txtCompanyCity" placeholder="City" value="">
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">State</label>
+                    <label class="form-label">Company State</label>
                     <select class="form-control custom-select" id="companyStateDD"></select>
 
                   </div>
                 </div>
                 <div class="col-sm-3 col-md-3">
                   <div class="form-group">
-                    <label class="form-label">Country</label>
+                    <label class="form-label">Company Country</label>
                     <select class="form-control custom-select" id="companyCountryDD"></select>
                   </div>
                 </div>
@@ -449,7 +449,9 @@
                 </b>
               </h3>
             </div>
+
             <div class="card-body">
+              ** Accepted format: PDF / JPG / PNG **
               <div class="col-sm-12 col-md-12">
                 <div class="form-group">
                   <label class="form-label">NRIC</label>
@@ -487,10 +489,12 @@
                 </div>
               </div>
               <div class="card-footer">
-
                 <button type="button" class="btn btn-dark" id="btnUploadFiles">
                   <i class="fe fe-upload mr-2"></i>Upload</button>
+                <label class="form-label-right text-danger" id="lblUploadErrorMsg"></label>
               </div>
+              <input type="hidden" id="txtUploadNRIC">
+              <input type="hidden" id="txtUploadUserId">
             </div>
           </div>
         </div>
@@ -503,8 +507,8 @@
 
     /////* Declare variables */////
 
-    var APIUrl = 'http://localhost/moneyflot-ci/api/';
-    //var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+    //var APIUrl = 'http://localhost/moneyflot-ci/api/';
+    var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
     var s3 = new AWS.S3({
       accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
       secretAccessKey: '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'
@@ -535,6 +539,9 @@
         dataType: 'JSON',
         success: function (data) {
           document.getElementById('lblName').innerHTML = data[0].name;
+          $("#txtUploadNRIC").val(data[0].IC);
+          $("#txtUploadUserId").val(data[0].userId);
+
           console.log(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
@@ -737,34 +744,64 @@
     });
 
     $("#btnUploadFiles").click(function () {
-
+      document.getElementById('lblUploadErrorMsg').innerHTML = "";
+      var NRIC = $("#txtUploadNRIC").val();
+      var userId = $("#txtUploadUserId").val();
       console.log($("#fileNRIC").get()[0].files[0]);
-      var uploadNRICPreSignedUrl = s3.getSignedUrl('putObject', {
-        Bucket: '<THE_BUCKET_NAME>',
-        Key: '<THE_UPLOADED_FILENAME>',
-        ACL: 'authenticated-read',
-        // This must match with your ajax contentType parameter
-        ContentType: 'binary/octet-stream'
-
-        /* then add all the rest of your parameters to AWS puttObect here */
-      });
-
-      $.ajax({
-        url: APIUrl + 'adm_approveUser',
-        type: 'POST',
-        data: {
-          "userId": $("#txtUserId").val(),
-        },
-        dataType: 'JSON',
-        success: function (data) {
-          //console.log(data);
-          closeAndReload();
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-          //console.log(errorMsg);
+      if ($("#fileNRIC").get()[0].files[0]) {
+        if ($("#fileNRIC").get()[0].files[0].type === 'image/png') {
+          fileName = NRIC + "_" + Date.now() + "_NRIC.png";
+        } else if ($("#fileNRIC").get()[0].files[0].type === 'image/jpeg') {
+          fileName = NRIC + "_" + Date.now() + "_NRIC.jpeg";
+        } else {
+          error = "Invalid file format for NRIC";
+          document.getElementById('lblUploadErrorMsg').innerHTML = error;
+          return;
         }
-      });
+        var S3Key = "users_NRIC/" + fileName;
+
+        var uploadPreSignedUrl = s3.getSignedUrl('putObject', {
+          Bucket: 'bucketeer-b596f285-e720-40f2-af7f-e9e17ce8b111',
+          Key: S3Key,
+          ACL: 'authenticated-read',
+          // This must match with your ajax contentType parameter
+          ContentType: 'binary/octet-stream'
+          /* then add all the rest of your parameters to AWS puttObect here */
+        });
+        $.ajax({
+          type: 'PUT',
+          url: uploadPreSignedUrl,
+          // Content type must much with the parameter you signed your URL with
+          contentType: 'binary/octet-stream',
+          // this flag is important, if not set, it will try to send data as a form
+          processData: false,
+          // the actual file is sent raw
+          data: $("#fileNRIC").get()[0].files[0],
+          success: function (data) {
+            var posting = $.post(APIUrl + "adm_insertDocDataToDB", {
+              "userId": userId,
+              "docType": "NRIC",
+              "docURL": S3Key
+            });
+
+          }
+        })
+      }
+      if ($("#fileEmploymentLetter").get()[0].files[0]) {
+        console.log($("#fileEmploymentLetter").get()[0].files[0]);
+      }
+      if ($("#filePayslip").get()[0].files[0]) {
+        console.log($("#filePayslip").get()[0].files[0]);
+      }
+      if ($("#fileBankStatement1").get()[0].files[0]) {
+        console.log($("#fileBankStatement1").get()[0].files[0]);
+      }
+      if ($("#fileBankStatement2").get()[0].files[0]) {
+        console.log($("#fileBankStatement2").get()[0].files[0]);
+      }
+      if ($("#fileBankStatement3").get()[0].files[0]) {
+        console.log($("#fileBankStatement3").get()[0].files[0]);
+      }
     });
     $("#btnLogout").click(function () {
       localStorage.clear();
