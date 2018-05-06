@@ -15153,6 +15153,25 @@ a.tag-addon:hover {
   font-size: 1rem;
 }
 
+.selectgroup-button-compact {
+  display: block;
+  border: 1px solid rgba(0, 40, 100, 0.12);
+  text-align: center;
+  padding: 0 0;
+  position: relative;
+  cursor: pointer;
+  border-radius: 3px;
+  color: #9aa0ac;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-size: 0.9375rem;
+  line-height: 1.5rem;
+  min-width: 2.375rem;
+}
+
+
 .selectgroup-input:checked + .selectgroup-button {
   border-color: #467fcf;
   z-index: 1;
