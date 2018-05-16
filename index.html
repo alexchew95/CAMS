@@ -561,8 +561,8 @@
 
     /////* Declare variables */////
 
-    //var APIUrl = 'http://localhost/moneyflot-ci/api/';
-    var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+    var APIUrl = 'http://localhost/moneyflot-ci/api/';
+    //var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
     var s3 = new AWS.S3({
       accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
       secretAccessKey: '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'
@@ -1028,7 +1028,8 @@
     $(document).ready(function () {
       //var token = localStorage.getItem("token");
       //Load all DD
-
+      
+      var role = localStorage.getItem('role');
       getUserPersonalDD(); //User Personal Info DD
       getUserContactDD(); //Emergency ContactDD
       getUserAddressDD(); //User Address DD
@@ -1037,7 +1038,8 @@
       //TODO: set the type to POST and send token for authentication
       $.ajax({
         url: APIUrl + 'adm_listAllUsers',
-        type: 'get',
+        type: 'post',
+        data: {"role":role},
         dataType: 'json',
         beforeSend: function (xhr) { //Include the bearer token in header
           xhr.setRequestHeader("Authorization", token);
@@ -1093,9 +1095,6 @@
           $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
       });
-
-
-
     });
 
     //sort function

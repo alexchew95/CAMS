@@ -78,8 +78,8 @@
     </div>
   </div>
   <script>
-    var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
-    //var APIUrl = 'http://localhost/moneyflot-ci/api/';
+    //var APIUrl = 'https://moneyflot-restu-ci.herokuapp.com/api/';
+    var APIUrl = 'http://localhost/moneyflot-ci/api/';
 
     $("#btnLogin").click(function () {
       event.preventDefault();
@@ -107,6 +107,8 @@
           dataType: 'JSON',
           success: function (data) {
             localStorage.setItem('token', data.token);
+            localStorage.setItem('role', data.role);
+
             window.location = "index.html";
           },
           statusCode: {
