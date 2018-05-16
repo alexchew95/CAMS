@@ -1,12 +1,6 @@
-RewriteCond %{HTTPS} =on
-RewriteRule ^(.*)$ - [env=ps:https]
-RewriteCond %{HTTPS} !=on
-RewriteRule ^(.*)$ - [env=ps:http]
-
-# redirect urls with index.html to folder
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)index.html HTTP/ [NC]
-RewriteRule ^.*$ %{ENV:ps}://%{SERVER_NAME}/%1 [R=301,L]
-
-# change // to /
-RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /(.*)//(.*) HTTP/ [NC]
-RewriteRule ^.*$ %{ENV:ps}://%{SERVER_NAME}/%1/%2 [R=301,L]
+  # you might need this
+    RewriteEngine On
+    
+    ErrorDocument 426 "SSL ONLY PLEASE"
+    RewriteCond %{HTTP:x-forwarded-proto} !='https'
+    RewriteRule .* - [R=426,L]
