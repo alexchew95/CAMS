@@ -1,2 +1,2 @@
 Redirect /login https://moneyflot-admin-site.herokuapp.com
-Redirect / https://moneyflot-admin-site.herokuapp.com
+Redirect /index.php https://moneyflot-admin-site.herokuapp.com
