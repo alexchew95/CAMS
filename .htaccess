@@ -1,6 +1,3 @@
-  # you might need this
-    RewriteEngine On
-    
-    ErrorDocument 426 "SSL ONLY PLEASE"
-    RewriteCond %{HTTP:x-forwarded-proto} !='https'
-    RewriteRule .* - [R=426,L]
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
