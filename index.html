@@ -546,6 +546,7 @@
               <div class="card-footer">
                 <button type="button" class="btn btn-dark" id="btnSaveCreditInfo">
                   <i class="fe fe-save"></i>Save</button>
+                <button class="btn btn-primary" id="btnVerifyUser">Verify</button>
                 <button class="btn btn-primary" id="btnApproveUser">Approve</button>
                 <label class="form-label-right" id="lblCreditInfoMsg"></label>
               </div>
@@ -788,6 +789,7 @@
     });
 
     $("#btnApproveUser").click(function () {
+      event.preventDefault();
       $.ajax({
         url: APIUrl + 'adm_approveUser',
         type: 'POST',
@@ -1028,8 +1030,20 @@
     $(document).ready(function () {
       //var token = localStorage.getItem("token");
       //Load all DD
-      
-      var role = localStorage.getItem('role');
+
+      var role = localStorage.getItem("role");
+      /*control for Admin and Director Role - Start */
+      var verifyUser = document.getElementById("btnVerifyUser");
+      var approveUser = document.getElementById("btnApproveUser");
+
+      if (role == "DIR") {
+        verifyUser.style.display = "none";
+      } else {
+        approveUser.style.display = "none";
+      }
+
+      /*control for Admin and Director Role - End */
+
       getUserPersonalDD(); //User Personal Info DD
       getUserContactDD(); //Emergency ContactDD
       getUserAddressDD(); //User Address DD
@@ -1039,7 +1053,7 @@
       $.ajax({
         url: APIUrl + 'adm_listAllUsers',
         type: 'post',
-        data: {"role":role},
+        data: {"role":role },
         dataType: 'json',
         beforeSend: function (xhr) { //Include the bearer token in header
           xhr.setRequestHeader("Authorization", token);
@@ -1052,10 +1066,14 @@
           //Add the data we received in our Ajax
           //request to the "content" div.
           $(data.allUsers).each(function () {
-            if (this.approvalStatus === "0") {
+            if (this.approvalStatus == "0") {
               this.approvalStatus = "Not Verified";
-            } else {
+            } else if (this.approvalStatus == "1") {
               this.approvalStatus = "Verified";
+            } else if (this.approvalStatus == "2") {
+              this.approvalStatus = "Approved";
+            } else {
+              this.approvalStatus = "Error";
             }
             $("#userListBody").append('<tr><td>' + this.userId + '</td><td>' +
               this.name + '</td><td>' +
