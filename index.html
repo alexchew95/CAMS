@@ -106,14 +106,14 @@
             </div>
           </div>
 
-          <table class="table">
+          <table class="table" id="tableAllUser">
             <thead>
               <tr>
                 <th id="headerID" class="text-center" style="width: 5%">ID</th>
                 <th id="headerName">Name</th>
                 <th id="headerIC">IC Number</th>
                 <th id="headerEmail">Email</th>
-                <th class="text-left" style="width: 15%">Status</th>
+                <th id="headerStatus" class="text-left" style="width: 15%">Status</th>
                 <th class="text-center" style="width: 5%">Action</th>
               </tr>
             </thead>
@@ -313,25 +313,25 @@
                     <input type="text" class="form-control" id="txtHomeAddress" placeholder="Address 1" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label class="form-label">Home Zip Code</label>
-                    <input type="number" class="form-control" id="txtHomeZipCode" placeholder="Zip code" value="">
+                    <label class="form-label">Home Postcode</label>
+                    <input type="number" class="form-control" id="txtHomeZipCode" placeholder="Postcode" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Home City</label>
                     <input type="text" class="form-control" id="txtHomeCity" placeholder="City" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Home State</label>
                     <select class="form-control custom-select" id="homeStateDD"></select>
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Home Country</label>
                     <select class="form-control custom-select" id="homeCountryDD"></select>
@@ -387,26 +387,26 @@
                     <input type="text" class="form-control" id="txtCompanyAddress" placeholder="Company Address" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
-                    <label class="form-label">Company Zip Code</label>
-                    <input type="number" class="form-control" id="txtCompanyZipCode" placeholder="Zip code" value="">
+                    <label class="form-label">Company Postcode</label>
+                    <input type="number" class="form-control" id="txtCompanyZipCode" placeholder="Postcode" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Company City</label>
                     <input type="text" class="form-control" id="txtCompanyCity" placeholder="City" value="">
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Company State</label>
                     <select class="form-control custom-select" id="companyStateDD"></select>
 
                   </div>
                 </div>
-                <div class="col-sm-3 col-md-3">
+                <div class="col-sm-6 col-md-6">
                   <div class="form-group">
                     <label class="form-label">Company Country</label>
                     <select class="form-control custom-select" id="companyCountryDD"></select>
@@ -424,14 +424,13 @@
                     <tbody id="docBody">
                     </tbody>
                   </table>
+                  <input type="hidden" id="txtUserId">
                 </div>
-                <input type="hidden" id="txtUserId">
+              </div>
+              <div class="card-footer text-right">
+                <button class="btn btn-primary" id="btnCloseModal">Close</button>
 
-                <div class="card-footer text-right">
-                  <button class="btn btn-primary" id="btnCloseModal">Close</button>
-
-                  <button type="submit" class="btn btn-primary" id="btnUpdateInfo">Update Info</button>
-                </div>
+                <button type="submit" class="btn btn-primary" id="btnUpdateInfo">Update Info</button>
               </div>
             </div>
           </div>
@@ -458,46 +457,25 @@
 
             <div class="card-body">
               ** Accepted format: PDF / JPG / PNG **
-              <div class="col-sm-12 col-md-12">
+              <div class="col-sm-6 col-md-6">
                 <div class="form-group">
-                  <label class="form-label">NRIC</label>
-                  <input type="file" class="form-control" id="fileNRIC">
+                  <label class="form-label">Document Type</label>
+                  <select class="form-control" id="docTypeDD"></select>
                 </div>
               </div>
-              <div class="col-sm-12 col-md-12">
+              <div class="col-sm-9 col-md-9">
                 <div class="form-group">
-                  <label class="form-label">Employment Offer Letter</label>
-                  <input type="file" class="form-control" id="fileEmploymentLetter">
+                  <label class="form-label">Document to Upload</label>
+                  <input type="file" class="form-control" id="fileDocToUpload">
                 </div>
               </div>
-              <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                  <label class="form-label">Latest Payslip</label>
-                  <input type="file" class="form-control" id="filePayslip">
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                  <label class="form-label">Bank Statement 1</label>
-                  <input type="file" class="form-control" id="fileBankStatement1">
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                  <label class="form-label">Bank Statement 2</label>
-                  <input type="file" class="form-control" id="fileBankStatement2">
-                </div>
-              </div>
-              <div class="col-sm-12 col-md-12">
-                <div class="form-group">
-                  <label class="form-label">Bank Statement 3</label>
-                  <input type="file" class="form-control" id="fileBankStatement3">
-                </div>
-              </div>
-              <div class="card-footer">
+
+              <div class="card-footer text-right">
+                <label class="form-label-right text-danger" id="lblUploadErrorMsg"></label>
                 <button type="button" class="btn btn-dark" id="btnUploadFiles">
                   <i class="fe fe-upload mr-2"></i>Upload</button>
-                <label class="form-label-right text-danger" id="lblUploadErrorMsg"></label>
+                <button class="btn btn-primary" id="btnCloseUploadModal">Close</button>
+
               </div>
               <input type="hidden" id="txtUploadNRIC">
               <input type="hidden" id="txtUploadUserId">
@@ -543,11 +521,12 @@
               </div>
               <input type="hidden" id="txtCreditInfoUserId">
 
-              <div class="card-footer">
+              <div class="card-footer text-right">
                 <button type="button" class="btn btn-dark" id="btnSaveCreditInfo">
                   <i class="fe fe-save"></i>Save</button>
                 <button class="btn btn-primary" id="btnVerifyUser">Verify</button>
                 <button class="btn btn-primary" id="btnApproveUser">Approve</button>
+                <button class="btn btn-primary" id="btnCloseCreditInfoModal">Close</button>
                 <label class="form-label-right" id="lblCreditInfoMsg"></label>
               </div>
             </div>
@@ -583,8 +562,9 @@
     }
 
     function openUsersUploadFileModal(userId) {
-      $('#userUploadDocumentForm').modal();
       document.getElementById('lblName').innerHTML = "";
+      document.getElementById('lblUploadErrorMsg').innerHTML = "";
+      $('#userUploadDocumentForm').modal();
 
       $.ajax({
         url: APIUrl + 'adm_loadUserInfo',
@@ -724,6 +704,15 @@
       });
     }
 
+    function getDocTypeDD() {
+      $.get(APIUrl + "docTypeDD", function (data) {
+        docTypeDD = data.docTypeDD;
+        $.each(docTypeDD, function (key, value) {
+          $('#docTypeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+        });
+      }, "json");
+    }
+
     /* Reset Modal textboxs value to null */
     function resetModalTextbox() {
       $('input[type="text"]').val('');
@@ -836,20 +825,41 @@
 
     $("#btnUploadFiles").click(function () {
       document.getElementById('lblUploadErrorMsg').innerHTML = "";
+      $(".custom-loader").show();
+
       var NRIC = $("#txtUploadNRIC").val();
+      var docType = $("#docTypeDD").val()
+      var uploadDoc = $("#txtUploadDoc").val();
       var userId = $("#txtUploadUserId").val();
-      console.log($("#fileNRIC").get()[0].files[0]);
-      if ($("#fileNRIC").get()[0].files[0]) {
-        if ($("#fileNRIC").get()[0].files[0].type === 'image/png') {
-          fileName = NRIC + "_" + Date.now() + "_NRIC.png";
-        } else if ($("#fileNRIC").get()[0].files[0].type === 'image/jpeg') {
-          fileName = NRIC + "_" + Date.now() + "_NRIC.jpeg";
+      var uploadFolder;
+      if (docType == "BASM1") {
+        uploadFolder = "users_bankAcct1/";
+      } else if (docType == "BASM2") {
+        uploadFolder = "users_bankAcct2/";
+      } else if (docType == "BASM3") {
+        uploadFolder = "users_bankAcct3/";
+      } else if (docType == "EMPLTR") {
+        uploadFolder = "users_offerLetter/";
+      } else if (docType == "NRIC") {
+        uploadFolder = "users_NRIC/";
+      } else if (docType == "PAYSLP") {
+        uploadFolder = "users_paySlip/";
+      }
+
+      console.log($("#fileDocToUpload").get()[0].files[0]);
+      if ($("#fileDocToUpload").get()[0].files[0]) {
+        if ($("#fileDocToUpload").get()[0].files[0].type === 'image/png') {
+          fileName = NRIC + "_" + Date.now() + "_"+ docType+".png";
+        } else if ($("#fileDocToUpload").get()[0].files[0].type === 'image/jpeg') {
+          fileName = NRIC + "_" + Date.now() + "_"+ docType+".jpeg";
+        } else if ($("#fileDocToUpload").get()[0].files[0].type === 'application/pdf') {
+          fileName = NRIC + "_" + Date.now() + "_"+ docType+".pdf";
         } else {
-          error = "Invalid file format for NRIC";
+          error = "Invalid file format ";
           document.getElementById('lblUploadErrorMsg').innerHTML = error;
           return;
         }
-        var S3Key = "users_NRIC/" + fileName;
+        var S3Key = uploadFolder + fileName;
 
         var uploadPreSignedUrl = s3.getSignedUrl('putObject', {
           Bucket: 'bucketeer-b596f285-e720-40f2-af7f-e9e17ce8b111',
@@ -867,34 +877,20 @@
           // this flag is important, if not set, it will try to send data as a form
           processData: false,
           // the actual file is sent raw
-          data: $("#fileNRIC").get()[0].files[0],
+          data: $("#fileDocToUpload").get()[0].files[0],
           success: function (data) {
             var posting = $.post(APIUrl + "adm_insertDocDataToDB", {
               "userId": userId,
-              "docType": "NRIC",
+              "docType": docType,
               "docURL": S3Key
             });
             posting.done(function (data) {
+              $(".custom-loader").hide();
               alert("Upload Complete!");
-              closeModal();
+              //closeModal();
             });
           }
         })
-      }
-      if ($("#fileEmploymentLetter").get()[0].files[0]) {
-        console.log($("#fileEmploymentLetter").get()[0].files[0]);
-      }
-      if ($("#filePayslip").get()[0].files[0]) {
-        console.log($("#filePayslip").get()[0].files[0]);
-      }
-      if ($("#fileBankStatement1").get()[0].files[0]) {
-        console.log($("#fileBankStatement1").get()[0].files[0]);
-      }
-      if ($("#fileBankStatement2").get()[0].files[0]) {
-        console.log($("#fileBankStatement2").get()[0].files[0]);
-      }
-      if ($("#fileBankStatement3").get()[0].files[0]) {
-        console.log($("#fileBankStatement3").get()[0].files[0]);
       }
     });
     $("#btnLogout").click(function () {
@@ -905,7 +901,16 @@
     $("#btnCloseModal").click(function (event) {
       event.preventDefault();
       closeModal();
+    });
 
+    $("#btnCloseUploadModal").click(function (event) {
+      event.preventDefault();
+      closeModal();
+    });
+
+    $("#btnCloseCreditInfoModal").click(function (event) {
+      event.preventDefault();
+      closeModal();
     });
 
     function loadUserInfo(userId) {
@@ -996,7 +1001,6 @@
       });
     }
 
-
     function loadUserCreditRequestForm(userId) {
       resetModalTextbox();
       $.ajax({
@@ -1024,8 +1028,6 @@
       });
     }
 
-
-
     //When the page has loaded.
     $(document).ready(function () {
       //var token = localStorage.getItem("token");
@@ -1044,16 +1046,15 @@
 
       /*control for Admin and Director Role - End */
 
-      getUserPersonalDD(); //User Personal Info DD
-      getUserContactDD(); //Emergency ContactDD
-      getUserAddressDD(); //User Address DD
-      getEmploymentDD(); //Employment tDD
+
       //Perform Ajax request.
       //TODO: set the type to POST and send token for authentication
       $.ajax({
         url: APIUrl + 'adm_listAllUsers',
         type: 'post',
-        data: {"role":role },
+        data: {
+          "role": role
+        },
         dataType: 'json',
         beforeSend: function (xhr) { //Include the bearer token in header
           xhr.setRequestHeader("Authorization", token);
@@ -1101,7 +1102,11 @@
           $('#content').html(errorMsg);
         }
       }).done(function (response) {
-
+        getUserPersonalDD(); //User Personal Info DD
+        getUserContactDD(); //Emergency ContactDD
+        getUserAddressDD(); //User Address DD
+        getEmploymentDD(); //Employment tDD
+        getDocTypeDD();
       }).fail(function (err) {
         //console.log("err");
       });
@@ -1116,9 +1121,9 @@
     });
 
     //sort function
-    var table = $('table');
+    var table = $('#tableAllUser');
 
-    $('#headerName,#headerIC,#headerID,#headerEmail')
+    $('#headerName,#headerIC,#headerID,#headerEmail,#headerStatus')
       .wrapInner('<span title="sort this column"/>')
       .each(function () {
 
