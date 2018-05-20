@@ -1,1 +1,1 @@
-<?php include_once("https://moneyflot-admin-site.herokuapp.com/index.html"); ?>
+<?php include_once("index.html"); ?>
