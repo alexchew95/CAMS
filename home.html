@@ -47,7 +47,7 @@
   <!-- jQuery Modal -->
   <script src="./assets/js/jquery.sortElements.js"></script>
 
-  
+
 
 </head>
 
@@ -1034,6 +1034,10 @@
         url: APIUrl + "adm_loadUserCreditRequestInfo",
         success: function (data) {
           $userCreditRequestInfo = data.userCreditRequestInfo;
+          $approvalStatus = data.approvalStatus;
+          if ($approvalStatus == 2) {
+            document.getElementById("btnApproveUser").disabled = true;
+          }
           $("#txtCreditInfoUserId").val(userId);
 
           $.each($userCreditRequestInfo, function (key, value) {
