@@ -108,7 +108,7 @@
             </div>
           </div>
 
-          <table class="table" id="tableAllUser">
+          <table class="table table-responsive" id="tableAllUser">
             <thead>
               <tr>
                 <th id="headerID" class="text-center" style="width: 5%">ID</th>
@@ -1024,6 +1024,7 @@
     }
 
     function loadUserCreditRequestForm(userId) {
+      document.getElementById("btnApproveUser").disabled = false;
       resetModalTextbox();
       $.ajax({
         type: "POST",
