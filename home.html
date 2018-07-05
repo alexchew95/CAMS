@@ -523,7 +523,7 @@
     /////* Declare variables */////
 
     //var APIUrl = 'http://localhost/lpts-ci/api/';
-    var APIUrl = 'https://lpts-restu-ci.herokuapp.com/api/';
+    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
     var s3 = new AWS.S3({
       accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
       secretAccessKey: '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'
@@ -1045,8 +1045,10 @@
 
       if (role == "DIR") {
         verifyUser.style.display = "none";
+        $(".custom-loader").hide();//testing 
       } else {
         approveUser.style.display = "none";
+        $(".custom-loader").hide();//testing
       }
 
       /*control for Admin and Director Role - End */
@@ -1054,7 +1056,7 @@
 
       //Perform Ajax request.
       //TODO: set the type to POST and send token for authentication
-      $.ajax({
+     /* $.ajax({
         url: APIUrl + 'adm_listAllUsers',
         type: 'post',
         data: {
@@ -1107,6 +1109,7 @@
           var errorMsg = 'Ajax request failed: ' + xhr.responseText;
           $('#content').html(errorMsg);
         }
+        
       }).done(function (response) {
         getUserPersonalDD(); //User Personal Info DD
         getUserContactDD(); //Emergency ContactDD
@@ -1115,7 +1118,7 @@
         getDocTypeDD();
       }).fail(function (err) {
         //console.log("err");
-      });
+      });*/
 
       //filter function 
       $("#myFilter").on("keyup", function () {
