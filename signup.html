@@ -55,23 +55,37 @@
                 <a class="header-brand" href="./index.html">
                   <img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
                 </a>
-                <div class="card-login">User Login</div>
+                <div class="card-login">User Sign Up</div>
                 <div class="form-group">
-                  <label class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                  <label class="form-label">Name</label>
+                  <input type="text" class="form-control" id="txtName" aria-describedby="nameHelp" placeholder="Enter name">
                 </div>
+                <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                      </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
                   <input type="password" class="form-control" id="txtPwd" placeholder="Password">
-                </div>                    
-                      <label id="lblMessages" class="text-danger"></label>
+                </div>               
+                <div class="form-group">
+                        <label class="form-label">Roles</label>
+                        <select class="form-control custom-select" id="rolesDD">
+                                <option value="Business owner">Business Owner</option>
+                                <option value="Master">Master</option>
+                                <option value="Staff">Staff</option>
+                                <option value="Agent">Agent</option>
+                                <option value="Sub-agent">Sub-agent</option>
+                        </select>
+                      </div>
 
               </div>
                 <div class="form-footer">
-                  <button type="submit" id="btnLogin" class="btn btn-primary btn-block">Sign in</button>
+                    <button  class="btn btn-primary btn-block">Sign up</button>
+                
                 </div>
                 <div class="form-footer">
-                    <input type="button" onclick="location.href='signup.html';" class="btn btn-primary btn-block" value="New user? Click here to sign up!" />
+                        <input type="button" onclick="location.href='index.html';" class="btn btn-primary btn-block" value="Already a user? Sign in here!" />
                 </div>
                 
               </div>
@@ -82,11 +96,9 @@
     </div>
   </div>
 
- 
-  <!--Modal for sign up - End-->
   <script>
-    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
- //var APIUrl = 'http://localhost/lpts-ci/api/';
+    //var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+ var APIUrl = 'http://localhost/lpts-ci/api/';
   //  var APIUrl = 'http://localhost/lpts-ci/application/controllers/api/';
 
     $("#btnLogin").click(function () {
@@ -133,8 +145,8 @@
         //console.log(localStorage);
       });
     });
-    function signUpPage(){
-      window.location="signup.html"
+    function userSignUp() {
+       
     }
 
     $(document).ready(function () {
