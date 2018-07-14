@@ -85,11 +85,11 @@
  
   <!--Modal for sign up - End-->
   <script>
-    //var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
-var APIUrl = 'http://localhost/lpts-ci/api/';
+    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+ //var APIUrl = 'http://localhost/lpts-ci/api/';
   //  var APIUrl = 'http://localhost/lpts-ci/application/controllers/api/';
 
-    $("#btnLogin").click(function () {
+    $("#btnLogin").click(function (event) {
       event.preventDefault();
       //reset label msg
       $("#lblMessages").text("");
@@ -133,7 +133,9 @@ var APIUrl = 'http://localhost/lpts-ci/api/';
         //console.log(localStorage);
       });
     });
-   
+    function signUpPage(){
+      window.location="signup.html"
+    }
 
     $(document).ready(function () {
     });
