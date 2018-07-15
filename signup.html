@@ -71,22 +71,23 @@
                 <div class="form-group">
                         <label class="form-label">Roles</label>
                         <select class="form-control custom-select" id="rolesDD">
-                                <option value="Business owner">Business Owner</option>
-                                <option value="Master">Master</option>
-                                <option value="Staff">Staff</option>
-                                <option value="Agent">Agent</option>
-                                <option value="Sub-agent">Sub-agent</option>
+                                <option value="1">Business Owner</option>
+                                <option value="2">Master</option>
+                                <option value="3">Staff</option>
+                                <option value="4">Agent</option>
+                                <option value="5">Sub-agent</option>
                         </select>
                       </div>
 
               </div>
                 <div class="form-footer">
-                    <button  class="btn btn-primary btn-block">Sign up</button>
+                    <button type="submit" class="btn btn-primary btn-block" id="btnSignUp">Sign up</button>
                 
                 </div>
                 <div class="form-footer">
                         <input type="button" onclick="location.href='index.html';" class="btn btn-primary btn-block" value="Already a user? Sign in here!" />
                 </div>
+                
               </div>
             </form>
           </div>
@@ -98,9 +99,9 @@
   <script>
     var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
  //var APIUrl = 'http://localhost/lpts-ci/api/';
+  //  var APIUrl = 'http://localhost/lpts-ci/application/controllers/api/';
 
-
-    $("#btnLogin").click(function () {
+    $("#btnSignUp").click(function () {
       event.preventDefault();
       //reset label msg
       $("#lblMessages").text("");
@@ -115,13 +116,14 @@
 
         $.ajax({
 
-          url: APIUrl + 'login',
+          url: APIUrl + 'signup',
           type: 'POST',
 
           data: {
+            "name": $("#txtName").val(),
             "email": $("#txtEmail").val(),
             "password": hash,
-            "loginType": 'admin'
+            "role": $("#rolesDD").val()
           },
           dataType: 'JSON',
           success: function (data) {
@@ -144,11 +146,8 @@
         //console.log(localStorage);
       });
     });
-    function userSignUp() {
-       
-    }
-
-    $(document).ready(function () {
+    
+        $(document).ready(function () {
     });
   </script>
 </body>
