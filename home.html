@@ -88,6 +88,18 @@
 
 				</div>
 			</div>
+			
+			<div class="my-3 my-md-5">
+				<div class="container">
+					<div>
+					<ul class="pagination px-3">
+						<button class="prev-btn">Prev</button>
+						<button class="next-btn">Next</button>
+					</ul>
+					</div>
+				</div>
+			</div>
+				
 			<div class="my-3 my-md-5">
 				<div class="container" id="announcementContainer">
 
@@ -95,7 +107,7 @@
 			</div>
 		</div>
 		<div class="footer">
-
+			
 		</div>
 		<footer class="footer">
 			<div class="container">
@@ -132,8 +144,9 @@
 
 		/////* Declare variables */////
 
-		//var APIUrl = 'http://localhost/lpts-ci/api/';
-		var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+		var APIUrl = 'http://localhost/lpts-ci/api/';
+		//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+		var totalPage;
 		
 		var s3 = new AWS.S3({
 			accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
@@ -235,41 +248,65 @@
 			event.preventDefault();
 			closeModal();
 		});
-
+		
 		//When the page has loaded.
 		$(document).ready(function () {
 			//var token = localStorage.getItem("token");
-			var role = sessionStorage.getItem("role");
+			var role = sessionStorage.getItem("role"),
+				currentPage = 1;
+			
+			$(".prev-btn").on("click" , function(){
+				if(currentPage > 1){
+					currentPage --;
+					announcement();
+				}
+			})
+
+			$(".next-btn").on("click" , function(){
+				if(currentPage < totalPage){
+					currentPage ++;
+					announcement();
+				}
+			})
 
 			/*load announcement - Start */
+			function announcement(){
 			$.ajax({
 				url: APIUrl + 'announcement',
 				type: 'GET',
 				dataType: 'JSON',
+				data: {
+					currentPage:currentPage
+				},
 				success: function (announcement) {
-					console.log(announcement);
+					var announcementPerPage = 10,
+						totalAnnouncement = announcement.length,
+						announcementContainer = "";
+
+					totalPage=Math.ceil(totalAnnouncement/announcementPerPage)
+
 					$.each(announcement, function (key, value) {
-						$("#announcementContainer").append(
-							'<div class="col-md-auto col-xl-8">' +
-							'<div class="card">' +
-							'<div class="card-header bg-blue">' +
-							'<h3 class="card-title text-white" id="announcementTitle">'+
-              value.dateCreated+' '+value.title +
-              '</h3>' +
-							'</div>' +
-							'<div class="card-body" id="announcementContent">' +
-              value.content+
-							'</div>' +
-							'</div>' +
-							'</div>'
-						)
-						//$('#announcementContent').text(value.content + " " + key);
-						//console.log(value.content);
-						//console.log(key);
-					})
+						if((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage - 1))){
+							announcementContainer +='<div class="col-md-auto col-xl-8">' +
+								'<div class="card">' +
+								'<div class="card-header bg-blue">' +
+								'<h3 class="card-title text-white" id="announcementTitle">'+
+								value.dateCreated+' '+value.title +
+								'</h3>' +
+								'</div>' +
+								'<div class="card-body" id="announcementContent">' +
+								value.content+
+								'</div>' +
+								'</div>' +
+								'</div>'
+							}
+						})
+					$("#announcementContainer").html(announcementContainer);
 					$(".custom-loader").hide();
 				},
 			});
+			}
+
 			/*load announcement - End */
 
 			//Perform Ajax request.
@@ -378,6 +415,7 @@
 					});
 
 				});
+			announcement();			
 		});
 
 	</script>
