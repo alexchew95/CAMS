@@ -58,15 +58,15 @@
                 <div class="card-login">User Sign Up</div>
                 <div class="form-group">
                   <label class="form-label">Name</label>
-                  <input type="text" class="form-control" id="txtName" aria-describedby="nameHelp" placeholder="Enter name" required>
+                  <input type="text" class="form-control" id="txtName" aria-describedby="nameHelp" placeholder="Enter name" required/>
                 </div>
                 <div class="form-group">
                         <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required/>
                       </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
-                  <input type="password" class="form-control" id="txtPwd" placeholder="Password" required>
+                  <input type="password" class="form-control" id="txtPwd" placeholder="Password" required/>
                 </div>               
                 <div class="form-group">
                         <label class="form-label">Roles</label>
@@ -78,11 +78,10 @@
                                 <option value="5">Sub-agent</option>
                         </select>
                       </div>
-
+                      <label id="lblMessages" class="text-danger"></label>
               </div>
                 <div class="form-footer">
-                    <button type="submit" class="btn btn-primary btn-block" id="btnSignUp">Sign up</button>
-                
+                    <button type="submit" class="btn btn-primary btn-block" id="btnSignUp" />Sign up  qw</button>
                 </div>
                 <div class="form-footer">
                         <input type="button" onclick="location.href='index.html';" class="btn btn-primary btn-block" value="Already a user? Sign in here!" />
@@ -97,55 +96,61 @@
   </div>
 
   <script>
-    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
- //var APIUrl = 'http://localhost/lpts-ci/api/';
+    //var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+ var APIUrl = 'http://localhost/lpts-ci/api/';
   //  var APIUrl = 'http://localhost/lpts-ci/application/controllers/api/';
 
-    $("#btnSignUp").click(function () {
-      event.preventDefault();
-      //reset label msg
-      $("#lblMessages").text("");
-      require(['bcrypt'], function (bcrypt) {
+    
+    $("#btnSignUp").click(function (event) {
+      //check form if it is all valid
+			if ($("form")[0].checkValidity()) {
+        //your form execution code
+        event.preventDefault();
+				require(['bcrypt'], function (bcrypt) {
 
-        const saltRounds = 10;
-        const myPlaintextPassword = $("#txtPwd").val()
-        //salt = bcrypt.genSaltSync(saltRounds);
-        salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
-        //console.log(salt);
-        hash = bcrypt.hashSync(myPlaintextPassword, salt);
+					const saltRounds = 10;
+					const myPlaintextPassword = $("#txtPwd").val()
+					//salt = bcrypt.genSaltSync(saltRounds);
+					salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
+					//console.log(salt);
+					hash = bcrypt.hashSync(myPlaintextPassword, salt);
 
-        $.ajax({
+					$.ajax({
 
-          url: APIUrl + 'signup',
-          type: 'POST',
+						url: APIUrl + 'signup',
+						type: 'POST',
 
-          data: {
-            "name": $("#txtName").val(),
-            "email": $("#txtEmail").val(),
-            "password": hash,
-            "role": $("#rolesDD").val()
-          },
-          dataType: 'JSON',
-          success: function (data) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('role', data.role);
+						data: {
+							"name": $("#txtName").val(),
+							"email": $("#txtEmail").val(),
+							"password": hash,
+							"role": $("#rolesDD").val()
+						},
+						dataType: 'JSON',
+						success: function (data) {
+							sessionStorage.setItem('token', data.token);
+							sessionStorage.setItem('role', data.role);
 
-            window.location = "home.html";
-          },
-          statusCode: {
-            401: function (request, status, error) {
-              //console.log("401 - Login incorrect");
-              //console.log(error);
-              $("#lblMessages").text("Login Incorrect - Please try again");            }
-          },
-          error: function (xhr, ajaxOptions, thrownError) {
-            var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-            console.log(errorMsg);
-          }
-        });
-        //console.log(localStorage);
-      });
-    });
+							window.location = "signin.html";
+						},
+						statusCode: {
+							409: function (request, status, error) {
+								//console.log("401 - Login incorrect");
+								//console.log(error);
+								$("#lblMessages").text("Error sign up - Email already exist, please use other email");            
+							}
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+							console.log(errorMsg);
+						}
+					});
+					//console.log(localStorage);
+				});
+			} else console.log("invalid form"); //log error if invalid
+
+		});
+    
     
         $(document).ready(function () {
     });
