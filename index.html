@@ -85,13 +85,15 @@
  
   <!--Modal for sign up - End-->
   <script>
-    //var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
-    var APIUrl = 'http://localhost/lpts-ci/api/';
+    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+   // var APIUrl = 'http://localhost/lpts-ci/api/';
   
 
     $("#btnLogin").click(function (event) {
-      event.preventDefault();
-      //reset label msg
+       
+      if($("form")[0].checkValidity()){
+          //reset label msg
+          event.preventDefault();
       $("#lblMessages").text("");
       require(['bcrypt'], function (bcrypt) {
 
@@ -132,6 +134,9 @@
         });
         //console.log(localStorage);
       });
+      }
+      elseconsole.log("invalid form"); //log error if invalid
+      
     });
     
 
