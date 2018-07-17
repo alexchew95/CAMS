@@ -49,6 +49,8 @@
 	<script src="./assets/js/jquery.sortElements.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
+	<!--Pagination JS-->
+	<script src="./assets/js/jquery.twbsPagination.min"></script>
 
 
 
@@ -93,8 +95,7 @@
 				<div class="container">
 					<div>
 					<ul class="pagination px-3">
-						<button class="prev-btn">Prev</button>
-						<button class="next-btn">Next</button>
+						<ul id="pagination-demo" class="pagination-sm"></ul>
 					</ul>
 					</div>
 				</div>
@@ -147,6 +148,7 @@
 		//var APIUrl = 'http://localhost/lpts-ci/api/';
 		var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 		var totalPage;
+		var pageFirstTimeLoad = true;
 		
 		var s3 = new AWS.S3({
 			accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
@@ -255,20 +257,6 @@
 			var role = sessionStorage.getItem("role"),
 				currentPage = 1;
 			
-			$(".prev-btn").on("click" , function(){
-				if(currentPage > 1){
-					currentPage --;
-					announcement();
-				}
-			})
-
-			$(".next-btn").on("click" , function(){
-				if(currentPage < totalPage){
-					currentPage ++;
-					announcement();
-				}
-			})
-
 			/*load announcement - Start */
 			function announcement(){
 			$.ajax({
@@ -282,9 +270,7 @@
 					var announcementPerPage = 10,
 						totalAnnouncement = announcement.length,
 						announcementContainer = "";
-
 					totalPage=Math.ceil(totalAnnouncement/announcementPerPage)
-
 					$.each(announcement, function (key, value) {
 						if((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage - 1))){
 							announcementContainer +='<div class="col-md-auto col-xl-8">' +
@@ -302,11 +288,31 @@
 							}
 						})
 					$("#announcementContainer").html(announcementContainer);
+
+					if(pageFirstTimeLoad == true)
+					{
+						pagination();
+						pageFirstTimeLoad = false;
+					}
+					
 					$(".custom-loader").hide();
 				},
 			});
 			}
-
+			
+			function pagination(){
+				$('#pagination-demo').twbsPagination({
+				totalPages:totalPage,
+				visiblePages: 7,
+				onPageClick: function (event, page) {
+					if(pageFirstTimeLoad == false)
+					{
+						currentPage=page;
+						announcement();
+					}
+				}
+				});
+			}
 			/*load announcement - End */
 
 			//Perform Ajax request.
@@ -415,9 +421,8 @@
 					});
 
 				});
-			announcement();			
+			announcement();	
 		});
-
 	</script>
 </body>
 
