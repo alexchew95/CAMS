@@ -512,12 +512,12 @@
     /////* Declare variables */////
 
     //var APIUrl = 'http://localhost/lpts-ci/api/';
-    var APIUrl = 'https://lpts-ci.herokuapp.com/aplication/contorollers/api/';
+    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
     var s3 = new AWS.S3({
       accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
       secretAccessKey: '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'
     });
-    token = localStorage.getItem("token");
+    token = sessionStorage.getItem("token");
 
 
     /////* Function List */////
@@ -883,7 +883,7 @@
       }
     });
     $("#btnLogout").click(function () {
-      localStorage.clear();
+      sessionStorage.clear();
       window.location = "index.html";
     });
 
@@ -1024,9 +1024,9 @@
 
     //When the page has loaded.
     $(document).ready(function () {
-      //var token = localStorage.getItem("token");
+      //var token = sessionStorage.getItem("token");
 
-      var role = localStorage.getItem("role");
+      var role = sessionStorage.getItem("role");
       /*control for Admin and Director Role - Start */
       var verifyUser = document.getElementById("btnVerifyUser");
       var approveUser = document.getElementById("btnApproveUser");
