@@ -87,7 +87,7 @@
   <script>
     
     //var APIUrl = 'http://localhost/lpts-ci/api/';
-  var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+      var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 
     $("#btnLogin").click(function (event) {
        
@@ -118,7 +118,7 @@
           success: function (data) {
             sessionStorage.setItem('token', data.token);
             sessionStorage.setItem('role', data.role);
-
+            sessionStorage.setItem('email',data.email);
             window.location = "home.html";
           },
           statusCode: {

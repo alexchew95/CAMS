@@ -128,10 +128,7 @@
 						},
 						dataType: 'JSON',
 						success: function (data) {
-							sessionStorage.setItem('token', data.token);
-							sessionStorage.setItem('role', data.role);
-
-							window.location = "signin.html";
+									window.location = "index.html";
 						},
 						statusCode: {
 							409: function (request, status, error) {
