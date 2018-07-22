@@ -61,95 +61,96 @@
                   <input type="text" class="form-control" id="txtName" aria-describedby="nameHelp" placeholder="Enter name" required/>
                 </div>
                 <div class="form-group">
-                        <label class="form-label">Email</label>
-                        <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required/>
-                      </div>
+                  <label class="form-label">Email</label>
+                  <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required/>
+                </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
                   <input type="password" class="form-control" id="txtPwd" placeholder="Password" required/>
-                </div>               
+                </div>
                 <div class="form-group">
-                        <label class="form-label">Roles</label>
-                        <select class="form-control custom-select" id="rolesDD">
-                                <option value="1">Business Owner</option>
-                                <option value="2">Master</option>
-                                <option value="3">Staff</option>
-                                <option value="4">Agent</option>
-                                <option value="5">Sub-agent</option>
-                        </select>
-                      </div>
-                      <label id="lblMessages" class="text-danger"></label>
-              </div>
-                <div class="form-footer">
-                    <button type="submit" class="btn btn-primary btn-block" id="btnSignUp" />Sign up  qw</button>
+                  <label class="form-label">Roles</label>
+                  <select class="form-control custom-select" id="rolesDD">
+                    <option value="1">Business Owner</option>
+                    <option value="2">Master</option>
+                    <option value="3">Staff</option>
+                    <option value="4">Agent</option>
+                    <option value="5">Sub-agent</option>
+                  </select>
                 </div>
-                <div class="form-footer">
-                        <input type="button" onclick="location.href='index.html';" class="btn btn-primary btn-block" value="Already a user? Sign in here!" />
-                </div>
-                
+                <label id="lblMessages" class="text-danger"></label>
               </div>
-            </form>
+              <div class="form-footer">
+                <button type="submit" class="btn btn-primary btn-block" id="btnSignUp" />Sign up qw</button>
+              </div>
+              <div class="form-footer">
+                <input type="button" onclick="location.href='index.html';" class="btn btn-primary btn-block" value="Already a user? Sign in here!"
+                />
+              </div>
+
           </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <script>
     var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
     //var APIUrl = 'http://localhost/lpts-ci/api/';
- 
 
-    
+
+
     $("#btnSignUp").click(function (event) {
       //check form if it is all valid
-			if ($("form")[0].checkValidity()) {
+      if ($("form")[0].checkValidity()) {
         //your form execution code
         event.preventDefault();
-				require(['bcrypt'], function (bcrypt) {
+        require(['bcrypt'], function (bcrypt) {
 
-					const saltRounds = 10;
-					const myPlaintextPassword = $("#txtPwd").val()
-					//salt = bcrypt.genSaltSync(saltRounds);
-					salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
-					//console.log(salt);
-					hash = bcrypt.hashSync(myPlaintextPassword, salt);
+          const saltRounds = 10;
+          const myPlaintextPassword = $("#txtPwd").val()
+          //salt = bcrypt.genSaltSync(saltRounds);
+          salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
+          //console.log(salt);
+          hash = bcrypt.hashSync(myPlaintextPassword, salt);
 
-					$.ajax({
+          $.ajax({
 
-						url: APIUrl + 'signup',
-						type: 'POST',
+            url: APIUrl + 'signup',
+            type: 'POST',
 
-						data: {
-							"name": $("#txtName").val(),
-							"email": $("#txtEmail").val(),
-							"password": hash,
-							"role": $("#rolesDD").val()
-						},
-						dataType: 'JSON',
-						success: function (data) {
-									window.location = "index.html";
-						},
-						statusCode: {
-							409: function (request, status, error) {
-								//console.log("401 - Login incorrect");
-								//console.log(error);
-								$("#lblMessages").text("Error sign up - Email already exist, please use other email");            
-							}
-						},
-						error: function (xhr, ajaxOptions, thrownError) {
-							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-							console.log(errorMsg);
-						}
-					});
-					//console.log(localStorage);
-				});
-			} else console.log("invalid form"); //log error if invalid
+            data: {
+              "name": $("#txtName").val(),
+              "email": $("#txtEmail").val(),
+              "password": hash,
+              "role": $("#rolesDD").val()
+            },
+            dataType: 'JSON',
+            success: function (data) {
+              window.location = "index.html";
+            },
+            statusCode: {
+              409: function (request, status, error) {
+                //console.log("401 - Login incorrect");
+                //console.log(error);
+                $("#lblMessages").text("Error sign up - Email already exist, please use other email");
+              }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+              console.log(errorMsg);
+            }
+          });
+          //console.log(localStorage);
+        });
+      } else console.log("invalid form"); //log error if invalid
 
-		});
-    
-    
-        $(document).ready(function () {
+    });
+
+
+    $(document).ready(function () {
     });
   </script>
 </body>
