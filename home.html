@@ -89,6 +89,7 @@
 				<div class="container" id="navbar">
 
 				</div>
+				<button type="button" id="btnAddNewAnnouncement" class="btn btn-secondary btn-sm">Add Announcement</button>
 			</div>
 
 			<div class="my-3 my-md-5">
@@ -140,6 +141,41 @@
 		</footer>
 	</div>
 
+  <!--Modal for addNewAnnouncementForm -Start -->
+  <div class="custom-loader"></div>
+  <form id="addNewAnnouncementForm" class="modal">
+    <div class="my-3 my-md-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="card-header">
+              <h3 class="card-title">New Announcement</h3>
+            </div>
+
+            <div class="col-sm-6 col-md-6">
+				<div class="form-group">
+					<label class="form-label">Announcement Title</label>
+					<input type="text" class="form-control" id="newAnnouncementTitle" value="">
+				</div>
+			</div>
+			  <div class="col-sm-12 col-md-12">
+					<div class="form-group">
+					  <label class="form-label">Announcement Content</label>
+					  <input type="text" class="form-control" id="newAnnouncementContent">
+					</div>
+			  </div>
+
+              <div class="card-footer text-right">
+                <button class="btn btn-primary" id="btnAddAnnouncement">Add</button>
+				<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  </form>
+  <!--Modal for addNewAnnouncementForm -End -->
+	
 	<script type="text/javascript">
 		window.onload = checkAdminLogin;
 
@@ -231,8 +267,12 @@
 			$('.custom-select').val('');
 		}
 
+		function viewAddNewAnnouncement() {
+			$('#addNewAnnouncementForm').modal();
+		}
+
 		$("#btnLogout").click(function () {
-			sessionStorage.clear();
+			sessionStorage.clear(); 
 			window.location = "index.html";
 		});
 
@@ -251,6 +291,35 @@
 			closeModal();
 		});
 
+		$("#btnAddNewAnnouncement").click(function () {
+			viewAddNewAnnouncement();
+		});
+
+		$("#btnCloseAddNewAnnouncementForm").click(function (event) {
+			event.preventDefault();
+			closeModal();
+		});
+		
+		$("#btnAddAnnouncement").click(function (event) {
+		event.preventDefault();
+		$.ajax({
+			url: APIUrl + 'add_announcement',
+			type: 'POST',
+			data: {
+			announcementTitle: $("#newAnnouncementTitle").val(),
+			//"newAnnouncementContent": $("#newAnnouncementContent").val()
+			},
+			dataType: 'JSON',
+			success: function (add_announcement) {
+				console.log(announcementTitle);
+			},
+			error: function (xhr, ajaxOptions, thrownError) {
+			var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+			//console.log(errorMsg);
+			}
+		});
+		});
+	
 		//When the page has loaded.
 		$(document).ready(function () {
 			//var token = localStorage.getItem("token");
