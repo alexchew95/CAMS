@@ -181,8 +181,8 @@
 
 		/////* Declare variables */////
 
-		//var APIUrl = 'http://localhost/lpts-ci/api/';
-		var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+		var APIUrl = 'http://localhost/lpts-ci/api/';
+		//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 		var totalPage;
 		var pageFirstTimeLoad = true;
 
@@ -306,11 +306,12 @@
 			url: APIUrl + 'add_announcement',
 			type: 'POST',
 			data: {
-			announcementTitle: $("#newAnnouncementTitle").val(),
-			//"newAnnouncementContent": $("#newAnnouncementContent").val()
+			"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
+			"newAnnouncementContent": $("#newAnnouncementContent").val()
 			},
+			//TODO: add Date Created and Created By who
 			dataType: 'JSON',
-			success: function (add_announcement) {
+			success: function (data) {
 				console.log(announcementTitle);
 			},
 			error: function (xhr, ajaxOptions, thrownError) {
