@@ -163,7 +163,7 @@
 			  <div class="col-sm-12 col-md-12">
 					<div class="form-group">
 					  <label class="form-label">Announcement Content</label>
-					  <input type="text" class="form-control" id="newAnnouncementContent">
+					  <textarea class="form-control" rows="5" id="newAnnouncementContent"></textarea>
 					</div>
 			  </div>
 
@@ -304,22 +304,38 @@
 		
 		$("#btnAddAnnouncement").click(function (event) {
 		event.preventDefault();
+
+		var currentUserEmail = sessionStorage.getItem("email");
+		var name;
+
 		$.ajax({
-			url: APIUrl + 'add_announcement',
+			url: APIUrl + 'getName',
 			type: 'POST',
-			data: {
-			"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
-			"newAnnouncementContent": $("#newAnnouncementContent").val()
+			data:{
+				"email": currentUserEmail
 			},
-			//TODO: add Date Created and Created By who
 			dataType: 'JSON',
 			success: function (data) {
-				console.log(announcementTitle);
+				name = data.name;
+
+				$.ajax({
+					url: APIUrl + 'add_announcement',
+					type: 'POST',
+					data: {
+						"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
+						"newAnnouncementContent": $("#newAnnouncementContent").val(),
+						"userName" : name
+					},
+					dataType: 'JSON',
+					success: function (data) {
+						closeAndReload();
+					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+						//console.log(errorMsg);
+					}
+				});
 			},
-			error: function (xhr, ajaxOptions, thrownError) {
-			var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-			//console.log(errorMsg);
-			}
 		});
 		});
 	
