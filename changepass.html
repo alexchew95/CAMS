@@ -221,6 +221,20 @@
 
                                     }
                                 },
+                                statusCode: {
+                                    400: function (request, status, error) {
+                                        //console.log("401 - Login incorrect");
+                                        //console.log(error);
+                                        $("#lblMessages").text("Error please try again.");
+                                    }
+                                },
+                                statusCode: {
+                                    401: function (request, status, error) {
+                                        //console.log("401 - Login incorrect");
+                                        //console.log(error);
+                                        $("#lblMessages").text("Wrong old password. Please enter your current password as old passsword");
+                                    }
+                                },
                                 error: function (xhr, ajaxOptions, thrownError) {
                                     var errorMsg = 'Ajax request failed: ' + xhr.responseText;
                                     console.log(errorMsg);
