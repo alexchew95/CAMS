@@ -76,6 +76,14 @@
 										<small class="text-muted d-block mt-1">Administrator</small>
 									</span>
 								</a>
+								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+									<a href="change_password.html" class="dropdown-item" href="#">
+										<i class="dropdown-icon fe fe-user"></i> Change Password
+									</a>
+									<a href="change_email.html" class="dropdown-item" href="#">
+										<i class="dropdown-icon fe fe-settings"></i> Change Email
+									</a>
+								</div>
 
 							</div>
 						</div>
@@ -143,41 +151,41 @@
 		</footer>
 	</div>
 
-  <!--Modal for addNewAnnouncementForm -Start -->
-  <div class="custom-loader"></div>
-  <form id="addNewAnnouncementForm" class="modal">
-    <div class="my-3 my-md-5">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="card-header">
-              <h3 class="card-title">New Announcement</h3>
-            </div>
+	<!--Modal for addNewAnnouncementForm -Start -->
+	<div class="custom-loader"></div>
+	<form id="addNewAnnouncementForm" class="modal">
+		<div class="my-3 my-md-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card-header">
+							<h3 class="card-title">New Announcement</h3>
+						</div>
 
-            <div class="col-sm-12 col-md-12">
-				<div class="form-group">
-					<label class="form-label">Announcement Title</label>
-					<input type="text" class="form-control" id="newAnnouncementTitle" autocomplete="off" required>
+						<div class="col-sm-12 col-md-12">
+							<div class="form-group">
+								<label class="form-label">Announcement Title</label>
+								<input type="text" class="form-control" id="newAnnouncementTitle" autocomplete="off" required>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-12">
+							<div class="form-group">
+								<label class="form-label">Announcement Content</label>
+								<textarea class="form-control" rows="5" id="newAnnouncementContent" required></textarea>
+							</div>
+						</div>
+						<div class="card-footer text-right">
+							<button class="btn btn-primary" id="btnAddAnnouncement">Add</button>
+							<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
+						</div>
+						<label id="lblMessages" class="text-danger"></label>
+					</div>
 				</div>
 			</div>
-			  <div class="col-sm-12 col-md-12">
-					<div class="form-group">
-					  <label class="form-label">Announcement Content</label>
-					  <textarea class="form-control" rows="5" id="newAnnouncementContent" required></textarea>
-					</div>
-			  </div>
-          <div class="card-footer text-right">
-            <button class="btn btn-primary" id="btnAddAnnouncement">Add</button>
-						<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
-							</div>
-							<label id="lblMessages" class="text-danger"></label>
-            </div>
-          </div>
-        </div>
-      </div>
-  </form>
-  <!--Modal for addNewAnnouncementForm -End -->
-	
+		</div>
+	</form>
+	<!--Modal for addNewAnnouncementForm -End -->
+
 	<script type="text/javascript">
 		window.onload = checkAdminLogin;
 
@@ -274,7 +282,7 @@
 		}
 
 		$("#btnLogout").click(function () {
-			sessionStorage.clear(); 
+			sessionStorage.clear();
 			window.location = "index.html";
 		});
 
@@ -301,61 +309,57 @@
 			event.preventDefault();
 			closeModal();
 		});
-		
-		$("#btnAddAnnouncement").click(function (event) {
-		event.preventDefault();
 
-		var currentUserEmail = sessionStorage.getItem("email"),
-		 		name,
+		$("#btnAddAnnouncement").click(function (event) {
+			event.preventDefault();
+
+			var currentUserEmail = sessionStorage.getItem("email"),
+				name,
 				inpTitle = document.getElementById("newAnnouncementTitle"),
 				inpContent = document.getElementById("newAnnouncementContent");
 
-		if (inpTitle.checkValidity() && inpContent.checkValidity())
-		{
-			$.ajax({
-				url: APIUrl + 'getName',
-				type: 'POST',
-				data:{
-					"email": currentUserEmail
-				},
-				dataType: 'JSON',
-				success: function (data) {
-					name = data.name;
+			if (inpTitle.checkValidity() && inpContent.checkValidity()) {
+				$.ajax({
+					url: APIUrl + 'getName',
+					type: 'POST',
+					data: {
+						"email": currentUserEmail
+					},
+					dataType: 'JSON',
+					success: function (data) {
+						name = data.name;
 
-					$.ajax({
-						url: APIUrl + 'add_announcement',
-						type: 'POST',
-						data: {
-							"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
-							"newAnnouncementContent": $("#newAnnouncementContent").val(),
-							"userName" : name
-						},
-						dataType: 'JSON',
-						success: function (data) {
-							closeAndReload();
-						},
-						error: function (xhr, ajaxOptions, thrownError) {
-							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-							//console.log(errorMsg);
-						}
-					});
-				},
-			});
-		}
-		else if(!inpTitle.checkValidity() && inpContent.checkValidity())
-		{
-			$("#lblMessages").text("Please fill up for announcement title");
-		}
-		else if(inpTitle.checkValidity() && !inpContent.checkValidity())
-		{
-			$("#lblMessages").text("Please fill up for announcement content");
-		}
-		else
-		{
-			$("#lblMessages").text("Please fill up for both announcement title and content");
-		}
+						$.ajax({
+							url: APIUrl + 'add_announcement',
+							type: 'POST',
+							data: {
+								"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
+								"newAnnouncementContent": $("#newAnnouncementContent").val(),
+								"userName": name
+							},
+							dataType: 'JSON',
+							success: function (data) {
+								closeAndReload();
+							},
+							error: function (xhr, ajaxOptions, thrownError) {
+								var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+								//console.log(errorMsg);
+							}
+						});
+					},
+				});
+			}
+			else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
+				$("#lblMessages").text("Please fill up for announcement title");
+			}
+			else if (inpTitle.checkValidity() && !inpContent.checkValidity()) {
+				$("#lblMessages").text("Please fill up for announcement content");
+			}
+			else {
+				$("#lblMessages").text("Please fill up for both announcement title and content");
+			}
 		});
-	
+
 		//When the page has loaded.
 		$(document).ready(function () {
 			//var token = localStorage.getItem("token");
