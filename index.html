@@ -87,8 +87,8 @@
   <!--Modal for sign up - End-->
   <script>
 
-    //var APIUrl = 'http://localhost/lpts-ci/api/';
-    var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+    var APIUrl = 'http://localhost/lpts-ci/api/';
+    //var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 
     $("#btnLogin").click(function (event) {
 
@@ -118,9 +118,13 @@
             dataType: 'JSON',
             success: function (data) {
               sessionStorage.setItem('token', data.token);
+              sessionStorage.setItem('name',data.name);
               sessionStorage.setItem('role', data.role);
               sessionStorage.setItem('email', data.email);
-              window.location = "home.html";
+              window.location= "home.html";
+              //name = sessionStorage.getItem("name");
+             // $("#lblMessages").text(name);  from storageSession
+            //  $("#lblMessages").text(data.name); from data(return from login_post)
             },
             statusCode: {
               401: function (request, status, error) {
