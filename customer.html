@@ -16,12 +16,11 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
-	<title>LPTS - Users List</title>
+	<title>LPTS - Customer</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
 	<script src="https://code.jquery.com/jquery.min.js"></script>
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.233.1.min.js"></script>
 
 	<script>
 		requirejs.config({
@@ -29,19 +28,12 @@
 		});
 
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+
 
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
-	<!-- c3.js Charts Plugin -->
-	<link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/charts-c3/plugin.js"></script>
-	<!-- Google Maps Plugin -->
-	<link href="./assets/plugins/maps-google/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/maps-google/plugin.js"></script>
-	<!-- Input Mask Plugin -->
-	<script src="./assets/plugins/input-mask/plugin.js"></script>
+
 	<!-- jQuery Modal -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
@@ -49,7 +41,8 @@
 	<script src="./assets/js/jquery.sortElements.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
-
+	<!--Datatable CSS-->
+	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
 
 </head>
 
@@ -90,7 +83,38 @@
 			<div class="my-3 my-md-5">
 				<div class="container">
 
+					<table class="table table-responsive" id="tableAllCustomers">
+						<thead>
+							<tr>
+								<th id="headerID" class="text-center" style="width: 5%"></th>
+								<th id="headerName">Entry Date</th>
+								<th id="headerIC">Package</th>
+								<th id="headerMobileNo">Name</th>
+								<th id="headerEmail">IC No.</th>
+								<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
+								<th class="text-center" style="width: 5%">Batch</th>
+								<th class="text-center" style="width: 5%">Docs</th>
+								<th class="text-center" style="width: 5%">Status</th>
+							</tr>
+						</thead>
+						<tbody id="userListBody">
 
+						</tbody>
+
+						<tfoot>
+							<tr>
+								<th></th>
+								<th>Entry Date</th>
+								<th>Package</th>
+								<th>Name</th>
+								<th>IC No.</th>
+								<th>Marketing Officer</th>
+								<th>Batch</th>
+								<th>Docs</th>
+								<th>Status</th>
+							</tr>
+						</tfoot>
+					</table>
 
 				</div>
 			</div>
@@ -118,19 +142,19 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-	  var APIUrl = 'http://localhost/lpts-ci/api/';
+		var APIUrl = 'http://localhost/lpts-ci/api/';
 		// var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 		// var s3 = new AWS.S3({
 		//   accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
 		//   secretAccessKey: '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'
 		// });
-    token = sessionStorage.getItem("token");
-    role = sessionStorage.getItem("role");
+		token = sessionStorage.getItem("token");
+		role = sessionStorage.getItem("role");
 
 		window.onload = checkAdminLogin;
 		/////* Function List */////
 
-	
+
 		function checkAdminLogin() {
 			if (!token) {
 				window.location = "index.html";
@@ -145,65 +169,6 @@
 			$.modal.close();
 			window.location.reload();
 		}
-
-
-		/* Submit function */
-		$("#userInfoForm").submit(function (event) {
-			// $("#btnUpdateInfo").click(function () {
-			event.preventDefault();
-			$(".custom-loader").show();
-			$.ajax({
-				url: APIUrl + 'adm_updateUserInfo',
-				type: 'POST',
-				data: {
-					userId: $("#txtUserId").val(),
-					name: $("#txtName").val(),
-					IC: $("#txtIC").val(),
-					email: $("#txtEmail").val(),
-					mobileNo: $("#txtMobileNo").val(),
-					raceCode: $("#raceDD").val(),
-					nationalityCode: $("#nationalityDD").val(),
-					dob: $("#txtDOB").val(),
-					genderCode: $("#genderDD").val(),
-					maritalCode: $("#maritalDD").val(),
-					emergencyContactName: $("#txtEmergencyContactName").val(),
-					emergencyContactRelationCode: $("#emergencyContactRelationDD").val(),
-					emergencyContactNo: $("#txtEmergencyContactNo").val(),
-					typeOfHome: $("#typeOfHomeDD").val(),
-					addr: $("#txtHomeAddress").val(),
-					postcode: $("#txtHomeZipCode").val(),
-					city: $("#txtHomeCity").val(),
-					state: $("#homeStateDD").val(),
-					country: $("#homeCountryDD").val(),
-					monthlyGrossIncome: $("#txtMonthlyGrossIncome").val(),
-					totalMonthlyLoan: $("#txtTotalMonthlyLoan").val(),
-					employmentType: $("#empTypeDD").val(),
-					employmentStatus: $("#empStatusDD").val(),
-					workPhone: $("#txtWorkPhone").val(),
-					companyName: $("#txtCompanyName").val(),
-					joinedDate: $("#txtDateJoined").val(),
-					workAddress: $("#txtCompanyAddress").val(),
-					workPostcode: $("#txtCompanyZipCode").val(),
-					workCity: $("#txtCompanyCity").val(),
-					workState: $("#companyStateDD").val(),
-					workCountry: $("#companyCountryDD").val()
-				},
-				dataType: 'JSON',
-				success: function (data) {
-					// consoleconsole.log(data);
-
-				},
-				complete: function (data) {
-					closeAndReload();
-				},
-				error: function (xhr, ajaxOptions, thrownError) {
-					var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-					// console.log(errorMsg);
-				}
-			});
-
-		});
-
 
 		$("#btnLogout").click(function () {
 			sessionStorage.clear();
@@ -225,104 +190,122 @@
 			closeModal();
 		});
 
-    //When the page has loaded.
-		$(document).ready(function () {
-			//var token = sessionStorage.getItem("token");
-
-			//Perform Ajax request.
-			//TODO: set the type to POST and send token for authentication
-			$.ajax({
-			   url: APIUrl + 'listAllCustomers',
-			   type: 'post',
-			   dataType: 'json',
-			   beforeSend: function (xhr) { //Include the bearer token in header
-			     xhr.setRequestHeader("Authorization", token);
-			   },
-			   success: function (data) {
-			     allUserData = data.allCustomers;
-			     //If the success function is execute,
-			     //then the Ajax request was successful.
-			     //Add the data we received in our Ajax
-			     //request to the "content" div.
-			     $(data.allCustomers).each(function () {
-			       if (this.approvalStatus == "0") {
-			         this.approvalStatus = "Not Verified";
-			       } else if (this.approvalStatus == "1") {
-			         this.approvalStatus = "Verified";
-			       } else if (this.approvalStatus == "2") {
-			         this.approvalStatus = "Approved";
-			       } else {
-			         this.approvalStatus = "Error";
-			       }
-			       $("#userListBody").append('<tr><td>' + this.userId + '</td><td>' +
-			         this.name + '</td><td>' +
-			         this.IC + '</td><td>' +
-			         this.mobileNo + '</td><td>' +
-			         this.email + '</td><td>' +
-			         this.approvalStatus + '</td><td>' +
-			         '<div class="selectgroup">' +
-			         '<div class="selectgroup-item" onclick="viewUserInfo(' + this.userId +
-			         ')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-			         '<i class="fe fe-edit-2"></i></div>' +
-			         '<div class="selectgroup-item" onclick="viewUserCreditRequest(' + this.userId +
-			         ')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-			         '<i class="fe fe-dollar-sign"></i></div>' +
-			         '<div class="selectgroup-item" onclick="openUsersUploadFileModal(' + this.userId + ')">' +
-			         '<span class="selectgroup-button-compact selectgroup-button-icon">' +
-			         '<i class="fe fe-upload"></i></span></div>' +
-			         '</div></td></tr>')
-			       $(".custom-loader").hide();
-			     });
-			   },
-			   error: function (xhr, ajaxOptions, thrownError) {
-			     var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-			     $('#content').html(errorMsg);
-			   }
-			   
-			 }).done(function (response) {
-			 }).fail(function (err) {
-			 });
-
-			//filter function 
-			$("#myFilter").on("keyup", function () {
-				var value = $(this).val().toLowerCase();
-				$("#userListBody tr").filter(function () {
-					$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		//When the page has loaded.
+		require(['jquery', 'datatables'], function ($, dt) {
+			$(document).ready(function () {
+				//setup the search tab for datatable - Nick
+				$('#tableAllCustomers tfoot th').each(function () {
+					var title = $(this).text();
+					if (title != '')
+						$(this).html('<input type="text" class="form-control" />');
 				});
-			});
 
-			//sort function
-			var table = $('#tableAllUser');
-			$('#headerName,#headerIC,#headerID,#headerMobileNo,#headerEmail,#headerStatus')
-				.wrapInner('<span title="sort this column"/>')
-				.each(function () {
+				var arrayReturn = [];
+				$.ajax({
+					url: APIUrl + 'listAllCustomers',
+					async: false,
+					dataType: 'json',
+					type: 'post',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					success: function (data) {
+						for (var i = 0, len = data.length; i < len; i++) {
+							//var desc = data[i].body; //to substring, limit the data to display 
+							console.log(data[0]);
+							arrayReturn.push([
+								'',
+								data[i].entryDate,
+								data[i].packageId,
+								data[i].customerName,
+								data[i].newIC,
+								data[i].marketingOfficerId,
+								'', //TODO: Check what is batch with Fatin
+								'', //TODO: Count total doc uploaded
+								data[i].status,
 
-					var th = $(this),
-						thIndex = th.index(),
-						inverse = false;
+							]);
+						}
+						console.log(arrayReturn);
 
-					th.click(function () {
+						inittable(arrayReturn);
+					}
+				});
 
-						table.find('td').filter(function () {
-
-							return $(this).index() === thIndex;
-
-						}).sortElements(function (a, b) {
-
-							return $.text([a]) > $.text([b]) ?
-								inverse ? -1 : 1 :
-								inverse ? 1 : -1;
-
-						}, function () {
-							// parentNode is the element we want to move
-							return this.parentNode;
-						});
-
-						inverse = !inverse;
-
+				function inittable(data) {
+					//console.log(data);
+					var table = $('#tableAllCustomers').DataTable({
+						"aaData": data
 					});
 
-				});
+					// Apply the search
+					table.columns().every(function () {
+						var that = this;
+
+						$('input', this.footer()).on('keyup change', function () {
+							if (that.search() !== this.value) {
+								that
+									.search(this.value)
+									.draw();
+							}
+						});
+					});
+
+				}
+
+
+				//TODO: set the type to POST and send token for authentication
+				// $.ajax({
+				// 	url: APIUrl + 'listAllCustomers',
+				// 	type: 'post',
+				// 	dataType: 'json',
+				// 	beforeSend: function (xhr) { //Include the bearer token in header
+				// 		xhr.setRequestHeader("Authorization", token);
+				// 	},
+				// 	success: function (data) {
+				// 		allUserData = data.allCustomers;
+				// 		//If the success function is execute,
+				// 		//then the Ajax request was successful.
+				// 		//Add the data we received in our Ajax
+				// 		//request to the "content" div.
+				// 		$(data.allCustomers).each(function () {
+				// 			if (this.approvalStatus == "0") {
+				// 				this.approvalStatus = "Not Verified";
+				// 			} else if (this.approvalStatus == "1") {
+				// 				this.approvalStatus = "Verified";
+				// 			} else if (this.approvalStatus == "2") {
+				// 				this.approvalStatus = "Approved";
+				// 			} else {
+				// 				this.approvalStatus = "Error";
+				// 			}
+				// 			$("#userListBody").append('<tr><td>' + this.userId + '</td><td>' +
+				// 				this.name + '</td><td>' +
+				// 				this.IC + '</td><td>' +
+				// 				this.mobileNo + '</td><td>' +
+				// 				this.email + '</td><td>' +
+				// 				this.approvalStatus + '</td><td>' +
+				// 				'<div class="selectgroup">' +
+				// 				'<div class="selectgroup-item" onclick="viewUserInfo(' + this.userId +
+				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
+				// 				'<i class="fe fe-edit-2"></i></div>' +
+				// 				'<div class="selectgroup-item" onclick="viewUserCreditRequest(' + this.userId +
+				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
+				// 				'<i class="fe fe-dollar-sign"></i></div>' +
+				// 				'<div class="selectgroup-item" onclick="openUsersUploadFileModal(' + this.userId + ')">' +
+				// 				'<span class="selectgroup-button-compact selectgroup-button-icon">' +
+				// 				'<i class="fe fe-upload"></i></span></div>' +
+				// 				'</div></td></tr>')
+				// 			$(".custom-loader").hide();
+				// 		});
+				// 	},
+				// 	error: function (xhr, ajaxOptions, thrownError) {
+				// 		var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+				// 		$('#content').html(errorMsg);
+				// 	}
+
+				// }).done(function (response) {}).fail(function (err) {});
+
+			});
 		});
 
 	</script>
