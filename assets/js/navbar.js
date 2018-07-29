@@ -1,5 +1,6 @@
 $(document).ready(function () {
 
+	$('#topbar').load('topbar.html');	
 	//load the navbar
 	$('#navbar').load('navbar.html', function () {
 		//Add Underline to active html page. This will only work on LIVE SERVER

@@ -41,74 +41,27 @@
 	<script src="./assets/js/jquery.sortElements.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
-	<!--Datatable CSS-->
-	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
 
 </head>
 
 <body class="">
 	<div class="page">
 		<div class="page-main">
-			<div class="custom-loader"></div>
+		<div class="custom-loader"></div>
 
 			<div class="header py-4">
 				<div class="container" id="topbar">
-
+					<!--Top Bar to autoload to here with logo and User Box-->
 				</div>
 			</div>
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
-
+					<!--Nav Bar to autoload to here-->
 				</div>
 			</div>
-
 			<div class="my-3 my-md-5">
-
 				<div class="container">
-					<div class="row">
-						<h1 class="page-title">
-							Customer
-						</h1>
-
-						<div class="form-group">
-							<div class="col-lg-4">
-								<button class="btn btn-primary">Add Customer</button>
-							</div>
-						</div>
-					</div>
-					<table class="table table-responsive" id="tableAllCustomers">
-						<thead>
-							<tr>
-								<th id="headerID" class="text-center" style="width: 5%"></th>
-								<th id="headerName">Entry Date</th>
-								<th id="headerIC">Package</th>
-								<th id="headerMobileNo">Name</th>
-								<th id="headerEmail">IC No.</th>
-								<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
-								<th class="text-center" style="width: 5%">Batch</th>
-								<th class="text-center" style="width: 5%">Docs</th>
-								<th class="text-center" style="width: 5%">Status</th>
-							</tr>
-						</thead>
-						<tbody id="userListBody">
-
-						</tbody>
-
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Entry Date</th>
-								<th>Package</th>
-								<th>Name</th>
-								<th>IC No.</th>
-								<th>Marketing Officer</th>
-								<th>Batch</th>
-								<th>Docs</th>
-								<th>Status</th>
-							</tr>
-						</tfoot>
-					</table>
-
+					<!--Content to be placed here-->
 				</div>
 			</div>
 		</div>
@@ -135,58 +88,57 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
+		var APIUrl = 'http://localhost/lpts-ci/api/';
+		// var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+		// var s3 = new AWS.S3({
+		//   accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
+		//   secretAccessKey: '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'
+		// });
+		token = sessionStorage.getItem("token");
+		role = sessionStorage.getItem("role");
 
+		window.onload = checkAdminLogin;
+		/////* Function List */////
+
+
+		function checkAdminLogin() {
+			if (!token) {
+				window.location = "index.html";
+			}
+		}
+
+		function closeModal() {
+			$.modal.close();
+		}
+
+		function closeAndReload() {
+			$.modal.close();
+			window.location.reload();
+		}
+
+		$("#btnLogout").click(function () {
+			sessionStorage.clear();
+			window.location = "index.html";
+		});
+
+		$("#btnCloseModal").click(function (event) {
+			event.preventDefault();
+			closeModal();
+		});
+
+		$("#btnCloseUploadModal").click(function (event) {
+			event.preventDefault();
+			closeModal();
+		});
+
+		$("#btnCloseCreditInfoModal").click(function (event) {
+			event.preventDefault();
+			closeModal();
+		});
 
 		//When the page has loaded.
 		require(['jquery', 'datatables'], function ($, dt) {
 			$(document).ready(function () {
-				var APIUrl = 'http://localhost/lpts-ci/api/';
-				// var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
-				// var s3 = new AWS.S3({
-				//   accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
-				//   secretAccessKey: '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'
-				// });
-				token = sessionStorage.getItem("token");
-				role = sessionStorage.getItem("role");
-
-				window.onload = checkAdminLogin;
-				/////* Function List */////
-
-
-				function checkAdminLogin() {
-					if (!token) {
-						window.location = "index.html";
-					}
-				}
-
-				function closeModal() {
-					$.modal.close();
-				}
-
-				function closeAndReload() {
-					$.modal.close();
-					window.location.reload();
-				}
-
-				$("#btnLogout").click(function () {
-					sessionStorage.clear();
-					window.location = "index.html";
-				});
-
-				$("#btnCloseModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
-
-				$("#btnCloseUploadModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
-
-				$("#btnCloseCreditInfoModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
 				//setup the search tab for datatable - Nick
 				$('#tableAllCustomers tfoot th').each(function () {
 					var title = $(this).text();
@@ -219,7 +171,7 @@
 								data[i].status,
 
 							]);
-						}
+						}						
 						inittable(arrayReturn);
 						$(".custom-loader").hide();
 					}
