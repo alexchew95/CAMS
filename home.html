@@ -320,39 +320,27 @@
 			event.preventDefault();
 
 			var currentUserEmail = sessionStorage.getItem("email"),
-				name,
+				name = sessionStorage.getItem("name"),
 				inpTitle = document.getElementById("newAnnouncementTitle"),
 				inpContent = document.getElementById("newAnnouncementContent");
 
 			if (inpTitle.checkValidity() && inpContent.checkValidity()) {
 				$.ajax({
-					url: APIUrl + 'getName',
+					url: APIUrl + 'add_announcement',
 					type: 'POST',
 					data: {
-						"email": currentUserEmail
+						"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
+						"newAnnouncementContent": $("#newAnnouncementContent").val(),
+						"userName": name
 					},
 					dataType: 'JSON',
 					success: function (data) {
-						name = data.name;
-
-						$.ajax({
-							url: APIUrl + 'add_announcement',
-							type: 'POST',
-							data: {
-								"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
-								"newAnnouncementContent": $("#newAnnouncementContent").val(),
-								"userName": name
-							},
-							dataType: 'JSON',
-							success: function (data) {
-								closeAndReload();
-							},
-							error: function (xhr, ajaxOptions, thrownError) {
-								var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-								//console.log(errorMsg);
-							}
-						});
+						closeAndReload();
 					},
+					error: function (xhr, ajaxOptions, thrownError) {
+						var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+						//console.log(errorMsg);
+					}
 				});
 			}
 			else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
