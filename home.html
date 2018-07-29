@@ -62,7 +62,7 @@
 			<div class="header py-4">
 				<div class="container">
 					<div class="d-flex">
-						<a class="header-brand" href="./index.html">
+						<a class="header-brand" href="./home.html">
 							<img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
 						</a>
 						<div class="d-flex order-lg-2 ml-auto">
@@ -72,8 +72,10 @@
 							<div class="dropdown">
 								<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
 									<span class="ml-2 d-none d-lg-block">
-										<span class="text-default">Admin</span>
-										<small class="text-muted d-block mt-1">Administrator</small>
+										<!--username-->
+										<span class="text-default"></span>
+										<!--user role-->
+										<small class="text-muted d-block mt-1"></small>
 									</span>
 								</a>
 								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -188,6 +190,8 @@
 
 	<script type="text/javascript">
 		window.onload = checkAdminLogin;
+		
+
 
 		/////* Declare variables */////
 
@@ -201,7 +205,7 @@
 			secretAccessKey: '7blsHxtnDb0Q6SRCfvvZlFfzj9OjawWV4A6+fBu0'
 		});
 		token = sessionStorage.getItem("token");
-
+	
 
 		/////* Function List */////
 
@@ -245,6 +249,8 @@
 			if (!token) {
 				window.location = "index.html";
 			}
+			document.querySelector('.text-default').innerHTML = sessionStorage.getItem("name");
+			document.querySelector('.text-muted.d-block.mt-1').innerHTML = sessionStorage.getItem("role");
 		}
 
 		function viewUserInfo(userId) {
