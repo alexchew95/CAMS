@@ -39,6 +39,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<!-- jQuery Modal -->
 	<script src="./assets/js/jquery.sortElements.js"></script>
+	<!--Main JS-->
+	<script src="./assets/js/main.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
 	<!--Datatable CSS-->
@@ -65,50 +67,46 @@
 			<div class="my-3 my-md-5">
 
 				<div class="container">
-					<div class="row">
+					<div class="card-header">
 						<h1 class="page-title">
 							Customer
 						</h1>
-
-						<div class="form-group">
-							<div class="col-lg-4">
-								<button class="btn btn-primary">Add Customer</button>
-							</div>
-						</div>
+						<button class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add Customer</button>
 					</div>
-					<table class="table table-responsive" id="tableAllCustomers">
-						<thead>
-							<tr>
-								<th id="headerID" class="text-center" style="width: 5%"></th>
-								<th id="headerName">Entry Date</th>
-								<th id="headerIC">Package</th>
-								<th id="headerMobileNo">Name</th>
-								<th id="headerEmail">IC No.</th>
-								<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
-								<th class="text-center" style="width: 5%">Batch</th>
-								<th class="text-center" style="width: 5%">Docs</th>
-								<th class="text-center" style="width: 5%">Status</th>
-							</tr>
-						</thead>
-						<tbody id="userListBody">
+					<div class="card-body">
+						<table class="table table-responsive" id="tableAllCustomers">
+							<thead>
+								<tr>
+									<th id="headerID" class="text-center" style="width: 5%"></th>
+									<th id="headerName">Entry Date</th>
+									<th id="headerIC">Package</th>
+									<th id="headerMobileNo">Name</th>
+									<th id="headerEmail">IC No.</th>
+									<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
+									<th class="text-center" style="width: 5%">Batch</th>
+									<th class="text-center" style="width: 5%">Docs</th>
+									<th class="text-center" style="width: 5%">Status</th>
+								</tr>
+							</thead>
+							<tbody id="userListBody">
 
-						</tbody>
+							</tbody>
 
-						<tfoot>
-							<tr>
-								<th></th>
-								<th>Entry Date</th>
-								<th>Package</th>
-								<th>Name</th>
-								<th>IC No.</th>
-								<th>Marketing Officer</th>
-								<th>Batch</th>
-								<th>Docs</th>
-								<th>Status</th>
-							</tr>
-						</tfoot>
-					</table>
-
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Entry Date</th>
+									<th>Package</th>
+									<th>Name</th>
+									<th>IC No.</th>
+									<th>Marketing Officer</th>
+									<th>Batch</th>
+									<th>Docs</th>
+									<th>Status</th>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -150,50 +148,19 @@
 				role = sessionStorage.getItem("role");
 
 				window.onload = checkAdminLogin;
-				/////* Function List */////
 
 
-				function checkAdminLogin() {
-					if (!token) {
-						window.location = "index.html";
-					}
-				}
-
-				function closeModal() {
-					$.modal.close();
-				}
-
-				function closeAndReload() {
-					$.modal.close();
-					window.location.reload();
-				}
-
-				$("#btnLogout").click(function () {
-					sessionStorage.clear();
-					window.location = "index.html";
-				});
-
-				$("#btnCloseModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
-
-				$("#btnCloseUploadModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
-
-				$("#btnCloseCreditInfoModal").click(function (event) {
-					event.preventDefault();
-					closeModal();
-				});
-				//setup the search tab for datatable - Nick
+				/* To setup the search tab for datatable - Nick */
 				$('#tableAllCustomers tfoot th').each(function () {
 					var title = $(this).text();
 					if (title != '')
 						$(this).html('<input type="text" class="form-control" />');
+					else
+						$(this).html('Search');
+
 				});
 
+				/* To List all customer in Customer Homepage */
 				var arrayReturn = [];
 				$.ajax({
 					url: APIUrl + 'listAllCustomers',
@@ -216,7 +183,6 @@
 								'', //TODO: Check what is batch with Fatin
 								'', //TODO: Count total doc uploaded
 								data[i].status,
-
 							]);
 						}
 						inittable(arrayReturn);
@@ -224,6 +190,7 @@
 					}
 				});
 
+				/* To initialise the datatable */
 				function inittable(data) {
 					//console.log(data);
 					var table = $('#tableAllCustomers').DataTable({
@@ -242,61 +209,7 @@
 							}
 						});
 					});
-
 				}
-
-
-				//TODO: set the type to POST and send token for authentication
-				// $.ajax({
-				// 	url: APIUrl + 'listAllCustomers',
-				// 	type: 'post',
-				// 	dataType: 'json',
-				// 	beforeSend: function (xhr) { //Include the bearer token in header
-				// 		xhr.setRequestHeader("Authorization", token);
-				// 	},
-				// 	success: function (data) {
-				// 		allUserData = data.allCustomers;
-				// 		//If the success function is execute,
-				// 		//then the Ajax request was successful.
-				// 		//Add the data we received in our Ajax
-				// 		//request to the "content" div.
-				// 		$(data.allCustomers).each(function () {
-				// 			if (this.approvalStatus == "0") {
-				// 				this.approvalStatus = "Not Verified";
-				// 			} else if (this.approvalStatus == "1") {
-				// 				this.approvalStatus = "Verified";
-				// 			} else if (this.approvalStatus == "2") {
-				// 				this.approvalStatus = "Approved";
-				// 			} else {
-				// 				this.approvalStatus = "Error";
-				// 			}
-				// 			$("#userListBody").append('<tr><td>' + this.userId + '</td><td>' +
-				// 				this.name + '</td><td>' +
-				// 				this.IC + '</td><td>' +
-				// 				this.mobileNo + '</td><td>' +
-				// 				this.email + '</td><td>' +
-				// 				this.approvalStatus + '</td><td>' +
-				// 				'<div class="selectgroup">' +
-				// 				'<div class="selectgroup-item" onclick="viewUserInfo(' + this.userId +
-				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-edit-2"></i></div>' +
-				// 				'<div class="selectgroup-item" onclick="viewUserCreditRequest(' + this.userId +
-				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-dollar-sign"></i></div>' +
-				// 				'<div class="selectgroup-item" onclick="openUsersUploadFileModal(' + this.userId + ')">' +
-				// 				'<span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-upload"></i></span></div>' +
-				// 				'</div></td></tr>')
-				// 			$(".custom-loader").hide();
-				// 		});
-				// 	},
-				// 	error: function (xhr, ajaxOptions, thrownError) {
-				// 		var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-				// 		$('#content').html(errorMsg);
-				// 	}
-
-				// }).done(function (response) {}).fail(function (err) {});
-
 			});
 		});
 

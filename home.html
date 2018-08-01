@@ -28,19 +28,13 @@
 		});
 
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<!--Needed for JQuery Modal
 	TODO: think how to move it to requireJS-->
 
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
-	<!-- c3.js Charts Plugin -->
-	<link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/charts-c3/plugin.js"></script>
-	<!-- Google Maps Plugin -->
-	<link href="./assets/plugins/maps-google/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/maps-google/plugin.js"></script>
 	<!-- Input Mask Plugin -->
 	<script src="./assets/plugins/input-mask/plugin.js"></script>
 	<!-- jQuery Modal -->
@@ -48,52 +42,20 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<!-- jQuery Modal -->
 	<script src="./assets/js/jquery.sortElements.js"></script>
+	<!--Main JS-->
+	<script src="./assets/js/main.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
 	<!--Pagination JS-->
 	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
-
-
-
 </head>
 
 <body class="">
 	<div class="page">
 		<div class="page-main">
 			<div class="header py-4">
-				<div class="container">
-					<div class="d-flex">
-						<a class="header-brand" href="./home.html">
-							<img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
-						</a>
-						<div class="d-flex order-lg-2 ml-auto">
-							<div class="nav-item d-none d-md-flex">
-								<a class="btn btn-danger btn-outline-primary" id="btnLogout" target="_blank">Logout</a>
-							</div>
-							<div class="dropdown">
-								<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-									<span class="ml-2 d-none d-lg-block">
-										<!--username-->
-										<span class="text-default"></span>
-										<!--user role-->
-										<small class="text-muted d-block mt-1"></small>
-									</span>
-								</a>
-								<div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-									<a href="change_password.html" class="dropdown-item" href="#">
-										<i class="dropdown-icon fe fe-user"></i> Change Password
-									</a>
-									<a href="change_email.html" class="dropdown-item" href="#">
-										<i class="dropdown-icon fe fe-settings"></i> Change Email
-									</a>
-								</div>
-
-							</div>
-						</div>
-						<a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
-							<span class="header-toggler-icon"></span>
-						</a>
-					</div>
+				<div class="container" id="topbar">
+					<!--Header to auto load here-->
 				</div>
 			</div>
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
@@ -190,7 +152,6 @@
 	<!--Modal for addNewAnnouncementForm -End -->
 
 	<script type="text/javascript">
-		window.onload = checkAdminLogin;
 		/////* Declare variables */////
 		var APIUrl = 'http://localhost/lpts-ci/api/';
 		//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
@@ -198,26 +159,6 @@
 		var pageFirstTimeLoad = true;
 
 		token = sessionStorage.getItem("token");
-	
-
-		/////* Function List */////
-
-		function checkAdminLogin() {
-			if (!token) {
-				window.location = "index.html";
-			}
-			document.querySelector('.text-default').innerHTML = sessionStorage.getItem("name");
-			document.querySelector('.text-muted.d-block.mt-1').innerHTML = sessionStorage.getItem("role");
-		}
-
-		function closeModal() {
-			$.modal.close();
-		}
-
-		function closeAndReload() {
-			$.modal.close();
-			window.location.reload();
-		}
 
 		/* Reset Modal textboxs value to null */
 		function resetModalTextbox() {
@@ -235,12 +176,7 @@
 			window.location = "index.html";
 		});
 
-		$("#btnCloseModal").click(function (event) {
-			event.preventDefault();
-			closeModal();
-		});
-
-			$("#btnAddNewAnnouncement").click(function () {
+		$("#btnAddNewAnnouncement").click(function () {
 			viewAddNewAnnouncement();
 		});
 
@@ -275,21 +211,18 @@
 						//console.log(errorMsg);
 					}
 				});
-			}
-			else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
+			} else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
 				$("#lblMessages").text("Please fill up for announcement title");
-			}
-			else if (inpTitle.checkValidity() && !inpContent.checkValidity()) {
+			} else if (inpTitle.checkValidity() && !inpContent.checkValidity()) {
 				$("#lblMessages").text("Please fill up for announcement content");
-			}
-			else {
+			} else {
 				$("#lblMessages").text("Please fill up for both announcement title and content");
 			}
 		});
 
 		//When the page has loaded.
 		$(document).ready(function () {
-			//var token = localStorage.getItem("token");
+			window.onload = checkAdminLogin;
 			var role = sessionStorage.getItem("role"),
 				currentPage = 1;
 
@@ -348,9 +281,10 @@
 				});
 			}
 			/*load announcement - End */
-		
+
 			announcement();
 		});
+
 	</script>
 </body>
 
