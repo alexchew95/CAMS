@@ -1,3 +1,8 @@
+/////* Common Variable List */////
+
+//var APIUrl = 'http://localhost/lpts-ci/api/';
+ var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+
 /////* Common Function List */////
 
 function checkAdminLogin() {
