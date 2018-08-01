@@ -39,6 +39,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<!-- jQuery Modal -->
 	<script src="./assets/js/jquery.sortElements.js"></script>
+	<!--Main JS-->
+	<script src="./assets/js/main.js"></script>
 	<!--Navbar JS-->
 	<script src="./assets/js/navbar.js"></script>
 
@@ -47,7 +49,7 @@
 <body class="">
 	<div class="page">
 		<div class="page-main">
-		<div class="custom-loader"></div>
+			<div class="custom-loader"></div>
 
 			<div class="header py-4">
 				<div class="container" id="topbar">
@@ -98,160 +100,8 @@
 		role = sessionStorage.getItem("role");
 
 		window.onload = checkAdminLogin;
-		/////* Function List */////
-
-
-		function checkAdminLogin() {
-			if (!token) {
-				window.location = "index.html";
-			}
-		}
-
-		function closeModal() {
-			$.modal.close();
-		}
-
-		function closeAndReload() {
-			$.modal.close();
-			window.location.reload();
-		}
-
-		$("#btnLogout").click(function () {
-			sessionStorage.clear();
-			window.location = "index.html";
-		});
-
-		$("#btnCloseModal").click(function (event) {
-			event.preventDefault();
-			closeModal();
-		});
-
-		$("#btnCloseUploadModal").click(function (event) {
-			event.preventDefault();
-			closeModal();
-		});
-
-		$("#btnCloseCreditInfoModal").click(function (event) {
-			event.preventDefault();
-			closeModal();
-		});
-
-		//When the page has loaded.
-		require(['jquery', 'datatables'], function ($, dt) {
-			$(document).ready(function () {
-				//setup the search tab for datatable - Nick
-				$('#tableAllCustomers tfoot th').each(function () {
-					var title = $(this).text();
-					if (title != '')
-						$(this).html('<input type="text" class="form-control" />');
-				});
-
-				var arrayReturn = [];
-				$.ajax({
-					url: APIUrl + 'listAllCustomers',
-					async: false,
-					dataType: 'json',
-					type: 'post',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					success: function (data) {
-						for (var i = 0, len = data.length; i < len; i++) {
-							//var desc = data[i].body; //to substring, limit the data to display 
-							console.log(data[0]);
-							arrayReturn.push([
-								'',
-								data[i].entryDate,
-								data[i].packageId,
-								data[i].customerName,
-								data[i].newIC,
-								data[i].marketingOfficerId,
-								'', //TODO: Check what is batch with Fatin
-								'', //TODO: Count total doc uploaded
-								data[i].status,
-
-							]);
-						}						
-						inittable(arrayReturn);
-						$(".custom-loader").hide();
-					}
-				});
-
-				function inittable(data) {
-					//console.log(data);
-					var table = $('#tableAllCustomers').DataTable({
-						"aaData": data
-					});
-
-					// Apply the search
-					table.columns().every(function () {
-						var that = this;
-
-						$('input', this.footer()).on('keyup change', function () {
-							if (that.search() !== this.value) {
-								that
-									.search(this.value)
-									.draw();
-							}
-						});
-					});
-
-				}
-
-
-				//TODO: set the type to POST and send token for authentication
-				// $.ajax({
-				// 	url: APIUrl + 'listAllCustomers',
-				// 	type: 'post',
-				// 	dataType: 'json',
-				// 	beforeSend: function (xhr) { //Include the bearer token in header
-				// 		xhr.setRequestHeader("Authorization", token);
-				// 	},
-				// 	success: function (data) {
-				// 		allUserData = data.allCustomers;
-				// 		//If the success function is execute,
-				// 		//then the Ajax request was successful.
-				// 		//Add the data we received in our Ajax
-				// 		//request to the "content" div.
-				// 		$(data.allCustomers).each(function () {
-				// 			if (this.approvalStatus == "0") {
-				// 				this.approvalStatus = "Not Verified";
-				// 			} else if (this.approvalStatus == "1") {
-				// 				this.approvalStatus = "Verified";
-				// 			} else if (this.approvalStatus == "2") {
-				// 				this.approvalStatus = "Approved";
-				// 			} else {
-				// 				this.approvalStatus = "Error";
-				// 			}
-				// 			$("#userListBody").append('<tr><td>' + this.userId + '</td><td>' +
-				// 				this.name + '</td><td>' +
-				// 				this.IC + '</td><td>' +
-				// 				this.mobileNo + '</td><td>' +
-				// 				this.email + '</td><td>' +
-				// 				this.approvalStatus + '</td><td>' +
-				// 				'<div class="selectgroup">' +
-				// 				'<div class="selectgroup-item" onclick="viewUserInfo(' + this.userId +
-				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-edit-2"></i></div>' +
-				// 				'<div class="selectgroup-item" onclick="viewUserCreditRequest(' + this.userId +
-				// 				')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-dollar-sign"></i></div>' +
-				// 				'<div class="selectgroup-item" onclick="openUsersUploadFileModal(' + this.userId + ')">' +
-				// 				'<span class="selectgroup-button-compact selectgroup-button-icon">' +
-				// 				'<i class="fe fe-upload"></i></span></div>' +
-				// 				'</div></td></tr>')
-				// 			$(".custom-loader").hide();
-				// 		});
-				// 	},
-				// 	error: function (xhr, ajaxOptions, thrownError) {
-				// 		var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-				// 		$('#content').html(errorMsg);
-				// 	}
-
-				// }).done(function (response) {}).fail(function (err) {});
-
-			});
-		});
+        /////* Function List */////
+        $(".custom-loader").hide();
 
 	</script>
 </body>
