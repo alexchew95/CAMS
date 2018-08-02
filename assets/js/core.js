@@ -18,7 +18,8 @@ let hexToRgba = function(hex, opacity) {
 $(document).ready(function() {
   /** Constant div card */
   const DIV_CARD = 'div.card';
-
+  document.querySelector('#txt_username').innerHTML = sessionStorage.getItem("name");
+	document.querySelector('#txt_role').innerHTML = sessionStorage.getItem("role");
   /** Initialize tooltips */
   $('[data-toggle="tooltip"]').tooltip();
 

@@ -9,10 +9,20 @@
         <div class="dropdown">
             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                 <span class="ml-2 d-none d-lg-block">
+                    <!--username-->
                     <span class="text-default" id="txt_username"></span>
+                    <!--user role-->
                     <small class="text-muted d-block mt-1" id="txt_role"></small>
                 </span>
             </a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                <a href="change_password.html" class="dropdown-item" href="#">
+                    <i class="dropdown-icon fe fe-user"></i> Change Password
+                </a>
+                <a href="change_email.html" class="dropdown-item" href="#">
+                    <i class="dropdown-icon fe fe-settings"></i> Change Email
+                </a>
+            </div>
 
         </div>
     </div>
@@ -20,3 +30,10 @@
         <span class="header-toggler-icon"></span>
     </a>
 </div>
+<script type="text/javascript">
+    $("#btnLogout").click(function () {
+			sessionStorage.clear();
+			window.location = "index.html";
+		});
+
+</script>
