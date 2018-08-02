@@ -9,7 +9,8 @@ function checkAdminLogin() {
 	if (!token) {
 		window.location = "index.html";
     }
-	
+	document.querySelector('#txt_username').innerHTML = sessionStorage.getItem("name");
+	document.querySelector('#txt_role').innerHTML = sessionStorage.getItem("role");
 }
 
 function closeModal() {
