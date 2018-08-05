@@ -51,7 +51,7 @@
 	<script src="./assets/js/navbar.js"></script>
 	<!--Pagination JS-->
 	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
-
+	
 </head>
 
 <body class="">
@@ -1088,7 +1088,7 @@
 
 															<div class="controls">
 																<td>
-																	<select id="CompanyAddressState" class="form-control" size="1">
+																	<select id="Bank" class="form-control" size="1">
 																		<option value="0">- Select One -</option>
 																		<option value="1">Affin Bank</option>
 																		<option value="2">Al Rajhi Bank</option>
@@ -1369,6 +1369,7 @@
 						&nbsp; &nbsp;
 						<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 					</div>
+					<label id="lblMessages" class="text-danger"></label>
 				</div>
 			</div>
 		</div>
@@ -1439,6 +1440,105 @@
 					}
 				}
 			});
+		}
+		
+		$("#SaveAndStay").click(function (event) {
+			event.preventDefault();
+
+			if(checkValidity()){
+				insertCustomer();
+			}
+		});
+
+		$("#Save").click(function (event) {
+			if(checkValidity()){
+				insertCustomer();
+				window.location = "home.html";
+			}
+		});
+		
+		$("#Cancel").click(function (event) {
+			window.location = "customer.html";
+		});
+
+		function checkValidity(){
+			data = ["Name","MarketingOfficer","Package","Status","EntryDate","ICNo","DateOfBirth","CompanyName","Salary","Deduction","EligibleDeduction","LoanApplied","Tenure","ProfitRate","Bank","AccountNo"];
+
+			var datalength = data.length,
+				comma = true,
+				validInp = true,
+				reqField = "";
+
+			for(var i = 0 ; i < datalength ; i++){
+				var inp = document.getElementById(data[i]);
+				if(!inp.checkValidity()){
+					if(comma){
+						reqField += (data[i]);
+						comma = false;
+						validInp = false;
+					}
+					else
+					{
+						reqField += (", "+data[i]);
+					}
+				}
+			$("#lblMessages").text("Please fill up for " + reqField);
+			}
+			return validInp;
+		}
+
+		function insertCustomer(){
+		$.ajax({
+			url: APIUrl + 'insertCustomer',
+			type: 'POST',
+			dataType: 'JSON',
+			data: {
+				Name:$("#Name").val(),
+				MarketingOfficer:$("#MarketingOfficer").val(),
+				Package:$("#Package").val(),
+				Status:$("#Status").val(),
+				EntryDate:$("#EntryDate").val(),
+				ICNo:$("#ICNo").val(),
+				OldICNo:$("#OldICNo").val(),
+				DateOfBirth:$("#DateOfBirth").val(),
+				Gender:$("#Gender").val(),
+				MobilePhoneNo:$("#MobilePhoneNo").val(),
+				Email:$("#Email").val(),
+				NextContactName:$("#NextContactName").val(),
+				NextContactRelationship:$("#NextContactRelationship").val(),
+				NextContactPhoneNo:$("#NextContactPhoneNo").val(),
+				NextContactOfficePhoneNo:$("#NextContactOfficePhoneNo").val(),
+				HomeAddressLine1:$("#HomeAddressLine1").val(),
+				HomeAddressLine2:$("#HomeAddressLine2").val(),
+				HomeCity:$("#HomeCity").val(),
+				HomePostCode:$("#HomePostCode").val(),
+				HomeState:$("#HomeState").val(),
+				HomePhoneNo:$("#HomePhoneNo").val(),
+				CompanyName:$("#CompanyName").val(),
+				Position:$("#Position").val(),
+				OfficePhoneNo:$("#OfficePhoneNo").val(),
+				FaxPhoneNo:$("#FaxPhoneNo").val(),
+				CompanyAddressLine1:$("#HomeAddressLine1").val(),
+				CompanyAddressLine2:$("#HomeAddressLine2").val(),
+				CompanyCity:$("#HomeCity").val(),
+				CompanyPostCode:$("#HomePostCode").val(),
+				CompanyState:$("#HomeState").val(),
+				CompanyPhoneNo:$("#HomePhoneNo").val(),
+				Salary:$("#Salary").val(),
+				Allowance:$("#Allowance").val(),
+				PayslipMonth:$("#PayslipMonth").val(),
+				Deduction:$("#Deduction").val(),
+				EligibleDeduction:$("#EligibleDeduction").val(),
+				LoanApplied:$("#LoanApplied").val(),
+				Tenure:$("#Tenure").val(),
+				ProfitRate:$("#ProfitRate").val(),
+				Bank:$("#Bank").val(),
+				BankInName:$("#BankInName").val(),
+				AccountNo:$("#AccountNo").val()
+			},
+			success: function (data) {
+			}
+		});
 		}
 
 		$(document).ready(function () {
