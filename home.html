@@ -20,7 +20,6 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
-	<script src="https://code.jquery.com/jquery.min.js"></script>
 
 	<script>
 		requirejs.config({
@@ -30,24 +29,17 @@
 	</script>
 	<!--Needed for JQuery Modal
 	TODO: think how to move it to requireJS-->
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script> <!-- this JQEUERY had to be here in order for modal to work -->
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+	<!-- this JQEUERY had to be here in order for modal to work -->
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
 	<!-- Input Mask Plugin -->
 	<script src="./assets/plugins/input-mask/plugin.js"></script>
 	<!-- jQuery Modal -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	<!-- jQuery Modal -->
-	<script src="./assets/js/jquery.sortElements.js"></script>
-	<!--Main JS-->
-	<script src="./assets/js/main.js"></script>
-	<!--Navbar JS-->
-	<script src="./assets/js/navbar.js"></script>
-	<!--Pagination JS-->
-	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
+
 </head>
 
 <body class="">
@@ -152,136 +144,135 @@
 	<!--Modal for addNewAnnouncementForm -End -->
 
 	<script type="text/javascript">
-		/////* Declare variables */////
-		var totalPage;
-		var pageFirstTimeLoad = true;
+		require(['mainjs','twbs','modal'], function () {
 
-		token = sessionStorage.getItem("token");
-		
+			/////* Declare variables */////
+			var totalPage;
+			var pageFirstTimeLoad = true;
 
-		/* Reset Modal textboxs value to null */
-		function resetModalTextbox() {
-			$('input[type="text"]').val('');
-			$('input[type="number"]').val('');
-			$('.custom-select').val('');
-		}
-
-		function viewAddNewAnnouncement() {
-			$('#addNewAnnouncementForm').modal();
-		}
-
-		$("#btnLogout").click(function () {
-			sessionStorage.clear();
-			window.location = "index.html";
-		});
-
-		$("#btnAddNewAnnouncement").click(function () {
-			viewAddNewAnnouncement();
-		});
-
-		$("#btnCloseAddNewAnnouncementForm").click(function (event) {
-			event.preventDefault();
-			closeModal();
-		});
-
-		$("#btnAddAnnouncement").click(function (event) {
-			event.preventDefault();
-
-			var currentUserEmail = sessionStorage.getItem("email"),
-				name = sessionStorage.getItem("name"),
-				inpTitle = document.getElementById("newAnnouncementTitle"),
-				inpContent = document.getElementById("newAnnouncementContent");
-
-			if (inpTitle.checkValidity() && inpContent.checkValidity()) {
-				$.ajax({
-					url: APIUrl + 'add_announcement',
-					type: 'POST',
-					data: {
-						"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
-						"newAnnouncementContent": $("#newAnnouncementContent").val(),
-						"userName": name
-					},
-					dataType: 'JSON',
-					success: function (data) {
-						closeAndReload();
-					},
-					error: function (xhr, ajaxOptions, thrownError) {
-						var errorMsg = 'Ajax request failed: ' + xhr.responseText;
-						//console.log(errorMsg);
-					}
-				});
-			} else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
-				$("#lblMessages").text("Please fill up for announcement title");
-			} else if (inpTitle.checkValidity() && !inpContent.checkValidity()) {
-				$("#lblMessages").text("Please fill up for announcement content");
-			} else {
-				$("#lblMessages").text("Please fill up for both announcement title and content");
+			/* Reset Modal textboxs value to null */
+			function resetModalTextbox() {
+				$('input[type="text"]').val('');
+				$('input[type="number"]').val('');
+				$('.custom-select').val('');
 			}
-		});
 
-		//When the page has loaded.
-		$(document).ready(function () {
-			window.onload = checkAdminLogin;
-			var role = sessionStorage.getItem("role"),
-				currentPage = 1;
+			function viewAddNewAnnouncement() {
+				$('#addNewAnnouncementForm').modal();
+			}
 
-			/*load announcement - Start */
-			function announcement() {
-				$.ajax({
-					url: APIUrl + 'announcement',
-					type: 'GET',
-					dataType: 'JSON',
-					data: {
-						currentPage: currentPage
-					},
-					success: function (announcement) {
-						var announcementPerPage = 10,
-							totalAnnouncement = announcement.length,
-							announcementContainer = "";
-						totalPage = Math.ceil(totalAnnouncement / announcementPerPage)
-						$.each(announcement, function (key, value) {
-							if ((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage - 1))) {
-								announcementContainer += '<div class="col-md-auto col-xl-8">' +
-									'<div class="card">' +
-									'<div class="card-header bg-blue">' +
-									'<h3 class="card-title text-white" id="announcementTitle">' +
-									value.dateCreated + ' ' + value.title +
-									'</h3>' +
-									'</div>' +
-									'<div class="card-body" id="announcementContent">' +
-									value.content +
-									'</div>' +
-									'</div>' +
-									'</div>'
+			$("#btnLogout").click(function () {
+				sessionStorage.clear();
+				window.location = "index.html";
+			});
+
+			$("#btnAddNewAnnouncement").click(function () {
+				viewAddNewAnnouncement();
+			});
+
+			$("#btnCloseAddNewAnnouncementForm").click(function (event) {
+				event.preventDefault();
+				closeModal();
+			});
+
+			$("#btnAddAnnouncement").click(function (event) {
+				event.preventDefault();
+
+				var currentUserEmail = sessionStorage.getItem("email"),
+					name = sessionStorage.getItem("name"),
+					inpTitle = document.getElementById("newAnnouncementTitle"),
+					inpContent = document.getElementById("newAnnouncementContent");
+
+				if (inpTitle.checkValidity() && inpContent.checkValidity()) {
+					$.ajax({
+						url: APIUrl + 'add_announcement',
+						type: 'POST',
+						data: {
+							"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
+							"newAnnouncementContent": $("#newAnnouncementContent").val(),
+							"userName": name
+						},
+						dataType: 'JSON',
+						success: function (data) {
+							closeAndReload();
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+							//console.log(errorMsg);
+						}
+					});
+				} else if (!inpTitle.checkValidity() && inpContent.checkValidity()) {
+					$("#lblMessages").text("Please fill up for announcement title");
+				} else if (inpTitle.checkValidity() && !inpContent.checkValidity()) {
+					$("#lblMessages").text("Please fill up for announcement content");
+				} else {
+					$("#lblMessages").text("Please fill up for both announcement title and content");
+				}
+			});
+
+			//When the page has loaded.
+			$(document).ready(function () {
+					currentPage = 1;
+
+				/*load announcement - Start */
+				function announcement() {
+					$.ajax({
+						url: APIUrl + 'announcement',
+						type: 'GET',
+						dataType: 'JSON',
+						data: {
+							currentPage: currentPage
+						},
+						success: function (announcement) {
+							var announcementPerPage = 10,
+								totalAnnouncement = announcement.length,
+								announcementContainer = "";
+							totalPage = Math.ceil(totalAnnouncement / announcementPerPage)
+							$.each(announcement, function (key, value) {
+								if ((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage -
+										1))) {
+									announcementContainer += '<div class="col-md-auto col-xl-8">' +
+										'<div class="card">' +
+										'<div class="card-header bg-blue">' +
+										'<h3 class="card-title text-white" id="announcementTitle">' +
+										value.dateCreated + ' ' + value.title +
+										'</h3>' +
+										'</div>' +
+										'<div class="card-body" id="announcementContent">' +
+										value.content +
+										'</div>' +
+										'</div>' +
+										'</div>'
+								}
+							})
+							$("#announcementContainer").html(announcementContainer);
+
+							if (pageFirstTimeLoad == true) {
+								pagination();
+								pageFirstTimeLoad = false;
 							}
-						})
-						$("#announcementContainer").html(announcementContainer);
 
-						if (pageFirstTimeLoad == true) {
-							pagination();
-							pageFirstTimeLoad = false;
+							$(".custom-loader").hide();
+						},
+					});
+				}
+
+				function pagination() {
+					$('#pagination-demo').twbsPagination({
+						totalPages: totalPage,
+						visiblePages: 7,
+						onPageClick: function (event, page) {
+							if (pageFirstTimeLoad == false) {
+								currentPage = page;
+								announcement();
+							}
 						}
+					});
+				}
+				/*load announcement - End */
 
-						$(".custom-loader").hide();
-					},
-				});
-			}
-
-			function pagination() {
-				$('#pagination-demo').twbsPagination({
-					totalPages: totalPage,
-					visiblePages: 7,
-					onPageClick: function (event, page) {
-						if (pageFirstTimeLoad == false) {
-							currentPage = page;
-							announcement();
-						}
-					}
-				});
-			}
-			/*load announcement - End */
-
-			announcement();
+				announcement();
+			});
 		});
 
 	</script>

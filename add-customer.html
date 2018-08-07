@@ -16,12 +16,11 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
-	<title>LPTS - Users List</title>
+	<title>LPTS - Add Customer</title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
-	<script src="https://code.jquery.com/jquery.min.js"></script>
-	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.233.1.min.js"></script>
 
 	<script>
 		requirejs.config({
@@ -29,58 +28,23 @@
 		});
 
 	</script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
-
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
-	<!-- c3.js Charts Plugin -->
-	<link href="./assets/plugins/charts-c3/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/charts-c3/plugin.js"></script>
-	<!-- Google Maps Plugin -->
-	<link href="./assets/plugins/maps-google/plugin.css" rel="stylesheet" />
-	<script src="./assets/plugins/maps-google/plugin.js"></script>
-	<!-- Input Mask Plugin -->
-	<script src="./assets/plugins/input-mask/plugin.js"></script>
+
 	<!-- jQuery Modal -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-	<!-- jQuery Modal -->
-	<script src="./assets/js/jquery.sortElements.js"></script>
-	<!--Navbar JS-->
-	<script src="./assets/js/navbar.js"></script>
-	<!--Pagination JS-->
-	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
-	
+	<!--Datatable CSS-->
+	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
+
 </head>
 
 <body class="">
 	<div class="page">
 		<div class="page-main">
 			<div class="header py-4">
-				<div class="container">
-					<div class="d-flex">
-						<a class="header-brand" href="./index.html">
-							<img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
-						</a>
-						<div class="d-flex order-lg-2 ml-auto">
-							<div class="nav-item d-none d-md-flex">
-								<a class="btn btn-danger btn-outline-primary" id="btnLogout" target="_blank">Logout</a>
-							</div>
-							<div class="dropdown">
-								<a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
-									<span class="ml-2 d-none d-lg-block">
-										<span class="text-default">Admin</span>
-										<small class="text-muted d-block mt-1">Administrator</small>
-									</span>
-								</a>
+				<div class="container" id="topbar">
 
-							</div>
-						</div>
-						<a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
-							<span class="header-toggler-icon"></span>
-						</a>
-					</div>
 				</div>
 			</div>
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
@@ -89,9 +53,19 @@
 				</div>
 			</div>
 
-
 			<div class="my-3 my-md-5">
 				<div class="container">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="home.html">Home</a>
+							</li>
+							<li class="breadcrumb-item">
+								<a href="customer.html">Customer</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+						</ol>
+					</nav>
 					<form>
 						<div class="form-horizontal">
 							<div style="display:inline;">
@@ -152,35 +126,56 @@
 							</div>
 						</div>
 						<br>
+						<script type="text/javascript">
+							function setAndResetActive(id) {
+								data = ['Personal', 'Work', 'SalaryAndDeduction', 'Loan', 'Redemption', 'Remark'];
+								$('#showAll').removeClass('active');
+								$.each(data, function (i, v) {
+									if (id == 'All') {
+										$('#navTab').addClass('active');
+										$('#' + i).addClass('active');
+									} else {
+										if (id != i) {
+											$('#' + i).removeClass('active');
+											$(id + '.tab-pane').removeClass('active');
+										}
+										if (id = i) {
+											$('#' + i).addClass('active');
+											$(id + '.tab-pane').addClass('active');
+										}
+									}
+								});
+							}
+
+						</script>
 						<div id="myTab">
 							<ul class="nav nav-tabs" style="font-size:1.25rem;justify-content:center;">
 								<li id="showAll" class="active">
-									<a href="#All" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('All')">All</a>
+									<a href="#All" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('All')">All</a>
 								</li>
 								<li>
-									<a href="#Personal" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('Personal')">Personal</a>
+									<a href="#Personal" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('Personal')">Personal</a>
 								</li>
 								<li>
-									<a href="#Work" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('Work')">Work</a>
+									<a href="#Work" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('Work')">Work</a>
 								</li>
 								<li>
-									<a href="#SalaryAndDeduction" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('SalaryAndDeduction')">Salary & Deduction</a>
+									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('SalaryAndDeduction')">Salary & Deduction</a>
 								</li>
 								<li>
-									<a href="#Loan" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('Loan')">Loan</a>
+									<a href="#Loan" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('Loan')">Loan</a>
 								</li>
 								<li>
-									<a href="#Redemption" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('Redemption')">Redemption</a>
+									<a href="#Redemption" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('Redemption')">Redemption</a>
 								</li>
 								<li>
-									<a href="#Remark" data-toggle="tab" id="navTab" class="nav-item text-dark" onclick="setAndResetActive('Remark')">Remark</a>
+									<a href="#Remark" data-toggle="tab" class="nav-item text-dark" onclick="setAndResetActive('Remark')">Remark</a>
 								</li>
 							</ul>
 
 							<div class="tab-content">
+								<div class="tab-pane" id="Personal">
 
-								<div class="tab-pane active" id="Personal">
-									<br>
 									<div id="choose_table">
 										<div id="dtg">
 											<div class="row">
@@ -196,352 +191,34 @@
 																			<label class="control-label required disabled float-right">Status*</label>
 																		</td>
 
-																		<div class="controls">
-																			<td>
-																				<select id="status" disabled="disabled" class="form-control" size="1">
-																					<option value="0">- Select One -</option>
-																					<option value="1" selected="selected">Pending</option>
-																					<option value="2">Processed</option>
-																					<option value="3">Approved</option>
-																					<option value="4">Disbursed</option>
-																					<option value="5">Rejected</option>
-																				</select>
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
 																		<td>
-																			<label class="control-label required disabled float-right">Entry Date*</label>
+																			<select id="status" disabled="disabled" class="form-control" size="1">
+																				<option value="0">- Select One -</option>
+																				<option value="1" selected="selected">Pending</option>
+																				<option value="2">Processed</option>
+																				<option value="3">Approved</option>
+																				<option value="4">Disbursed</option>
+																				<option value="5">Rejected</option>
+																			</select>
 																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input id="EntryDate" disabled="disabled" class="form-control" value="Jul 28 2018">
-																			</td>
 																	</tr>
-																	</div>
 																</div>
 															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">IC No.*</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="ICNo" class="form-control" autocomplete="off" maxlength="20" required>
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Old IC No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="OldICNo" class="form-control" autocomplete="off" maxlength="20">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Date Of Birth*</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="DateOfBirth" class="form-control" autocomplete="off" maxlength="20" required>
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Gender</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<select id="Gender" class="form-control" size="1">
-																					<option value="0">- Select One -</option>
-																					<option value="1">Male</option>
-																					<option value="2">Female</option>
-																				</select>
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Mobile Phone No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="MobilePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Email</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="Email" class="form-control" autocomplete="off" maxlength="100">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Name</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="NextContactName" class="form-control" autocomplete="off" maxlength="100">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Relationship</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="NextContactRelationship" class="form-control" autocomplete="off" maxlength="20">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Phone No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="NextContactPhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Office Phone No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="NextContactOfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-														</table>
 													</div>
-												</div>
 
-												<div class="col-md-6">
-													<legend>Home Address</legend>
-													<div class="form-horizontal">
-														<table>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Line 1</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Line 2</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomeAddressLine2" class="form-control" autocomplete="off" maxlength="150">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">City</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomeAddressCity" class="form-control" autocomplete="off" maxlength="100">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Post Code</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomeAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">State</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<select id="HomeAddressState" class="form-control" size="1">
-																					<option value="0">- Select One -</option>
-																					<option value="1">Johor</option>
-																					<option value="2">Kedah</option>
-																					<option value="3">Kelantan</option>
-																					<option value="4">Kuala Lumpur</option>
-																					<option value="5">Melaka</option>
-																					<option value="6">Negeri Sembilan</option>
-																					<option value="7">Pahang</option>
-																					<option value="8">Perak</option>
-																					<option value="9">Perlis</option>
-																					<option value="10">Pulau Pinang</option>
-																					<option value="11">Sabah</option>
-																					<option value="12">Sarawak</option>
-																					<option value="13">Selangor</option>
-																					<option value="14">Terengganu</option>
-																					<option value="15">Labuan</option>
-																					<option value="16">Putrajaya</option>
-																				</select>
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Home Phone No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																			</td>
-																	</tr>
-																	</div>
-																</div>
-															</div>
-
-														</table>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="tab-pane active" id="Work">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Company Details</legend>
-											<table>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Company Name*</label>
-															</td>
-
-															<div class="controls">
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
 																<td>
-																	<input type="text" id="CompanyName" class="form-control" autocomplete="off" maxlength="100" required>
+																	<label class="control-label required disabled float-right">Entry Date*</label>
 																</td>
-														</tr>
+
+																<div class="controls">
+																	<td>
+																		<input id="EntryDate" disabled="disabled" class="form-control" value="Jul 28 2018">
+																	</td>
+																</div>
+															</tr>
 														</div>
 													</div>
 												</div>
@@ -550,71 +227,15 @@
 													<div class="form-inline form-group">
 														<tr>
 															<td>
-																<label class="control-label required disabled float-right">Position</label>
+																<label class="control-label required disabled float-right">IC No.*</label>
 															</td>
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="Position" class="form-control" autocomplete="off" maxlength="100">
+																	<input type="text" id="ICNo" class="form-control" autocomplete="off" maxlength="20" required>
 																</td>
+															</div>
 														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Office Phone No.</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="OfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Fax Phone No.</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="FaxPhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-											</table>
-										</div>
-									</div>
-
-
-									<legend>Company Address</legend>
-									<div class="form-horizontal">
-										<table>
-
-											<div style="display:inline;">
-												<div class="form-inline form-group">
-													<tr>
-														<td>
-															<label class="control-label required disabled float-right">Line 1</label>
-														</td>
-
-														<div class="controls">
-															<td>
-																<input type="text" id="CompanyAddressLine1" class="form-control" autocomplete="off" maxlength="150">
-															</td>
-													</tr>
 													</div>
 												</div>
 											</div>
@@ -623,756 +244,1177 @@
 												<div class="form-inline form-group">
 													<tr>
 														<td>
-															<label class="control-label required disabled float-right">Line 2</label>
+															<label class="control-label required disabled float-right">Old IC No.</label>
 														</td>
 
 														<div class="controls">
 															<td>
-																<input type="text" id="CompanyAddressLine2" class="form-control" autocomplete="off" maxlength="150">
+																<input type="text" id="OldICNo" class="form-control" autocomplete="off" maxlength="20">
 															</td>
+														</div>
 													</tr>
-													</div>
 												</div>
 											</div>
+										</div>
 
-											<div style="display:inline;">
-												<div class="form-inline form-group">
-													<tr>
+										<div style="display:inline;">
+											<div class="form-inline form-group">
+												<tr>
+													<td>
+														<label class="control-label required disabled float-right">Date Of Birth*</label>
+													</td>
+
+													<div class="controls">
 														<td>
-															<label class="control-label required disabled float-right">City</label>
+															<input type="text" id="DateOfBirth" class="form-control" autocomplete="off" maxlength="20" required>
 														</td>
-
-														<div class="controls">
-															<td>
-																<input type="text" id="CompanyAddressCity" class="form-control" autocomplete="off" maxlength="100">
-															</td>
-													</tr>
 													</div>
-												</div>
+												</tr>
 											</div>
-
-											<div style="display:inline;">
-												<div class="form-inline form-group">
-													<tr>
-														<td>
-															<label class="control-label required disabled float-right">Post Code</label>
-														</td>
-
-														<div class="controls">
-															<td>
-																<input type="text" id="CompanyAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
-															</td>
-													</tr>
-													</div>
-												</div>
-											</div>
-
-											<div style="display:inline;">
-												<div class="form-inline form-group">
-													<tr>
-														<td>
-															<label class="control-label required disabled float-right">State</label>
-														</td>
-
-														<div class="controls">
-															<td>
-																<select id="CompanyAddressState" class="form-control" size="1">
-																	<option value="0">- Select One -</option>
-																	<option value="1">Johor</option>
-																	<option value="2">Kedah</option>
-																	<option value="3">Kelantan</option>
-																	<option value="4">Kuala Lumpur</option>
-																	<option value="5">Melaka</option>
-																	<option value="6">Negeri Sembilan</option>
-																	<option value="7">Pahang</option>
-																	<option value="8">Perak</option>
-																	<option value="9">Perlis</option>
-																	<option value="10">Pulau Pinang</option>
-																	<option value="11">Sabah</option>
-																	<option value="12">Sarawak</option>
-																	<option value="13">Selangor</option>
-																	<option value="14">Terengganu</option>
-																	<option value="15">Labuan</option>
-																	<option value="16">Putrajaya</option>
-																</select>
-															</td>
-													</tr>
-													</div>
-												</div>
-											</div>
-
-											<div style="display:inline;">
-												<div class="form-inline form-group">
-													<tr>
-														<td>
-															<label class="control-label required disabled float-right">Company Phone No.</label>
-														</td>
-
-														<div class="controls">
-															<td>
-																<input type="text" id="CompanyPhoneNo" class="form-control" autocomplete="off" maxlength="50">
-															</td>
-													</tr>
-													</div>
-												</div>
-											</div>
-
-										</table>
-									</div>
-
-								</div>
-
-
-								<div class="tab-pane active" id="SalaryAndDeduction">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Salary Details</legend>
-											<table>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Salary (RM)*</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="Salary" class="form-control" autocomplete="off" value="0.00" required>
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Allowance (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="Allowance" class="form-control" autocomplete="off" value="0.00">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Deduction (RM)*</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="Deduction" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">In Transit (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="InTransit" class="form-control" autocomplete="off" value="0.00">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Amount Booked (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="AmountBooked" class="form-control" autocomplete="off" value="0.00">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Payslip Month</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="PayslipMonth" class="form-control" autocomplete="off">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-											</table>
 										</div>
-
-										<legend>Deduction</legend>
-										<button class="btn btn-info" id="Deduction" data-loading-text>Add Deduction</button>
-
-										<legend>Deduction Finished</legend>
-										<button class="btn btn-info" id="DeductionFinished" data-loading-text>Add Deduction Finished</button>
 									</div>
-								</div>
 
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Gender</label>
+												</td>
 
-								<div class="tab-pane active" id="Loan">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Loan Details</legend>
-											<table>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Installment (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="Installment" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<select id="Gender" class="form-control" size="1">
+															<option value="0">- Select One -</option>
+															<option value="1">Male</option>
+															<option value="2">Female</option>
+														</select>
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Mobile Phone No.</label>
+												</td>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Eligible Deduction (%)*</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<select id="EligibleDeduction" class="form-control" size="1">
-																		<option value="0">- Select One -</option>
-																		<option value="1">60</option>
-																		<option value="2">50</option>
-																		<option value="2">40</option>
-																	</select>
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="MobilePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Loan Applied (RM)*</label>
-															</td>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Email</label>
+												</td>
 
-															<div class="controls">
-																<td>
-																	<input type="text" id="LoanApplied" class="form-control" autocomplete="off" value="0.00" required>
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="Email" class="form-control" autocomplete="off" maxlength="100">
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Tenure (Month)*</label>
-															</td>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Next Contact Name</label>
+												</td>
 
-															<div class="controls">
-																<td>
-																	<input type="text" id="Tenure" class="form-control" autocomplete="off" required>
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="NextContactName" class="form-control" autocomplete="off" maxlength="100">
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Profit Rate (%)*</label>
-															</td>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Next Contact Relationship</label>
+												</td>
 
-															<div class="controls">
-																<td>
-																	<input type="text" id="ProfitRate" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="NextContactRelationship" class="form-control" autocomplete="off" maxlength="20">
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Approval Code</label>
-															</td>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Next Contact Phone No.</label>
+												</td>
 
-															<div class="controls">
-																<td>
-																	<input type="text" id="ApprovalCode" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="NextContactPhoneNo" class="form-control" autocomplete="off" maxlength="50">
+													</td>
 												</div>
+											</tr>
+										</div>
+									</div>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Next Contact Office Phone No.</label>
+												</td>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Loan Approved (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="LoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
+												<div class="controls">
+													<td>
+														<input type="text" id="NextContactOfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+													</td>
 												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Invoice Amount (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="InvoiceAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Approval Date</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="ApprovalDate" class="form-control" autocomplete="off" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Net Loan Approved (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="NetLoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Settle Own Loan (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="SettleOwnLoan" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Marketing Officer Advance (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="Marketing Officer Advance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Company Advance (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="CompanyAdvance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-											</table>
-
-											<legend>Disbursment Details</legend>
-											<table>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Commission Deduction Amount (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="CommissionDeductionAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Bank*</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<select id="Bank" class="form-control" size="1">
-																		<option value="0">- Select One -</option>
-																		<option value="1">Affin Bank</option>
-																		<option value="2">Al Rajhi Bank</option>
-																		<option value="3">Alliance Bank</option>
-																		<option value="4">Am Bank</option>
-																		<option value="5">Bank Mualamat</option>
-																		<option value="6">CIMB Bank</option>
-																		<option value="7">Bank Simpanan Nasional</option>
-																		<option value="8">EON Bank</option>
-																		<option value="9">CitiBank</option>
-																		<option value="10">HSBC Bank</option>
-																		<option value="11">Hong Leong Bank</option>
-																		<option value="12">Maybank</option>
-																		<option value="13">OCBC Bank</option>
-																		<option value="14">Public Bank</option>
-																		<option value="15">RHB Bank</option>
-																		<option value="16">Standard Chartered Bank</option>
-																		<option value="17">United Overseas Bank (UOB)</option>
-																		<option value="18">Maybank Finance</option>
-																		<option value="19">Public Finance</option>
-																		<option value="20">Bank Rakyat</option>
-																		<option value="21">AM Finance</option>
-																		<option value="22">Bank Persatuan</option>
-																		<option value="23">Agro Bank (Bank Pertanian Malaysia)</option>
-																		<option value="24">Bank Islam</option>
-																		<option value="25">Tabung Haji</option>
-																		<option value="26">Bank Pertanian Malaysia</option>
-																		<option value="27">MBSB</option>
-																	</select>
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Bank In Name</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="BankInName" class="form-control" autocomplete="off" maxlength="100">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Account No.*</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="AccountNo" class="form-control" autocomplete="off" maxlength="20" required>
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Bank In Ammount (RM)</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="BankInAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Bank In Date</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="BankInDate" class="form-control" autocomplete="off" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Cheque No.</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="ChequeNo" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Reconciliation Date</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="ReconciliationDate" class="form-control" autocomplete="off" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Date To Bank</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="DateToBank" class="form-control" autocomplete="off" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Bank Reference</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="text" id="BankReference" class="form-control" autocomplete="off" maxlength="10" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-											</table>
-
+											</tr>
 										</div>
 									</div>
 								</div>
 
-								<div class="tab-pane active" id="Redemption">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Redemption Details</legend>
-											<table>
+								</table>
+							</div>
+						</div>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Commission Deduction Settlement (RM)</label>
-															</td>
+						<div class="col-md-6">
+							<legend>Home Address</legend>
+							<div class="form-horizontal">
+								<table>
 
-															<div class="controls">
-																<td>
-																	<input type="text" id="CommissionDeductionSettlement" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
-																</td>
-														</tr>
-														</div>
-													</div>
+									<div style="display:inline;">
+										<div class="form-inline form-group">
+											<tr>
+												<td>
+													<label class="control-label required disabled float-right">Line 1</label>
+												</td>
+
+												<div class="controls">
+													<td>
+														<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150">
+													</td>
 												</div>
-
-											</table>
-
-											<button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
-
+											</tr>
 										</div>
 									</div>
-								</div>
+							</div>
 
-								<div class="tab-pane active" id="Remark">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Remark</legend>
-											<table>
+							<div style="display:inline;">
+								<div class="form-inline form-group">
+									<tr>
+										<td>
+											<label class="control-label required disabled float-right">Line 2</label>
+										</td>
 
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Attention</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<input type="checkbox" id="Attention_MarketingOfficer" autocomplete="off">
-																	<label>Marketing Officer</label>
-																</td>
-														</tr>
-														<tr>
-															<td></td>
-															<td>
-																<input type="checkbox" id="Attention_Company" autocomplete="off">
-																<label>Company</label>
-															</td>
-														</tr>
-
-														</div>
-													</div>
-												</div>
-
-												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">New Remark</label>
-															</td>
-
-															<div class="controls">
-																<td>
-																	<textarea type="text" id="NewRemark" class="form-control" autocomplete="off"></textarea>
-																</td>
-														</tr>
-														</div>
-													</div>
-												</div>
-
-											</table>
-
+										<div class="controls">
+											<td>
+												<input type="text" id="HomeAddressLine2" class="form-control" autocomplete="off" maxlength="150">
+											</td>
 										</div>
-									</div>
+									</tr>
 								</div>
+							</div>
 
-								<div class="tab-pane active" id="Document">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Upload</legend>
-											<button class="btn btn-info" id="Upload" data-loading-text="Loading. . . ">Upload</button>
+							<div style="display:inline;">
+								<div class="form-inline form-group">
+									<tr>
+										<td>
+											<label class="control-label required disabled float-right">City</label>
+										</td>
+
+										<div class="controls">
+											<td>
+												<input type="text" id="HomeAddressCity" class="form-control" autocomplete="off" maxlength="100">
+											</td>
 										</div>
-									</div>
+									</tr>
 								</div>
+							</div>
+						</div>
 
+						<div style="display:inline;">
+							<div class="form-inline form-group">
+								<tr>
+									<td>
+										<label class="control-label required disabled float-right">Post Code</label>
+									</td>
+
+									<div class="controls">
+										<td>
+											<input type="text" id="HomeAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
+										</td>
+									</div>
+								</tr>
 							</div>
 						</div>
 				</div>
-				</form>
 
-				<div class="container">
-					<br>
-					<div class="row">
-						<button class="btn btn-warning" id="Calculate" data-loading-text>Calculate</button>
-						&nbsp; &nbsp;
-						<button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
-						&nbsp; &nbsp;
-						<button class="btn btn-primary" id="Save" data-loading-text>Save</button>
-						&nbsp; &nbsp;
-						<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
+				<div style="display:inline;">
+					<div class="form-inline form-group">
+						<tr>
+							<td>
+								<label class="control-label required disabled float-right">State</label>
+							</td>
+
+							<div class="controls">
+								<td>
+									<select id="HomeAddressState" class="form-control" size="1">
+										<option value="0">- Select One -</option>
+										<option value="1">Johor</option>
+										<option value="2">Kedah</option>
+										<option value="3">Kelantan</option>
+										<option value="4">Kuala Lumpur</option>
+										<option value="5">Melaka</option>
+										<option value="6">Negeri Sembilan</option>
+										<option value="7">Pahang</option>
+										<option value="8">Perak</option>
+										<option value="9">Perlis</option>
+										<option value="10">Pulau Pinang</option>
+										<option value="11">Sabah</option>
+										<option value="12">Sarawak</option>
+										<option value="13">Selangor</option>
+										<option value="14">Terengganu</option>
+										<option value="15">Labuan</option>
+										<option value="16">Putrajaya</option>
+									</select>
+								</td>
+						</tr>
+						</div>
 					</div>
-					<label id="lblMessages" class="text-danger"></label>
+				</div>
+
+				<div style="display:inline;">
+					<div class="form-inline form-group">
+						<tr>
+							<td>
+								<label class="control-label required disabled float-right">Home Phone No.</label>
+							</td>
+
+							<div class="controls">
+								<td>
+									<input type="text" id="HomePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+								</td>
+							</div>
+						</tr>
+					</div>
+				</div>
+			</div>
+
+			</table>
+		</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</div>
+
+	<div class="tab-pane" id="Work">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Company Details</legend>
+				<table>
+
+					<div style="display:inline;">
+						<div class="form-inline form-group">
+							<tr>
+								<td>
+									<label class="control-label required disabled float-right">Company Name*</label>
+								</td>
+
+								<div class="controls">
+									<td>
+										<input type="text" id="CompanyName" class="form-control" autocomplete="off" maxlength="100" required>
+									</td>
+								</div>
+							</tr>
+						</div>
+					</div>
+			</div>
+
+			<div style="display:inline;">
+				<div class="form-inline form-group">
+					<tr>
+						<td>
+							<label class="control-label required disabled float-right">Position</label>
+						</td>
+
+						<div class="controls">
+							<td>
+								<input type="text" id="Position" class="form-control" autocomplete="off" maxlength="100">
+							</td>
+						</div>
+					</tr>
 				</div>
 			</div>
 		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Office Phone No.</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="OfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Fax Phone No.</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="FaxPhoneNo" class="form-control" autocomplete="off" maxlength="50">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	</table>
+	</div>
+	</div>
+
+
+	<legend>Company Address</legend>
+	<div class="form-horizontal">
+		<table>
+
+			<div style="display:inline;">
+				<div class="form-inline form-group">
+					<tr>
+						<td>
+							<label class="control-label required disabled float-right">Line 1</label>
+						</td>
+
+						<div class="controls">
+							<td>
+								<input type="text" id="CompanyAddressLine1" class="form-control" autocomplete="off" maxlength="150">
+							</td>
+						</div>
+					</tr>
+				</div>
+			</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Line 2</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="CompanyAddressLine2" class="form-control" autocomplete="off" maxlength="150">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">City</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="CompanyAddressCity" class="form-control" autocomplete="off" maxlength="100">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Post Code</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="CompanyAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">State</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<select id="CompanyAddressState" class="form-control" size="1">
+							<option value="0">- Select One -</option>
+							<option value="1">Johor</option>
+							<option value="2">Kedah</option>
+							<option value="3">Kelantan</option>
+							<option value="4">Kuala Lumpur</option>
+							<option value="5">Melaka</option>
+							<option value="6">Negeri Sembilan</option>
+							<option value="7">Pahang</option>
+							<option value="8">Perak</option>
+							<option value="9">Perlis</option>
+							<option value="10">Pulau Pinang</option>
+							<option value="11">Sabah</option>
+							<option value="12">Sarawak</option>
+							<option value="13">Selangor</option>
+							<option value="14">Terengganu</option>
+							<option value="15">Labuan</option>
+							<option value="16">Putrajaya</option>
+						</select>
+					</td>
+			</tr>
+			</div>
+		</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Company Phone No.</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="CompanyPhoneNo" class="form-control" autocomplete="off" maxlength="50">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	</table>
+	</div>
+
+	</div>
+
+
+	<div class="tab-pane" id="SalaryAndDeduction">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Salary Details</legend>
+				<table>
+
+					<div style="display:inline;">
+						<div class="form-inline form-group">
+							<tr>
+								<td>
+									<label class="control-label required disabled float-right">Salary (RM)*</label>
+								</td>
+
+								<div class="controls">
+									<td>
+										<input type="text" id="Salary" class="form-control" autocomplete="off" value="0.00" required>
+									</td>
+								</div>
+							</tr>
+						</div>
+					</div>
+			</div>
+
+			<div style="display:inline;">
+				<div class="form-inline form-group">
+					<tr>
+						<td>
+							<label class="control-label required disabled float-right">Allowance (RM)</label>
+						</td>
+
+						<div class="controls">
+							<td>
+								<input type="text" id="Allowance" class="form-control" autocomplete="off" value="0.00">
+							</td>
+						</div>
+					</tr>
+				</div>
+			</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Deduction (RM)*</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="Deduction" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">In Transit (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="InTransit" class="form-control" autocomplete="off" value="0.00">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Amount Booked (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="AmountBooked" class="form-control" autocomplete="off" value="0.00">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Payslip Month</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="PayslipMonth" class="form-control" autocomplete="off">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	</table>
+	</div>
+
+	<legend>Deduction</legend>
+	<button class="btn btn-info" id="Deduction" data-loading-text>Add Deduction</button>
+
+	<legend>Deduction Finished</legend>
+	<button class="btn btn-info" id="DeductionFinished" data-loading-text>Add Deduction Finished</button>
+	</div>
+	</div>
+
+
+	<div class="tab-pane" id="Loan">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Loan Details</legend>
+				<table>
+
+					<div style="display:inline;">
+						<div class="form-inline form-group">
+							<tr>
+								<td>
+									<label class="control-label required disabled float-right">Installment (RM)</label>
+								</td>
+
+								<div class="controls">
+									<td>
+										<input type="text" id="Installment" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+									</td>
+								</div>
+							</tr>
+						</div>
+					</div>
+			</div>
+
+			<div style="display:inline;">
+				<div class="form-inline form-group">
+					<tr>
+						<td>
+							<label class="control-label required disabled float-right">Eligible Deduction (%)*</label>
+						</td>
+
+						<div class="controls">
+							<td>
+								<select id="EligibleDeduction" class="form-control" size="1">
+									<option value="0">- Select One -</option>
+									<option value="1">60</option>
+									<option value="2">50</option>
+									<option value="2">40</option>
+								</select>
+							</td>
+						</div>
+					</tr>
+				</div>
+			</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Loan Applied (RM)*</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="LoanApplied" class="form-control" autocomplete="off" value="0.00" required>
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Tenure (Month)*</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="Tenure" class="form-control" autocomplete="off" required>
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Profit Rate (%)*</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="ProfitRate" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Approval Code</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="ApprovalCode" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Loan Approved (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="LoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Invoice Amount (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="InvoiceAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Approval Date</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="ApprovalDate" class="form-control" autocomplete="off" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Net Loan Approved (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="NetLoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Settle Own Loan (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="SettleOwnLoan" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Marketing Officer Advance (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="Marketing Officer Advance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	<div style="display:inline;">
+		<div class="form-inline form-group">
+			<tr>
+				<td>
+					<label class="control-label required disabled float-right">Company Advance (RM)</label>
+				</td>
+
+				<div class="controls">
+					<td>
+						<input type="text" id="CompanyAdvance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+					</td>
+				</div>
+			</tr>
+		</div>
+	</div>
+	</div>
+
+	</table>
+
+	<legend>Disbursment Details</legend>
+	<table>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Commission Deduction Amount (RM)</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="CommissionDeductionAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Bank*</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<select id="Bank" class="form-control" size="1">
+								<option value="0">- Select One -</option>
+								<option value="1">Affin Bank</option>
+								<option value="2">Al Rajhi Bank</option>
+								<option value="3">Alliance Bank</option>
+								<option value="4">Am Bank</option>
+								<option value="5">Bank Mualamat</option>
+								<option value="6">CIMB Bank</option>
+								<option value="7">Bank Simpanan Nasional</option>
+								<option value="8">EON Bank</option>
+								<option value="9">CitiBank</option>
+								<option value="10">HSBC Bank</option>
+								<option value="11">Hong Leong Bank</option>
+								<option value="12">Maybank</option>
+								<option value="13">OCBC Bank</option>
+								<option value="14">Public Bank</option>
+								<option value="15">RHB Bank</option>
+								<option value="16">Standard Chartered Bank</option>
+								<option value="17">United Overseas Bank (UOB)</option>
+								<option value="18">Maybank Finance</option>
+								<option value="19">Public Finance</option>
+								<option value="20">Bank Rakyat</option>
+								<option value="21">AM Finance</option>
+								<option value="22">Bank Persatuan</option>
+								<option value="23">Agro Bank (Bank Pertanian Malaysia)</option>
+								<option value="24">Bank Islam</option>
+								<option value="25">Tabung Haji</option>
+								<option value="26">Bank Pertanian Malaysia</option>
+								<option value="27">MBSB</option>
+							</select>
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Bank In Name</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="BankInName" class="form-control" autocomplete="off" maxlength="100">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Account No.*</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="AccountNo" class="form-control" autocomplete="off" maxlength="20" required>
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Bank In Ammount (RM)</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="BankInAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Bank In Date</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="BankInDate" class="form-control" autocomplete="off" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Cheque No.</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="ChequeNo" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Reconciliation Date</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="ReconciliationDate" class="form-control" autocomplete="off" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Date To Bank</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="DateToBank" class="form-control" autocomplete="off" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+		<div style="display:inline;">
+			<div class="form-inline form-group">
+				<tr>
+					<td>
+						<label class="control-label required disabled float-right">Bank Reference</label>
+					</td>
+
+					<div class="controls">
+						<td>
+							<input type="text" id="BankReference" class="form-control" autocomplete="off" maxlength="10" readonly="readonly">
+						</td>
+					</div>
+				</tr>
+			</div>
+		</div>
+		</div>
+
+	</table>
+
+	</div>
+	</div>
+	</div>
+
+	<div class="tab-pane" id="Redemption">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Redemption Details</legend>
+				<table>
+
+					<div style="display:inline;">
+						<div class="form-inline form-group">
+							<tr>
+								<td>
+									<label class="control-label required disabled float-right">Commission Deduction Settlement (RM)</label>
+								</td>
+
+								<div class="controls">
+									<td>
+										<input type="text" id="CommissionDeductionSettlement" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+									</td>
+								</div>
+							</tr>
+						</div>
+					</div>
+			</div>
+
+			</table>
+
+			<button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
+
+		</div>
+	</div>
+	</div>
+
+	<div class="tab-pane" id="Remark">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Remark</legend>
+				<table>
+
+					<div style="display:inline;">
+						<div class="form-inline form-group">
+							<tr>
+								<td>
+									<label class="control-label required disabled float-right">Attention</label>
+								</td>
+
+								<div class="controls">
+									<td>
+										<input type="checkbox" id="Attention_MarketingOfficer" autocomplete="off">
+										<label>Marketing Officer</label>
+									</td>
+								</div>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+									<input type="checkbox" id="Attention_Company" autocomplete="off">
+									<label>Company</label>
+								</td>
+							</tr>
+
+						</div>
+					</div>
+			</div>
+
+			<div style="display:inline;">
+				<div class="form-inline form-group">
+					<tr>
+						<td>
+							<label class="control-label required disabled float-right">New Remark</label>
+						</td>
+
+						<div class="controls">
+							<td>
+								<textarea type="text" id="NewRemark" class="form-control" autocomplete="off"></textarea>
+							</td>
+						</div>
+					</tr>
+				</div>
+			</div>
+		</div>
+
+		</table>
+
+	</div>
+	</div>
+	</div>
+
+	<div class="tab-pane" id="Document">
+		<br>
+		<div>
+			<div class="form-horizontal">
+				<legend>Upload</legend>
+				<button class="btn btn-info" id="Upload" data-loading-text="Loading. . . ">Upload</button>
+			</div>
+		</div>
+	</div>
+
+	</div>
+	</div>
+	</div>
+	</form>
+
+	<div class="container">
+		<br>
+		<div class="row">
+			<button class="btn btn-warning" id="Calculate" data-loading-text>Calculate</button>
+			&nbsp; &nbsp;
+			<button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
+			&nbsp; &nbsp;
+			<button class="btn btn-primary" id="Save" data-loading-text>Save</button>
+			&nbsp; &nbsp;
+			<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
+		</div>
+		<label id="lblMessages" class="text-danger"></label>
+	</div>
+	</div>
+	</div>
 	</div>
 
 	<div class="footer">
@@ -1411,146 +1453,118 @@
 	<script type="text/javascript">
 		/////* Declare variables */////
 
-		var APIUrl = 'http://localhost/lpts-ci/api/';
-		//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
-
-		var s3 = new AWS.S3({
-			accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
-			secretAccessKey: '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'
-		});
 		token = sessionStorage.getItem("token");
+		require(['mainjs'], function () {
 
-		function setAndResetActive(id) {
-			data = ['All', 'Personal', 'Work', 'SalaryAndDeduction', 'Loan', 'Redemption', 'Remark'];
-			$('#showAll').removeClass('active');
-			data.each(function (i, v) {
-				if (id == 'ALL') {
-					$('#navTab').addClass('active');
-					$('#' + i).addClass('active');
-					break;
-				}
-				else {
-					if (id != i) {
-						$('#' + i).removeClass('active');
-						$(id + '.tab-pane').removeClass('active');
-					}
-					if (id = i) {
-						$('#' + i).addClass('active');
-						$(id + '.tab-pane').addClass('active');
-					}
+			$("#SaveAndStay").click(function (event) {
+				event.preventDefault();
+
+				if (checkValidity()) {
+					insertCustomer();
 				}
 			});
-		}
-		
-		$("#SaveAndStay").click(function (event) {
-			event.preventDefault();
 
-			if(checkValidity()){
-				insertCustomer();
-			}
-		});
-
-		$("#Save").click(function (event) {
-			if(checkValidity()){
-				insertCustomer();
-				window.location = "home.html";
-			}
-		});
-		
-		$("#Cancel").click(function (event) {
-			window.location = "customer.html";
-		});
-
-		function checkValidity(){
-			data = ["Name","MarketingOfficer","Package","Status","EntryDate","ICNo","DateOfBirth","CompanyName","Salary","Deduction","EligibleDeduction","LoanApplied","Tenure","ProfitRate","Bank","AccountNo"];
-
-			var datalength = data.length,
-				comma = true,
-				validInp = true,
-				reqField = "";
-
-			for(var i = 0 ; i < datalength ; i++){
-				var inp = document.getElementById(data[i]);
-				if(!inp.checkValidity()){
-					if(comma){
-						reqField += (data[i]);
-						comma = false;
-						validInp = false;
-					}
-					else
-					{
-						reqField += (", "+data[i]);
-					}
+			$("#Save").click(function (event) {
+				if (checkValidity()) {
+					insertCustomer();
+					window.location = "home.html";
 				}
-			$("#lblMessages").text("Please fill up for " + reqField);
-			}
-			return validInp;
-		}
+			});
 
-		function insertCustomer(){
-		$.ajax({
-			url: APIUrl + 'insertCustomer',
-			type: 'POST',
-			dataType: 'JSON',
-			data: {
-				Name:$("#Name").val(),
-				MarketingOfficer:$("#MarketingOfficer").val(),
-				Package:$("#Package").val(),
-				Status:$("#Status").val(),
-				EntryDate:$("#EntryDate").val(),
-				ICNo:$("#ICNo").val(),
-				OldICNo:$("#OldICNo").val(),
-				DateOfBirth:$("#DateOfBirth").val(),
-				Gender:$("#Gender").val(),
-				MobilePhoneNo:$("#MobilePhoneNo").val(),
-				Email:$("#Email").val(),
-				NextContactName:$("#NextContactName").val(),
-				NextContactRelationship:$("#NextContactRelationship").val(),
-				NextContactPhoneNo:$("#NextContactPhoneNo").val(),
-				NextContactOfficePhoneNo:$("#NextContactOfficePhoneNo").val(),
-				HomeAddressLine1:$("#HomeAddressLine1").val(),
-				HomeAddressLine2:$("#HomeAddressLine2").val(),
-				HomeCity:$("#HomeCity").val(),
-				HomePostCode:$("#HomePostCode").val(),
-				HomeState:$("#HomeState").val(),
-				HomePhoneNo:$("#HomePhoneNo").val(),
-				CompanyName:$("#CompanyName").val(),
-				Position:$("#Position").val(),
-				OfficePhoneNo:$("#OfficePhoneNo").val(),
-				FaxPhoneNo:$("#FaxPhoneNo").val(),
-				CompanyAddressLine1:$("#HomeAddressLine1").val(),
-				CompanyAddressLine2:$("#HomeAddressLine2").val(),
-				CompanyCity:$("#HomeCity").val(),
-				CompanyPostCode:$("#HomePostCode").val(),
-				CompanyState:$("#HomeState").val(),
-				CompanyPhoneNo:$("#HomePhoneNo").val(),
-				Salary:$("#Salary").val(),
-				Allowance:$("#Allowance").val(),
-				PayslipMonth:$("#PayslipMonth").val(),
-				Deduction:$("#Deduction").val(),
-				EligibleDeduction:$("#EligibleDeduction").val(),
-				LoanApplied:$("#LoanApplied").val(),
-				Tenure:$("#Tenure").val(),
-				ProfitRate:$("#ProfitRate").val(),
-				Bank:$("#Bank").val(),
-				BankInName:$("#BankInName").val(),
-				AccountNo:$("#AccountNo").val()
-			},
-			success: function (data) {
-			}
-		});
-		}
+			$("#Cancel").click(function (event) {
+				window.location = "customer.html";
+			});
 
-		$(document).ready(function () {
-			/*$('#navTab').click(function(){
-				$('#navTab').addClass('active');  
-				$('.tab-pane').each(function(i,t){
-					$('#myTab li').removeClass('active'); 
-					$(this).addClass('active');  
+			function checkValidity() {
+				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
+					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
+				];
+
+				var datalength = data.length,
+					comma = true,
+					validInp = true,
+					reqField = "";
+
+				for (var i = 0; i < datalength; i++) {
+					var inp = document.getElementById(data[i]);
+					if (!inp.checkValidity()) {
+						if (comma) {
+							reqField += (data[i]);
+							comma = false;
+							validInp = false;
+						} else {
+							reqField += (", " + data[i]);
+						}
+					}
+					$("#lblMessages").text("Please fill up for " + reqField);
+				}
+				return validInp;
+			}
+
+			function insertCustomer() {
+				$.ajax({
+					url: APIUrl + 'insertCustomer',
+					type: 'POST',
+					dataType: 'JSON',
+					data: {
+						Name: $("#Name").val(),
+						MarketingOfficer: $("#MarketingOfficer").val(),
+						Package: $("#Package").val(),
+						Status: $("#Status").val(),
+						EntryDate: $("#EntryDate").val(),
+						ICNo: $("#ICNo").val(),
+						OldICNo: $("#OldICNo").val(),
+						DateOfBirth: $("#DateOfBirth").val(),
+						Gender: $("#Gender").val(),
+						MobilePhoneNo: $("#MobilePhoneNo").val(),
+						Email: $("#Email").val(),
+						NextContactName: $("#NextContactName").val(),
+						NextContactRelationship: $("#NextContactRelationship").val(),
+						NextContactPhoneNo: $("#NextContactPhoneNo").val(),
+						NextContactOfficePhoneNo: $("#NextContactOfficePhoneNo").val(),
+						HomeAddressLine1: $("#HomeAddressLine1").val(),
+						HomeAddressLine2: $("#HomeAddressLine2").val(),
+						HomeCity: $("#HomeCity").val(),
+						HomePostCode: $("#HomePostCode").val(),
+						HomeState: $("#HomeState").val(),
+						HomePhoneNo: $("#HomePhoneNo").val(),
+						CompanyName: $("#CompanyName").val(),
+						Position: $("#Position").val(),
+						OfficePhoneNo: $("#OfficePhoneNo").val(),
+						FaxPhoneNo: $("#FaxPhoneNo").val(),
+						CompanyAddressLine1: $("#HomeAddressLine1").val(),
+						CompanyAddressLine2: $("#HomeAddressLine2").val(),
+						CompanyCity: $("#HomeCity").val(),
+						CompanyPostCode: $("#HomePostCode").val(),
+						CompanyState: $("#HomeState").val(),
+						CompanyPhoneNo: $("#HomePhoneNo").val(),
+						Salary: $("#Salary").val(),
+						Allowance: $("#Allowance").val(),
+						PayslipMonth: $("#PayslipMonth").val(),
+						Deduction: $("#Deduction").val(),
+						EligibleDeduction: $("#EligibleDeduction").val(),
+						LoanApplied: $("#LoanApplied").val(),
+						Tenure: $("#Tenure").val(),
+						ProfitRate: $("#ProfitRate").val(),
+						Bank: $("#Bank").val(),
+						BankInName: $("#BankInName").val(),
+						AccountNo: $("#AccountNo").val()
+					},
+					success: function (data) {}
 				});
-			});*/
+			}
 
-			//$('#showAll').addClass('active');
+			$(document).ready(function () {
+				/*$('#navTab').click(function(){
+					$('#navTab').addClass('active');  
+					$('.tab-pane').each(function(i,t){
+						$('#myTab li').removeClass('active'); 
+						$(this).addClass('active');  
+					});
+				});*/
+
+				//$('#showAll').addClass('active');
+			});
 		});
 
 	</script>
