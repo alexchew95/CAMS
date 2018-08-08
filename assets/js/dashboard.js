@@ -11,6 +11,7 @@ shim: {
 'twbs':['jquery1'],
 'modal':['jquery1'],
 'datatables':['jquery'],
+'jqueryui':['jquery'],
 },
 paths: {
 'core': 'assets/js/core',
@@ -29,6 +30,7 @@ paths: {
 'mainjs': 'assets/js/main',
 'twbs': 'assets/js/jquery.twbsPagination.min',
 'modal':'https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min',
+'jqueryui': 'assets/js/jquery-ui.min',
 },
 });
 window.tabler = {

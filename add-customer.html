@@ -36,6 +36,8 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<!--Datatable CSS-->
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
+	<!--JqueryUi CSS-->
+	<link href="./assets/css/jquery-ui.min.css" rel="stylesheet" />
 
 </head>
 
@@ -266,7 +268,7 @@
 
 													<div class="controls">
 														<td>
-															<input type="text" id="DateOfBirth" class="form-control" autocomplete="off" maxlength="20" required>
+															<input type="text" id="DateOfBirth" class="form-control datepicker" autocomplete="off" maxlength="20" required>
 														</td>
 													</div>
 												</tr>
@@ -1011,7 +1013,7 @@
 
 				<div class="controls">
 					<td>
-						<input type="text" id="ApprovalDate" class="form-control" autocomplete="off" readonly="readonly">
+						<input type="text" id="ApprovalDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
 					</td>
 				</div>
 			</tr>
@@ -1215,7 +1217,7 @@
 
 					<div class="controls">
 						<td>
-							<input type="text" id="BankInDate" class="form-control" autocomplete="off" readonly="readonly">
+							<input type="text" id="BankInDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
 						</td>
 					</div>
 				</tr>
@@ -1249,7 +1251,7 @@
 
 					<div class="controls">
 						<td>
-							<input type="text" id="ReconciliationDate" class="form-control" autocomplete="off" readonly="readonly">
+							<input type="text" id="ReconciliationDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
 						</td>
 					</div>
 				</tr>
@@ -1266,7 +1268,7 @@
 
 					<div class="controls">
 						<td>
-							<input type="text" id="DateToBank" class="form-control" autocomplete="off" readonly="readonly">
+							<input type="text" id="DateToBank" class="form-control datepicker" autocomplete="off" readonly="readonly">
 						</td>
 					</div>
 				</tr>
@@ -1555,15 +1557,15 @@
 			}
 
 			$(document).ready(function () {
-				/*$('#navTab').click(function(){
-					$('#navTab').addClass('active');  
-					$('.tab-pane').each(function(i,t){
-						$('#myTab li').removeClass('active'); 
-						$(this).addClass('active');  
+				// Load datepicker
+				require(['jquery','jqueryui'], function ($) {
+					$(function () {
+						$(".datepicker").datepicker({
+							changeMonth: true,
+							changeYear: true
+						});
 					});
-				});*/
-
-				//$('#showAll').addClass('active');
+				});
 			});
 		});
 
