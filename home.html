@@ -143,7 +143,7 @@
 	<!--Modal for addNewAnnouncementForm -End -->
 
 	<script type="text/javascript">
-		require(['mainjs','twbs','modal'], function () {
+		require(['mainjs', 'twbs', 'modal'], function () {
 
 			/////* Declare variables */////
 			var totalPage;
@@ -186,11 +186,15 @@
 					$.ajax({
 						url: APIUrl + 'add_announcement',
 						type: 'POST',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
 						data: {
 							"newAnnouncementTitle": $("#newAnnouncementTitle").val(),
 							"newAnnouncementContent": $("#newAnnouncementContent").val(),
 							"userName": name
 						},
+
 						dataType: 'JSON',
 						success: function (data) {
 							closeAndReload();
@@ -211,7 +215,7 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
-					currentPage = 1;
+				currentPage = 1;
 
 				/*load announcement - Start */
 				function announcement() {
@@ -219,9 +223,14 @@
 						url: APIUrl + 'announcement',
 						type: 'GET',
 						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+
 						data: {
 							currentPage: currentPage
 						},
+
 						success: function (announcement) {
 							var announcementPerPage = 10,
 								totalAnnouncement = announcement.length,
@@ -229,7 +238,7 @@
 							totalPage = Math.ceil(totalAnnouncement / announcementPerPage)
 							$.each(announcement, function (key, value) {
 								if ((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage -
-										1))) {
+									1))) {
 									announcementContainer += '<div class="col-md-auto col-xl-8">' +
 										'<div class="card">' +
 										'<div class="card-header bg-blue">' +
