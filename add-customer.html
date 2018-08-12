@@ -1376,6 +1376,9 @@
 					url: APIUrl + 'insertCustomer',
 					type: 'POST',
 					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
 					data: {
 						Name: $("#Name").val(),
 						MarketingOfficer: $("#MarketingOfficer").val(),
@@ -1420,7 +1423,11 @@
 						BankInName: $("#BankInName").val(),
 						AccountNo: $("#AccountNo").val()
 					},
-					success: function (data) {}
+
+					success: function (data) {
+						alert("Customer add succesful.");
+
+					}
 				});
 			}
 

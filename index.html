@@ -112,18 +112,19 @@
 
             data: {
               "email": $("#txtEmail").val(),
-              "password": hash,              
+              "password": hash,
             },
             dataType: 'JSON',
             success: function (data) {
               sessionStorage.setItem('token', data.token);
-              sessionStorage.setItem('name',data.name);
-              sessionStorage.setItem('role', data.role);
               sessionStorage.setItem('email', data.email);
-              window.location= "home.html";
+              sessionStorage.setItem('name', data.name);
+              sessionStorage.setItem('role', data.role);
+
+              window.location = "home.html";
               //name = sessionStorage.getItem("name");
-             // $("#lblMessages").text(name);  from storageSession
-            //  $("#lblMessages").text(data.name); from data(return from login_post)
+              // $("#lblMessages").text(name);  from storageSession
+              //  $("#lblMessages").text(data.name); from data(return from login_post)
             },
             statusCode: {
               401: function (request, status, error) {

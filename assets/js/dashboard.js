@@ -1,5 +1,6 @@
 require.config({
 shim: {
+'mainjs': ['jquery'],
 'bootstrap': ['jquery'],
 'sparkline': ['jquery'],
 'tablesorter': ['jquery'],
@@ -7,7 +8,6 @@ shim: {
 'vector-map-de': ['vector-map', 'jquery'],
 'vector-map-world': ['vector-map', 'jquery'],
 'core': ['bootstrap', 'jquery'],
-'mainjs': ['jquery'],
 'twbs':['jquery1'],
 'modal':['jquery1'],
 'datatables':['jquery'],
