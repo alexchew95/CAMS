@@ -192,293 +192,290 @@
 							</ul>
 
 							<div class="tab-content">
-								<div class="tab-pane" id="personal">
-									<div id="choose_table">
-										<div id="dtg">
-											<div class="row">
-												<div class="col-md-6">
-													<legend>General</legend>
-													<table>
-														<div class="form-horizontal">
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Status*</label>
-																		</td>
+								<div class="tab-pane active" id="personal">
+									<br>
+									<div class="row">
+										<div class="col-md-6">
+											<legend>General</legend>
+											<table>
+												<div class="form-horizontal">
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Status*</label>
+																</td>
 
-																		<td>
-																			<select id="status" disabled="disabled" class="form-control" size="1">
-																				<option value="0">- Select One -</option>
-																				<option value="1" selected="selected">Pending</option>
-																				<option value="2">Processed</option>
-																				<option value="3">Approved</option>
-																				<option value="4">Disbursed</option>
-																				<option value="5">Rejected</option>
-																			</select>
-																		</td>
-																	</tr>
-																</div>
-															</div>
-
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Entry Date*</label>
-																		</td>
-
-																		<td>
-																			<input id="EntryDate" disabled="disabled" class="form-control datepicker" value="Jul 28 2018">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">IC No.*</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="ICNo" class="form-control" autocomplete="off" maxlength="20" required>
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Old IC No.</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="OldICNo" class="form-control" autocomplete="off" maxlength="20">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Date Of Birth*</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="DateOfBirth" class="form-control datepicker" autocomplete="off" required>
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Gender</label>
-																		</td>
-
-																		<td>
-																			<select id="Gender" class="form-control" size="1">
-																				<option value="0">- Select One -</option>
-																				<option value="1">Male</option>
-																				<option value="2">Female</option>
-																			</select>
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Mobile Phone No.</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="MobilePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Email</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="Email" class="form-control" autocomplete="off" maxlength="100">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Name</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="NextContactName" class="form-control" autocomplete="off" maxlength="100">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Relationship</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="NextContactRelationship" class="form-control" autocomplete="off" maxlength="20">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Phone No.</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="NextContactPhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Next Contact Office Phone No.</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="NextContactOfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																		</td>
-																	</tr>
-																</div>
-															</div>
+																<td>
+																	<select id="status" disabled="disabled" class="form-control" size="1">
+																		<option value="0">- Select One -</option>
+																		<option value="1" selected="selected">Pending</option>
+																		<option value="2">Processed</option>
+																		<option value="3">Approved</option>
+																		<option value="4">Disbursed</option>
+																		<option value="5">Rejected</option>
+																	</select>
+																</td>
+															</tr>
 														</div>
-													</table>
-												</div>
-												<div class="col-md-6">
-													<legend>Home Address</legend>
-													<table>
-														<div class="form-horizontal">
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Line 1</label>
-																		</td>
+													</div>
 
-																		<td>
-																			<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150"> </td>
-																	</tr>
-																</div>
-															</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Entry Date*</label>
+																</td>
 
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Line 2</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="HomeAddressLine2" class="form-control" autocomplete="off" maxlength="150">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">City</label>
-																		</td>
-
-																		<td>
-																			<input type="text" id="HomeAddressCity" class="form-control" autocomplete="off" maxlength="100">
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Post Code</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomeAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
-																			</td>
-																		</div>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">State</label>
-																		</td>
-
-																		<td>
-																			<select id="HomeAddressState" class="form-control" size="1">
-																				<option value="0">- Select One -</option>
-																				<option value="1">Johor</option>
-																				<option value="2">Kedah</option>
-																				<option value="3">Kelantan</option>
-																				<option value="4">Kuala Lumpur</option>
-																				<option value="5">Melaka</option>
-																				<option value="6">Negeri Sembilan</option>
-																				<option value="7">Pahang</option>
-																				<option value="8">Perak</option>
-																				<option value="9">Perlis</option>
-																				<option value="10">Pulau Pinang</option>
-																				<option value="11">Sabah</option>
-																				<option value="12">Sarawak</option>
-																				<option value="13">Selangor</option>
-																				<option value="14">Terengganu</option>
-																				<option value="15">Labuan</option>
-																				<option value="16">Putrajaya</option>
-																			</select>
-																		</td>
-																	</tr>
-																</div>
-															</div>
-															<div style="display:inline;">
-																<div class="form-inline form-group">
-																	<tr>
-																		<td>
-																			<label class="control-label required disabled float-right">Home Phone No.</label>
-																		</td>
-
-																		<div class="controls">
-																			<td>
-																				<input type="text" id="HomePhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																			</td>
-																		</div>
-																	</tr>
-																</div>
-															</div>
+																<td>
+																	<input id="EntryDate" disabled="disabled" class="form-control datepicker" value="Jul 28 2018">
+																</td>
+															</tr>
 														</div>
-													</table>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">IC No.*</label>
+																</td>
+
+																<td>
+																	<input type="text" id="ICNo" class="form-control" autocomplete="off" maxlength="20" required>
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Old IC No.</label>
+																</td>
+
+																<td>
+																	<input type="text" id="OldICNo" class="form-control" autocomplete="off" maxlength="20">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Date Of Birth*</label>
+																</td>
+
+																<td>
+																	<input type="text" id="DateOfBirth" class="form-control datepicker" autocomplete="off" required>
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Gender</label>
+																</td>
+
+																<td>
+																	<select id="Gender" class="form-control" size="1">
+																		<option value="0">- Select One -</option>
+																		<option value="1">Male</option>
+																		<option value="2">Female</option>
+																	</select>
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Mobile Phone No.</label>
+																</td>
+
+																<td>
+																	<input type="text" id="MobilePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Email</label>
+																</td>
+
+																<td>
+																	<input type="text" id="Email" class="form-control" autocomplete="off" maxlength="100">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Next Contact Name</label>
+																</td>
+
+																<td>
+																	<input type="text" id="NextContactName" class="form-control" autocomplete="off" maxlength="100">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Next Contact Relationship</label>
+																</td>
+
+																<td>
+																	<input type="text" id="NextContactRelationship" class="form-control" autocomplete="off" maxlength="20">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Next Contact Phone No.</label>
+																</td>
+
+																<td>
+																	<input type="text" id="NextContactPhoneNo" class="form-control" autocomplete="off" maxlength="50">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Next Contact Office Phone No.</label>
+																</td>
+
+																<td>
+																	<input type="text" id="NextContactOfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+																</td>
+															</tr>
+														</div>
+													</div>
 												</div>
-											</div>
+											</table>
+										</div>
+										<div class="col-md-6">
+											<legend>Home Address</legend>
+											<table>
+												<div class="form-horizontal">
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Line 1</label>
+																</td>
+
+																<td>
+																	<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150"> </td>
+															</tr>
+														</div>
+													</div>
+
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Line 2</label>
+																</td>
+
+																<td>
+																	<input type="text" id="HomeAddressLine2" class="form-control" autocomplete="off" maxlength="150">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">City</label>
+																</td>
+
+																<td>
+																	<input type="text" id="HomeAddressCity" class="form-control" autocomplete="off" maxlength="100">
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Post Code</label>
+																</td>
+
+																<div class="controls">
+																	<td>
+																		<input type="text" id="HomeAddressPostCode" class="form-control" autocomplete="off" maxlength="5">
+																	</td>
+																</div>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">State</label>
+																</td>
+
+																<td>
+																	<select id="HomeAddressState" class="form-control" size="1">
+																		<option value="0">- Select One -</option>
+																		<option value="1">Johor</option>
+																		<option value="2">Kedah</option>
+																		<option value="3">Kelantan</option>
+																		<option value="4">Kuala Lumpur</option>
+																		<option value="5">Melaka</option>
+																		<option value="6">Negeri Sembilan</option>
+																		<option value="7">Pahang</option>
+																		<option value="8">Perak</option>
+																		<option value="9">Perlis</option>
+																		<option value="10">Pulau Pinang</option>
+																		<option value="11">Sabah</option>
+																		<option value="12">Sarawak</option>
+																		<option value="13">Selangor</option>
+																		<option value="14">Terengganu</option>
+																		<option value="15">Labuan</option>
+																		<option value="16">Putrajaya</option>
+																	</select>
+																</td>
+															</tr>
+														</div>
+													</div>
+													<div style="display:inline;">
+														<div class="form-inline form-group">
+															<tr>
+																<td>
+																	<label class="control-label required disabled float-right">Home Phone No.</label>
+																</td>
+
+																<div class="controls">
+																	<td>
+																		<input type="text" id="HomePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+																	</td>
+																</div>
+															</tr>
+														</div>
+													</div>
+												</div>
+											</table>
 										</div>
 									</div>
 								</div>
