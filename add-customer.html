@@ -94,7 +94,7 @@
 												</td>
 												<td>
 													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
-													<input type="hidden" id="MarketingOfficerId" value="2">
+													<input type="hidden" id="MarketingOfficerId" value="">
 												</td>
 											</tr>
 										</div>
@@ -208,7 +208,7 @@
 																	</td>
 																	<td>
 																		<select id="Status" disabled="disabled" class="form-control" size="1">
-																			<option value="0">- Select One -</option>
+																			<option value="">- Select One -</option>
 																			<option value="ST_PND" selected="selected">Pending</option>
 																			<option value="ST_PRO">Processed</option>
 																			<option value="ST_APPV">Approved</option>
@@ -281,7 +281,7 @@
 
 																	<td>
 																		<select id="Gender" class="form-control" size="1">
-																			<option value="0">- Select One -</option>
+																			<option value="">- Select One -</option>
 																			<option value="M">Male</option>
 																			<option value="F">Female</option>
 																		</select>
@@ -437,7 +437,7 @@
 
 																	<td>
 																		<select id="HomeAddressState" class="form-control" size="1">
-																			<option value="0">- Select One -</option>
+																			<option value="">- Select One -</option>
 																			<option value="JHR">Johor</option>
 																			<option value="KDH">Kedah</option>
 																			<option value="KLT">Kelantan</option>
@@ -635,7 +635,7 @@
 																	<div class="controls">
 																		<td>
 																			<select id="CompanyAddressState" class="form-control" size="1">
-																				<option value="0">- Select One -</option>
+																				<option value="">- Select One -</option>
 																				<option value="JHR">Johor</option>
 																				<option value="KDH">Kedah</option>
 																				<option value="KLT">Kelantan</option>
@@ -932,7 +932,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ApprovalDate" class="form-control datepicker" autocomplete="off" readonly>
+																			<input type="text" id="ApprovalDate" class="form-control" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1038,7 +1038,7 @@
 																	<div class="controls">
 																		<td>
 																			<select id="Bank" class="form-control" size="1">
-																				<option value="0">- Select One -</option>
+																				<option value="">- Select One -</option>
 																				<option value="1">Affin Bank</option>
 																				<option value="2">Al Rajhi Bank</option>
 																				<option value="3">Alliance Bank</option>
@@ -1162,7 +1162,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ReconciliationDate" class="form-control datepicker" autocomplete="off" readonly>
+																			<input type="text" id="ReconciliationDate" class="form-control" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1178,7 +1178,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="DateToBank" class="form-control datepicker" autocomplete="off" readonly>
+																			<input type="text" id="DateToBank" class="form-control" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1359,13 +1359,12 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-
+		
 		token = sessionStorage.getItem("token");
 		require(['mainjs'], function () {
 
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
-
 				if (checkValidity()) {
 					addCustomer();
 				}
@@ -1373,8 +1372,10 @@
 
 			$("#Save").click(function (event) {
 				if (checkValidity()) {
-					addCustomer();
-					window.location = "home.html";
+					if(addCustomer())
+					{
+						window.location = "home.html";
+					}
 				}
 			});
 
@@ -1391,11 +1392,11 @@
 					comma = true,
 					validInp = true,
 					reqField = "",
+					inp,
 					inpValue;
 
 				for (var i = 0; i < datalength; i++) {
-					var inp = document.getElementById(data[i]);
-					var inpValue = $(data[i]).val();
+					inp = document.getElementById(data[i]);
 					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
 						inpValue = document.getElementById(data[i]).value;
 						if (inpValue == 0) {
@@ -1492,8 +1493,8 @@
 						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
 						"bankId": $("#Bank").val(),
 						"bankInName": $("#BankInName").val(),
-						"AccountNo": $("#AccountNo").val(),
-						"Bank": $("#BankInAmmount").val(),
+						"bankAcctNo": $("#AccountNo").val(),
+						"bankInAmt": $("#BankInAmmount").val(),
 						"bankInDate": $("#BankInDate").val(),
 						"chequeNo": $("#BankChequeNo").val(),
 						"reconciliationDate": $("#ReconciliationDate").val(),
@@ -1509,6 +1510,12 @@
 					
 					success: function (data) {
 						alert("Customer add succesful.");
+						return true;
+					},
+
+					error: function () {
+						alert("Customer add fail.");
+						return false;
 					}
 				});
 			}
@@ -1518,7 +1525,7 @@
 				require(['jquery', 'jqueryui'], function ($) {
 					$(function () {
 						var d = new Date().getDate();
-						var m = 01 + new Date().getMonth(); // JavaScript months are 0-11
+						var m = new Date().getMonth() + 1; // JavaScript months are 0-11
 						var y = new Date().getFullYear();
 						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
 						$("[id$=EntryDate]").datepicker({ weekStart: 1, dateFormat: 'yy-mm-dd' });
@@ -1533,7 +1540,10 @@
 				});
 
 				var name = sessionStorage.getItem("name");
+				var userId = sessionStorage.getItem("userId");
 				$("#MarketingOfficer").attr("placeholder", name);
+				$("#MarketingOfficerId").val(userId);
+				
 				
 			});
 		});
