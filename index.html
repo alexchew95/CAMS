@@ -101,7 +101,7 @@
 						$this.data('original-text', $(this).html());
 						$this.html(loadingText);
 					}
-          
+
 					//reset label msg
 					$("#lblMessages").text("");
 					$(this).prop('valid', true);
@@ -129,6 +129,7 @@
 								sessionStorage.setItem('email', data.email);
 								sessionStorage.setItem('name', data.name);
 								sessionStorage.setItem('role', data.role);
+								sessionStorage.setItem('userId', data.userId);
 
 								window.location = "home.html";
 								//name = sessionStorage.getItem("name");
@@ -143,7 +144,7 @@
 									//console.log(error);
 									$("#lblMessages").text("Login Incorrect - Please try again");
 									$('.form-control').prop('disabled', false);
-                  $this.html($this.data('original-text'));
+									$this.html($this.data('original-text'));
 
 								}
 							},

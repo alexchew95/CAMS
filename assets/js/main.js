@@ -10,9 +10,10 @@ $(document).ready(function () {
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
 	name = sessionStorage.getItem("name"),
+		userId = sessionStorage.getItem("userId");
 
-		// Check Admin Login
-		window.onload = checkAdminLogin;
+	// Check Admin Login
+	window.onload = checkAdminLogin;
 
 	// Load TopBar and NavBar
 	$('#topbar').load('topbar.html', function () {
@@ -40,8 +41,8 @@ function checkAdminLogin() {
 	if (!token) {
 		window.location = "index.html";
 	}
-	document.querySelector('#txt_username').innerHTML = sessionStorage.getItem("name");
-	document.querySelector('#txt_role').innerHTML = sessionStorage.getItem("role");
+	document.querySelector('#txt_username').innerHTML = name;
+	document.querySelector('#txt_role').innerHTML = role;
 }
 
 function closeModal() {
