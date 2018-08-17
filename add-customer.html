@@ -93,7 +93,8 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" required>
+													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
+													<input type="hidden" id="MarketingOfficerId" value="2">
 												</td>
 											</tr>
 										</div>
@@ -160,7 +161,6 @@
 
 								});
 							}
-
 						</script>
 						<div class="tabbable" id="myTab">
 							<!-- Tabs Header Row -->
@@ -209,11 +209,11 @@
 																	<td>
 																		<select id="Status" disabled="disabled" class="form-control" size="1">
 																			<option value="0">- Select One -</option>
-																			<option value="1" selected="selected">Pending</option>
-																			<option value="2">Processed</option>
-																			<option value="3">Approved</option>
-																			<option value="4">Disbursed</option>
-																			<option value="5">Rejected</option>
+																			<option value="ST_PND" selected="selected">Pending</option>
+																			<option value="ST_PRO">Processed</option>
+																			<option value="ST_APPV">Approved</option>
+																			<option value="ST_DIS">Disbursed</option>
+																			<option value="ST_REJ">Rejected</option>
 																		</select>
 																	</td>
 																</tr>
@@ -228,7 +228,7 @@
 																	</td>
 
 																	<td>
-																		<input id="EntryDate" disabled="disabled" class="form-control datepicker" value="Jul 28 2018" required>
+																		<input id="EntryDate" disabled="disabled" class="form-control datepicker" required>
 																	</td>
 																</tr>
 															</div>
@@ -282,8 +282,8 @@
 																	<td>
 																		<select id="Gender" class="form-control" size="1">
 																			<option value="0">- Select One -</option>
-																			<option value="1">Male</option>
-																			<option value="2">Female</option>
+																			<option value="M">Male</option>
+																			<option value="F">Female</option>
 																		</select>
 																	</td>
 																</tr>
@@ -324,45 +324,6 @@
 
 																	<td>
 																		<input type="text" id="NextContactName" class="form-control" autocomplete="off" maxlength="100">
-																	</td>
-																</tr>
-															</div>
-														</div>
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Next Contact Relationship</label>
-																	</td>
-
-																	<td>
-																		<input type="text" id="NextContactRelationship" class="form-control" autocomplete="off" maxlength="20">
-																	</td>
-																</tr>
-															</div>
-														</div>
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Next Contact Phone No.</label>
-																	</td>
-
-																	<td>
-																		<input type="text" id="NextContactPhoneNo" class="form-control" autocomplete="off" maxlength="50">
-																	</td>
-																</tr>
-															</div>
-														</div>
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Next Contact Office Phone No.</label>
-																	</td>
-
-																	<td>
-																		<input type="text" id="NextContactOfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
 																	</td>
 																</tr>
 															</div>
@@ -477,22 +438,22 @@
 																	<td>
 																		<select id="HomeAddressState" class="form-control" size="1">
 																			<option value="0">- Select One -</option>
-																			<option value="1">Johor</option>
-																			<option value="2">Kedah</option>
-																			<option value="3">Kelantan</option>
-																			<option value="4">Kuala Lumpur</option>
-																			<option value="5">Melaka</option>
-																			<option value="6">Negeri Sembilan</option>
-																			<option value="7">Pahang</option>
-																			<option value="8">Perak</option>
-																			<option value="9">Perlis</option>
-																			<option value="10">Pulau Pinang</option>
-																			<option value="11">Sabah</option>
-																			<option value="12">Sarawak</option>
-																			<option value="13">Selangor</option>
-																			<option value="14">Terengganu</option>
-																			<option value="15">Labuan</option>
-																			<option value="16">Putrajaya</option>
+																			<option value="JHR">Johor</option>
+																			<option value="KDH">Kedah</option>
+																			<option value="KLT">Kelantan</option>
+																			<option value="WPK">Kuala Lumpur</option>
+																			<option value="MLK">Melaka</option>
+																			<option value="NGS">Negeri Sembilan</option>
+																			<option value="PHG">Pahang</option>
+																			<option value="PRK">Perak</option>
+																			<option value="PLS">Perlis</option>
+																			<option value="PPG">Pulau Pinang</option>
+																			<option value="SBH">Sabah</option>
+																			<option value="SWK">Sarawak</option>
+																			<option value="SLG">Selangor</option>
+																			<option value="TRG">Terengganu</option>
+																			<option value="WPL">Labuan</option>
+																			<option value="WPP">Putrajaya</option>
 																		</select>
 																	</td>
 																</tr>
@@ -570,6 +531,22 @@
 																	<div class="controls">
 																		<td>
 																			<input type="text" id="OfficePhoneNo" class="form-control" autocomplete="off" maxlength="50">
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
+
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Fax Phone No.</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input type="text" id="FaxPhoneNo" class="form-control" autocomplete="off" maxlength="50">
 																		</td>
 																	</div>
 																</tr>
@@ -659,22 +636,22 @@
 																		<td>
 																			<select id="CompanyAddressState" class="form-control" size="1">
 																				<option value="0">- Select One -</option>
-																				<option value="1">Johor</option>
-																				<option value="2">Kedah</option>
-																				<option value="3">Kelantan</option>
-																				<option value="4">Kuala Lumpur</option>
-																				<option value="5">Melaka</option>
-																				<option value="6">Negeri Sembilan</option>
-																				<option value="7">Pahang</option>
-																				<option value="8">Perak</option>
-																				<option value="9">Perlis</option>
-																				<option value="10">Pulau Pinang</option>
-																				<option value="11">Sabah</option>
-																				<option value="12">Sarawak</option>
-																				<option value="13">Selangor</option>
-																				<option value="14">Terengganu</option>
-																				<option value="15">Labuan</option>
-																				<option value="16">Putrajaya</option>
+																				<option value="JHR">Johor</option>
+																				<option value="KDH">Kedah</option>
+																				<option value="KLT">Kelantan</option>
+																				<option value="WPK">Kuala Lumpur</option>
+																				<option value="MLK">Melaka</option>
+																				<option value="NGS">Negeri Sembilan</option>
+																				<option value="PHG">Pahang</option>
+																				<option value="PRK">Perak</option>
+																				<option value="PLS">Perlis</option>
+																				<option value="PPG">Pulau Pinang</option>
+																				<option value="SBH">Sabah</option>
+																				<option value="SWK">Sarawak</option>
+																				<option value="SLG">Selangor</option>
+																				<option value="TRG">Terengganu</option>
+																				<option value="WPL">Labuan</option>
+																				<option value="WPP">Putrajaya</option>
 																			</select>
 																		</td>
 																	</div>
@@ -704,7 +681,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="Salary" class="form-control" autocomplete="off" value="0.00" required>
+																	<input type="text" id="Salary" class="form-control" autocomplete="off" placeholder="0.00" required>
 																</td>
 															</div>
 														</tr>
@@ -720,7 +697,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="Allowance" class="form-control" autocomplete="off" value="0.00">
+																	<input type="text" id="Allowance" class="form-control" autocomplete="off" placeholder="0.00">
 																</td>
 															</div>
 														</tr>
@@ -736,7 +713,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="Deduction" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																	<input type="text" id="Deduction" class="form-control" autocomplete="off" value="0.00" readonly>
 																</td>
 															</div>
 														</tr>
@@ -752,7 +729,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="InTransit" class="form-control" autocomplete="off" value="0.00">
+																	<input type="text" id="InTransit" class="form-control" autocomplete="off" placeholder="0.00">
 																</td>
 															</div>
 														</tr>
@@ -768,7 +745,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="AmountBooked" class="form-control" autocomplete="off" value="0.00">
+																	<input type="text" id="AmountBooked" class="form-control" autocomplete="off" placeholder="0.00">
 																</td>
 															</div>
 														</tr>
@@ -785,7 +762,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="PayslipMonth" class="form-control" autocomplete="off">
+																	<input type="text" id="PayslipMonth" class="form-control datepicker" autocomplete="off">
 																</td>
 															</div>
 														</tr>
@@ -822,7 +799,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="Installment" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="Installment" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -859,7 +836,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="LoanApplied" class="form-control" autocomplete="off" value="0.00" required>
+																			<input type="text" id="LoanApplied" class="form-control" autocomplete="off" placeholder="0.00" required>
 																		</td>
 																	</div>
 																</tr>
@@ -891,7 +868,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ProfitRate" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="ProfitRate" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -907,7 +884,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ApprovalCode" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
+																			<input type="text" id="ApprovalCode" class="form-control" autocomplete="off" maxlength="20" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -923,7 +900,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="LoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="LoanApproved" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -939,7 +916,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="InvoiceAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="InvoiceAmount" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -955,7 +932,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ApprovalDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
+																			<input type="text" id="ApprovalDate" class="form-control datepicker" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -971,7 +948,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="NetLoanApproved" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="NetLoanApproved" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -987,7 +964,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="SettleOwnLoan" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="SettleOwnLoan" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1003,7 +980,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="Marketing Officer Advance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="Marketing Officer Advance" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1019,7 +996,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="CompanyAdvance" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="CompanyAdvance" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1044,7 +1021,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="CommissionDeductionAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="CommissionDeductionAmount" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1137,7 +1114,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="BankInAmount" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																			<input type="text" id="BankInAmount" class="form-control" autocomplete="off" value="0.00" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1153,7 +1130,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="BankInDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
+																			<input type="text" id="BankInDate" class="form-control" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1169,7 +1146,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ChequeNo" class="form-control" autocomplete="off" maxlength="20" readonly="readonly">
+																			<input type="text" id="ChequeNo" class="form-control" autocomplete="off" maxlength="20" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1185,7 +1162,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ReconciliationDate" class="form-control datepicker" autocomplete="off" readonly="readonly">
+																			<input type="text" id="ReconciliationDate" class="form-control datepicker" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1201,7 +1178,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="DateToBank" class="form-control datepicker" autocomplete="off" readonly="readonly">
+																			<input type="text" id="DateToBank" class="form-control datepicker" autocomplete="off" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1217,7 +1194,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="BankReference" class="form-control" autocomplete="off" maxlength="10" readonly="readonly">
+																			<input type="text" id="BankReference" class="form-control" autocomplete="off" maxlength="10" readonly>
 																		</td>
 																	</div>
 																</tr>
@@ -1247,7 +1224,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="text" id="CommissionDeductionSettlement" class="form-control" autocomplete="off" value="0.00" readonly="readonly">
+																	<input type="text" id="CommissionDeductionSettlement" class="form-control" autocomplete="off" value="0.00" readonly>
 																</td>
 															</div>
 														</tr>
@@ -1390,13 +1367,13 @@
 				event.preventDefault();
 
 				if (checkValidity()) {
-					insertCustomer();
+					addCustomer();
 				}
 			});
 
 			$("#Save").click(function (event) {
 				if (checkValidity()) {
-					insertCustomer();
+					addCustomer();
 					window.location = "home.html";
 				}
 			});
@@ -1441,67 +1418,97 @@
 							}
 						}
 					}
-					$("#lblMessages").text("Please fill up for " + reqField);
+					if(validInp == false)
+					{
+						$("#lblMessages").text("Please fill up for " + reqField);
+					}
+					else
+					{
+						$("#lblMessages").text("");
+					}
 				}
 				return validInp;
 			}
 
-			function insertCustomer() {
+			function addCustomer() {
 				$.ajax({
-					url: APIUrl + 'insertCustomer',
+					url: APIUrl + 'addCustomer',
 					type: 'POST',
 					dataType: 'JSON',
 					beforeSend: function (xhr) { //Include the bearer token in header
 						xhr.setRequestHeader("Authorization", token);
 					},
 					data: {
-						Name: $("#Name").val(),
-						MarketingOfficer: $("#MarketingOfficer").val(),
-						Package: $("#Package").val(),
-						Status: $("#Status").val(),
-						EntryDate: $("#EntryDate").val(),
-						ICNo: $("#ICNo").val(),
-						OldICNo: $("#OldICNo").val(),
-						DateOfBirth: $("#DateOfBirth").val(),
-						Gender: $("#Gender").val(),
-						MobilePhoneNo: $("#MobilePhoneNo").val(),
-						Email: $("#Email").val(),
-						NextContactName: $("#NextContactName").val(),
-						NextContactRelationship: $("#NextContactRelationship").val(),
-						NextContactPhoneNo: $("#NextContactPhoneNo").val(),
-						NextContactOfficePhoneNo: $("#NextContactOfficePhoneNo").val(),
-						HomeAddressLine1: $("#HomeAddressLine1").val(),
-						HomeAddressLine2: $("#HomeAddressLine2").val(),
-						HomeCity: $("#HomeCity").val(),
-						HomePostCode: $("#HomePostCode").val(),
-						HomeState: $("#HomeState").val(),
-						HomePhoneNo: $("#HomePhoneNo").val(),
-						CompanyName: $("#CompanyName").val(),
-						Position: $("#Position").val(),
-						OfficePhoneNo: $("#OfficePhoneNo").val(),
-						FaxPhoneNo: $("#FaxPhoneNo").val(),
-						CompanyAddressLine1: $("#HomeAddressLine1").val(),
-						CompanyAddressLine2: $("#HomeAddressLine2").val(),
-						CompanyCity: $("#HomeCity").val(),
-						CompanyPostCode: $("#HomePostCode").val(),
-						CompanyState: $("#HomeState").val(),
-						CompanyPhoneNo: $("#HomePhoneNo").val(),
-						Salary: $("#Salary").val(),
-						Allowance: $("#Allowance").val(),
-						PayslipMonth: $("#PayslipMonth").val(),
-						Deduction: $("#Deduction").val(),
-						EligibleDeduction: $("#EligibleDeduction").val(),
-						LoanApplied: $("#LoanApplied").val(),
-						Tenure: $("#Tenure").val(),
-						ProfitRate: $("#ProfitRate").val(),
-						Bank: $("#Bank").val(),
-						BankInName: $("#BankInName").val(),
-						AccountNo: $("#AccountNo").val()
+						"customerName": $("#Name").val(),
+						"marketingOfficerId": $("#MarketingOfficerId").val(),
+						"packageId": $("#Package").val(),
+						"status": $("#Status").val(),
+						"entryDate": $("#EntryDate").val(),
+						"newIC": $("#ICNo").val(),
+						"oldIC": $("#OldICNo").val(),
+						"dob": $("#DateOfBirth").val(),
+						"gender": $("#Gender").val(),
+						"phoneNumber": $("#MobilePhoneNo").val(),
+						"email": $("#Email").val(),
+						"nextContactName": $("#NextContactName").val(),
+						"nextContactRel": $("#NextContactRelationship").val(),
+						"nextContactPhone": $("#NextContactPhoneNo").val(),
+						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
+						"addr1": $("#HomeAddressLine1").val(),
+						"addr2": $("#HomeAddressLine2").val(),
+						"city": $("#HomeAddressCity").val(),
+						"postCode": $("#HomeAddressPostCode").val(),
+						"state": $("#HomeAddressState").val(),
+						"homePhone": $("#HomePhoneNo").val(),
+						"companyName": $("#CompanyName").val(),
+						"position": $("#Position").val(),
+						"officePhone": $("#OfficePhoneNo").val(),
+						"faxNumber": $("#FaxPhoneNo").val(),
+						"compAddr1": $("#CompanyAddressLine1").val(),
+						"compAddr2": $("#CompanyAddressLine2").val(),
+						"compCity": $("#CompanyAddressCity").val(),
+						"compPostCode": $("#CompanyAddressPostCode").val(),
+						"compState": $("#CompanyAddressState").val(),
+						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
+						"salary": $("#Salary").val(),
+						"allowance": $("#Allowance").val(),
+						"deduction": $("#Deduction").val(),
+						"inTransit": $("#InTransit").val(),
+						"amtBooked": $("#AmountBooked").val(),
+						"payslipMonth": $("#PayslipMonth").val(),
+						"installment": $("#Installment").val(),
+						"eligibleDeduction": $("#EligibleDeduction").val(),
+						"loanAppliedAmt": $("#LoanApplied").val(),
+						"tenure": $("#Tenure").val(),
+						"profitRate": $("#ProfitRate").val(),
+						"approvalCode": $("#ApprovalCode").val(),
+						"loanApprovedAmt": $("#LoanApproved").val(),
+						"invoiceAmt": $("#InvoiceAmount").val(),
+						"approvalDate": $("#ApprovalDate").val(),
+						"netLoanApproved": $("#NetLoanApproved").val(),
+						"settleOwnLoan": $("#SettleOwnLoan").val(),
+						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
+						"companyAdv": $("#CompanyAdvance").val(),
+						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
+						"bankId": $("#Bank").val(),
+						"bankInName": $("#BankInName").val(),
+						"AccountNo": $("#AccountNo").val(),
+						"Bank": $("#BankInAmmount").val(),
+						"bankInDate": $("#BankInDate").val(),
+						"chequeNo": $("#BankChequeNo").val(),
+						"reconciliationDate": $("#ReconciliationDate").val(),
+						"dateToBank": $("#DateToBank").val(),
+						"bankRef": $("#BankReference").val(),
+						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
+						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
+						"Attention_Company": $("#Attention_Company").val(),
+						"remarkContent": $("#NewRemark").val(),
 					},
-
+					
+					// to do API.php user, createDateTime, completeUser, completeDateTime, completeDateTime
+					
 					success: function (data) {
 						alert("Customer add succesful.");
-
 					}
 				});
 			}
@@ -1510,12 +1517,24 @@
 				// Load datepicker
 				require(['jquery', 'jqueryui'], function ($) {
 					$(function () {
+						var d = new Date().getDate();
+						var m = 01 + new Date().getMonth(); // JavaScript months are 0-11
+						var y = new Date().getFullYear();
+						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
+						$("[id$=EntryDate]").datepicker({ weekStart: 1, dateFormat: 'yy-mm-dd' });
+
 						$(".datepicker").datepicker({
 							changeMonth: true,
-							changeYear: true
+							changeYear: true,
+							dateFormat: 'yy-mm-dd',
+							yearRange: '1900:' + y
 						});
 					});
 				});
+
+				var name = sessionStorage.getItem("name");
+				$("#MarketingOfficer").attr("placeholder", name);
+				
 			});
 		});
 
