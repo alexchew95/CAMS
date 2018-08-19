@@ -1,7 +1,7 @@
 /////* Common Variable List */////
 
-//var APIUrl = 'http://localhost/lpts-ci/api/';
-var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+var APIUrl = 'http://localhost/lpts-ci/api/';
+//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 
 /* Common function call for most html page */
 
@@ -9,11 +9,11 @@ $(document).ready(function () {
 	// Load Session data
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
-	name = sessionStorage.getItem("name"),
-		userId = sessionStorage.getItem("userId");
+	name = sessionStorage.getItem("name");
+	userId = sessionStorage.getItem("userId"),
 
-	// Check Admin Login
-	window.onload = checkAdminLogin;
+		// Check Admin Login
+		window.onload = checkAdminLogin;
 
 	// Load TopBar and NavBar
 	$('#topbar').load('topbar.html', function () {
