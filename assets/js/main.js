@@ -9,11 +9,11 @@ $(document).ready(function () {
 	// Load Session data
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
-	name = sessionStorage.getItem("name");
-	userId = sessionStorage.getItem("userId"),
+	name = sessionStorage.getItem("name"),
+	userId = sessionStorage.getItem("userId");
 
-		// Check Admin Login
-		window.onload = checkAdminLogin;
+	// Check Admin Login
+	window.onload = checkLogin;
 
 	// Load TopBar and NavBar
 	$('#topbar').load('topbar.html', function () {
@@ -37,7 +37,21 @@ $(document).ready(function () {
 
 /////* Common Function List */////
 
-function checkAdminLogin() {
+/* 
+Function: To get the value in URL 
+Usage:	var customerId = $_GET('customerId'); 
+*/
+function $_GET(q, s) {
+	s = (s) ? s : window.location.search;
+	var re = new RegExp('&amp;' + q + '=([^&amp;]*)', 'i');
+	return (s = s.replace(/^\?/, '&amp;').match(re)) ? s = s[1] : s = '';
+}
+
+/* 
+Function: Check login
+Usage:	var customerId = $_GET('customerId'); 
+*/
+function checkLogin() {
 	if (!token) {
 		window.location = "index.html";
 	}

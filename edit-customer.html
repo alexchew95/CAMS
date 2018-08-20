@@ -16,7 +16,7 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
-	<title>LPTS - Add Customer</title>
+	<title>LPTS - Edit Customer</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -65,7 +65,7 @@
 							<li class="breadcrumb-item">
 								<a href="customer.html">Customer</a>
 							</li>
-							<li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+							<li class="breadcrumb-item active" aria-current="page">Edit Customer</li>
 						</ol>
 					</nav>
 					<form>
@@ -161,6 +161,7 @@
 
 								});
 							}
+
 						</script>
 						<div class="tabbable" id="myTab">
 							<!-- Tabs Header Row -->
@@ -1359,7 +1360,8 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-		
+		var customerID;
+
 		token = sessionStorage.getItem("token");
 		require(['mainjs'], function () {
 
@@ -1372,8 +1374,7 @@
 
 			$("#Save").click(function (event) {
 				if (checkValidity()) {
-					if(addCustomer())
-					{
+					if (addCustomer()) {
 						window.location = "customer.html";
 					}
 				}
@@ -1382,145 +1383,20 @@
 			$("#Cancel").click(function (event) {
 				window.location = "customer.html";
 			});
-
-			function checkValidity() {
-				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
-				];
-
-				var datalength = data.length,
-					comma = true,
-					validInp = true,
-					reqField = "",
-					inp,
-					inpValue;
-
-				for (var i = 0; i < datalength; i++) {
-					inp = document.getElementById(data[i]);
-					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
-						inpValue = document.getElementById(data[i]).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
-						}
-					} else {
-						if (!inp.checkValidity()) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
-						}
-					}
-					if(validInp == false)
-					{
-						$("#lblMessages").text("Please fill up for " + reqField);
-					}
-					else
-					{
-						$("#lblMessages").text("");
-					}
-				}
-				return validInp;
+			
+			function loadCustomerData(customerId)
+			{
+				
 			}
-
-			function addCustomer() {
-				$.ajax({
-					url: APIUrl + 'addCustomer',
-					type: 'POST',
-					dataType: 'JSON',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					data: {
-						"customerName": $("#Name").val(),
-						"marketingOfficerId": $("#MarketingOfficerId").val(),
-						"packageId": $("#Package").val(),
-						"status": $("#Status").val(),
-						"entryDate": $("#EntryDate").val(),
-						"newIC": $("#ICNo").val(),
-						"oldIC": $("#OldICNo").val(),
-						"dob": $("#DateOfBirth").val(),
-						"gender": $("#Gender").val(),
-						"phoneNumber": $("#MobilePhoneNo").val(),
-						"email": $("#Email").val(),
-						"nextContactName": $("#NextContactName").val(),
-						"nextContactRel": $("#NextContactRelationship").val(),
-						"nextContactPhone": $("#NextContactPhoneNo").val(),
-						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
-						"addr1": $("#HomeAddressLine1").val(),
-						"addr2": $("#HomeAddressLine2").val(),
-						"city": $("#HomeAddressCity").val(),
-						"postCode": $("#HomeAddressPostCode").val(),
-						"state": $("#HomeAddressState").val(),
-						"homePhone": $("#HomePhoneNo").val(),
-						"companyName": $("#CompanyName").val(),
-						"position": $("#Position").val(),
-						"officePhone": $("#OfficePhoneNo").val(),
-						"faxNumber": $("#FaxPhoneNo").val(),
-						"compAddr1": $("#CompanyAddressLine1").val(),
-						"compAddr2": $("#CompanyAddressLine2").val(),
-						"compCity": $("#CompanyAddressCity").val(),
-						"compPostCode": $("#CompanyAddressPostCode").val(),
-						"compState": $("#CompanyAddressState").val(),
-						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
-						"salary": $("#Salary").val(),
-						"allowance": $("#Allowance").val(),
-						"deduction": $("#Deduction").val(),
-						"inTransit": $("#InTransit").val(),
-						"amtBooked": $("#AmountBooked").val(),
-						"payslipMonth": $("#PayslipMonth").val(),
-						"installment": $("#Installment").val(),
-						"eligibleDeduction": $("#EligibleDeduction").val(),
-						"loanAppliedAmt": $("#LoanApplied").val(),
-						"tenure": $("#Tenure").val(),
-						"profitRate": $("#ProfitRate").val(),
-						"approvalCode": $("#ApprovalCode").val(),
-						"loanApprovedAmt": $("#LoanApproved").val(),
-						"invoiceAmt": $("#InvoiceAmount").val(),
-						"approvalDate": $("#ApprovalDate").val(),
-						"netLoanApproved": $("#NetLoanApproved").val(),
-						"settleOwnLoan": $("#SettleOwnLoan").val(),
-						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
-						"companyAdv": $("#CompanyAdvance").val(),
-						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
-						"bankId": $("#Bank").val(),
-						"bankInName": $("#BankInName").val(),
-						"bankAcctNo": $("#AccountNo").val(),
-						"bankInAmt": $("#BankInAmmount").val(),
-						"bankInDate": $("#BankInDate").val(),
-						"chequeNo": $("#BankChequeNo").val(),
-						"reconciliationDate": $("#ReconciliationDate").val(),
-						"dateToBank": $("#DateToBank").val(),
-						"bankRef": $("#BankReference").val(),
-						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
-						"Attention_Company": $("#Attention_Company").val(),
-						"remarkContent": $("#NewRemark").val(),
-					},
-					
-					// to do API.php user, createDateTime, completeUser, completeDateTime, completeDateTime
-					
-					success: function (data) {
-						alert("Customer add succesful.");
-						return true;
-					},
-
-					error: function () {
-						alert("Customer add fail.");
-						return false;
-					}
-				});
-			}
+				// TODO Yue zong
+				// 1. Write a function to load customer outside of document.ready 
 
 			$(document).ready(function () {
+				var customerId = $_GET('customerId'); 
+				// TODO Yue Zong
+				// 2. Call the load customer function
+				loadCustomerData(customerId);	
+				
 				// Load datepicker
 				require(['jquery', 'jqueryui'], function ($) {
 					$(function () {
@@ -1528,7 +1404,10 @@
 						var m = new Date().getMonth() + 1; // JavaScript months are 0-11
 						var y = new Date().getFullYear();
 						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
-						$("[id$=EntryDate]").datepicker({ weekStart: 1, dateFormat: 'yy-mm-dd' });
+						$("[id$=EntryDate]").datepicker({
+							weekStart: 1,
+							dateFormat: 'yy-mm-dd'
+						});
 
 						$(".datepicker").datepicker({
 							changeMonth: true,
@@ -1543,8 +1422,8 @@
 				var userId = sessionStorage.getItem("userId");
 				$("#MarketingOfficer").attr("placeholder", name);
 				$("#MarketingOfficerId").val(userId);
-				
-				
+
+
 			});
 		});
 

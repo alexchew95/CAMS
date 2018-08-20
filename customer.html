@@ -155,7 +155,7 @@
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								'',
+								'<a href="edit-customer.html?customerId='+data[i].customerId+'"> <i class="fa fa-edit"></i></a>',
 								data[i].entryDate,
 								data[i].packageId,
 								data[i].customerName,
