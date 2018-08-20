@@ -16,7 +16,7 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
-	<title>LPTS - Customer</title>
+	<title>LPTS - Message</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
@@ -28,12 +28,10 @@
 
 	</script>
 
-
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
 
-	<!-- jQuery Modal -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<!--Datatable CSS-->
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
@@ -47,37 +45,33 @@
 
 			<div class="header py-4">
 				<div class="container" id="topbar">
-
+					<!--Top Bar to autoload to here with logo and User Box-->
 				</div>
 			</div>
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
-
+					<!--Nav Bar to autoload to here-->
 				</div>
 			</div>
-
 			<div class="my-3 my-md-5">
-
 				<div class="container">
 					<div class="card-header">
 						<h1 class="page-title">
-							Customer
+							Package
 						</h1>
-						<button class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add Customer</button>
 					</div>
 					<div class="card-body">
-						<table class="table table-responsive" id="tableAllCustomers">
+						<table class="table table-responsive" id="tablePackage">
 							<thead>
 								<tr>
 									<th id="headerID" class="text-center" style="width: 5%"></th>
-									<th id="headerName">Entry Date</th>
-									<th id="headerIC">Package</th>
+									<th id="headerName">Date Time</th>
+									<th id="headerIC">Marketing Officer</th>
 									<th id="headerMobileNo">Name</th>
 									<th id="headerEmail">IC No.</th>
-									<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
-									<th class="text-center" style="width: 5%">Batch</th>
-									<th class="text-center" style="width: 5%">Docs</th>
-									<th class="text-center" style="width: 5%">Status</th>
+									<th id="headerStatus" class="text-left" style="width: 15%">Package</th>
+									<th class="text-center" style="width: 5%">Processor</th>
+									<th class="text-center" style="width: 5%">Remarks</th>
 								</tr>
 							</thead>
 							<tbody id="userListBody">
@@ -85,17 +79,7 @@
 							</tbody>
 
 							<tfoot>
-								<tr>
-									<th></th>
-									<th>Entry Date</th>
-									<th>Package</th>
-									<th>Name</th>
-									<th>IC No.</th>
-									<th>Marketing Officer</th>
-									<th>Batch</th>
-									<th>Docs</th>
-									<th>Status</th>
-								</tr>
+
 							</tfoot>
 						</table>
 					</div>
@@ -125,28 +109,32 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
+		// var s3 = new AWS.S3({
+		//   accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
+		//   secretAccessKey: '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'
+		// });
+		token = sessionStorage.getItem("token");
+		role = sessionStorage.getItem("role");
 
-		//When the page has loaded.
-		require(['jquery','mainjs','datatables'], function ($) {
+		/////* Function List */////
+
+		require(['mainjs', 'datatables'], function () {
 			$(document).ready(function () {
 
+				token = sessionStorage.getItem("token");
 				role = sessionStorage.getItem("role");
-				/* To setup the search tab for datatable - Nick */
-				$('#tableAllCustomers tfoot th').each(function () {
-					var title = $(this).text();
-					if (title != '')
-						$(this).html('<input type="text" class="form-control" />');
-					else
-						$(this).html('Search');
-
-				});
+				email = sessionStorage.getItem("email");
+console.log(email);
 
 				/* To List all customer in Customer Homepage */
 				var arrayReturn = [];
 				$.ajax({
-					url: APIUrl + 'listAllCustomers',
+					url: APIUrl + 'listRemark',
 					async: false,
 					dataType: 'json',
+					data: {
+						"email": email
+					},
 					type: 'post',
 					beforeSend: function (xhr) { //Include the bearer token in header
 						xhr.setRequestHeader("Authorization", token);
@@ -155,15 +143,14 @@
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								'<a href="edit-customer.html?customerId='+data[i].customerId+'"> <i class="fa fa-edit"></i></a>',
-								data[i].entryDate,
-								data[i].packageId,
-								data[i].customerName,
+								'',
+								data[i].createDateTime,
+								data[i].attentionTo, //marketting officer 
+								data[i].customerId,
 								data[i].newIC,
-								data[i].name,
-								'', //TODO: Check what is batch with Fatin
-								'', //TODO: Count total doc uploaded
-								data[i].description,
+								data[i].packageId,
+								data[i].user, //user who log this remark
+								data[i].remarks,
 							]);
 						}
 						inittable(arrayReturn);
@@ -192,7 +179,10 @@
 					});
 				}
 			});
+			$(".custom-loader").hide();
+
 		});
+
 
 	</script>
 </body>

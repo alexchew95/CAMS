@@ -16,7 +16,7 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
-	<title>LPTS - Add Customer</title>
+	<title>LPTS - Edit Customer</title>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -65,7 +65,7 @@
 							<li class="breadcrumb-item">
 								<a href="customer.html">Customer</a>
 							</li>
-							<li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+							<li class="breadcrumb-item active" aria-current="page">Edit Customer</li>
 						</ol>
 					</nav>
 					<form>
@@ -150,7 +150,7 @@
 							});
 
 							function ResetActive(id) {
-								data = ['personal', 'work', 'deduction', 'loan', 'package', 'redemption', 'remark'];
+								data = ['personal', 'work', 'deduction', 'loan', 'package', 'redemption', 'remark', 'document'];
 								data.forEach(function (i, v) {
 									if (id != i) {
 										console.log(id + " ? ? " + i);
@@ -186,6 +186,9 @@
 								</li>
 								<li id="liRemark">
 									<a href="#Remark" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('remark')">Remark</a>
+								</li>
+								<li id="liDocument">
+									<a href="#Document" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('document')">Document</a>
 								</li>
 							</ul>
 
@@ -840,22 +843,6 @@
 																</tr>
 															</div>
 														</div>
-														
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Agent Commission (RM)*</label>
-																	</td>
-
-																	<div class="controls">
-																		<td>
-																			<input type="text" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00">
-																		</td>
-																	</div>
-																</tr>
-															</div>
-														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
@@ -1254,11 +1241,9 @@
 								<div class="tab-pane" id="remark">
 									<br>
 									<div>
-										<div class="form-horizontal">
-											<table>
-
+											<div class="form-horizontal">
 												<legend>Remark</legend>
-
+												<table>
 												<div style="display:inline;">
 													<div class="form-inline form-group">
 														<tr>
@@ -1275,13 +1260,10 @@
 														</tr>
 														<tr>
 															<td></td>
-															<div class="controls">
-
-																<td>
-																	<input type="checkbox" id="Attention_Company" autocomplete="off">
-																	<label>Company</label>
-																</td>
-															</div>
+															<td>
+																<input type="checkbox" id="Attention_Company" autocomplete="off">
+																<label>Company</label>
+															</td>
 														</tr>
 
 													</div>
@@ -1302,22 +1284,61 @@
 														</tr>
 													</div>
 												</div>
-											</table>
-											
+												</table>
+											</div>
+											<button class="btn btn-warning" id="addRemark" data-loading-text>Calculate</button>
+
+											<table class="table table-responsive" id="tableAllCustomers">
+													<thead>
+														<tr>
+															<th id="headerID" class="text-center" style="width: 5%"></th>
+															<th id="headerName">Entry Date</th>
+															<th id="headerIC">Package</th>
+															<th id="headerMobileNo">Name</th>
+															<th id="headerEmail">IC No.</th>
+															<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
+															<th class="text-center" style="width: 5%">Batch</th>
+															<th class="text-center" style="width: 5%">Docs</th>
+															<th class="text-center" style="width: 5%">Status</th>
+														</tr>
+													</thead>
+													<tbody id="userListBody">
+													</tbody>
+													<tfoot>
+														<tr>
+															<th></th>
+															<th>Entry Date</th>
+															<th>Package</th>
+															<th>Name</th>
+															<th>IC No.</th>
+															<th>Marketing Officer</th>
+															<th>Batch</th>
+															<th>Docs</th>
+															<th>Status</th>
+														</tr>
+													</tfoot>
+												</table>
+									</div>
+								</div>
+								<div class="tab-pane" id="document">
+									<br>
+									<div>
+										<div class="form-horizontal">
+											<legend>Upload</legend>
+											<button class="btn btn-info" id="btn_upload" data-loading-text="Loading. . . ">Upload</button>
 										</div>
 									</div>
 								</div>
-
 							</div>
 
 							<div class="container">
 								<br>
 								<div class="row">
-									<button class="btn btn-warning" id="Calculate" data-loading-text>Calculate</button>
+									<button class="btn btn-warning" id="btn_calculate" data-loading-text>Calculate</button>
 									&nbsp; &nbsp;
-									<button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
+									<button class="btn btn-primary" id="btn_saveAndStay" data-loading-text>Save & Stay</button>
 									&nbsp; &nbsp;
-									<button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
+									<button class="btn btn-primary" id="btn_save" type="button" data-loading-text>Save</button>
 									&nbsp; &nbsp;
 									<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 								</div>
@@ -1370,6 +1391,7 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
+		var customerID;
 
 		token = sessionStorage.getItem("token");
 		require(['mainjs'], function () {
@@ -1392,144 +1414,20 @@
 			$("#Cancel").click(function (event) {
 				window.location = "customer.html";
 			});
-
-			function checkValidity() {
-				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
-				];
-
-				var datalength = data.length,
-					comma = true,
-					validInp = true,
-					reqField = "",
-					inp,
-					inpValue;
-
-				for (var i = 0; i < datalength; i++) {
-					inp = document.getElementById(data[i]);
-					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
-						inpValue = document.getElementById(data[i]).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
-						}
-					} else {
-						if (!inp.checkValidity()) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
-						}
-					}
-					if (validInp == false) {
-						$("#lblMessages").text("Please fill up for " + reqField);
-					} else {
-						$("#lblMessages").text("");
-					}
-				}
-				return validInp;
+			
+			function loadCustomerData(customerId)
+			{
+				
 			}
-
-			function addCustomer() {
-				$.ajax({
-					url: APIUrl + 'addCustomer',
-					type: 'POST',
-					dataType: 'JSON',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					data: {
-						"customerName": $("#Name").val(),
-						"marketingOfficerId": $("#MarketingOfficerId").val(),
-						"packageId": $("#Package").val(),
-						"status": $("#Status").val(),
-						"entryDate": $("#EntryDate").val(),
-						"newIC": $("#ICNo").val(),
-						"oldIC": $("#OldICNo").val(),
-						"dob": $("#DateOfBirth").val(),
-						"gender": $("#Gender").val(),
-						"phoneNumber": $("#MobilePhoneNo").val(),
-						"email": $("#Email").val(),
-						"nextContactName": $("#NextContactName").val(),
-						"nextContactRel": $("#NextContactRelationship").val(),
-						"nextContactPhone": $("#NextContactPhoneNo").val(),
-						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
-						"addr1": $("#HomeAddressLine1").val(),
-						"addr2": $("#HomeAddressLine2").val(),
-						"city": $("#HomeAddressCity").val(),
-						"postCode": $("#HomeAddressPostCode").val(),
-						"state": $("#HomeAddressState").val(),
-						"homePhone": $("#HomePhoneNo").val(),
-						"companyName": $("#CompanyName").val(),
-						"position": $("#Position").val(),
-						"officePhone": $("#OfficePhoneNo").val(),
-						"faxNumber": $("#FaxPhoneNo").val(),
-						"compAddr1": $("#CompanyAddressLine1").val(),
-						"compAddr2": $("#CompanyAddressLine2").val(),
-						"compCity": $("#CompanyAddressCity").val(),
-						"compPostCode": $("#CompanyAddressPostCode").val(),
-						"compState": $("#CompanyAddressState").val(),
-						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
-						"salary": $("#Salary").val(),
-						"allowance": $("#Allowance").val(),
-						"deduction": $("#Deduction").val(),
-						"inTransit": $("#InTransit").val(),
-						"amtBooked": $("#AmountBooked").val(),
-						"payslipMonth": $("#PayslipMonth").val(),
-						"installment": $("#Installment").val(),
-						"eligibleDeduction": $("#EligibleDeduction").val(),
-						"loanAppliedAmt": $("#LoanApplied").val(),
-						"agentCommision": $("#AgentCommission").val(),
-						"tenure": $("#Tenure").val(),
-						"profitRate": $("#ProfitRate").val(),
-						"approvalCode": $("#ApprovalCode").val(),
-						"loanApprovedAmt": $("#LoanApproved").val(),
-						"invoiceAmt": $("#InvoiceAmount").val(),
-						"approvalDate": $("#ApprovalDate").val(),
-						"netLoanApproved": $("#NetLoanApproved").val(),
-						"settleOwnLoan": $("#SettleOwnLoan").val(),
-						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
-						"companyAdv": $("#CompanyAdvance").val(),
-						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
-						"bankId": $("#Bank").val(),
-						"bankInName": $("#BankInName").val(),
-						"bankAcctNo": $("#AccountNo").val(),
-						"bankInAmt": $("#BankInAmmount").val(),
-						"bankInDate": $("#BankInDate").val(),
-						"chequeNo": $("#BankChequeNo").val(),
-						"reconciliationDate": $("#ReconciliationDate").val(),
-						"dateToBank": $("#DateToBank").val(),
-						"bankRef": $("#BankReference").val(),
-						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
-						"Attention_Company": $("#Attention_Company").val(),
-						"remarkContent": $("#NewRemark").val(),
-					},
-					
-					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
-					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
-
-					success: function (data) {
-						alert("Customer add succesful.");
-						return true;
-					},
-
-					error: function () {
-						alert("Customer add fail.");
-						return false;
-					}
-				});
-			}
+				// TODO Yue zong
+				// 1. Write a function to load customer outside of document.ready 
 
 			$(document).ready(function () {
+				var customerId = $_GET('customerId'); 
+				// TODO Yue Zong
+				// 2. Call the load customer function
+				loadCustomerData(customerId);	
+				
 				// Load datepicker
 				require(['jquery', 'jqueryui'], function ($) {
 					$(function () {
