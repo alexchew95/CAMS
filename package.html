@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="Content-Language" content="en" />
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="theme-color" content="#4188c9">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
+	<title>LPTS - Message</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+	<script src="./assets/js/require.min.js"></script>
+
+	<script>
+		requirejs.config({
+			baseUrl: '.'
+		});
+
+	</script>
+
+	<!-- Dashboard Core -->
+	<link href="./assets/css/dashboard.css" rel="stylesheet" />
+	<script src="./assets/js/dashboard.js"></script>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+	<!--Datatable CSS-->
+	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
+
+</head>
+
+<body class="">
+	<div class="page">
+		<div class="page-main">
+			<div class="custom-loader"></div>
+
+			<div class="header py-4">
+				<div class="container" id="topbar">
+					<!--Top Bar to autoload to here with logo and User Box-->
+				</div>
+			</div>
+			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+				<div class="container" id="navbar">
+					<!--Nav Bar to autoload to here-->
+				</div>
+			</div>
+			<div class="my-3 my-md-5">
+				<div class="container">
+					<div class="card-header">
+						<h1 class="page-title">
+							Package
+						</h1>
+					</div>
+					<div class="card-body">
+						<table class="table table-responsive" id="tablePackage">
+							<thead>
+								<tr>
+									<th id="headerID" class="text-center" style="width: 5%"></th>
+									<th id="headerName">Date Time</th>
+									<th id="headerIC">Marketing Officer</th>
+									<th id="headerMobileNo">Name</th>
+									<th id="headerEmail">IC No.</th>
+									<th id="headerStatus" class="text-left" style="width: 15%">Package</th>
+									<th class="text-center" style="width: 5%">Processor</th>
+									<th class="text-center" style="width: 5%">Remarks</th>
+								</tr>
+							</thead>
+							<tbody id="userListBody">
+
+							</tbody>
+
+							<tfoot>
+
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+
+		</div>
+		<footer class="footer">
+			<div class="container">
+				<div class="row align-items-center flex-row-reverse">
+					<div class="col-auto ml-lg-auto">
+						<div class="row align-items-center">
+
+						</div>
+					</div>
+					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+						Copyright © 2018
+						<a href=".">LPTS Sdn Bhd</a>. Theme by
+						<a href="https://tentspark.com" target="_blank">tenstpark</a> All rights reserved.
+					</div>
+				</div>
+			</div>
+		</footer>
+	</div>
+
+	<script type="text/javascript">
+		/////* Declare variables */////
+		// var s3 = new AWS.S3({
+		//   accessKeyId: 'AKIAJVJR2EO3XNJQVHKA',
+		//   secretAccessKey: '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'
+		// });
+		token = sessionStorage.getItem("token");
+		role = sessionStorage.getItem("role");
+
+		/////* Function List */////
+
+		require(['mainjs', 'datatables'], function () {
+			$(document).ready(function () {
+
+				token = sessionStorage.getItem("token");
+				role = sessionStorage.getItem("role");
+				email = sessionStorage.getItem("email");
+console.log(email);
+
+				/* To List all customer in Customer Homepage */
+				var arrayReturn = [];
+				$.ajax({
+					url: APIUrl + 'listRemark',
+					async: false,
+					dataType: 'json',
+					data: {
+						"email": email
+					},
+					type: 'post',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					success: function (data) {
+						for (var i = 0, len = data.length; i < len; i++) {
+							//var desc = data[i].body; //to substring, limit the data to display 
+							arrayReturn.push([
+								'',
+								data[i].createDateTime,
+								data[i].attentionTo, //marketting officer 
+								data[i].customerId,
+								data[i].newIC,
+								data[i].packageId,
+								data[i].user, //user who log this remark
+								data[i].remarks,
+							]);
+						}
+						inittable(arrayReturn);
+						$(".custom-loader").hide();
+					}
+				});
+
+				/* To initialise the datatable */
+				function inittable(data) {
+					//console.log(data);
+					var table = $('#tableAllCustomers').DataTable({
+						"aaData": data
+					});
+
+					// Apply the search
+					table.columns().every(function () {
+						var that = this;
+
+						$('input', this.footer()).on('keyup change', function () {
+							if (that.search() !== this.value) {
+								that
+									.search(this.value)
+									.draw();
+							}
+						});
+					});
+				}
+			});
+			$(".custom-loader").hide();
+
+		});
+
+
+	</script>
+</body>
+
+</html>
