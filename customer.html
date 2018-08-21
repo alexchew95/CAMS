@@ -123,6 +123,40 @@
 		</footer>
 	</div>
 
+	<!--Modal for add new remarks -Start -->
+	<div class="custom-loader"></div>
+	<form id="addNewAnnouncementForm" class="modal">
+		<div class="my-3 my-md-5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="card-header">
+							<h3 class="card-title">New Remarks</h3>
+						</div>
+
+						<div class="col-sm-12 col-md-12">
+							<div class="form-group">
+								<label class="form-label">Announcement Title</label>
+								<input type="text" class="form-control" id="newAnnouncementTitle" autocomplete="off" required>
+							</div>
+						</div>
+						<div class="col-sm-12 col-md-12">
+							<div class="form-group">
+								<label class="form-label">Announcement Content</label>
+								<textarea class="form-control" rows="5" id="newAnnouncementContent" required></textarea>
+							</div>
+						</div>
+						<div class="card-footer text-right">
+							<button class="btn btn-primary" id="btnAddAnnouncement">Add</button>
+							<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
+						</div>
+						<label id="lblMessages" class="text-danger"></label>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<!--Modal for add new remarks -End -->
 	<script type="text/javascript">
 		/////* Declare variables */////
 

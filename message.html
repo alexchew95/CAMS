@@ -61,10 +61,10 @@
 						</h1>
 					</div>
 					<div class="card-body">
-						<table class="table table-responsive" id="tableRemarks">
+						<table class="table table-responsive" id="tableAllRemark">
 							<thead>
 								<tr>
-									<th id="headerID" class="text-center" style="width: 5%"></th>
+									
 									<th id="headerName">Date Time</th>
 									<th id="headerIC">Marketing Officer</th>
 									<th id="headerMobileNo">Name</th>
@@ -79,7 +79,16 @@
 							</tbody>
 
 							<tfoot>
-
+								<tr>
+									
+									<th>Date Time</th>
+									<th>Marketting Officer</th>
+									<th>Name</th>
+									<th>IC No.</th>
+									<th>Package</th>
+									<th>Processor</th>
+									<th>Remarks</th>
+								</tr>
 							</tfoot>
 						</table>
 					</div>
@@ -115,10 +124,10 @@
 		// });
 		token = sessionStorage.getItem("token");
 		role = sessionStorage.getItem("role");
-
+		
 		/////* Function List */////
 
-		require(['mainjs', 'datatables'], function () {
+		require(['jquery','mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
 				token = sessionStorage.getItem("token");
@@ -126,14 +135,24 @@
 				email = sessionStorage.getItem("email");
 console.log(email);
 
+$('#tableAllRemark tfoot th').each(function () {
+					var title = $(this).text();
+					if (title != '')
+						$(this).html('<input type="text" class="form-control" />');
+					else
+						$(this).html('Search');
+
+				});
 				/* To List all customer in Customer Homepage */
 				var arrayReturn = [];
 				$.ajax({
-					url: APIUrl + 'listRemark',
+					url: APIUrl + 'listAllRemark',
 					async: false,
 					dataType: 'json',
 					data: {
-						"email": email
+						
+						"userId": userId
+						
 					},
 					type: 'post',
 					beforeSend: function (xhr) { //Include the bearer token in header
@@ -143,14 +162,14 @@ console.log(email);
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								'',
+							
 								data[i].createDateTime,
-								data[i].attentionTo, //marketting officer 
-								data[i].customerId,
+								data[i].name, //marketting officer 
+								data[i].customerName,
 								data[i].newIC,
 								data[i].packageId,
-								data[i].user, //user who log this remark
-								data[i].remarks,
+								data[i].name, //user who log this remark
+								data[i].remarkContent,
 							]);
 						}
 						inittable(arrayReturn);
@@ -161,7 +180,7 @@ console.log(email);
 				/* To initialise the datatable */
 				function inittable(data) {
 					//console.log(data);
-					var table = $('#tableAllCustomers').DataTable({
+					var table = $('#tableAllRemark').DataTable({
 						"aaData": data
 					});
 
