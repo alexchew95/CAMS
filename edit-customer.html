@@ -1241,10 +1241,9 @@
 								<div class="tab-pane" id="remark">
 									<br>
 									<div>
-										<table>
 											<div class="form-horizontal">
 												<legend>Remark</legend>
-
+												<table>
 												<div style="display:inline;">
 													<div class="form-inline form-group">
 														<tr>
@@ -1285,8 +1284,40 @@
 														</tr>
 													</div>
 												</div>
+												</table>
 											</div>
-										</table>
+											<button class="btn btn-warning" id="addRemark" data-loading-text>Calculate</button>
+
+											<table class="table table-responsive" id="tableAllCustomers">
+													<thead>
+														<tr>
+															<th id="headerID" class="text-center" style="width: 5%"></th>
+															<th id="headerName">Entry Date</th>
+															<th id="headerIC">Package</th>
+															<th id="headerMobileNo">Name</th>
+															<th id="headerEmail">IC No.</th>
+															<th id="headerStatus" class="text-left" style="width: 15%">Marketing Officer</th>
+															<th class="text-center" style="width: 5%">Batch</th>
+															<th class="text-center" style="width: 5%">Docs</th>
+															<th class="text-center" style="width: 5%">Status</th>
+														</tr>
+													</thead>
+													<tbody id="userListBody">
+													</tbody>
+													<tfoot>
+														<tr>
+															<th></th>
+															<th>Entry Date</th>
+															<th>Package</th>
+															<th>Name</th>
+															<th>IC No.</th>
+															<th>Marketing Officer</th>
+															<th>Batch</th>
+															<th>Docs</th>
+															<th>Status</th>
+														</tr>
+													</tfoot>
+												</table>
 									</div>
 								</div>
 								<div class="tab-pane" id="document">
@@ -1294,7 +1325,7 @@
 									<div>
 										<div class="form-horizontal">
 											<legend>Upload</legend>
-											<button class="btn btn-info" id="Upload" data-loading-text="Loading. . . ">Upload</button>
+											<button class="btn btn-info" id="btn_upload" data-loading-text="Loading. . . ">Upload</button>
 										</div>
 									</div>
 								</div>
@@ -1303,11 +1334,11 @@
 							<div class="container">
 								<br>
 								<div class="row">
-									<button class="btn btn-warning" id="Calculate" data-loading-text>Calculate</button>
+									<button class="btn btn-warning" id="btn_calculate" data-loading-text>Calculate</button>
 									&nbsp; &nbsp;
-									<button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
+									<button class="btn btn-primary" id="btn_saveAndStay" data-loading-text>Save & Stay</button>
 									&nbsp; &nbsp;
-									<button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
+									<button class="btn btn-primary" id="btn_save" type="button" data-loading-text>Save</button>
 									&nbsp; &nbsp;
 									<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 								</div>

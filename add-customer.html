@@ -150,7 +150,7 @@
 							});
 
 							function ResetActive(id) {
-								data = ['personal', 'work', 'deduction', 'loan', 'package', 'redemption', 'remark', 'document'];
+								data = ['personal', 'work', 'deduction', 'loan', 'package', 'redemption', 'remark'];
 								data.forEach(function (i, v) {
 									if (id != i) {
 										console.log(id + " ? ? " + i);
@@ -161,6 +161,7 @@
 
 								});
 							}
+
 						</script>
 						<div class="tabbable" id="myTab">
 							<!-- Tabs Header Row -->
@@ -185,9 +186,6 @@
 								</li>
 								<li id="liRemark">
 									<a href="#Remark" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('remark')">Remark</a>
-								</li>
-								<li id="liDocument">
-									<a href="#Document" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('document')">Document</a>
 								</li>
 							</ul>
 
@@ -842,6 +840,22 @@
 																</tr>
 															</div>
 														</div>
+														
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Agent Commission (RM)*</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input type="text" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00">
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
@@ -1240,8 +1254,9 @@
 								<div class="tab-pane" id="remark">
 									<br>
 									<div>
-										<table>
-											<div class="form-horizontal">
+										<div class="form-horizontal">
+											<table>
+
 												<legend>Remark</legend>
 
 												<div style="display:inline;">
@@ -1260,10 +1275,13 @@
 														</tr>
 														<tr>
 															<td></td>
-															<td>
-																<input type="checkbox" id="Attention_Company" autocomplete="off">
-																<label>Company</label>
-															</td>
+															<div class="controls">
+
+																<td>
+																	<input type="checkbox" id="Attention_Company" autocomplete="off">
+																	<label>Company</label>
+																</td>
+															</div>
 														</tr>
 
 													</div>
@@ -1284,19 +1302,12 @@
 														</tr>
 													</div>
 												</div>
-											</div>
-										</table>
-									</div>
-								</div>
-								<div class="tab-pane" id="document">
-									<br>
-									<div>
-										<div class="form-horizontal">
-											<legend>Upload</legend>
-											<button class="btn btn-info" id="Upload" data-loading-text="Loading. . . ">Upload</button>
+											</table>
+											
 										</div>
 									</div>
 								</div>
+
 							</div>
 
 							<div class="container">
@@ -1359,7 +1370,7 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-		
+
 		token = sessionStorage.getItem("token");
 		require(['mainjs'], function () {
 
@@ -1372,8 +1383,7 @@
 
 			$("#Save").click(function (event) {
 				if (checkValidity()) {
-					if(addCustomer())
-					{
+					if (addCustomer()) {
 						window.location = "customer.html";
 					}
 				}
@@ -1419,12 +1429,9 @@
 							}
 						}
 					}
-					if(validInp == false)
-					{
+					if (validInp == false) {
 						$("#lblMessages").text("Please fill up for " + reqField);
-					}
-					else
-					{
+					} else {
 						$("#lblMessages").text("");
 					}
 				}
@@ -1480,6 +1487,7 @@
 						"installment": $("#Installment").val(),
 						"eligibleDeduction": $("#EligibleDeduction").val(),
 						"loanAppliedAmt": $("#LoanApplied").val(),
+						"agentCommision": $("#AgentCommission").val(),
 						"tenure": $("#Tenure").val(),
 						"profitRate": $("#ProfitRate").val(),
 						"approvalCode": $("#ApprovalCode").val(),
@@ -1506,8 +1514,9 @@
 						"remarkContent": $("#NewRemark").val(),
 					},
 					
-					// to do API.php user, createDateTime, completeUser, completeDateTime, completeDateTime
-					
+					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
+					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
+
 					success: function (data) {
 						alert("Customer add succesful.");
 						return true;
@@ -1528,7 +1537,10 @@
 						var m = new Date().getMonth() + 1; // JavaScript months are 0-11
 						var y = new Date().getFullYear();
 						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
-						$("[id$=EntryDate]").datepicker({ weekStart: 1, dateFormat: 'yy-mm-dd' });
+						$("[id$=EntryDate]").datepicker({
+							weekStart: 1,
+							dateFormat: 'yy-mm-dd'
+						});
 
 						$(".datepicker").datepicker({
 							changeMonth: true,
@@ -1543,8 +1555,8 @@
 				var userId = sessionStorage.getItem("userId");
 				$("#MarketingOfficer").attr("placeholder", name);
 				$("#MarketingOfficerId").val(userId);
-				
-				
+
+
 			});
 		});
 
