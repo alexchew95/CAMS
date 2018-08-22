@@ -10,7 +10,7 @@ $(document).ready(function () {
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
 	name = sessionStorage.getItem("name"),
-		userId = sessionStorage.getItem("userId");
+	userId = sessionStorage.getItem("userId");
 
 	// Check Admin Login
 	window.onload = checkLogin;

@@ -840,6 +840,22 @@
 																</tr>
 															</div>
 														</div>
+														
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Agent Commission (RM)*</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input type="text" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00">
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
@@ -1471,6 +1487,7 @@
 						"installment": $("#Installment").val(),
 						"eligibleDeduction": $("#EligibleDeduction").val(),
 						"loanAppliedAmt": $("#LoanApplied").val(),
+						"agentCommision": $("#AgentCommission").val(),
 						"tenure": $("#Tenure").val(),
 						"profitRate": $("#ProfitRate").val(),
 						"approvalCode": $("#ApprovalCode").val(),
@@ -1496,8 +1513,9 @@
 						"Attention_Company": $("#Attention_Company").val(),
 						"remarkContent": $("#NewRemark").val(),
 					},
-
-					// to do API.php user, createDateTime, completeUser, completeDateTime, completeDateTime
+					
+					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
+					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
 					success: function (data) {
 						alert("Customer add succesful.");
