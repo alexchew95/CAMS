@@ -1417,7 +1417,82 @@
 			
 			function loadCustomerData(customerId)
 			{
-				
+				$.ajax({
+					url: APIUrl + 'loadCustomer',
+					type: 'POST',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					data:{
+						"customerId": customerId,
+					},
+					success: function (customerData) {
+						customerData.forEach(function(data) {
+							$("#Name").val(data.customerName);
+							$("#Package").val(data.packageId);
+							$("#Status").val(data.status);
+							$("#EntryDate").val(data.entryDate);
+							$("#ICNo").val(data.newIC);
+							$("#OldICNo").val(data.oldIC);
+							$("#DateOfBirth").val(data.dob);
+							$("#Gender").val(data.gender);
+							$("#MobilePhoneNo").val(data.phoneNumber);
+							$("#Email").val(data.email);
+							$("#NextContactName").val(data.nextContactName);
+							$("#NextContactRelationship").val(data.nextContactRel);
+							$("#NextContactPhoneNo").val(data.nextContactPhone);
+							$("#NextContactOfficePhoneNo").val(data.nextContactOfficePhone);
+							$("#HomeAddressLine1").val(data.addr1);
+							$("#HomeAddressLine2").val(data.addr2);
+							$("#HomeAddressCity").val(data.city);
+							$("#HomeAddressPostCode").val(data.postCode);
+							$("#HomeAddressState").val(data.state);
+							$("#HomePhoneNo").val(data.homePhone);
+							$("#CompanyName").val(data.companyName);
+							$("#Position").val(data.position);
+							$("#OfficePhoneNo").val(data.officePhone);
+							$("#FaxPhoneNo").val(data.faxNumber);
+							$("#CompanyAddressLine1").val(data.compAddr1);
+							$("#CompanyAddressLine2").val(data.compAddr2);
+							$("#CompanyAddressCity").val(data.compCity);
+							$("#CompanyAddressPostCode").val(data.compPostCode);
+							$("#CompanyAddressState").val(data.compState);
+							$("#CompanyPhoneNo").val(data.CompanyPhoneNo);
+							$("#Salary").val(data.salary);
+							$("#Allowance").val(data.allowance);
+							$("#Deduction").val(data.deduction);
+							$("#InTransit").val(data.inTransit);
+							$("#AmountBooked").val(data.amtBooked);
+							$("#PayslipMonth").val(data.payslipMonth);
+							$("#Installment").val(data.installment);
+							$("#EligibleDeduction").val(data.eligibleDeduction);
+							$("#LoanApplied").val(data.loanAppliedAmt);
+							$("#AgentCommission").val(data.agentCommision);
+							$("#Tenure").val(data.tenure);
+							$("#ProfitRate").val(data.profitRate);
+							$("#ApprovalCode").val(data.approvalCode);
+							$("#LoanApproved").val(data.loanApprovedAmt);
+							$("#InvoiceAmount").val(data.invoiceAmt);
+							$("#ApprovalDate").val(data.approvalDate);
+							$("#NetLoanApproved").val(data.netLoanApproved);
+							$("#SettleOwnLoan").val(data.settleOwnLoan);
+							$("#MarketingOfficerAdvance").val(data.marketingOfficerAdv);
+							$("#CompanyAdvance").val(data.companyAdv);
+							$("#CommissionDeductionAmount").val(data.commissionDeductionAmt);
+							$("#Bank").val(data.bankId);
+							$("#BankInName").val(data.bankInName);
+							$("#AccountNo").val(data.bankAcctNo);
+							$("#BankInAmmount").val(data.bankInAmt);
+							$("#BankInDate").val(data.bankInDate);
+							$("#BankChequeNo").val(data.chequeNo);
+							$("#ReconciliationDate").val(data.reconciliationDate);
+							$("#DateToBank").val(data.dateToBank);
+							$("#BankReference").val(data.bankRef);
+							$("#CommissionDeductionSettlement").val(data.commissionDeductionSettlement);
+						});
+					}
+				});
 			}
 				// TODO Yue zong
 				// 1. Write a function to load customer outside of document.ready 
@@ -1449,9 +1524,9 @@
 					});
 				});
 
-				var name = sessionStorage.getItem("name");
+				var MarketingOfficer = sessionStorage.getItem("name");
 				var userId = sessionStorage.getItem("userId");
-				$("#MarketingOfficer").attr("placeholder", name);
+				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
 				$("#MarketingOfficerId").val(userId);
 
 
