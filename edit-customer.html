@@ -1536,6 +1536,8 @@
 					success: function (customerData) {
 						customerData.forEach(function (data) {
 							$("#Name").val(data.customerName);
+							$("#MarketingOfficerId").val(data.marketingOfficerId);
+							$("#MarketingOfficer").val(data.name);
 							$("#Package").val(data.packageId);
 							$("#Status").val(data.status);
 							$("#EntryDate").val(data.entryDate);
@@ -1629,13 +1631,6 @@
 						});
 					});
 				});
-
-				var MarketingOfficer = sessionStorage.getItem("name");
-				var userId = sessionStorage.getItem("userId");
-				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
-				$("#MarketingOfficerId").val(userId);
-
-
 			});
 		});
 
