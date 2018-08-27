@@ -1253,7 +1253,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="checkbox" id="Attention_MarketingOfficer" autocomplete="off">
+																	<input name="attentionTo" type="radio" id="attentionTo" value="MOfficer" autocomplete="off">
 																	<label>Marketing Officer</label>
 																</td>
 															</div>
@@ -1261,7 +1261,7 @@
 														<tr>
 															<td></td>
 															<td>
-																<input type="checkbox" id="Attention_Company" autocomplete="off">
+																<input name="attentionTo" type="radio" id="attentionTo" value="BUSOWN" autocomplete="off">
 																<label>Company</label>
 															</td>
 														</tr>
@@ -1421,12 +1421,16 @@
 
 			$("#addRemark").click(function (event) {
 				event.preventDefault();
-				if (checkValidity()) {
-					addNewRemark();
-				}
+				var customerId = $_GET('customerId');
+				addNewRemark(customerId);
+
 			});
 
-			function addNewRemark() {
+			function addNewRemark(customerId) {
+
+
+				attentionTo = document.getElementById("attentionTo").value;
+
 				$.ajax({
 					url: APIUrl + 'addRemark',
 					type: 'POST',
@@ -1434,12 +1438,11 @@
 					beforeSend: function (xhr) { //Include the bearer token in header
 						xhr.setRequestHeader("Authorization", token);
 					},
-					data: {
-						"customerId": customerId,
-						"userId": userId,
 
-						"attentionTo": $("#Attention_MarketingOfficer").val(),
-						"attentionTo": $("#Attention_Company").val(),
+					data: {
+
+						"customerId": customerId,
+						"attentionTo": attentionTo,
 						"remarkContent": $("#NewRemark").val(),
 					},
 
@@ -1447,17 +1450,61 @@
 					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
 					success: function (data) {
-						alert("Remark add succesful.");
+						alert("Customer add successful.");
 						return true;
 					},
 
 					error: function () {
-						alert("Remark add fail.");
+						alert("Customer add fail.");
 						return false;
 					}
 				});
 			}
+			function checkValidity() {
+				/* data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
+					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
+				]; */
 
+				data = ["NewRemark", "Attention_MarketingOfficer", "Attention_Company"];
+				var datalength = data.length,
+					comma = true,
+					validInp = true,
+					reqField = "",
+					inp,
+					inpValue;
+
+				for (var i = 0; i < datalength; i++) {
+					inp = document.getElementById(data[i]);
+					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
+						inpValue = document.getElementById(data[i]).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (data[i]);
+								comma = false;
+								validInp = false;
+							} else {
+								reqField += (", " + data[i]);
+							}
+						}
+					} else {
+						if (!inp.checkValidity()) {
+							if (comma) {
+								reqField += (data[i]);
+								comma = false;
+								validInp = false;
+							} else {
+								reqField += (", " + data[i]);
+							}
+						}
+					}
+					if (validInp == false) {
+						$("#lblMessages").text("Please fill up for " + reqField);
+					} else {
+						$("#lblMessages").text("");
+					}
+				}
+				return validInp;
+			}
 			function loadCustomerData(customerId) {
 				$.ajax({
 					url: APIUrl + 'loadCustomer',
@@ -1471,6 +1518,8 @@
 					},
 					success: function (customerData) {
 						customerData.forEach(function (data) {
+
+							$customerId = data.customerId;
 							$("#Name").val(data.customerName);
 							$("#MarketingOfficerId").val(data.marketingOfficerId);
 							$("#MarketingOfficer").val(data.name);
