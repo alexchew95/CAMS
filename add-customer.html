@@ -1268,7 +1268,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="checkbox" id="Attention_MarketingOfficer" autocomplete="off">
+																	<input name='attentionT' type="radio" id="Attention_MarketingOfficer" autocomplete="off" value="MOfficer">
 																	<label>Marketing Officer</label>
 																</td>
 															</div>
@@ -1278,7 +1278,7 @@
 															<div class="controls">
 
 																<td>
-																	<input type="checkbox" id="Attention_Company" autocomplete="off">
+																	<input name='attentionT' type="radio" id="Attention_Company" autocomplete="off" value="BUSOWN">
 																	<label>Company</label>
 																</td>
 															</div>
@@ -1439,6 +1439,14 @@
 			}
 
 			function addCustomer() {
+
+				if (document.getElementById('Attention_MarketingOfficer').checked) {
+					attentionTo = document.getElementById("Attention_MarketingOfficer").value;
+				}
+				if (document.getElementById('Attention_Company').checked) {
+					attentionTo = document.getElementById("Attention_Company").value;
+				}
+
 				$.ajax({
 					url: APIUrl + 'addCustomer',
 					type: 'POST',
@@ -1446,6 +1454,7 @@
 					beforeSend: function (xhr) { //Include the bearer token in header
 						xhr.setRequestHeader("Authorization", token);
 					},
+
 					data: {
 						"customerName": $("#Name").val(),
 						"marketingOfficerId": $("#MarketingOfficerId").val(),
@@ -1509,8 +1518,7 @@
 						"dateToBank": $("#DateToBank").val(),
 						"bankRef": $("#BankReference").val(),
 						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
-						"Attention_Company": $("#Attention_Company").val(),
+						"attentionTo": attentionTo,
 						"remarkContent": $("#NewRemark").val(),
 					},
 
@@ -1518,7 +1526,7 @@
 					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
 					success: function (data) {
-						alert("Customer add succesful.");
+						alert("Customer add successful.");
 						return true;
 					},
 

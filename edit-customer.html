@@ -1279,6 +1279,7 @@
 															<div class="controls">
 																<td>
 																	<textarea type="text" id="NewRemark" class="form-control" autocomplete="off"></textarea>
+																	<br>
 																</td>
 															</div>
 														</tr>
@@ -1286,7 +1287,9 @@
 												</div>
 											</table>
 										</div>
-										<button class="btn btn-warning" id="addRemark" data-loading-text>Calculate</button>
+										<button class="btn btn-warning" id="addRemark" data-loading-text>Add Remark</button>
+										<br>
+										<br>
 
 										<table class="table table-responsive" id="tableAllCustomers">
 											<thead>
@@ -1339,8 +1342,6 @@
 									<button class="btn btn-primary" id="btn_saveAndStay" data-loading-text>Save & Stay</button>
 									&nbsp; &nbsp;
 									<button class="btn btn-primary" id="btn_save" type="button" data-loading-text>Save</button>
-									&nbsp; &nbsp;
-									<button class="btn btn-primary" id="btn_add_remark" type="button" data-loading-text>Add Remark</button>
 									&nbsp; &nbsp;
 									<button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 
@@ -1405,12 +1406,6 @@
 					addCustomer();
 				}
 			});
-			$("#btn_add_remark").click(function (event) {
-				event.preventDefault();
-				if (checkValidity()) {
-					addNewRemark();
-				}
-			});
 
 			$("#Save").click(function (event) {
 				if (checkValidity()) {
@@ -1424,10 +1419,10 @@
 				window.location = "customer.html";
 			});
 
-			$("#btn_add_remark").click(function (event) {
+			$("#addRemark").click(function (event) {
 				event.preventDefault();
 				if (checkValidity()) {
-					addCustomer();
+					addNewRemark();
 				}
 			});
 
@@ -1440,70 +1435,11 @@
 						xhr.setRequestHeader("Authorization", token);
 					},
 					data: {
-						"customerName": $("#Name").val(),
-						"marketingOfficerId": $("#MarketingOfficerId").val(),
-						"packageId": $("#Package").val(),
-						"status": $("#Status").val(),
-						"entryDate": $("#EntryDate").val(),
-						"newIC": $("#ICNo").val(),
-						"oldIC": $("#OldICNo").val(),
-						"dob": $("#DateOfBirth").val(),
-						"gender": $("#Gender").val(),
-						"phoneNumber": $("#MobilePhoneNo").val(),
-						"email": $("#Email").val(),
-						"nextContactName": $("#NextContactName").val(),
-						"nextContactRel": $("#NextContactRelationship").val(),
-						"nextContactPhone": $("#NextContactPhoneNo").val(),
-						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
-						"addr1": $("#HomeAddressLine1").val(),
-						"addr2": $("#HomeAddressLine2").val(),
-						"city": $("#HomeAddressCity").val(),
-						"postCode": $("#HomeAddressPostCode").val(),
-						"state": $("#HomeAddressState").val(),
-						"homePhone": $("#HomePhoneNo").val(),
-						"companyName": $("#CompanyName").val(),
-						"position": $("#Position").val(),
-						"officePhone": $("#OfficePhoneNo").val(),
-						"faxNumber": $("#FaxPhoneNo").val(),
-						"compAddr1": $("#CompanyAddressLine1").val(),
-						"compAddr2": $("#CompanyAddressLine2").val(),
-						"compCity": $("#CompanyAddressCity").val(),
-						"compPostCode": $("#CompanyAddressPostCode").val(),
-						"compState": $("#CompanyAddressState").val(),
-						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
-						"salary": $("#Salary").val(),
-						"allowance": $("#Allowance").val(),
-						"deduction": $("#Deduction").val(),
-						"inTransit": $("#InTransit").val(),
-						"amtBooked": $("#AmountBooked").val(),
-						"payslipMonth": $("#PayslipMonth").val(),
-						"installment": $("#Installment").val(),
-						"eligibleDeduction": $("#EligibleDeduction").val(),
-						"loanAppliedAmt": $("#LoanApplied").val(),
-						"agentCommision": $("#AgentCommission").val(),
-						"tenure": $("#Tenure").val(),
-						"profitRate": $("#ProfitRate").val(),
-						"approvalCode": $("#ApprovalCode").val(),
-						"loanApprovedAmt": $("#LoanApproved").val(),
-						"invoiceAmt": $("#InvoiceAmount").val(),
-						"approvalDate": $("#ApprovalDate").val(),
-						"netLoanApproved": $("#NetLoanApproved").val(),
-						"settleOwnLoan": $("#SettleOwnLoan").val(),
-						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
-						"companyAdv": $("#CompanyAdvance").val(),
-						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
-						"bankId": $("#Bank").val(),
-						"bankInName": $("#BankInName").val(),
-						"bankAcctNo": $("#AccountNo").val(),
-						"bankInAmt": $("#BankInAmmount").val(),
-						"bankInDate": $("#BankInDate").val(),
-						"chequeNo": $("#BankChequeNo").val(),
-						"reconciliationDate": $("#ReconciliationDate").val(),
-						"dateToBank": $("#DateToBank").val(),
-						"bankRef": $("#BankReference").val(),
-						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
-						"Attention_Company": $("#Attention_Company").val(),
+						"customerId": customerId,
+						"userId": userId,
+
+						"attentionTo": $("#Attention_MarketingOfficer").val(),
+						"attentionTo": $("#Attention_Company").val(),
 						"remarkContent": $("#NewRemark").val(),
 					},
 
