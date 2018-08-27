@@ -159,7 +159,7 @@
 		/////* Declare variables */////
 
 		//When the page has loaded.
-		require(['jquery','mainjs','datatables'], function ($) {
+		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
 				role = sessionStorage.getItem("role");
@@ -179,6 +179,10 @@
 					url: APIUrl + 'listAllCustomers',
 					async: false,
 					dataType: 'json',
+					data: {
+						"userId": userId,
+						"role": role,
+					},
 					type: 'post',
 					beforeSend: function (xhr) { //Include the bearer token in header
 						xhr.setRequestHeader("Authorization", token);
@@ -187,7 +191,7 @@
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								'<a href="edit-customer.html?customerId='+data[i].customerId+'"> <i class="fa fa-edit"></i></a>',
+								'<a href="edit-customer.html?customerId=' + data[i].customerId + '"> <i class="fa fa-edit"></i></a>',
 								data[i].entryDate,
 								data[i].packageId,
 								data[i].customerName,
