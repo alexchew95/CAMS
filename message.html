@@ -199,9 +199,13 @@
 								data[i].createDateTime,
 								data[i].name, //marketting officer 
 								data[i].customerName,
-								data[i].newIC,
+								'<a href="./edit-customer.html?customerId='+data[i].customerId+'">'+data[i].newIC+'</a>',
 								data[i].packageId,
+<<<<<<< HEAD
 								data[i].processor, //temporary name for processor
+=======
+								data[i].processor, 
+>>>>>>> 50a4e33526868583eab21929d9b05bf962a0b882
 								data[i].remarkContent,
 								//	
 								//'<a onClick="return confirm()">Logout</a>',
@@ -219,7 +223,8 @@
 				function inittable(data) {
 					//console.log(data);
 					var table = $('#tableAllRemark').DataTable({
-						"aaData": data
+						"aaData": data,
+						"order": [[ 0, "desc" ]]
 					});
 
 					// Apply the search
