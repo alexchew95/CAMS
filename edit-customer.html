@@ -238,6 +238,23 @@
 															<div class="form-inline form-group">
 																<tr>
 																	<td>
+																		<label class="control-label required disabled float-right">Process User</label>
+																	</td>
+
+																	<td>
+																		<select id="ProcessUser" class="form-control" size="1">
+																			<option value="">- Select One -</option>
+																			<option value="William" selected="selected">William</option>
+																			<option value="Linda">Linda</option>
+																		</select>
+																	</td>
+																</tr>
+															</div>
+														</div>
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
 																		<label class="control-label required disabled float-right">IC No.*</label>
 																	</td>
 
@@ -1613,6 +1630,7 @@
 							$("#Package").val(data.packageId);
 							$("#Status").val(data.status);
 							$("#EntryDate").val(data.entryDate);
+							$("#ProcessUser").val(data.processor);
 							$("#ICNo").val(data.newIC);
 							$("#OldICNo").val(data.oldIC);
 							$("#DateOfBirth").val(data.dob);
