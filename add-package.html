@@ -63,9 +63,9 @@
 								<a href="home.html">Home</a>
 							</li>
 							<li class="breadcrumb-item">
-								<a href="customer.html">Customer</a>
+								<a href="package.html">Package</a>
 							</li>
-							<li class="breadcrumb-item active" aria-current="page">Add Customer</li>
+							<li class="breadcrumb-item active" aria-current="page">Add Package</li>
 						</ol>
 					</nav>
 					<form>
@@ -73,60 +73,152 @@
 						<div class="form-horizontal">
 							<div style="display:inline;">
 								<table>
-									<div class="col-sm-12 col-md-12">
-										<div class="form-group">
-											<tr>
-												<td>
-													<label class="col-form-label float-right">Name*</label>
-												</td>
-												<td>
-													<input type="text" id="Name" class="form-control" autocomplete="off" maxlength="100" required>
-												</td>
-											</tr>
-										</div>
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Package Name</label>
+											</td>
+											<td>
+												<input type="text" class="form-control" id="packageName" autocomplete="off" required>
+											</td>
+										</tr>
 									</div>
 
-									<div class="col-sm-12 col-md-12">
-										<div class="form-group">
-											<tr>
-												<td>
-													<label class="col-form-label float-right">Marketing Officer* </label>
-												</td>
-												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
-													<input type="hidden" id="MarketingOfficerId" value="">
-												</td>
-											</tr>
-										</div>
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Package Interest</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="packageInterest" autocomplete="off">
+											</td>
+										</tr>
 									</div>
 
-									<div class="col-sm-12 col-md-12">
-										<div class="form-group">
-											<tr>
-												<td>
-													<label class="col-form-label float-right">Package* </label>
-												</td>
-												<td>
-													<select type="form-control custom-select" id="Package" class="form-control" maxlength="100" required>
-														<option value="0">- Select One-</option>
-														<option value="1">MAB-CS-3-85%</option>
-														<option value="2">MAB-CS-4-90%</option>
-														<option value="3">Gemilang-BR</option>
-														<option value="4">Kobeta-BR-5.99%</option>
-														<option value="5">Konsumer-Br</option>
-														<option value="6">KopMinda-CS</option>
-														<option value="7">Kospek-Contract</option>
-														<option value="8">KOSPEM-BR-TETAP</option>
-														<option value="9">Kowamas</option>
-														<option value="10">PBB-MCCM</option>
-														<option value="11">RHB-Govt</option>
-														<option value="12">Ukhwah-MBB-5.59%</option>
-													</select>
-												</td>
-											</tr>
-										</div>
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Profit 1 to 3 years</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="profit1to3" autocomplete="off">
+											</td>
+										</tr>
 									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Profit 4 to 10 years</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="profit4to10" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Min Tenure</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="minTenure" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Max Tenure</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="maxTenure" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Payout Pecentage</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="payoutPerc" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Minimum Age</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="minAge" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Maximum Age</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="maxAge" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Minimum Loan Amount</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="minLoanAmt" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Maximum Loan Amount</label>
+											</td>
+											<td>
+												<input type="number" class="form-control" id="maxLoanAmt" autocomplete="off">
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<label class="form-label">Package Status</label>
+											</td>
+											<td>
+												<input type="text" class="form-control" id="packageStatus" autocomplete="off" required>
+											</td>
+										</tr>
+									</div>
+
+									<div class="form-group">
+										<tr>
+											<td>
+												<button class="btn btn-primary" id="btnAddPackage">Add</button>
+												<button class="btn btn-primary" id="btnCloseAddNewPackage">Close</button>
+											</td>
+										</tr>
+									</div>
+
 								</table>
+
+								<div class="form-group">
+									<label id="lblMessages" class="text-danger"></label>
+								</div>
 							</div>
 						</div>
 						<br>
@@ -176,192 +268,98 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-
+		
 		token = sessionStorage.getItem("token");
-		require(['mainjs'], function () {
+		require(['mainjs','modal'], function () {
+			function resetModalTextbox() {
+				$('input[type="text"]').val('');
+				$('input[type="number"]').val('');
+				$('.custom-select').val('');
+			}
+			
+			$("#btnCloseAddNewPackage").click(function (event) {
+				window.location = "package.html";
+			});
 
-			$("#SaveAndStay").click(function (event) {
+			$("#btnAddPackage").click(function (event) {
 				event.preventDefault();
-				if (checkValidity()) {
-					addCustomer();
-				}
-			});
 
-			$("#Save").click(function (event) {
-				if (checkValidity()) {
-					if (addCustomer()) {
-						window.location = "customer.html";
-					}
-				}
-			});
+				var inpPackageName = document.getElementById("packageName")
+				var inpPackageStatus = document.getElementById("packageStatus")
 
-			$("#Cancel").click(function (event) {
-				window.location = "customer.html";
-			});
+				if (inpPackageName.checkValidity() && inpPackageStatus.checkValidity()) {
 
-			function checkValidity() {
-				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
-				];
-
-				var datalength = data.length,
-					comma = true,
-					validInp = true,
-					reqField = "",
-					inp,
-					inpValue;
-
-				for (var i = 0; i < datalength; i++) {
-					inp = document.getElementById(data[i]);
-					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
-						inpValue = document.getElementById(data[i]).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
+					$.ajax({
+						url: APIUrl + 'add_package',
+						type: 'POST',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						data: {
+							"packageName": $("#packageName").val(),
+							"packageInterest": $("#packageInterest").val(),
+							"profit1to3": $("#profit1to3").val(),
+							"profit4to10": $("#profit4to10").val(),
+							"minTenure": $("#minTenure").val(),
+							"maxTenure": $("#maxTenure").val(),
+							"payoutPerc": $("#payoutPerc").val(),
+							"minAge": $("#minAge").val(),
+							"maxAge": $("#maxAge").val(),
+							"minLoanAmt": $("#minLoanAmt").val(),
+							"maxLoanAmt": $("#maxLoanAmt").val(),
+							"packageStatus": $("#packageStatus").val(),
+						},
+						dataType: 'JSON',
+						success: function (data) {
+							resetModalTextbox();
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+							//console.log(errorMsg);
 						}
-					} else {
-						if (!inp.checkValidity()) {
-							if (comma) {
-								reqField += (data[i]);
-								comma = false;
-								validInp = false;
-							} else {
-								reqField += (", " + data[i]);
-							}
-						}
-					}
-					if (validInp == false) {
-						$("#lblMessages").text("Please fill up for " + reqField);
-					} else {
-						$("#lblMessages").text("");
-					}
+					});
 				}
-				return validInp;
-			}
 
-			function addCustomer() {
-				$.ajax({
-					url: APIUrl + 'addCustomer',
-					type: 'POST',
-					dataType: 'JSON',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					data: {
-						"customerName": $("#Name").val(),
-						"marketingOfficerId": $("#MarketingOfficerId").val(),
-						"packageId": $("#Package").val(),
-						"status": $("#Status").val(),
-						"entryDate": $("#EntryDate").val(),
-						"newIC": $("#ICNo").val(),
-						"oldIC": $("#OldICNo").val(),
-						"dob": $("#DateOfBirth").val(),
-						"gender": $("#Gender").val(),
-						"phoneNumber": $("#MobilePhoneNo").val(),
-						"email": $("#Email").val(),
-						"nextContactName": $("#NextContactName").val(),
-						"nextContactRel": $("#NextContactRelationship").val(),
-						"nextContactPhone": $("#NextContactPhoneNo").val(),
-						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
-						"addr1": $("#HomeAddressLine1").val(),
-						"addr2": $("#HomeAddressLine2").val(),
-						"city": $("#HomeAddressCity").val(),
-						"postCode": $("#HomeAddressPostCode").val(),
-						"state": $("#HomeAddressState").val(),
-						"homePhone": $("#HomePhoneNo").val(),
-						"companyName": $("#CompanyName").val(),
-						"position": $("#Position").val(),
-						"officePhone": $("#OfficePhoneNo").val(),
-						"faxNumber": $("#FaxPhoneNo").val(),
-						"compAddr1": $("#CompanyAddressLine1").val(),
-						"compAddr2": $("#CompanyAddressLine2").val(),
-						"compCity": $("#CompanyAddressCity").val(),
-						"compPostCode": $("#CompanyAddressPostCode").val(),
-						"compState": $("#CompanyAddressState").val(),
-						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
-						"salary": $("#Salary").val(),
-						"allowance": $("#Allowance").val(),
-						"deduction": $("#Deduction").val(),
-						"inTransit": $("#InTransit").val(),
-						"amtBooked": $("#AmountBooked").val(),
-						"payslipMonth": $("#PayslipMonth").val(),
-						"installment": $("#Installment").val(),
-						"eligibleDeduction": $("#EligibleDeduction").val(),
-						"loanAppliedAmt": $("#LoanApplied").val(),
-						"tenure": $("#Tenure").val(),
-						"profitRate": $("#ProfitRate").val(),
-						"approvalCode": $("#ApprovalCode").val(),
-						"loanApprovedAmt": $("#LoanApproved").val(),
-						"invoiceAmt": $("#InvoiceAmount").val(),
-						"approvalDate": $("#ApprovalDate").val(),
-						"netLoanApproved": $("#NetLoanApproved").val(),
-						"settleOwnLoan": $("#SettleOwnLoan").val(),
-						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
-						"companyAdv": $("#CompanyAdvance").val(),
-						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
-						"bankId": $("#Bank").val(),
-						"bankInName": $("#BankInName").val(),
-						"bankAcctNo": $("#AccountNo").val(),
-						"bankInAmt": $("#BankInAmmount").val(),
-						"bankInDate": $("#BankInDate").val(),
-						"chequeNo": $("#BankChequeNo").val(),
-						"reconciliationDate": $("#ReconciliationDate").val(),
-						"dateToBank": $("#DateToBank").val(),
-						"bankRef": $("#BankReference").val(),
-						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"Attention_MarketingOfficer": $("#Attention_MarketingOfficer").val(),
-						"Attention_Company": $("#Attention_Company").val(),
-						"remarkContent": $("#NewRemark").val(),
-					},
+				else if(inpPackageName.checkValidity() && !inpPackageStatus.checkValidity()){
+					$("#lblMessages").text("Please fill up for Package Status");
+				}
+				else if(!inpPackageName.checkValidity() && inpPackageStatus.checkValidity()){
+					$("#lblMessages").text("Please fill up for Package Name");
+				}
+				else{
+					$("#lblMessages").text("Please fill up for Package Name and Package Status");
+				}
+			});
+		});
 
-					// to do API.php user, createDateTime, completeUser, completeDateTime, completeDateTime
+		$(document).ready(function () {
+			// Load datepicker
+			require(['jquery', 'jqueryui'], function ($) {
+				$(function () {
+					var d = new Date().getDate();
+					var m = new Date().getMonth() + 1; // JavaScript months are 0-11
+					var y = new Date().getFullYear();
+					$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
+					$("[id$=EntryDate]").datepicker({
+						weekStart: 1,
+						dateFormat: 'yy-mm-dd'
+					});
 
-					success: function (data) {
-						alert("Customer add succesful.");
-						return true;
-					},
-
-					error: function () {
-						alert("Customer add fail.");
-						return false;
-					}
-				});
-			}
-
-			$(document).ready(function () {
-				// Load datepicker
-				require(['jquery', 'jqueryui'], function ($) {
-					$(function () {
-						var d = new Date().getDate();
-						var m = new Date().getMonth() + 1; // JavaScript months are 0-11
-						var y = new Date().getFullYear();
-						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
-						$("[id$=EntryDate]").datepicker({
-							weekStart: 1,
-							dateFormat: 'yy-mm-dd'
-						});
-
-						$(".datepicker").datepicker({
-							changeMonth: true,
-							changeYear: true,
-							dateFormat: 'yy-mm-dd',
-							yearRange: '1900:' + y
-						});
+					$(".datepicker").datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'yy-mm-dd',
+						yearRange: '1900:' + y
 					});
 				});
-
-				var name = sessionStorage.getItem("name");
-				var userId = sessionStorage.getItem("userId");
-				$("#MarketingOfficer").attr("placeholder", name);
-				$("#MarketingOfficerId").val(userId);
-
-
 			});
+
+			var name = sessionStorage.getItem("name");
+			var userId = sessionStorage.getItem("userId");
+			$("#MarketingOfficer").attr("placeholder", name);
+			$("#MarketingOfficerId").val(userId);
+
+
 		});
 
 	</script>
