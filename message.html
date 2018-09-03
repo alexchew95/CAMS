@@ -65,8 +65,8 @@
 							<thead>
 								<tr>
 
-									<th id="headerName">Date Time</th>
-									<th id="headerIC">Marketing Officer</th>
+									<th>Date Time</th>
+									<th>Marketing Officer</th>
 									<th id="headerMobileNo">Name</th>
 									<th id="headerEmail">IC No.</th>
 									<th id="headerStatus" class="text-left" style="width: 15%">Package</th>
@@ -153,10 +153,7 @@
 		}
 
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
-
-
 			$(document).ready(function () {
-
 				token = sessionStorage.getItem("token");
 				role = sessionStorage.getItem("role");
 				email = sessionStorage.getItem("email");

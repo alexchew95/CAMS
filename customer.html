@@ -76,6 +76,7 @@
 									<th class="text-center" style="width: 5%">Batch</th>
 									<th class="text-center" style="width: 5%">Docs</th>
 									<th class="text-center" style="width: 5%">Status</th>
+									<th class="text-center" style="width: 5%">Commission</th>
 								</tr>
 							</thead>
 							<tbody id="userListBody">
@@ -93,6 +94,7 @@
 									<th>Batch</th>
 									<th>Docs</th>
 									<th>Status</th>
+									<th>Commission</th>
 								</tr>
 							</tfoot>
 						</table>
@@ -200,6 +202,7 @@
 								'', //TODO: Check what is batch with Fatin
 								'', //TODO: Count total doc uploaded
 								data[i].description,
+								'<a href="add-commission.html?customerId=' + data[i].customerId + '"> <i class="fa fa-money"></i></a>',
 							]);
 						}
 						inittable(arrayReturn);
