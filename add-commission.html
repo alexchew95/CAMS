@@ -274,11 +274,13 @@
             });
 
             $("#Save").click(function (event) {
+                alert("success");
                 if (checkValidity()) {
 
                     var customerId = $_GET('customerId');
 
-                    if (addCommission(customerId)) {
+                    if (addCommission(customerId)==true) {
+                     
                         window.location = "customer.html";
                     }
                 }
@@ -336,8 +338,8 @@
             function addCommission(customerId) {
 
                 var customerId = $_GET('customerId');
-
-                $.ajax({
+return true;
+                /* $.ajax({
                     url: APIUrl + 'addCommission',
                     type: 'POST',
                     dataType: 'JSON',
@@ -373,7 +375,7 @@
                         alert("Commission add fail.");
                         return false;
                     }
-                });
+                }); */
             }
             function loadCustomerData(customerId) {
                 $.ajax({

@@ -9,8 +9,9 @@ $(document).ready(function () {
 	// Load Session data
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
-	name = sessionStorage.getItem("name"),
-		userId = sessionStorage.getItem("userId");
+	name = sessionStorage.getItem("name");
+	userId = sessionStorage.getItem("userId");
+	email = sessionStorage.getItem("email");
 
 	// Check Admin Login
 	window.onload = checkLogin;
