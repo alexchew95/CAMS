@@ -232,6 +232,7 @@
                                 <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 
                             </div>
+                            <label id="lblMessages" class="text-danger"></label>
                         </div>
 
 
@@ -274,15 +275,10 @@
             });
 
             $("#Save").click(function (event) {
-                alert("success");
+                var customerId = $_GET('customerId');
                 if (checkValidity()) {
+                    addCommission(customerId);
 
-                    var customerId = $_GET('customerId');
-
-                    if (addCommission(customerId)==true) {
-                     
-                        window.location = "customer.html";
-                    }
                 }
             });
 
@@ -338,8 +334,8 @@
             function addCommission(customerId) {
 
                 var customerId = $_GET('customerId');
-return true;
-                /* $.ajax({
+
+                $.ajax({
                     url: APIUrl + 'addCommission',
                     type: 'POST',
                     dataType: 'JSON',
@@ -375,7 +371,7 @@ return true;
                         alert("Commission add fail.");
                         return false;
                     }
-                }); */
+                });
             }
             function loadCustomerData(customerId) {
                 $.ajax({
