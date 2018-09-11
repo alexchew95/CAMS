@@ -46,6 +46,10 @@
                 a = document.getElementById("registerUser");
                 a.setAttribute("href", "sign_up_subAgent.html");
             }
+            if (role == "SAGENT") {
+                a = document.getElementById("registerUser");
+                a.style.display = "none";
+            }
         }
 
         //When the page has loaded.
