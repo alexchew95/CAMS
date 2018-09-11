@@ -58,33 +58,38 @@
             <div class="row">
                 <div class="col col-login mx-auto">
 
-                    <form class="card" action="" method="post" id="pwdForm">
+                    <form class="card" action="" method="post">
 
                         <div class="card-body p-6">
-
-                            <div class="card-login">Change Email</div>
+                            <a class="header-brand" href="./index.html">
+                                <img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
+                            </a>
+                            <div class="card-login">User Sign Up</div>
                             <div class="form-group">
-                                <label class="form-label">New Email</label>
-                                <input type="email" class="form-control" id="new_txtEmail" placeholder="New Email" required>
-                            </div>
-                            <div class="form-group">
+                                <label class="form-label">Name</label>
+                                <input type="text" class="form-control" id="txtName" aria-describedby="nameHelp" placeholder="Enter name" required/>
+                                <label class="form-label">Email</label>
+                                <input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required/>
                                 <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="txtPwd" placeholder="Password" required>
+                                <input type="password" class="form-control" id="txtPwd" placeholder="Password" required/>
+                                <label class="form-label">Agent</label>
+                                <input type="text" class="form-control" id="txtAgent" placeholder="Agent" required readonly/>
+                                <label class="form-label">Roles</label>
+                                <input type="text" class="form-control" id="role" value="Sub Agent" required readonly/>
                             </div>
-                            <label id="lblMessages" class="text-danger"></label>
 
+                            <label id="lblMessages" class="text-danger"></label>
                         </div>
                         <div class="form-footer">
-                            <button type="submit" id="btnChangeEmail" class="btn btn-primary btn-block">Change email</button>
+                            <button type="submit" class="btn btn-primary btn-block" id="btnSignUp">Sign up qw</button>
                         </div>
                     </form>
                 </div>
 
             </div>
-        </div>
-        <div class="footer">
 
         </div>
+
         <footer class="footer">
             <div class="container">
                 <div class="row align-items-center flex-row-reverse">
@@ -103,59 +108,45 @@
     </div>
 
 
+
+
     <script type="text/javascript">
         require(['mainjs', 'twbs', 'modal'], function () {
-            $("#btnChangeEmail").click(function (event) {
-
+            $("#btnSignUp").click(function (event) {
+                //check form if it is all valid
                 if ($("form")[0].checkValidity()) {
-                    //reset label msg
+                    //your form execution code
                     event.preventDefault();
-
-
                     require(['bcrypt'], function (bcrypt) {
 
                         const saltRounds = 10;
-                        const txtPassword = $("#txtPwd").val()
+                        const myPlaintextPassword = $("#txtPwd").val()
                         //salt = bcrypt.genSaltSync(saltRounds);
                         salt = "$2a$10$s8r.zIlaXpYFB9DbbISgEu";
-
                         //console.log(salt);
-                        hash = bcrypt.hashSync(txtPassword, salt);
-
-
+                        hash = bcrypt.hashSync(myPlaintextPassword, salt);
+                        $role = "SAGENT";
                         $.ajax({
 
-                            url: APIUrl + 'changeEmail',
+                            url: APIUrl + 'signUpSubAgent',
                             type: 'POST',
-                            beforeSend: function (xhr) { //Include the bearer token in header
-                                xhr.setRequestHeader("Authorization", token);
-                            },
-                            data: {
-                                "email": email,
-                                "password": hash,
-                                "new_email": $("#new_txtEmail").val()
 
+                            data: {
+                                "name": $("#txtName").val(),
+                                "email": $("#txtEmail").val(),
+                                "password": hash,
+                                "role": $role,
+                                "masterAgentId": $("#txtAgent").val(),
                             },
                             dataType: 'JSON',
                             success: function (data) {
-
-                                alert("Email change succesful.");
-
-
-
+                                window.location = "index.html";
                             },
                             statusCode: {
-                                200: function (request, status, error) {
+                                409: function (request, status, error) {
                                     //console.log("401 - Login incorrect");
                                     //console.log(error);
-
-                                }
-                            },
-                            statusCode: {
-                                400: function (request, status, error) {
-                                    //console.log("401 - Login incorrect");
-                                    //console.log(error);
-                                    $("#lblMessages").text("Wrong password!");
+                                    $("#lblMessages").text("Error sign up - Email already exist, please use other email");
                                 }
                             },
                             error: function (xhr, ajaxOptions, thrownError) {
@@ -163,15 +154,16 @@
                                 console.log(errorMsg);
                             }
                         });
+                        //console.log(localStorage);
                     });
-                }
-
-                elseconsole.log("invalid form"); //log error if invalid
+                } else console.log("invalid form"); //log error if invalid
 
             });
 
             //When the page has loaded.
             $(document).ready(function () {
+                $("#txtAgent").val(userId); userId
+
             });
         });
 

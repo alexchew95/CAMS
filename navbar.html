@@ -17,14 +17,43 @@
             </li>
             <li class="nav-item">
                 <a href='package.html' class="nav-link ">
-                    <i class="fe fe-message-square"></i> Package</a>
+                    <i class="fe fe-square"></i> Package</a>
             </li>
             <li class="nav-item">
                 <a href='commission.html' class="nav-link ">
-                    <i class="fe fe-message-square"></i> Commission</a>
+                    <i class="fa fa-money"></i> Commission</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="registerUser" class="nav-link ">
+                    <i class="fe fe-user"></i> Register New User</a>
             </li>
 
 
         </ul>
     </div>
 </div>
+
+<script type="text/javascript">
+    require(['mainjs', 'twbs', 'modal'], function () {
+
+        function checkRole() {
+
+            if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
+                a = document.getElementById("registerUser");
+                a.setAttribute("href", "sign_up.html");
+            }
+            if (role == "AGENT") {
+                a = document.getElementById("registerUser");
+                a.setAttribute("href", "sign_up_subAgent.html");
+            }
+        }
+
+        //When the page has loaded.
+        $(document).ready(function () {
+
+            checkRole();
+
+        });
+    });
+
+</script>
