@@ -139,7 +139,7 @@
                                                     <label class="col-form-label float-right">Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="amount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="amount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -150,7 +150,7 @@
                                                     <label class="col-form-label float-right">Pay Customer Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="payCustomerAmount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="payCustomerAmount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -161,7 +161,7 @@
                                                     <label class="col-form-label float-right">Admin Fee (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="adminFee" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="adminFee" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -172,7 +172,7 @@
                                                     <label class="col-form-label float-right">Adjustment Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="adjustmentAmount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -183,7 +183,7 @@
                                                     <label class="col-form-label float-right">Net Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="netAmount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="netAmount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -194,7 +194,7 @@
                                                     <label class="col-form-label float-right">GST Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="gstAmount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="gstAmount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -204,7 +204,7 @@
                                                     <label class="col-form-label float-right">Net GST Amount (RM) </label>
                                                 </td>
                                                 <td>
-                                                    <input type="text" id="netGstAmount" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    <input type="number" id="netGstAmount" class="form-control" autocomplete="off" maxlength="100" required>
                                                 </td>
                                             </tr>
                                         </div>
@@ -234,6 +234,7 @@
                                         <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
 
                                     </div>
+                                    <label id="lblMessages" class="text-danger"></label>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +274,7 @@
                 var customerId = $_GET('customerId');
                 if (checkValidity()) {
 
-                    addCommission(customerId);
+                    editCommission(customerId);
                 }
             });
 
@@ -282,7 +283,7 @@
 
                     var customerId = $_GET('customerId');
 
-                    if (addCommission(customerId)) {
+                    if (editCommission(customerId)) {
                         window.location = "customer.html";
                     }
                 }
@@ -337,12 +338,12 @@
                 return validInp;
             }
 
-            function addCommission(customerId) {
+            function editCommission(commissionId) {
 
-                var customerId = $_GET('customerId');
+                var commissionId = $_GET('commissionId');
 
                 $.ajax({
-                    url: APIUrl + 'addCommission',
+                    url: APIUrl + 'editCommission',
                     type: 'POST',
                     dataType: 'JSON',
                     beforeSend: function (xhr) { //Include the bearer token in header
@@ -350,10 +351,10 @@
                     },
 
                     data: {
+                        "commissionId": $commissionId,
                         "createDate": $("#createDate").val(),
                         "no": $("#no").val(),
                         "chequeNo": $("#chequeNo").val(),
-                        "customerId": customerId,
                         "amount": $("#amount").val(),
                         "payCustomerAmount": $("#payCustomerAmount").val(),
                         "adminFee": $("#adminFee").val(),
