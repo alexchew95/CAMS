@@ -1406,7 +1406,7 @@
 		/////* Declare variables */////
 		var customerID;
 		var stay = true; // to change window location if set as false
-		
+
 		function deleteRemark(remarkId) {
 			var r = confirm('Please confirm you want to delete this remark' + remarkId);
 			if (r) {
@@ -1435,7 +1435,7 @@
 		}
 		token = sessionStorage.getItem("token");
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
-			
+
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
 				stay = true;
@@ -1693,8 +1693,7 @@
 
 					success: function (data) {
 						alert(data.msg);
-						if(stay == false)
-						{
+						if (stay == false) {
 							window.location = "customer.html";
 						}
 					},

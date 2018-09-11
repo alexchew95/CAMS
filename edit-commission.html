@@ -16,7 +16,7 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon" />
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
     <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-    <title>LPTS - Add Customer</title>
+    <title>LPTS - Edit commission</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -283,14 +283,14 @@
 
                     var customerId = $_GET('customerId');
 
-                    if (editCommission(customerId)) {
-                        window.location = "customer.html";
-                    }
+                    editCommission(customerId);
+
+
                 }
             });
 
             $("#Cancel").click(function (event) {
-                window.location = "customer.html";
+                window.location = "home.html";
             });
 
             function checkValidity() {
@@ -371,7 +371,7 @@
 
                     success: function (data) {
                         alert("Commission add successful.");
-                        return true;
+                        window.location = "commission.html";
                     },
 
                     error: function () {
@@ -394,7 +394,7 @@
                     },
                     success: function (customerData) {
                         customerData.forEach(function (data) {
-
+                            $("#createDate").val(data.createComDate);
                             $commissionId = data.commissionId;
                             $("#no").val(data.No);
                             $("#chequeNo").val(data.chequeNo);
@@ -418,26 +418,7 @@
 
                 var commissionId = $_GET('commissionId');
                 loadCommissionData(commissionId);
-                // Load datepicker
-                require(['jquery', 'jqueryui'], function ($) {
-                    $(function () {
-                        var d = new Date().getDate();
-                        var m = new Date().getMonth() + 1; // JavaScript months are 0-11
-                        var y = new Date().getFullYear();
-                        $("[id$=createDate]").val(y + "-" + m + "-" + d);
-                        $("[id$=createDate]").datepicker({
-                            weekStart: 1,
-                            dateFormat: 'yy-mm-dd'
-                        });
 
-                        $(".datepicker").datepicker({
-                            changeMonth: true,
-                            changeYear: true,
-                            dateFormat: 'yy-mm-dd',
-                            yearRange: '1900:' + y
-                        });
-                    });
-                });
 
                 /*  var MarketingOfficer = sessionStorage.getItem("name");
                  var userId = sessionStorage.getItem("userId");
