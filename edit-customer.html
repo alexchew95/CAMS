@@ -1405,6 +1405,8 @@
 	<script type="text/javascript">
 		/////* Declare variables */////
 		var customerID;
+		var stay = true; // to change window location if set as false
+		
 		function deleteRemark(remarkId) {
 			var r = confirm('Please confirm you want to delete this remark' + remarkId);
 			if (r) {
@@ -1433,20 +1435,19 @@
 		}
 		token = sessionStorage.getItem("token");
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
-
+			
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
+				stay = true;
 				if (checkValidity()) {
 					editCustomer();
 				}
 			});
 
 			$("#Save").click(function (event) {
-
+				stay = false;
 				if (checkValidity()) {
-					if (editCustomer()) {
-						window.location = "customer.html";
-					}
+					editCustomer();
 				}
 			});
 
@@ -1691,13 +1692,15 @@
 					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
 					success: function (data) {
-						alert("Customer edit successful.");
-						return true;
+						alert(data.msg);
+						if(stay == false)
+						{
+							window.location = "customer.html";
+						}
 					},
 
 					error: function () {
 						alert("Customer add fail.");
-						return false;
 					}
 				});
 			}

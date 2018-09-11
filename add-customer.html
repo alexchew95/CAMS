@@ -1370,22 +1370,23 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-
+		var stay = true; // to change window location if set as false
 		token = sessionStorage.getItem("token");
 		require(['mainjs', 'jquery'], function () {
 
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
+				stay = true;
 				if (checkValidity()) {
 					addCustomer();
 				}
 			});
 
 			$("#Save").click(function (event) {
-
-				addCustomer();
-
-
+				stay = false;
+				if (checkValidity()) {
+					addCustomer();
+				}
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1517,7 +1518,6 @@
 						"dateToBank": $("#DateToBank").val(),
 						"bankRef": $("#BankReference").val(),
 						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"attentionTo": attentionTo,
 						"remarkContent": $("#NewRemark").val(),
 					},
 
@@ -1527,12 +1527,13 @@
 
 					success: function (data) {
 						alert(data.msg);
-
+						if(stay == false)
+						{
+							window.location = "customer.html";
+						}
 					},
 					error: function (data) {
 						alert("Add customer fail");
-
-
 					}
 
 				});
