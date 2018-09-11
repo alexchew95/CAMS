@@ -1372,7 +1372,7 @@
 		/////* Declare variables */////
 
 		token = sessionStorage.getItem("token");
-		require(['mainjs'], function () {
+		require(['mainjs', 'jquery'], function () {
 
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
@@ -1382,11 +1382,10 @@
 			});
 
 			$("#Save").click(function (event) {
-				if (checkValidity()) {
-					if (addCustomer()) {
-						window.location = "customer.html";
-					}
-				}
+
+				addCustomer();
+
+
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1525,15 +1524,17 @@
 					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
 					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
-					success: function (data) {
-						alert("Customer add successful.");
-						return true;
-					},
 
-					error: function () {
-						alert("Customer add fail....");
-						return false;
+					success: function (data) {
+						alert(data.msg);
+
+					},
+					error: function (data) {
+						alert("Add customer fail");
+
+
 					}
+
 				});
 			}
 
