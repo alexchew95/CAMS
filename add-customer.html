@@ -1519,6 +1519,8 @@
 						"bankRef": $("#BankReference").val(),
 						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
 						"remarkContent": $("#NewRemark").val(),
+						"userId": userId,
+						"attentionTo": attentionTo,
 					},
 
 					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
@@ -1527,8 +1529,7 @@
 
 					success: function (data) {
 						alert(data.msg);
-						if(stay == false)
-						{
+						if (stay == false) {
 							window.location = "customer.html";
 						}
 					},
