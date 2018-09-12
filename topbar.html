@@ -10,9 +10,9 @@
             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                 <span class="ml-2 d-none d-lg-block">
                     <!--username-->
-                    <span class="text-default" id="txt_username"></span>
+                    <span class="text-default" id="txt_username">Loading</span>
                     <!--user role-->
-                    <small class="text-muted d-block mt-1" id="txt_role"></small>
+                    <small class="text-muted d-block mt-1" id="txt_role">Loading</small>
                 </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -34,6 +34,22 @@
     $("#btnLogout").click(function () {
         sessionStorage.clear();
         window.location = "index.html";
+    });
+    function currentUser() {
+
+
+        a = document.getElementById("txt_username");
+        a.innerHTML = name;
+
+        b = document.getElementById("txt_role");
+        b.innerHTML = role;
+
+
+    }
+    $(document).ready(function () {
+
+        currentUser();
+
     });
 
 </script>

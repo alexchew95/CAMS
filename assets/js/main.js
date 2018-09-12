@@ -13,12 +13,20 @@ $(document).ready(function () {
 	userId = sessionStorage.getItem("userId");
 	email = sessionStorage.getItem("email");
 
-	// Check Admin Login
-	window.onload = checkLogin;
 
+	// Check Admin Login
+
+	function checkLogin() {
+		if (!token) {
+			window.location = "index.html";
+		}
+
+	}
+	window.onload = checkLogin;
 	// Load TopBar and NavBar
 	$('#topbar').load('topbar.html', function () {
 		console.log("Topbar loaded");
+
 	});
 	$('#navbar').load('navbar.html', function () {
 		//Add Underline to active html page. This will only work on LIVE SERVER
@@ -32,6 +40,7 @@ $(document).ready(function () {
 		$('.nav > li > a[href="' + url + '"]').addClass('active');
 		console.log(url);
 	});
+
 });
 
 
@@ -52,13 +61,7 @@ function $_GET(q, s) {
 Function: Check login
 Usage:	var customerId = $_GET('customerId'); 
 */
-function checkLogin() {
-	if (!token) {
-		window.location = "index.html";
-	}
-	document.querySelector('#txt_username').innerHTML = name;
-	document.querySelector('#txt_role').innerHTML = role;
-}
+
 
 function closeModal() {
 	$.modal.close();
