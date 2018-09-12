@@ -64,12 +64,13 @@
 						<button class="btn btn-primary ml-auto" onclick="location.href='add-package.html';">Add Package</button>
 					</div>
 					<div class="card-body">
-						<table class="display" id="tableAllPackages" style="width:100%" >
+						<table class="display" id="tableAllPackages" style="width:100%">
 							<thead>
 								<tr>
 									<th width="10%" id="headerPackageId" class="text-center">Package ID</th>
 									<th id="headerPackageName">Package Name</th>
 									<th id="headerPackageInterest">Interest</th>
+									<th id="headerPackageStatus">Status</th>
 
 								</tr>
 							</thead>
@@ -77,7 +78,7 @@
 
 							</tbody>
 
-							
+
 						</table>
 					</div>
 				</div>
@@ -108,7 +109,7 @@
 		/////* Declare variables */////
 
 		//When the page has loaded.
-		require(['jquery','mainjs','datatables'], function ($) {
+		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
 				role = sessionStorage.getItem("role");
@@ -136,10 +137,12 @@
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								
+
 								data[i].packageId,
 								data[i].packageName,
 								data[i].packageInterest,
+								data[i].packageStatus,
+
 							]);
 						}
 						inittable(arrayReturn);
