@@ -1257,7 +1257,7 @@
 
 															<div class="controls">
 																<td>
-																	<input name='attentionT' type="radio" id="Attention_MarketingOfficer" autocomplete="off" value="MOfficer">
+																	<input name='attentionT' type="radio" id="Attention_MarketingOfficer" autocomplete="off" value="MOfficer" checked="checked">
 																	<label>Marketing Officer</label>
 																</td>
 															</div>
@@ -1428,6 +1428,7 @@
 			}
 
 			function addCustomer() {
+				caseCreated = "Case created: " + $("#NewRemark").val();
 
 				if (document.getElementById('Attention_MarketingOfficer').checked) {
 					attentionTo = document.getElementById("Attention_MarketingOfficer").value;
@@ -1507,7 +1508,7 @@
 						"dateToBank": $("#DateToBank").val(),
 						"bankRef": $("#BankReference").val(),
 						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-						"remarkContent": $("#NewRemark").val(),
+						"remarkContent": caseCreated,
 						"userId": userId,
 						"attentionTo": attentionTo,
 					},
