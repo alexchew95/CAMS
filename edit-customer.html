@@ -720,7 +720,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="number" id="Deduction" class="form-control" autocomplete="off" step="0.01">
+																	<input type="number" id="Deduction" class="form-control" autocomplete="off" step="0.01" required>
 																</td>
 															</div>
 														</tr>
@@ -849,6 +849,22 @@
 																</tr>
 															</div>
 														</div>
+														
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Agent Commission (RM)*</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00" required step="0.01">
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
@@ -875,7 +891,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" autocomplete="off">
+																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required autocomplete="off">
 																		</td>
 																	</div>
 																</tr>
@@ -1492,7 +1508,7 @@
 
 			function checkValidity() {
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "Tenure", "ProfitRate", "Bank", "AccountNo"
+					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
 				];
 
 				var datalength = data.length,
