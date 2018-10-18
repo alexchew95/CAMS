@@ -67,6 +67,7 @@
 						<table class="display" id="tableAllPackages" style="width:100%">
 							<thead>
 								<tr>
+									<th id="headerID" class="text-center"></th>
 									<th width="10%" id="headerPackageId" class="text-center">Package ID</th>
 									<th id="headerPackageName">Package Name</th>
 									<th id="headerPackageInterest">Interest</th>
@@ -77,6 +78,16 @@
 							<tbody id="tbl_packageBody">
 
 							</tbody>
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Package ID</th>
+									<th>Package Name</th>
+									<th>Interest</th>
+									<th>Status</th>
+
+								</tr>
+							</tfoot>
 
 
 						</table>
@@ -137,6 +148,7 @@
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
+								'<a href="edit-package.html?packageId=' + data[i].packageId + '"> <i class="fa fa-edit"></i></a>',
 
 								data[i].packageId,
 								data[i].packageName,
@@ -144,9 +156,9 @@
 								data[i].packageStatus,
 
 							]);
-						}
+							$(".custom-loader").hide();}
 						inittable(arrayReturn);
-						$(".custom-loader").hide();
+						
 					}
 				});
 
