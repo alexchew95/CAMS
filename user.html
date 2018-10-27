@@ -57,15 +57,15 @@
             <div class="my-3 my-md-5">
 
                 <div class="container">
-                        <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="home.html">Home</a>
-                                    </li>
-                                    
-                                    <li class="breadcrumb-item active" aria-current="page">View User</li>
-                                </ol>
-                            </nav>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="home.html">Home</a>
+                            </li>
+
+                            <li class="breadcrumb-item active" aria-current="page">View User</li>
+                        </ol>
+                    </nav>
                     <div class="card-header">
                         <h1 class="page-title">
                             Users
@@ -155,11 +155,11 @@
                     success: function (data) {
                         for (var i = 0, len = data.length; i < len; i++) {
 
-                            if(data[i].masterAgentId== 0 ){
-                              var  maID=" ";
+                            if (data[i].masterAgentId == 0) {
+                                var maID = " ";
                             }
-                            else{
-                               var maID = data[i].masterAgentId+"("+data[i].masterName+")";
+                            else {
+                                var maID = data[i].masterAgentId + "(" + data[i].masterName + ")";
                             }
                             arrayReturn.push([
                                 data[i].userId,
