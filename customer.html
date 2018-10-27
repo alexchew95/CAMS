@@ -57,11 +57,19 @@
 			<div class="my-3 my-md-5">
 
 				<div class="container">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="home.html">Home</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">Customer</li>
+						</ol>
+					</nav>
 					<div class="card-header">
 						<h1 class="page-title">
 							Customer
 						</h1>
-						<button class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add Customer</button>
+						<button id="addCustomer_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add Customer</button>
 					</div>
 					<div class="card-body">
 						<table class="table table-responsive" id="tableAllCustomers">
@@ -164,7 +172,10 @@
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
-				role = sessionStorage.getItem("role");
+				if (role == "MASTER" || role == "BUSOWN") {
+					var button = document.getElementById("addCustomer_button");
+					button.disabled = false;
+				}
 				/* To setup the search tab for datatable - Nick */
 				$('#tableAllCustomers tfoot th').each(function () {
 					var title = $(this).text();
@@ -192,8 +203,20 @@
 					success: function (data) {
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
+							if (role == "BUSOWN" || role == "MASTER") {
+								edit_customer = '<a href="edit-customer.html?customerId=' + data[i].customerId + '"> <i class="fa fa-edit"></i></a>';
+								edit_commission = '<a href="add-commission.html?customerId=' + data[i].customerId + '"> <i class="fa fa-money"></i></a>';
+							}
+							else if (role == "STAFF") {
+								edit_customer = '<a href="edit-customer.html?customerId=' + data[i].customerId + '"> <i class="fa fa-edit"></i></a>';
+							}
+							else if (role == "AGENT" || role == "SAGENT") {
+								edit_customer = '<a> <i  class="fa fa-edit"></i></a>';
+								edit_commission = '<a> <i  class="fa fa-money"></i></a>';
+
+							}
 							arrayReturn.push([
-								'<a href="edit-customer.html?customerId=' + data[i].customerId + '"> <i class="fa fa-edit"></i></a>',
+								edit_customer,
 								data[i].entryDate,
 								data[i].packageName,
 								data[i].customerName,
@@ -202,11 +225,11 @@
 								'', //TODO: Check what is batch with Fatin
 								'', //TODO: Count total doc uploaded
 								data[i].description,
-								'<a href="add-commission.html?customerId=' + data[i].customerId + '"> <i class="fa fa-money"></i></a>',
+								edit_commission,
 							]);
 						}
 						inittable(arrayReturn);
-						
+
 					}
 				});
 
@@ -230,7 +253,8 @@
 						});
 					});
 				}
-				$(".custom-loader").hide();});
+				$(".custom-loader").hide();
+			});
 		});
 
 	</script>

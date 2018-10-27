@@ -36,13 +36,24 @@
         window.location = "index.html";
     });
     function currentUser() {
-
-
+    if(role=="BUSOWN"){
+        real_role="Business Owner"
+    }
+    else if(role=="MASTER"){
+        real_role="Master"
+    }else if(role=="STAFF"){
+        real_role="Staff"
+    }else if(role=="AGENT"){
+        real_role="Agent"
+    }
+    else if(role=="SAGENT"){
+        real_role="Sub Agent"
+    }
         a = document.getElementById("txt_username");
         a.innerHTML = name;
 
         b = document.getElementById("txt_role");
-        b.innerHTML = role;
+        b.innerHTML = real_role;
 
 
     }

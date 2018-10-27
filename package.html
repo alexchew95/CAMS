@@ -57,11 +57,19 @@
 			<div class="my-3 my-md-5">
 
 				<div class="container">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="home.html">Home</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">Package</li>
+						</ol>
+					</nav>
 					<div class="card-header">
 						<h1 class="page-title">
 							Packages
 						</h1>
-						<button class="btn btn-primary ml-auto" onclick="location.href='add-package.html';">Add Package</button>
+						<button id="addPackage_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-package.html';">Add Package</button>
 					</div>
 					<div class="card-body">
 						<table class="display" id="tableAllPackages" style="width:100%">
@@ -122,8 +130,10 @@
 		//When the page has loaded.
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
-
-				role = sessionStorage.getItem("role");
+				if (role == "BUSOWN"||role == "MASTER"||role == "STAFF") {
+					var button = document.getElementById("addPackage_button");
+					button.disabled = false;
+				}
 				/* To setup the search tab for datatable - Nick */
 				$('#tableAllPackages tfoot th').each(function () {
 					var title = $(this).text();
@@ -145,20 +155,25 @@
 						xhr.setRequestHeader("Authorization", token);
 					},
 					success: function (data) {
+
 						for (var i = 0, len = data.length; i < len; i++) {
+							var edit_package = '<a> <i class="fa fa-edit"></i></a>';
+							if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
+								edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId + '"> <i class="fa fa-edit"></i></a>'
+							}
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
-								'<a href="edit-package.html?packageId=' + data[i].packageId + '"> <i class="fa fa-edit"></i></a>',
-
+								edit_package,
 								data[i].packageId,
 								data[i].packageName,
 								data[i].packageInterest,
 								data[i].packageStatus,
 
 							]);
-							$(".custom-loader").hide();}
+							$(".custom-loader").hide();
+						}
 						inittable(arrayReturn);
-						
+
 					}
 				});
 
