@@ -1216,28 +1216,53 @@
 									<div>
 										<div class="form-horizontal">
 											<legend>Redemption Details</legend>
-											<table>
+											<table id="redemption_table">
 
 												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Commission Deduction Settlement (RM)</label>
-															</td>
-
-															<div class="controls">
+													<div class="form-inline form-group" id=redemptionContaioner>
+														<thead>
+															<tr>
+																<div class="container1">
 																<td>
-																	<input type="number" id="CommissionDeductionSettlement" class="form-control" autocomplete="off" step="0.01">
 																</td>
-															</div>
-														</tr>
+																<td>
+																	<label class="control-label required disabled float-left">Code</label>
+																</td>
+																<td>
+																	<label class="control-label required disabled float-left">Bank / Coop / Organisation</label>
+																</td>
+																<td>
+																	<label class="control-label required disabled float-left">Details</label>
+																</td>
+																<td>
+																	<label class="control-label required disabled float-left">Amount</label>
+																</td>
+																<td>
+																	<label class="control-label required disabled float-left">Expired Date</label>
+																</td>
+																<td>
+																	<label class="control-label required disabled float-left">Status</label>
+																</td>
+																<td>
+																&ensp; &ensp;
+																</td>
+																<td>
+																	<button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
+																</td>
+																</div>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
+
+															</tr>
+														</tbody>	
 													</div>
 												</div>
 											</table>
+											<br>
+											<button class="btn btn-warning" id="DeleteRedemption" data-loading-text>Delete</button>
 										</div>
-
-										<!-- <button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
- -->
 									</div>
 								</div>
 								<div class="tab-pane" id="remark">
@@ -1360,6 +1385,9 @@
 	<script type="text/javascript">
 		/////* Declare variables */////
 		var stay = true; // to change window location if set as false
+		var redemption_count = 0;
+		var max_redemption_count = 20;
+
 		token = sessionStorage.getItem("token");
 		require(['mainjs', 'jquery'], function () {
 
@@ -1382,6 +1410,60 @@
 				window.location = "customer.html";
 			});
 
+			$("#AddRedemption").click(function (event) {
+				event.preventDefault();
+				redemptionField();
+			});
+			
+			function redemptionField(){
+				var redemption_container = "";
+				if(redemption_count < max_redemption_count){
+					redemption_count++;
+					redemption_container += '<tr><td><input type="checkbox" name="redemption_record"></td>' +
+					'<div class="controls"><td>' +
+					'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
+					'</td></div>' +
+					'<div class="controls"><td>' +
+					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100">' +
+					'</td></div>' +
+					'<div class="controls"><td>' +
+					'<textarea class="form-control" rows="1" id="RedemptionDetails" required></textarea>' +
+					'</td></div>' +
+					'<div class="controls"><td>' +
+					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01">' +
+					'</td></div>' +
+					'<div class="controls"><td>' +
+					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker">' +
+					'</td></div>' +
+					'<div class="controls"><td>' +
+					'<input type="text" id="RedemptionStatus" class="form-control" autocomplete="off">' +
+					'</td></div></tr>'; 
+					$('#RedemptionCode').attr( "id", "RedemptionCode" +  redemption_count);
+					$('#RedemptionBankCoopOrg').attr( "id", "RedemptionBankCoopOrg" +  redemption_count);
+					$('#RedemptionDetails').attr( "id", "RedemptionDetails" +  redemption_count);
+					$('#RedemptionAmount').attr( "id", "RedemptionAmount" +  redemption_count);
+					$('#RedemptionExpiredDate').attr( "id", "RedemptionExpiredDate" +  redemption_count);
+					$('#RedemptionStatus').attr( "id", "RedemptionStatus" +  redemption_count);
+					
+				}
+				else{
+					alert('You have reached the limits. Maximum count is 20')
+				}
+				$("#redemption_table > tbody").append(redemption_container); //add input box
+				console.log(redemption_count);
+			}
+
+			$("#DeleteRedemption").click(function (event) {
+				event.preventDefault();
+				$("table tbody").find('input[name="redemption_record"]').each(function(){
+            	if($(this).is(":checked")){
+                    $(this).parents("tr").remove();
+					redemption_count--;
+					console.log(redemption_count);
+                }
+            });
+       		}); 
+			
 			function checkValidity() {
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
@@ -1585,6 +1667,7 @@
 
 				}
 				package();
+				redemptionField();
 			});
 		});
 
