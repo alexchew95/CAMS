@@ -93,7 +93,8 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
+													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly
+													 required>
 													<input type="hidden" id="MarketingOfficerId" value="">
 												</td>
 											</tr>
@@ -165,7 +166,8 @@
 									<a href="#Work" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('work')">Work</a>
 								</li>
 								<li id="liSalaryAndDeduction">
-									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary & Deduction</a>
+									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary
+										& Deduction</a>
 								</li>
 								<li id="liLoan">
 									<a href="#Loan" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('loan')">Loan</a>
@@ -389,7 +391,8 @@
 																	</td>
 
 																	<td>
-																		<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150"> </td>
+																		<input type="text" id="HomeAddressLine1" class="form-control" autocomplete="off" maxlength="150">
+																	</td>
 																</tr>
 															</div>
 														</div>
@@ -688,7 +691,8 @@
 
 															<div class="controls">
 																<td>
-																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00" required>
+																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00"
+																	 required>
 																</td>
 															</div>
 														</tr>
@@ -843,7 +847,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off" placeholder="0.00" required>
+																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off"
+																			 placeholder="0.00" required>
 																		</td>
 																	</div>
 																</tr>
@@ -859,7 +864,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00" required step="0.01">
+																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00"
+																			 required step="0.01">
 																		</td>
 																	</div>
 																</tr>
@@ -891,7 +897,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required autocomplete="off">
+																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required
+																			 autocomplete="off">
 																		</td>
 																	</div>
 																</tr>
@@ -1431,13 +1438,18 @@
 						alert("Remark is deleted")
 					}
 				});
-			}
-			else {
+			} else {
 				event.preventDefault();
 			}
 
 		}
 		token = sessionStorage.getItem("token");
+		role = sessionStorage.getItem("role");
+		// Disable all input for Agent/Subagent. Only Admin level can edit 
+		if (role == 'AGENT' || role == 'SAGENT') {
+			$('input[type="text"],input[type="number"],input[type="checkbox"], select').prop("disabled", true);
+		}
+
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 
 			$("#SaveAndStay").click(function (event) {
@@ -1504,11 +1516,10 @@
 				});
 			}
 
-
-
 			function checkValidity() {
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
+					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank",
+					"AccountNo"
 				];
 
 				var datalength = data.length,
@@ -1591,11 +1602,14 @@
 					}
 				});
 			}
+
 			function inittable(data) {
 				//console.log(data);
 				var table = $('#tableAllRemark').DataTable({
 					"aaData": data,
-					"order": [[0, "desc"]]
+					"order": [
+						[0, "desc"]
+					]
 				});
 
 				// Apply the search
@@ -1788,7 +1802,8 @@
 							$("#BankReference").val(data.bankRef);
 							$("#CommissionDeductionSettlement").val(data.commissionDeductionSettlement);
 						});
-						$(".custom-loader").hide();}
+						$(".custom-loader").hide();
+					}
 				});
 			}
 			// TODO Yue zong
