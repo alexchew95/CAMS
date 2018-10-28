@@ -1247,7 +1247,7 @@
 																&ensp; &ensp;
 																</td>
 																<td>
-																	<button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
+																	<button class="btn btn-info" id="addRedemption" data-loading-text>Add Redemption</button>
 																</td>
 																</div>
 															</tr>
@@ -1261,7 +1261,7 @@
 												</div>
 											</table>
 											<br>
-											<button class="btn btn-warning" id="DeleteRedemption" data-loading-text>Delete</button>
+											<button class="btn btn-warning" id="deleteRedemption" data-loading-text>Delete</button>
 										</div>
 									</div>
 								</div>
@@ -1384,9 +1384,15 @@
 
 	<script type="text/javascript">
 		/////* Declare variables */////
-		var stay = true; // to change window location if set as false
-		var redemption_count = 0;
-		var max_redemption_count = 20;
+		var stay = true, // to change window location if set as false
+			redemption_count = 0,
+			max_redemption_count = 5,
+			totalRedemptionCode = [],
+			totalRedemptionBankCoopOrg = [],
+			totalRedemptionDetails = [],
+			totalRedemptionAmount = [],
+			totalRedemptionExpiredDate = [],
+			totalRedemptionStatus = [];
 
 		token = sessionStorage.getItem("token");
 		require(['mainjs', 'jquery'], function () {
@@ -1395,6 +1401,7 @@
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
+					setRedemptionArray();
 					addCustomer();
 				}
 			});
@@ -1402,6 +1409,7 @@
 			$("#Save").click(function (event) {
 				stay = false;
 				if (checkValidity()) {
+					setRedemptionArray();
 					addCustomer();
 				}
 			});
@@ -1410,50 +1418,54 @@
 				window.location = "customer.html";
 			});
 
-			$("#AddRedemption").click(function (event) {
+			$("#addRedemption").click(function (event) {
 				event.preventDefault();
 				redemptionField();
 			});
 			
 			function redemptionField(){
-				var redemption_container = "";
+				var redemption_container = "",
+				 	redemption_counter;
 				if(redemption_count < max_redemption_count){
 					redemption_count++;
 					redemption_container += '<tr><td><input type="checkbox" name="redemption_record"></td>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
+					'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100">' +
+					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
 					'<textarea class="form-control" rows="1" id="RedemptionDetails" required></textarea>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01">' +
+					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker">' +
+					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionStatus" class="form-control" autocomplete="off">' +
-					'</td></div></tr>'; 
-					$('#RedemptionCode').attr( "id", "RedemptionCode" +  redemption_count);
-					$('#RedemptionBankCoopOrg').attr( "id", "RedemptionBankCoopOrg" +  redemption_count);
-					$('#RedemptionDetails').attr( "id", "RedemptionDetails" +  redemption_count);
-					$('#RedemptionAmount').attr( "id", "RedemptionAmount" +  redemption_count);
-					$('#RedemptionExpiredDate').attr( "id", "RedemptionExpiredDate" +  redemption_count);
-					$('#RedemptionStatus').attr( "id", "RedemptionStatus" +  redemption_count);
-					
+					'<input type="text" id="RedemptionStatus" class="form-control" autocomplete="off" required>' +
+					'</td></div></tr>';
+					$("#redemption_table > tbody").append(redemption_container); //add input box
+					for(redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++){ 
+						if (!(document.getElementById("RedemptionCode"+ redemption_counter))) {
+							$('#RedemptionCode').attr( "id", "RedemptionCode" +  redemption_counter);
+							$('#RedemptionBankCoopOrg').attr( "id", "RedemptionBankCoopOrg" +  redemption_counter);
+							$('#RedemptionDetails').attr( "id", "RedemptionDetails" +  redemption_counter);
+							$('#RedemptionAmount').attr( "id", "RedemptionAmount" +  redemption_counter);
+							$('#RedemptionExpiredDate').attr( "id", "RedemptionExpiredDate" +  redemption_counter);
+							$('#RedemptionStatus').attr( "id", "RedemptionStatus" +  redemption_counter);
+							break;
+						}
+					}
 				}
 				else{
-					alert('You have reached the limits. Maximum count is 20')
+					alert('You have reached the limits. Maximum count is 5')
 				}
-				$("#redemption_table > tbody").append(redemption_container); //add input box
-				console.log(redemption_count);
 			}
 
-			$("#DeleteRedemption").click(function (event) {
+			$("#deleteRedemption").click(function (event) {
 				event.preventDefault();
 				$("table tbody").find('input[name="redemption_record"]').each(function(){
             	if($(this).is(":checked")){
@@ -1468,14 +1480,22 @@
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
 				];
+				reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth", "Company Name",
+					"Salary", "Deduction", "Eligible Deduction", "Loan Applied", "Agent Commission", "Tenure", "Profit Rate", "Bank", "AccountNo"
+				];
+				redemption_data = ["RedemptionCode", "RedemptionBankCoopOrg", "RedemptionDetails", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
 
-				var datalength = data.length,
+				reqField_redemption_data = ["Redemption Code", "Redemption Bank/Coop/Org", "Redemption Details", "Redemption Amount", "Redemption Expired Date", "Redemption Status"];
+
+				var datalength,
 					comma = true,
 					validInp = true,
 					reqField = "",
 					inp,
 					inpValue;
-
+				
+				/* Checking for require field excluding redemption*/
+				datalength = data.length;
 				for (var i = 0; i < datalength; i++) {
 					inp = document.getElementById(data[i]);
 					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
@@ -1486,7 +1506,7 @@
 								comma = false;
 								validInp = false;
 							} else {
-								reqField += (", " + data[i]);
+								reqField += (", " + reqField_data[i]);
 							}
 						}
 					} else {
@@ -1496,21 +1516,59 @@
 								comma = false;
 								validInp = false;
 							} else {
-								reqField += (", " + data[i]);
+								reqField += (", " + reqField_data[i]);
 							}
 						}
 					}
-					if (validInp == false) {
-						$("#lblMessages").text("Please fill up for " + reqField);
-					} else {
-						$("#lblMessages").text("");
+				}
+				
+				/* Checking for redemption field*/
+				datalength = redemption_data.length
+				for (var i = 0; i < datalength; i++) {
+					for(var j = 1; j <= redemption_count; j++)
+					{
+						inpValue = document.getElementById(redemption_data[i] + redemption_count).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (reqField_redemption_data[i]);
+								comma = false;
+								validInp = false;
+								break;
+							} else {
+								reqField += (", " + reqField_redemption_data[i]);
+								break;
+							}
+						}
 					}
 				}
+
+				if (validInp == false) {
+					$("#lblMessages").text("Please fill up for " + reqField);
+				} else {
+					$("#lblMessages").text("");
+				}
 				return validInp;
+			}
+			
+			function setRedemptionArray(){
+				for(var i = 0; i < redemption_count; i++){
+					totalRedemptionCode[redemption_count] = $("#RedemptionCode" + redemption_count).val();
+					totalRedemptionBankCoopOrg[redemption_count] = $("#RedemptionBankCoopOrg" + redemption_count).val();
+					totalRedemptionDetails[redemption_count] = $("#RedemptionDetails" + redemption_count).val();
+					totalRedemptionAmount[redemption_count] = $("#RedemptionAmount" + redemption_count).val();
+					totalRedemptionExpiredDate[redemption_count] = $("#RedemptionExpiredDate" + redemption_count).val();
+					totalRedemptionStatus[redemption_count] = $("#RedemptionStatus" + redemption_count).val();
+				}
 			}
 
 			function addCustomer() {
 				caseCreated = "Case created: " + $("#NewRemark").val();
+				var jsonString_RedemptionCode = JSON.stringify(totalRedemptionCode),
+					jsonString_RedemptionBankCoopOrg = JSON.stringify(totalRedemptionBankCoopOrg),
+					jsonString_RedemptionDetails = JSON.stringify(totalRedemptionDetails),
+					jsonString_RedemptionAmount = JSON.stringify(totalRedemptionAmount),
+					jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
+					jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus);
 
 				if (document.getElementById('Attention_MarketingOfficer').checked) {
 					attentionTo = document.getElementById("Attention_MarketingOfficer").value;
@@ -1593,6 +1651,12 @@
 						"remarkContent": caseCreated,
 						"userId": userId,
 						"attentionTo": attentionTo,
+						"jsonString_RedemptionCode": jsonString_RedemptionCode,
+						"jsonString_RedemptionBankCoopOrg": jsonString_RedemptionBankCoopOrg,
+						"jsonString_RedemptionDetails": jsonString_RedemptionDetails,
+						"jsonString_RedemptionAmount": jsonString_RedemptionAmount,
+						"jsonString_RedemptionExpiredDate": jsonString_RedemptionExpiredDate,
+						"jsonString_RedemptionStatus": jsonString_RedemptionStatus,
 					},
 
 					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
@@ -1601,6 +1665,8 @@
 
 					success: function (data) {
 						alert(data.msg);
+						customerID = data.customerId;
+						console.log(customerID);
 						if (stay == false) {
 							window.location = "customer.html";
 						}
@@ -1666,8 +1732,8 @@
 					});
 
 				}
+
 				package();
-				redemptionField();
 			});
 		});
 
