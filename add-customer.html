@@ -93,8 +93,10 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
-													<input type="hidden" id="MarketingOfficerId" value="">
+													<select type="form-control custom-select" class="form-control" id="nameMarketingOfficer" maxlength="100" required>
+														<option value="">Select Marketing Officer first</option>
+													</select>
+
 												</td>
 											</tr>
 										</div>
@@ -1732,8 +1734,34 @@
 					});
 
 				}
+				function listMO() {
+					$.ajax({
+						url: APIUrl + 'MO',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
 
+
+
+						success: function (MO) {
+
+
+							MO_DD = '<option value="">Select Marketing Officer first</option>';
+
+							$.each(MO, function (key, value) {
+
+								MO_DD += '<option value="' + value.userId + '">'+value.userId+') '  + value.name + '</option>';
+							})
+
+							$("#nameMarketingOfficer").html(MO_DD);
+						},
+					});
+
+				}
 				package();
+				listMO();
 			});
 		});
 
