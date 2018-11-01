@@ -1392,7 +1392,8 @@
 			totalRedemptionDetails = [],
 			totalRedemptionAmount = [],
 			totalRedemptionExpiredDate = [],
-			totalRedemptionStatus = [];
+			totalRedemptionStatus = [],
+			statusDD;
 
 		token = sessionStorage.getItem("token");
 		require(['mainjs', 'jquery'], function () {
@@ -1436,7 +1437,7 @@
 					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<textarea class="form-control" rows="1" id="RedemptionDetails" required></textarea>' +
+					'<input type="text" class="form-control" rows="1" id="RedemptionDetails" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
 					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
@@ -1445,7 +1446,7 @@
 					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionStatus" class="form-control" autocomplete="off" required>' +
+					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' + statusDD +
 					'</td></div></tr>';
 					$("#redemption_table > tbody").append(redemption_container); //add input box
 					for(redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++){ 
@@ -1527,7 +1528,7 @@
 				for (var i = 0; i < datalength; i++) {
 					for(var j = 1; j <= redemption_count; j++)
 					{
-						inpValue = document.getElementById(redemption_data[i] + redemption_count).value;
+						inpValue = document.getElementById(redemption_data[i] + j).value;
 						if (inpValue == 0) {
 							if (comma) {
 								reqField += (reqField_redemption_data[i]);
@@ -1551,13 +1552,13 @@
 			}
 			
 			function setRedemptionArray(){
-				for(var i = 0; i < redemption_count; i++){
-					totalRedemptionCode[redemption_count] = $("#RedemptionCode" + redemption_count).val();
-					totalRedemptionBankCoopOrg[redemption_count] = $("#RedemptionBankCoopOrg" + redemption_count).val();
-					totalRedemptionDetails[redemption_count] = $("#RedemptionDetails" + redemption_count).val();
-					totalRedemptionAmount[redemption_count] = $("#RedemptionAmount" + redemption_count).val();
-					totalRedemptionExpiredDate[redemption_count] = $("#RedemptionExpiredDate" + redemption_count).val();
-					totalRedemptionStatus[redemption_count] = $("#RedemptionStatus" + redemption_count).val();
+				for(var i = 1; i <= redemption_count; i++){
+					totalRedemptionCode[i-1] = $("#RedemptionCode" + i).val();
+					totalRedemptionBankCoopOrg[i-1] = $("#RedemptionBankCoopOrg" + i).val();
+					totalRedemptionDetails[i-1] = $("#RedemptionDetails" + i).val();
+					totalRedemptionAmount[i-1] = $("#RedemptionAmount" + i).val();
+					totalRedemptionExpiredDate[i-1] = $("#RedemptionExpiredDate" + i).val();
+					totalRedemptionStatus[i-1] = $("#RedemptionStatus" + i).val();
 				}
 			}
 
@@ -1733,7 +1734,27 @@
 
 				}
 
+				function statusDropDown() {
+					$.ajax({
+						url: APIUrl + 'status',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						success: function (status) {
+							statusDD = '<option value="0">- Select One -</option>';
+							$.each(status, function (key, value) {
+
+								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
+							})
+						},
+					});
+
+				}
+
 				package();
+				statusDropDown();
 			});
 		});
 
