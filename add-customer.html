@@ -1705,7 +1705,25 @@
 				var userId = sessionStorage.getItem("userId");
 				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
 				$("#MarketingOfficerId").val(userId);
+				
+				function statusDropDown() {
+					$.ajax({
+						url: APIUrl + 'status',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						success: function (status) {
+							statusDD = '<option value="0">- Select One -</option>';
+							$.each(status, function (key, value) {
 
+								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
+							})
+						},
+					});
+
+				}
 
 				function package() {
 					$.ajax({
@@ -1729,25 +1747,6 @@
 							})
 
 							$("#Package").html(packageDD);
-						},
-					});
-
-				}
-
-				function statusDropDown() {
-					$.ajax({
-						url: APIUrl + 'status',
-						type: 'GET',
-						dataType: 'JSON',
-						beforeSend: function (xhr) { //Include the bearer token in header
-							xhr.setRequestHeader("Authorization", token);
-						},
-						success: function (status) {
-							statusDD = '<option value="0">- Select One -</option>';
-							$.each(status, function (key, value) {
-
-								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
-							})
 						},
 					});
 
