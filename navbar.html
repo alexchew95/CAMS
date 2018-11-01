@@ -62,14 +62,16 @@
              b.style.display = "none"; */
 
 
-            if (role == "STAFF" || role == "AGENT" || role == "SAGENT") {
+            if (role == "AGENT" || role == "SAGENT") {
+
+                $("#li-1").remove();
+
+            }
+            if (role == "STAFF") {
 
                 $("#li-1").remove();
                 $("#li-commission").remove();
-
-
             }
-
 
         }
 

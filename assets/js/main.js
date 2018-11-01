@@ -12,6 +12,9 @@ $(document).ready(function () {
 	name = sessionStorage.getItem("name");
 	userId = sessionStorage.getItem("userId");
 	email = sessionStorage.getItem("email");
+	if (role == 'AGENT' || role == 'SAGENT') {
+		$('input[type="text"],input[type="number"],input[type="checkbox"], select').prop("disabled", true);
+	}
 
 
 	// Check Admin Login
@@ -62,7 +65,12 @@ Function: Check login
 Usage:	var customerId = $_GET('customerId'); 
 */
 
+function roleControl() {
+	if (role == 'AGENT' || role == 'SAGENT') {
+		$('input[type="text"],input[type="number"],input[type="checkbox"], select').prop("disabled", true);
+	}
 
+}
 function closeModal() {
 	$.modal.close();
 }

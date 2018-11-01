@@ -1446,10 +1446,7 @@
 		token = sessionStorage.getItem("token");
 		role = sessionStorage.getItem("role");
 		// Disable all input for Agent/Subagent. Only Admin level can edit 
-		if (role == 'AGENT' || role == 'SAGENT') {
-			$('input[type="text"],input[type="number"],input[type="checkbox"], select').prop("disabled", true);
-		}
-
+		
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 
 			$("#SaveAndStay").click(function (event) {

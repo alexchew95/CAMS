@@ -65,7 +65,7 @@
                             <li class="breadcrumb-item">
                                 <a href="customer.html">Customer</a>
                             </li>
-                            <li class="breadcrumb-item active" aria-current="page">Add Commission</li>
+                            <li class="breadcrumb-item active" aria-current="page">Edit Commission</li>
                         </ol>
                     </nav>
 
@@ -209,14 +209,6 @@
                                         </tr>
                                     </div>
 
-                                    <div class="form-group">
-                                        <tr>
-                                            <td>
-                                                <button class="btn btn-primary" id="btnAddPackage">Add</button>
-                                                <button class="btn btn-primary" id="btnCloseAddNewPackage">Close</button>
-                                            </td>
-                                        </tr>
-                                    </div>
 
                                 </table>
                                 <br>
@@ -264,23 +256,20 @@
 
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
-var packageId = $_GET('packageId');
+            var packageId = $_GET('packageId');
             $("#SaveAndStay").click(function (event) {
                 event.preventDefault();
-                
-            
 
-                    editPackage(packageId);
-                
+
+
+                editPackage(packageId);
+
             });
 
             $("#Save").click(function (event) {
-               
 
-                    editPackage(packageId);
+                editPackage(packageId);
 
-
-                
             });
 
             $("#Cancel").click(function (event) {
@@ -362,7 +351,8 @@ var packageId = $_GET('packageId');
 
 
                         });
-                        $(".custom-loader").hide();}
+                        $(".custom-loader").hide();
+                    }
                 });
             }
 
