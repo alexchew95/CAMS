@@ -108,11 +108,60 @@
 												<td>
 													<label class="col-form-label float-right">Package* </label>
 												</td>
-												<td>
-													<select type="form-control custom-select" class="form-control" id="Package" maxlength="100" required>
+												<td id="ddPackage">
+
+
+													<script type="text/javascript">
+												
+														function getSelectedPackageData() {
+															
+																var selectedPackageId =	$('#Package')[0].options;
+															
+															console.log(selectedPackageId)
+															/* $.ajax({
+											
+																url: APIUrl + 'loadPackage',
+																type: 'POST',
+																dataType: 'JSON',
+																beforeSend: function (xhr) { //Include the bearer token in header
+																	xhr.setRequestHeader("Authorization", token);
+																},
+																data: {
+																	"packageId": selectedPackageId,
+																},
+																success: function (data) {
+																	data.forEach(function (data) {
+																		sessionStorage.setItem('packageName', data.packageName);
+																		sessionStorage.setItem('packageId', data.packageId);
+																		sessionStorage.setItem('profit1to3', data.profit1to3);
+																		sessionStorage.setItem('profit4to10', data.profit4to10);
+																		sessionStorage.setItem('minTenure', data.minTenure);
+																		sessionStorage.setItem('maxTenure', data.maxTenure);
+																		sessionStorage.setItem('payoutPerc', data.payoutPerc);
+																		sessionStorage.setItem('maxAge', data.maxAge);
+																		sessionStorage.setItem('minLoanAmt', data.minLoanAmt);
+																		sessionStorage.setItem('maxLoanAmt', data.maxLoanAmt);
+																		sessionStorage.setItem('packageStatus', data.packageStatus);
+																		console.log(data);
+											
+											
+																	});
+																//	$(".custom-loader").hide();
+																}
+															}); */
+														}
+													</script>
+													<!-- <select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package" maxlength="100"
+													 required>
 														<option value="">Select package first</option>
 													</select>
+													
 
+														function getSelectedPackageData() {
+															selectedPackageId = this.options[this.selectedIndex].id
+															getSelectedPackageDatav2(selectedPackageId);
+														}
+ -->
 												</td>
 											</tr>
 										</div>
@@ -1225,32 +1274,32 @@
 														<thead>
 															<tr>
 																<div class="container1">
-																<td>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Code</label>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Bank / Coop / Organisation</label>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Details</label>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Amount</label>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Expired Date</label>
-																</td>
-																<td>
-																	<label class="control-label required disabled float-left">Status</label>
-																</td>
-																<td>
-																&ensp; &ensp;
-																</td>
-																<td>
-																	<button class="btn btn-info" id="addRedemption" data-loading-text>Add Redemption</button>
-																</td>
+																	<td>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Code</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Bank / Coop / Organisation</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Details</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Amount</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Expired Date</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Status</label>
+																	</td>
+																	<td>
+																		&ensp; &ensp;
+																	</td>
+																	<td>
+																		<button class="btn btn-info" id="addRedemption" data-loading-text>Add Redemption</button>
+																	</td>
 																</div>
 															</tr>
 														</thead>
@@ -1258,7 +1307,7 @@
 															<tr>
 
 															</tr>
-														</tbody>	
+														</tbody>
 													</div>
 												</div>
 											</table>
@@ -1385,6 +1434,8 @@
 	</div>
 
 	<script type="text/javascript">
+
+
 		/////* Declare variables */////
 		var stay = true, // to change window location if set as false
 			redemption_count = 0,
@@ -1399,7 +1450,10 @@
 
 		token = sessionStorage.getItem("token");
 		require(['mainjs', 'jquery'], function () {
-
+			function test() {
+				selectedPackageId = this.options[this.selectedIndex].id
+				console.log(selectedPackageId)
+			}
 			$("#SaveAndStay").click(function (event) {
 				event.preventDefault();
 				stay = true;
@@ -1412,9 +1466,9 @@
 			$("#Save").click(function (event) {
 				stay = false;
 				if (checkValidity()) {
-					setRedemptionArray();
-					addCustomer();
-				}
+				setRedemptionArray();
+				addCustomer();
+}
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1425,60 +1479,60 @@
 				event.preventDefault();
 				redemptionField();
 			});
-			
-			function redemptionField(){
+
+			function redemptionField() {
 				var redemption_container = "",
-				 	redemption_counter;
-				if(redemption_count < max_redemption_count){
+					redemption_counter;
+				if (redemption_count < max_redemption_count) {
 					redemption_count++;
 					redemption_container += '<tr><td><input type="checkbox" name="redemption_record"></td>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" class="form-control" rows="1" id="RedemptionDetails" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' + statusDD +
-					'</td></div></tr>';
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" class="form-control" rows="1" id="RedemptionDetails" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' + statusDD +
+						'</td></div></tr>';
 					$("#redemption_table > tbody").append(redemption_container); //add input box
-					for(redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++){ 
-						if (!(document.getElementById("RedemptionCode"+ redemption_counter))) {
-							$('#RedemptionCode').attr( "id", "RedemptionCode" +  redemption_counter);
-							$('#RedemptionBankCoopOrg').attr( "id", "RedemptionBankCoopOrg" +  redemption_counter);
-							$('#RedemptionDetails').attr( "id", "RedemptionDetails" +  redemption_counter);
-							$('#RedemptionAmount').attr( "id", "RedemptionAmount" +  redemption_counter);
-							$('#RedemptionExpiredDate').attr( "id", "RedemptionExpiredDate" +  redemption_counter);
-							$('#RedemptionStatus').attr( "id", "RedemptionStatus" +  redemption_counter);
+					for (redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++) {
+						if (!(document.getElementById("RedemptionCode" + redemption_counter))) {
+							$('#RedemptionCode').attr("id", "RedemptionCode" + redemption_counter);
+							$('#RedemptionBankCoopOrg').attr("id", "RedemptionBankCoopOrg" + redemption_counter);
+							$('#RedemptionDetails').attr("id", "RedemptionDetails" + redemption_counter);
+							$('#RedemptionAmount').attr("id", "RedemptionAmount" + redemption_counter);
+							$('#RedemptionExpiredDate').attr("id", "RedemptionExpiredDate" + redemption_counter);
+							$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);
 							break;
 						}
 					}
 				}
-				else{
+				else {
 					alert('You have reached the limits. Maximum count is 5')
 				}
 			}
 
 			$("#deleteRedemption").click(function (event) {
 				event.preventDefault();
-				$("table tbody").find('input[name="redemption_record"]').each(function(){
-            	if($(this).is(":checked")){
-                    $(this).parents("tr").remove();
-					redemption_count--;
-					console.log(redemption_count);
-                }
-            });
-       		}); 
-			
+				$("table tbody").find('input[name="redemption_record"]').each(function () {
+					if ($(this).is(":checked")) {
+						$(this).parents("tr").remove();
+						redemption_count--;
+						console.log(redemption_count);
+					}
+				});
+			});
+
 			function checkValidity() {
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
@@ -1496,7 +1550,7 @@
 					reqField = "",
 					inp,
 					inpValue;
-				
+
 				/* Checking for require field excluding redemption*/
 				datalength = data.length;
 				for (var i = 0; i < datalength; i++) {
@@ -1524,12 +1578,11 @@
 						}
 					}
 				}
-				
+
 				/* Checking for redemption field*/
 				datalength = redemption_data.length
 				for (var i = 0; i < datalength; i++) {
-					for(var j = 1; j <= redemption_count; j++)
-					{
+					for (var j = 1; j <= redemption_count; j++) {
 						inpValue = document.getElementById(redemption_data[i] + j).value;
 						if (inpValue == 0) {
 							if (comma) {
@@ -1552,17 +1605,18 @@
 				}
 				return validInp;
 			}
-			
-			function setRedemptionArray(){
-				for(var i = 1; i <= redemption_count; i++){
-					totalRedemptionCode[i-1] = $("#RedemptionCode" + i).val();
-					totalRedemptionBankCoopOrg[i-1] = $("#RedemptionBankCoopOrg" + i).val();
-					totalRedemptionDetails[i-1] = $("#RedemptionDetails" + i).val();
-					totalRedemptionAmount[i-1] = $("#RedemptionAmount" + i).val();
-					totalRedemptionExpiredDate[i-1] = $("#RedemptionExpiredDate" + i).val();
-					totalRedemptionStatus[i-1] = $("#RedemptionStatus" + i).val();
+
+			function setRedemptionArray() {
+				for (var i = 1; i <= redemption_count; i++) {
+					totalRedemptionCode[i - 1] = $("#RedemptionCode" + i).val();
+					totalRedemptionBankCoopOrg[i - 1] = $("#RedemptionBankCoopOrg" + i).val();
+					totalRedemptionDetails[i - 1] = $("#RedemptionDetails" + i).val();
+					totalRedemptionAmount[i - 1] = $("#RedemptionAmount" + i).val();
+					totalRedemptionExpiredDate[i - 1] = $("#RedemptionExpiredDate" + i).val();
+					totalRedemptionStatus[i - 1] = $("#RedemptionStatus" + i).val();
 				}
 			}
+
 
 			function addCustomer() {
 				caseCreated = "Case created: " + $("#NewRemark").val();
@@ -1590,7 +1644,7 @@
 
 					data: {
 						"customerName": $("#Name").val(),
-						"marketingOfficerId": $("#MarketingOfficerId").val(),
+						"marketingOfficerId": $("#nameMarketingOfficer").val(),
 						"packageId": $("#Package").val(),
 						"status": $("#Status").val(),
 						"entryDate": $("#EntryDate").val(),
@@ -1707,7 +1761,7 @@
 				var userId = sessionStorage.getItem("userId");
 				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
 				$("#MarketingOfficerId").val(userId);
-				
+
 				function statusDropDown() {
 					$.ajax({
 						url: APIUrl + 'status',
@@ -1741,14 +1795,15 @@
 						success: function (package) {
 
 
-							packageDD = '<option value="">Select package first</option>';
+							packageDD = '<select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package"' +
+								'maxlength="100" required> <option value="">Select package first</option>';
 
 							$.each(package, function (key, value) {
 
-								packageDD += '<option value="' + value.packageId + '">' + value.packageName + '</option>';
+								packageDD += '<option value="' + value.packageId + '"id="' + value.packageId + ' ">' + value.packageName + '</option>';
 							})
-
-							$("#Package").html(packageDD);
+							packageDD += '</select>';
+							$("#ddPackage").html(packageDD);
 						},
 					});
 
@@ -1771,7 +1826,7 @@
 
 							$.each(MO, function (key, value) {
 
-								MO_DD += '<option value="' + value.userId + '">'+value.userId+') '  + value.name + '</option>';
+								MO_DD += '<option  value="' + value.userId + '">' + value.userId + ') ' + value.name + '</option>';
 							})
 
 							$("#nameMarketingOfficer").html(MO_DD);
