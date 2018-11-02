@@ -1280,19 +1280,19 @@
 																		<label class="control-label required disabled float-left">Code</label>
 																	</td>
 																	<td>
-																		<label class="control-label required disabled float-left">Bank / Coop / Organisation</label>
+																		<label class="control-label required disabled float-left">Bank / Coop / Organisation*</label>
 																	</td>
 																	<td>
 																		<label class="control-label required disabled float-left">Details</label>
 																	</td>
 																	<td>
-																		<label class="control-label required disabled float-left">Amount</label>
+																		<label class="control-label required disabled float-left">Amount*</label>
 																	</td>
 																	<td>
-																		<label class="control-label required disabled float-left">Expired Date</label>
+																		<label class="control-label required disabled float-left">Expired Date*</label>
 																	</td>
 																	<td>
-																		<label class="control-label required disabled float-left">Status</label>
+																		<label class="control-label required disabled float-left">Status*</label>
 																	</td>
 																	<td>
 																		&ensp; &ensp;
@@ -1468,7 +1468,7 @@
 				if (checkValidity()) {
 				setRedemptionArray();
 				addCustomer();
-}
+				}
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1487,13 +1487,13 @@
 					redemption_count++;
 					redemption_container += '<tr><td><input type="checkbox" name="redemption_record"></td>' +
 						'<div class="controls"><td>' +
-						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20" required>' +
+						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
 						'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
-						'<input type="text" class="form-control" rows="1" id="RedemptionDetails" required>' +
+						'<input type="text" class="form-control" rows="1" id="RedemptionDetails">' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
 						'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
@@ -1540,9 +1540,9 @@
 				reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth", "Company Name",
 					"Salary", "Deduction", "Eligible Deduction", "Loan Applied", "Agent Commission", "Tenure", "Profit Rate", "Bank", "AccountNo"
 				];
-				redemption_data = ["RedemptionCode", "RedemptionBankCoopOrg", "RedemptionDetails", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
+				redemption_data = ["RedemptionBankCoopOrg", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
 
-				reqField_redemption_data = ["Redemption Code", "Redemption Bank/Coop/Org", "Redemption Details", "Redemption Amount", "Redemption Expired Date", "Redemption Status"];
+				reqField_redemption_data = ["Redemption Bank/Coop/Org", "Redemption Amount", "Redemption Expired Date", "Redemption Status"];
 
 				var datalength,
 					comma = true,
@@ -1722,8 +1722,6 @@
 
 					success: function (data) {
 						alert(data.msg);
-						customerID = data.customerId;
-						console.log(customerID);
 						if (stay == false) {
 							window.location = "customer.html";
 						}
