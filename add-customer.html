@@ -115,10 +115,10 @@
 												
 														function getSelectedPackageData() {
 															
-																var selectedPackageId =	$('#Package')[0].options;
-															
+																var selectedPackageId =$("#Package").val()
+																
 															console.log(selectedPackageId)
-															/* $.ajax({
+															$.ajax({
 											
 																url: APIUrl + 'loadPackage',
 																type: 'POST',
@@ -131,24 +131,24 @@
 																},
 																success: function (data) {
 																	data.forEach(function (data) {
-																		sessionStorage.setItem('packageName', data.packageName);
-																		sessionStorage.setItem('packageId', data.packageId);
-																		sessionStorage.setItem('profit1to3', data.profit1to3);
-																		sessionStorage.setItem('profit4to10', data.profit4to10);
-																		sessionStorage.setItem('minTenure', data.minTenure);
-																		sessionStorage.setItem('maxTenure', data.maxTenure);
-																		sessionStorage.setItem('payoutPerc', data.payoutPerc);
-																		sessionStorage.setItem('maxAge', data.maxAge);
-																		sessionStorage.setItem('minLoanAmt', data.minLoanAmt);
-																		sessionStorage.setItem('maxLoanAmt', data.maxLoanAmt);
-																		sessionStorage.setItem('packageStatus', data.packageStatus);
-																		console.log(data);
+																		packageName=data.packageName
+																		packageId=data.packageId
+																		profit1to3=data.rofit1to3
+																		profit4to10=data.profit4to10
+																		minTenure=data.minTenure
+																		maxTenure=data.maxTenure
+																		payoutPerc=data.payoutPerc
+																		maxAge=data.maxAge
+																		minLoanAmt=data.minLoanAmt
+																		maxLoanAmt=data.maxLoanAmt
+																		packageStatus=data.packageStatus
+																	
 											
 											
 																	});
 																//	$(".custom-loader").hide();
 																}
-															}); */
+															});
 														}
 													</script>
 													<!-- <select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package" maxlength="100"
