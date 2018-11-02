@@ -1534,7 +1534,7 @@
 			});
 
 			function checkValidity() {
-				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
+				data = ["Name", "nameMarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
 				];
 				reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth", "Company Name",
@@ -1555,11 +1555,11 @@
 				datalength = data.length;
 				for (var i = 0; i < datalength; i++) {
 					inp = document.getElementById(data[i]);
-					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
+					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank") || (data[i] == "nameMarketingOfficer")) {
 						inpValue = document.getElementById(data[i]).value;
 						if (inpValue == 0) {
 							if (comma) {
-								reqField += (data[i]);
+								reqField += (reqField_data[i]);
 								comma = false;
 								validInp = false;
 							} else {
@@ -1569,7 +1569,7 @@
 					} else {
 						if (!inp.checkValidity()) {
 							if (comma) {
-								reqField += (data[i]);
+								reqField += (reqField_data[i]);
 								comma = false;
 								validInp = false;
 							} else {
@@ -1822,7 +1822,7 @@
 						success: function (MO) {
 
 
-							MO_DD = '<option value="">Select Marketing Officer first</option>';
+							MO_DD = '<option value="0">Select Marketing Officer first</option>';
 
 							$.each(MO, function (key, value) {
 
