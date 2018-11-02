@@ -1270,6 +1270,7 @@
 																	<td>
 																		<label class="control-label required disabled float-left">Status*</label>
 																	</td>
+																	<input type="hidden" id="DeleteRedemptionId" value="">
 																	<td>
 																		&ensp; &ensp;
 																	</td>
@@ -1442,8 +1443,9 @@
 		/////* Declare variables */////
 		var customerID,
 			stay = true, // to change window location if set as false
-			redemption_count = 0,
-			redemption_counter,
+			redemption_count = 0, // to get current total redemption_count
+			redemption_counter, // to get current redemption_count
+			numRedemptionId = 0,
 			max_redemption_count = 5,
 			totalRedemptionCode = [],
 			totalRedemptionBankCoopOrg = [],
@@ -1452,6 +1454,7 @@
 			totalRedemptionExpiredDate = [],
 			totalRedemptionStatus = [],
 			totalRedemptionId = [],
+			totalDeleteRedemptionId = [],
 			statusDD,
 			redemption_data = ["RedemptionCode", "RedemptionBankCoopOrg", "RedemptionDetails", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"]; 
 
@@ -1699,7 +1702,7 @@
 				var redemption_container = "";
 				if (redemption_count < max_redemption_count) {
 					redemption_count++;
-					redemption_container += '<tr><td><input type="checkbox" name="redemption_record"></td>' +
+					redemption_container += '<tr><td><input type="checkbox" id="RedemptionCheckBox" name="redemption_record"></td>' +
 						'<div class="controls"><td>' +
 						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
 						'</td></div>' +
@@ -1717,18 +1720,17 @@
 						'</td></div>' +
 						'<div class="controls"><td>' +
 						'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' + statusDD +
-						'</td></div></tr>' +
-						'<input type="hidden" id="RedemptionId" value="">';
+						'</td></div></tr>';
 					$("#redemption_table > tbody").append(redemption_container); //add input box
 					for (redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++) {
 						if (!(document.getElementById("RedemptionCode" + redemption_counter))) {
+							$('#RedemptionCheckBox').attr("id", "RedemptionCheckBox" + redemption_counter);
 							$('#RedemptionCode').attr("id", "RedemptionCode" + redemption_counter);
 							$('#RedemptionBankCoopOrg').attr("id", "RedemptionBankCoopOrg" + redemption_counter);
 							$('#RedemptionDetails').attr("id", "RedemptionDetails" + redemption_counter);
 							$('#RedemptionAmount').attr("id", "RedemptionAmount" + redemption_counter);
 							$('#RedemptionExpiredDate').attr("id", "RedemptionExpiredDate" + redemption_counter);
-							$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);
-							$('#RedemptionId').attr("id", "RedemptionId" + redemption_counter);
+							$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);	
 							break;
 						} 
 					}
@@ -1739,12 +1741,24 @@
 			}
 
 			$("#deleteRedemption").click(function (event) {
+				var curRedemptionCheckBox,
+					curCount;
+
 				event.preventDefault();
 				$("table tbody").find('input[name="redemption_record"]').each(function () {
 					if ($(this).is(":checked")) {
+						/* Get checkbox id and get the count */
+						curRedemptionCheckBox = $(this).attr('id');
+						curCount = curRedemptionCheckBox.replace(/[^0-9]/g,'');
+						
+						/* Append the count to the redemption id to check for its existence. If redemption id is exist, add to totalDeleteRedemptionId*/
+						if($('#RedemptionId' + curCount).length){
+							totalDeleteRedemptionId[numRedemptionId] = $("#RedemptionId" + curCount).val();
+							numRedemptionId ++;
+							$("#RedemptionId"+curCount).attr("id","");
+						}
 						$(this).parents("tr").remove();
 						redemption_count--;
-						console.log(redemption_count);
 					}
 				});
 			});
@@ -1771,6 +1785,7 @@
 					jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
 					jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus),
 					jsonString_RedemptionId = JSON.stringify(totalRedemptionId);
+					jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
 
 				$.ajax({
 					url: APIUrl + 'editCustomer',
@@ -1852,6 +1867,7 @@
 						"jsonString_RedemptionExpiredDate": jsonString_RedemptionExpiredDate,
 						"jsonString_RedemptionStatus": jsonString_RedemptionStatus,
 						"jsonString_RedemptionId": jsonString_RedemptionId,
+						"jsonString_DeleteRedemptionId": jsonString_DeleteRedemptionId,
 					},
 
 					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
@@ -1953,6 +1969,11 @@
 						});
 						$.each(customerData, function (i, value) {
 							redemptionField();
+
+							/* Append redemption id for row that is retrieve from database*/
+							$("#redemption_table > tbody").append('<input type="hidden" id="RedemptionId" value="">');
+							$('#RedemptionId').attr("id", "RedemptionId" + redemption_counter);
+
 							datalength = redemption_data.length;
 							for (var i = 0; i < datalength; i++) {
 								$("#RedemptionCode" + redemption_counter).val(value.code);
