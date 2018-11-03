@@ -112,14 +112,14 @@
 
 
 													<script type="text/javascript">
-												
+
 														function getSelectedPackageData() {
-															
-																var selectedPackageId =	$('#Package')[0].options;
-															
-															console.log(selectedPackageId)
-															/* $.ajax({
-											
+
+															var selectedPackageId = $("#Package").val()
+
+
+															$.ajax({
+
 																url: APIUrl + 'loadPackage',
 																type: 'POST',
 																dataType: 'JSON',
@@ -131,24 +131,22 @@
 																},
 																success: function (data) {
 																	data.forEach(function (data) {
-																		sessionStorage.setItem('packageName', data.packageName);
-																		sessionStorage.setItem('packageId', data.packageId);
-																		sessionStorage.setItem('profit1to3', data.profit1to3);
-																		sessionStorage.setItem('profit4to10', data.profit4to10);
-																		sessionStorage.setItem('minTenure', data.minTenure);
-																		sessionStorage.setItem('maxTenure', data.maxTenure);
-																		sessionStorage.setItem('payoutPerc', data.payoutPerc);
-																		sessionStorage.setItem('maxAge', data.maxAge);
-																		sessionStorage.setItem('minLoanAmt', data.minLoanAmt);
-																		sessionStorage.setItem('maxLoanAmt', data.maxLoanAmt);
-																		sessionStorage.setItem('packageStatus', data.packageStatus);
-																		console.log(data);
-											
-											
+
+
+
+																		minTenure = data.minTenure //tenure
+																		maxTenure = data.maxTenure //tenure
+																		minAge = data.minAge
+																		maxAge = data.maxAge
+																		minLoanAmt = data.minLoanAmt
+																		maxLoanAmt = data.maxLoanAmt
+
+
+
 																	});
-																//	$(".custom-loader").hide();
+																	//	$(".custom-loader").hide();
 																}
-															}); */
+															});
 														}
 													</script>
 													<!-- <select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package" maxlength="100"
@@ -1200,7 +1198,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="text" id="ChequeNo" class="form-control" autocomplete="off" maxlength="20">
+																			<input type="text" id="BankChequeNo" class="form-control" autocomplete="off" maxlength="20">
 																		</td>
 																	</div>
 																</tr>
@@ -1458,17 +1456,26 @@
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
-					setRedemptionArray();
-					addCustomer();
+					if (checkPackageValidity()) {
+						setRedemptionArray();
+						addCustomer();
+
+					}
+
 				}
 			});
 
 			$("#Save").click(function (event) {
 				stay = false;
 				if (checkValidity()) {
-				setRedemptionArray();
-				addCustomer();
+					if (checkPackageValidity()) {
+						setRedemptionArray();
+						addCustomer();
+
+					}
+
 				}
+
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1531,7 +1538,46 @@
 					}
 				});
 			});
+			function checkPackageValidity() {
+				packageFlag = true;
+				//customer details-start
+				currentLoanApplied = parseInt($("#LoanApplied").val())
+				currentTenure = parseInt($("#Tenure").val())
+				dob = new Date($("#DateOfBirth").val())
+				var diff_ms = Date.now() - dob.getTime();
+				var age_dt = new Date(diff_ms);
+				age = Math.abs(age_dt.getUTCFullYear() - 1970);//don't have to convert. it is int
+				//customer details end
 
+
+				if (currentTenure > parseInt(maxTenure)) {
+					alert("Current tenure exceed maximum tenure.");
+					packageFlag = false;
+				}
+				if (currentTenure < parseInt(minTenure)) {
+					alert("Current tenure is less than minimum tenure.");
+					packageFlag = false;
+				}
+				if (age > parseInt(maxAge)) {
+					alert("Customer age exceed maximum allowed age.");
+					packageFlag = false;
+				}
+				if (age < parseInt(minAge)) {
+					alert("Customer age is less than minimum allowed age.");
+					packageFlag = false;
+				} if (currentLoanApplied > parseInt(maxLoanAmt)) {
+					alert("Current loan applied exceed maximum loan amount.");
+					packageFlag = false;
+				}
+				if (currentLoanApplied < parseInt(minLoanAmt)) {
+					alert("Current loan applied is less than minimum loan allowed.");
+					packageFlag = false;
+				}
+				console.log(packageFlag)
+				return packageFlag;
+
+				//	console.log(	minTenure,maxTenure,maxAge,minLoanAmt,maxLoanAmt);
+			}
 			function checkValidity() {
 				data = ["Name", "nameMarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
@@ -1697,7 +1743,7 @@
 						"bankId": $("#Bank").val(),
 						"bankInName": $("#BankInName").val(),
 						"bankAcctNo": $("#AccountNo").val(),
-						"bankInAmt": $("#BankInAmmount").val(),
+						"bankInAmt": $("#BankInAmount").val(),
 						"bankInDate": $("#BankInDate").val(),
 						"chequeNo": $("#BankChequeNo").val(),
 						"reconciliationDate": $("#ReconciliationDate").val(),
@@ -1756,8 +1802,6 @@
 
 				var MarketingOfficer = sessionStorage.getItem("name");
 				var userId = sessionStorage.getItem("userId");
-				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
-				$("#MarketingOfficerId").val(userId);
 
 				function statusDropDown() {
 					$.ajax({
