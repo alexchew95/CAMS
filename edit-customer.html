@@ -2033,14 +2033,10 @@
 					return statusSDFD;
 				}
 
-				/* 	statusDropDown();
-					package();
-					loadCustomerData(customerId);
-					loadCustomerRemark(customerId); */
-				if (statusDropDown() && package()) {
-					loadCustomerData(customerId);
-					loadCustomerRemark(customerId);
-				}
+				statusDropDown();
+				package();
+				loadCustomerData(customerId);
+				loadCustomerRemark(customerId);
 				$('#tableAllRemark tfoot th').each(function () {
 					var title = $(this).text();
 					if (title != '')
