@@ -2007,11 +2007,11 @@
 							$("#Package").html(packageDD);
 						},
 					});
-					return true;
+				
 				}
 
 				function statusDropDown(callback) {
-					statusSDFD = false
+			
 					$.ajax({
 						url: APIUrl + 'status',
 						type: 'GET',
@@ -2025,12 +2025,10 @@
 
 								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
 							})
-							statusSDFD = true
-							callback(statusSDFD);
+			
 						},
 					});
-					console.log(statusSDFD)
-					return statusSDFD;
+			
 				}
 
 				statusDropDown();
