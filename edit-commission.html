@@ -72,7 +72,7 @@
                     <form>
                         <!-- TOP ROW before Tabs-->
                         <div class="form-horizontal">
-                            <div style="display:inline;">
+                            <div id="commission-form" style="display:inline;">
                                 <table>
                                     <div class="col-sm-11 col-md-12">
                                         <div class="form-group">
@@ -412,12 +412,57 @@
                         });
                     }
                 });
+                /* if (role == "BUSOWN" || role == "MASTER") {
+                    $("#commission-form :input").attr("disabled", false);
+                } */
             }
+            function loadCommissionDataV2(customerId) {
+                $.ajax({
 
+                    url: APIUrl + 'loadCommissionV2',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    beforeSend: function (xhr) { //Include the bearer token in header
+                        xhr.setRequestHeader("Authorization", token);
+                    },
+                    data: {
+                        "customerId": customerId,
+                    },
+                    success: function (customerData) {
+                        customerData.forEach(function (data) {
+                            $("#createDate").val(data.createComDate);
+                            $commissionId = data.commissionId;
+                            $("#no").val(data.No);
+                            $("#chequeNo").val(data.chequeNo);
+                            $("#amount").val(data.amount);
+                            $("#payCustomerAmount").val(data.payCustomerAmount);
+                            $("#adminFee").val(data.adminFee);
+                            $("#adjustmentAmount").val(data.adjustmentAmount);
+                            $("#netAmount").val(data.netAmount);
+                            $("#gstAmount").val(data.gstAmount);
+                            $("#netGstAmount").val(data.netGstAmount);
+                            $("#NewRemark").val(data.remarkContent);
+                            $("#MarketingOfficer").val(data.name);
+                            $("#customerName").val(data.customerName);
+
+                        });
+                    }
+                });
+               /*  if (role == "BUSOWN" || role == "MASTER") {
+                    $("#commission-form :input").attr("disabled", false);
+                } */
+            }
             $(document).ready(function () {
+               
 
                 var commissionId = $_GET('commissionId');
-                loadCommissionData(commissionId);
+                var customerId = $_GET('customerId');
+                if (commissionId != "") {
+                    loadCommissionData(commissionId);
+                } else {
+                    loadCommissionDataV2(customerId);
+                }
+
 
 
                 /*  var MarketingOfficer = sessionStorage.getItem("name");

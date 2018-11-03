@@ -363,8 +363,10 @@
                     // to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
                     success: function (data) {
-                        alert("Commission add successful.");
-                        return true;
+                     //   alert("Commission add successful.");
+                     alert(data);
+                       
+                     return true;
                     },
 
                     error: function () {
@@ -396,12 +398,14 @@
                         });
                     }
                 });
+                $("#parent-selector :input").attr("disabled", true);
             }
 
             $(document).ready(function () {
 
                 var customerId = $_GET('customerId');
                 loadCustomerData(customerId);
+                
                 // Load datepicker
                 require(['jquery', 'jqueryui'], function ($) {
                     $(function () {

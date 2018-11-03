@@ -1247,28 +1247,54 @@
 									<div>
 										<div class="form-horizontal">
 											<legend>Redemption Details</legend>
-											<table>
+											<table id="redemption_table">
 
 												<div style="display:inline;">
-													<div class="form-inline form-group">
-														<tr>
-															<td>
-																<label class="control-label required disabled float-right">Commission Deduction Settlement (RM)</label>
-															</td>
+													<div class="form-inline form-group" id=redemptionContaioner>
+														<thead>
+															<tr>
+																<div class="container1">
+																	<td>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Code</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Bank / Coop / Organisation*</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Details</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Amount*</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Expired Date*</label>
+																	</td>
+																	<td>
+																		<label class="control-label required disabled float-left">Status*</label>
+																	</td>
+																	<input type="hidden" id="DeleteRedemptionId" value="">
+																	<td>
+																		&ensp; &ensp;
+																	</td>
+																	<td>
+																		<button class="btn btn-info" id="addRedemption" data-loading-text>Add Redemption</button>
+																	</td>
+																</div>
+															</tr>
+														</thead>
+														<tbody>
+															<tr>
 
-															<div class="controls">
-																<td>
-																	<input type="number" id="CommissionDeductionSettlement" class="form-control" step="0.01" autocomplete="off">
-																</td>
-															</div>
-														</tr>
+															</tr>
+														</tbody>
 													</div>
 												</div>
 											</table>
+											<br>
+											<button class="btn btn-warning" id="deleteRedemption" data-loading-text>Delete</button>
 										</div>
-
-										<!-- 	<button class="btn btn-info" id="AddRedemption" data-loading-text>Add Redemption</button>
- -->
 									</div>
 								</div>
 								<div class="tab-pane" id="remark">
@@ -1464,8 +1490,21 @@
 	<!--Modal for Upload Files -End -->
 	<script type="text/javascript">
 		/////* Declare variables */////
-
-		var stay = true; // to change window location if set as false
+		var customerID,
+			stay = true, // to change window location if set as false
+			redemption_count = 0, // to get current total redemption_count
+			redemption_counter, // to get current redemption_count
+			max_redemption_count = 5,
+			totalRedemptionCode = [],
+			totalRedemptionBankCoopOrg = [],
+			totalRedemptionDetails = [],
+			totalRedemptionAmount = [],
+			totalRedemptionExpiredDate = [],
+			totalRedemptionStatus = [],
+			totalRedemptionId = [],
+			totalDeleteRedemptionId = [],
+			statusDD,
+			redemption_data = ["RedemptionCode", "RedemptionBankCoopOrg", "RedemptionDetails", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"]; 
 
 		function deleteRemark(remarkId) {
 			var r = confirm('Please confirm you want to delete this remark' + remarkId);
@@ -1506,6 +1545,7 @@
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
+					setRedemptionArray();
 					editCustomer();
 				}
 			});
@@ -1513,6 +1553,7 @@
 			$("#Save").click(function (event) {
 				stay = false;
 				if (checkValidity()) {
+					setRedemptionArray();
 					editCustomer();
 				}
 			});
@@ -1576,6 +1617,14 @@
 					"AccountNo"
 				];
 
+				reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth", "Company Name",
+					"Salary", "Deduction", "Eligible Deduction", "Loan Applied", "Agent Commission", "Tenure", "Profit Rate", "Bank", "AccountNo"
+				];
+
+				check_redemption_data = ["RedemptionBankCoopOrg", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
+
+				reqField_redemption_data = ["Redemption Bank/Coop/Org", "Redemption Amount", "Redemption Expired Date", "Redemption Status"];
+
 				var datalength = data.length,
 					comma = true,
 					validInp = true,
@@ -1607,11 +1656,31 @@
 							}
 						}
 					}
-					if (validInp == false) {
-						$("#lblMessages").text("Please fill up for " + reqField);
-					} else {
-						$("#lblMessages").text("");
+				}
+
+				/* Checking for redemption field*/
+				datalength = check_redemption_data.length
+				for (var i = 0; i < datalength; i++) {
+					for (var j = 1; j <= redemption_count; j++) {
+						inpValue = document.getElementById(check_redemption_data[i] + j).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (reqField_redemption_data[i]);
+								comma = false;
+								validInp = false;
+								break;
+							} else {
+								reqField += (", " + reqField_redemption_data[i]);
+								break;
+							}
+						}
 					}
+				}
+
+				if (validInp == false) {
+					$("#lblMessages").text("Please fill up for " + reqField);
+				} else {
+					$("#lblMessages").text("");
 				}
 				return validInp;
 			}
@@ -1679,10 +1748,101 @@
 					});
 				});
 			}
+			
+			$("#addRedemption").click(function (event) {
+				event.preventDefault();
+				redemptionField();
+			});
+
+			function redemptionField() {
+				var redemption_container = "";
+				if (redemption_count < max_redemption_count) {
+					redemption_count++;
+					redemption_container += '<tr><td><input type="checkbox" id="RedemptionCheckBox" name="redemption_record"></td>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" class="form-control" rows="1" id="RedemptionDetails">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' + statusDD +
+						'</td></div></tr>';
+					$("#redemption_table > tbody").append(redemption_container); //add input box
+					for (redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++) {
+						if (!(document.getElementById("RedemptionCode" + redemption_counter))) {
+							$('#RedemptionCheckBox').attr("id", "RedemptionCheckBox" + redemption_counter);
+							$('#RedemptionCode').attr("id", "RedemptionCode" + redemption_counter);
+							$('#RedemptionBankCoopOrg').attr("id", "RedemptionBankCoopOrg" + redemption_counter);
+							$('#RedemptionDetails').attr("id", "RedemptionDetails" + redemption_counter);
+							$('#RedemptionAmount').attr("id", "RedemptionAmount" + redemption_counter);
+							$('#RedemptionExpiredDate').attr("id", "RedemptionExpiredDate" + redemption_counter);
+							$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);	
+							break;
+						} 
+					}
+				}
+				else {
+					alert('You have reached the limits. Maximum count is 5')
+				}
+			}
+
+			$("#deleteRedemption").click(function (event) {
+				var curRedemptionCheckBox,
+					curCount,
+					datalength;
+
+				event.preventDefault();
+				$("table tbody").find('input[name="redemption_record"]').each(function () {
+					if ($(this).is(":checked")) {
+						/* Get checkbox id and get the count */
+						curRedemptionCheckBox = $(this).attr('id');
+						curCount = curRedemptionCheckBox.replace(/[^0-9]/g,'');
+						
+						/* Append the count to the redemption id to check for its existence. If redemption id is exist, add to totalDeleteRedemptionId*/
+						if($('#RedemptionId' + curCount).length){
+							datalength = totalDeleteRedemptionId.length;
+							totalDeleteRedemptionId[datalength] = $("#RedemptionId" + curCount).val();
+							$("#RedemptionId"+curCount).attr("id","");
+						}
+						$(this).parents("tr").remove();
+						redemption_count--;
+					}
+				});
+			});
+			
+			function setRedemptionArray() {
+				for (var i = 1; i <= redemption_count; i++) {
+					totalRedemptionCode[i - 1] = $("#RedemptionCode" + i).val();
+					totalRedemptionBankCoopOrg[i - 1] = $("#RedemptionBankCoopOrg" + i).val();
+					totalRedemptionDetails[i - 1] = $("#RedemptionDetails" + i).val();
+					totalRedemptionAmount[i - 1] = $("#RedemptionAmount" + i).val();
+					totalRedemptionExpiredDate[i - 1] = $("#RedemptionExpiredDate" + i).val();
+					totalRedemptionStatus[i - 1] = $("#RedemptionStatus" + i).val();
+					totalRedemptionId[i - 1] = $("#RedemptionId" + i).val();
+				}
+			}
 
 			function editCustomer() {
 				p = document.getElementById("processorDL");
 				processor = p.options[p.selectedIndex].value;
+				var jsonString_RedemptionCode = JSON.stringify(totalRedemptionCode),
+					jsonString_RedemptionBankCoopOrg = JSON.stringify(totalRedemptionBankCoopOrg),
+					jsonString_RedemptionDetails = JSON.stringify(totalRedemptionDetails),
+					jsonString_RedemptionAmount = JSON.stringify(totalRedemptionAmount),
+					jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
+					jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus),
+					jsonString_RedemptionId = JSON.stringify(totalRedemptionId);
+					jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
 
 				$.ajax({
 					url: APIUrl + 'editCustomer',
@@ -1757,7 +1917,14 @@
 						"dateToBank": $("#DateToBank").val(),
 						"bankRef": $("#BankReference").val(),
 						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-
+						"jsonString_RedemptionCode": jsonString_RedemptionCode,
+						"jsonString_RedemptionBankCoopOrg": jsonString_RedemptionBankCoopOrg,
+						"jsonString_RedemptionDetails": jsonString_RedemptionDetails,
+						"jsonString_RedemptionAmount": jsonString_RedemptionAmount,
+						"jsonString_RedemptionExpiredDate": jsonString_RedemptionExpiredDate,
+						"jsonString_RedemptionStatus": jsonString_RedemptionStatus,
+						"jsonString_RedemptionId": jsonString_RedemptionId,
+						"jsonString_DeleteRedemptionId": jsonString_DeleteRedemptionId,
 					},
 
 					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
@@ -1766,7 +1933,7 @@
 					success: function (data) {
 						alert(data.msg);
 						if (stay == false) {
-							location.reload();
+							window.location = "customer.html";
 						}
 					},
 
@@ -1777,6 +1944,8 @@
 			}
 
 			function loadCustomerData(customerId) {
+				var datalength;
+
 				$.ajax({
 					url: APIUrl + 'loadCustomer',
 					type: 'POST',
@@ -1789,7 +1958,6 @@
 					},
 					success: function (customerData) {
 						customerData.forEach(function (data) {
-
 							$customerId = data.customerId;
 							$("#Name").val(data.customerName);
 							$("#MarketingOfficerId").val(data.marketingOfficerId);
@@ -1856,6 +2024,24 @@
 							$("#BankReference").val(data.bankRef);
 							$("#CommissionDeductionSettlement").val(data.commissionDeductionSettlement);
 						});
+						$.each(customerData, function (i, value) {
+							redemptionField();
+
+							/* Append redemption id for row that is retrieve from database*/
+							$("#redemption_table > tbody").append('<input type="hidden" id="RedemptionId" value="">');
+							$('#RedemptionId').attr("id", "RedemptionId" + redemption_counter);
+
+							datalength = redemption_data.length;
+							for (var i = 0; i < datalength; i++) {
+								$("#RedemptionCode" + redemption_counter).val(value.code);
+								$("#RedemptionBankCoopOrg" + redemption_counter).val(value.bankCoopOrg);
+								$("#RedemptionDetails" + redemption_counter).val(value.details);
+								$("#RedemptionAmount" + redemption_counter).val(value.amount);
+								$("#RedemptionExpiredDate" + redemption_counter).val(value.expiredDate);
+								$("#RedemptionStatus" + redemption_counter).val(value.status);
+								$("#RedemptionId" + redemption_counter).val(value.redemptionId);
+							}
+						})
 						$(".custom-loader").hide();
 					}
 				});
@@ -1918,6 +2104,26 @@
 					});
 
 				}
+
+				function statusDropDown() {
+					$.ajax({
+						url: APIUrl + 'status',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						success: function (status) {
+							statusDD = '<option value="0">- Select One -</option>';
+							$.each(status, function (key, value) {
+
+								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
+							})
+						},
+					});
+				}
+				
+				statusDropDown();
 				package();
 				loadCustomerData(customerId);
 				loadCustomerRemark(customerId);

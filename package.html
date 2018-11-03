@@ -157,10 +157,9 @@
 					success: function (data) {
 
 						for (var i = 0, len = data.length; i < len; i++) {
-							var edit_package = '<a> <i class="fa fa-edit"></i></a>';
-							if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
+						
 								edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId + '"> <i class="fa fa-edit"></i></a>'
-							}
+							
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
 								edit_package,

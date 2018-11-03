@@ -69,8 +69,8 @@
 						<h1 class="page-title">
 							Customer
 						</h1>
-						<button id="addCustomer_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add
-							Customer</button>
+						<button id="addCustomer_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-customer.html';">Add Customer
+						</button>
 					</div>
 					<div class="card-body">
 						<table class="table table-responsive" id="tableAllCustomers">
@@ -204,20 +204,30 @@
 					success: function (data) {
 						for (var i = 0, len = data.length; i < len; i++) {
 							//var desc = data[i].body; //to substring, limit the data to display 
-							if (role == "BUSOWN"|| role == "MASTER" ) {
+							commission_process = '<a> <i class="fa fa-money"></i></a>';
+							if (role == "BUSOWN" || role == "MASTER") {
 								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
 									'"> <i class="fe fe-edit-2"></i></a></div>';
-								edit_commission = '<a href="add-commission.html?customerId=' + data[i].customerId +
-									'"> <i class="fa fa-money"></i></a>';
+								if (data[i].commisionFlag == 0) {
+									commission_process = '<a href="add-commission.html?customerId=' + data[i].customerId +
+										'"> <i class="fa fa-money"></i></a>';
+								}
+								else if (data[i].commisionFlag == 1) {
+									commission_process = '<a href="edit-commission.html?customerId=' + data[i].customerId +
+										'"> <i class="fa fa-money"></i></a>';
+								}
 							} else if (role == "STAFF") {
 								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
 									'"> <i class="fe fe-edit-2"></i></a></div>';
 							} else if (role == "AGENT" || role == "SAGENT") {
 								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
 									'"> <i class="fe fe-edit-2"></i></a></div>';
-								edit_commission = '';
-
+								if (data[i].commisionFlag == 1) {
+									commission_process = '<a href="edit-commission.html?customerId=' + data[i].customerId +
+										'"> <i class="fa fa-money"></i></a>';
+								}
 							}
+
 							arrayReturn.push([
 								'<div class="selectgroup"><div class="selectgroup-item" onclick="openUploadModal(' + data[i].customerId +
 								')"><span class="selectgroup-button-compact selectgroup-button-icon">' +
@@ -230,7 +240,7 @@
 								'', //TODO: Check what is batch with Fatin
 								'', //TODO: Count total doc uploaded
 								data[i].description,
-								edit_commission,
+								commission_process,
 							]);
 						}
 						inittable(arrayReturn);
