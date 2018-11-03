@@ -112,14 +112,14 @@
 
 
 													<script type="text/javascript">
-												
+
 														function getSelectedPackageData() {
-															
-																var selectedPackageId =$("#Package").val()
-																
-															console.log(selectedPackageId)
+
+															var selectedPackageId = $("#Package").val()
+
+
 															$.ajax({
-											
+
 																url: APIUrl + 'loadPackage',
 																type: 'POST',
 																dataType: 'JSON',
@@ -131,20 +131,20 @@
 																},
 																success: function (data) {
 																	data.forEach(function (data) {
-																	
-																	
-																	
-																		minTenure=data.minTenure //tenure
-																		maxTenure=data.maxTenure //tenure
-																	
-																		maxAge=data.maxAge
-																		minLoanAmt=data.minLoanAmt
-																		maxLoanAmt=data.maxLoanAmt
-																	
-											
-											
+
+
+
+																		minTenure = data.minTenure //tenure
+																		maxTenure = data.maxTenure //tenure
+																		minAge = data.minAge
+																		maxAge = data.maxAge
+																		minLoanAmt = data.minLoanAmt
+																		maxLoanAmt = data.maxLoanAmt
+
+
+
 																	});
-																//	$(".custom-loader").hide();
+																	//	$(".custom-loader").hide();
 																}
 															});
 														}
@@ -1456,22 +1456,26 @@
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
-					setRedemptionArray();
-					addCustomer();
+					if (checkPackageValidity()) {
+						setRedemptionArray();
+						addCustomer();
+
+					}
+
 				}
 			});
 
 			$("#Save").click(function (event) {
 				stay = false;
-				/* if (checkValidity()) {
-					if(checkPackageValidity()){
+				if (checkValidity()) {
+					if (checkPackageValidity()) {
 						setRedemptionArray();
-				addCustomer();
-				
+						addCustomer();
+
 					}
 
-				} */
-				checkPackageValidity();
+				}
+
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1534,11 +1538,45 @@
 					}
 				});
 			});
-			function checkPackageValidity(){
-				packageFlag= true;
-				currentLoanApplied= $("#nameMarketingOfficer").val();
-				alert(currentLoanApplied);
-			//	console.log(	minTenure,maxTenure,maxAge,minLoanAmt,maxLoanAmt);
+			function checkPackageValidity() {
+				packageFlag = true;
+				//customer details-start
+				currentLoanApplied = parseInt($("#LoanApplied").val())
+				currentTenure = parseInt($("#Tenure").val())
+				dob = new Date($("#DateOfBirth").val())
+				var diff_ms = Date.now() - dob.getTime();
+				var age_dt = new Date(diff_ms);
+				age = Math.abs(age_dt.getUTCFullYear() - 1970);//don't have to convert. it is int
+				//customer details end
+
+
+				if (currentTenure > parseInt(maxTenure)) {
+					alert("Current tenure exceed maximum tenure.");
+					packageFlag = false;
+				}
+				if (currentTenure < parseInt(minTenure)) {
+					alert("Current tenure is less than minimum tenure.");
+					packageFlag = false;
+				}
+				if (age > parseInt(maxAge)) {
+					alert("Customer age exceed maximum allowed age.");
+					packageFlag = false;
+				}
+				if (age < parseInt(minAge)) {
+					alert("Customer age is less than minimum allowed age.");
+					packageFlag = false;
+				} if (currentLoanApplied > parseInt(maxLoanAmt)) {
+					alert("Current loan applied exceed maximum loan amount.");
+					packageFlag = false;
+				}
+				if (currentLoanApplied < parseInt(minLoanAmt)) {
+					alert("Current loan applied is less than minimum loan allowed.");
+					packageFlag = false;
+				}
+				console.log(packageFlag)
+				return packageFlag;
+
+				//	console.log(	minTenure,maxTenure,maxAge,minLoanAmt,maxLoanAmt);
 			}
 			function checkValidity() {
 				data = ["Name", "nameMarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
@@ -1764,7 +1802,7 @@
 
 				var MarketingOfficer = sessionStorage.getItem("name");
 				var userId = sessionStorage.getItem("userId");
-				
+
 				function statusDropDown() {
 					$.ajax({
 						url: APIUrl + 'status',
