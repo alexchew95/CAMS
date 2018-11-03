@@ -131,17 +131,15 @@
 																},
 																success: function (data) {
 																	data.forEach(function (data) {
-																		packageName=data.packageName
-																		packageId=data.packageId
-																		profit1to3=data.rofit1to3
-																		profit4to10=data.profit4to10
-																		minTenure=data.minTenure
-																		maxTenure=data.maxTenure
-																		payoutPerc=data.payoutPerc
+																	
+																	
+																	
+																		minTenure=data.minTenure //tenure
+																		maxTenure=data.maxTenure //tenure
+																	
 																		maxAge=data.maxAge
 																		minLoanAmt=data.minLoanAmt
 																		maxLoanAmt=data.maxLoanAmt
-																		packageStatus=data.packageStatus
 																	
 											
 											
@@ -1465,10 +1463,15 @@
 
 			$("#Save").click(function (event) {
 				stay = false;
-				if (checkValidity()) {
-				setRedemptionArray();
+				/* if (checkValidity()) {
+					if(checkPackageValidity()){
+						setRedemptionArray();
 				addCustomer();
-				}
+				
+					}
+
+				} */
+				checkPackageValidity();
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1531,7 +1534,12 @@
 					}
 				});
 			});
-
+			function checkPackageValidity(){
+				packageFlag= true;
+				currentLoanApplied= $("#nameMarketingOfficer").val();
+				alert(currentLoanApplied);
+			//	console.log(	minTenure,maxTenure,maxAge,minLoanAmt,maxLoanAmt);
+			}
 			function checkValidity() {
 				data = ["Name", "nameMarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank", "AccountNo"
@@ -1756,9 +1764,7 @@
 
 				var MarketingOfficer = sessionStorage.getItem("name");
 				var userId = sessionStorage.getItem("userId");
-				$("#MarketingOfficer").attr("placeholder", MarketingOfficer);
-				$("#MarketingOfficerId").val(userId);
-
+				
 				function statusDropDown() {
 					$.ajax({
 						url: APIUrl + 'status',
