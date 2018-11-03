@@ -1445,7 +1445,6 @@
 			stay = true, // to change window location if set as false
 			redemption_count = 0, // to get current total redemption_count
 			redemption_counter, // to get current redemption_count
-			numRedemptionId = 0,
 			max_redemption_count = 5,
 			totalRedemptionCode = [],
 			totalRedemptionBankCoopOrg = [],
@@ -1742,7 +1741,8 @@
 
 			$("#deleteRedemption").click(function (event) {
 				var curRedemptionCheckBox,
-					curCount;
+					curCount,
+					datalength;
 
 				event.preventDefault();
 				$("table tbody").find('input[name="redemption_record"]').each(function () {
@@ -1753,8 +1753,8 @@
 						
 						/* Append the count to the redemption id to check for its existence. If redemption id is exist, add to totalDeleteRedemptionId*/
 						if($('#RedemptionId' + curCount).length){
-							totalDeleteRedemptionId[numRedemptionId] = $("#RedemptionId" + curCount).val();
-							numRedemptionId ++;
+							datalength = totalDeleteRedemptionId.length;
+							totalDeleteRedemptionId[datalength] = $("#RedemptionId" + curCount).val();
 							$("#RedemptionId"+curCount).attr("id","");
 						}
 						$(this).parents("tr").remove();
