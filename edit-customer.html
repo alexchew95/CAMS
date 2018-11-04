@@ -38,7 +38,7 @@
 	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
 
 	<script src="./assets/js/main.js"></script>
-	<script src="./assets/js/datatables.min.js"></script>  <!-- Jquery 1.12.14 is included -->
+	<script src="./assets/js/datatables.min.js"></script> <!-- Jquery 1.12.14 is included -->
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -1587,6 +1587,8 @@
 			if (document.getElementById('Attention_Company').checked) {
 				attentionTo = document.getElementById("Attention_Company").value;
 			}
+		}
+
 			function checkPackageValidity() {
 				packageFlag = true;
 				//customer details-start
@@ -1595,7 +1597,7 @@
 				dob = new Date($("#DateOfBirth").val())
 				var diff_ms = Date.now() - dob.getTime();
 				var age_dt = new Date(diff_ms);
-				age = Math.abs(age_dt.getUTCFullYear() - 1970);//don't have to convert. it is int
+				age = Math.abs(age_dt.getUTCFullYear() - 1970); //don't have to convert. it is int
 				//customer details end
 
 
@@ -1614,7 +1616,8 @@
 				if (age < parseInt(minAge)) {
 					alert("Customer age is less than minimum allowed age.");
 					packageFlag = false;
-				} if (currentLoanApplied > parseInt(maxLoanAmt)) {
+				}
+				if (currentLoanApplied > parseInt(maxLoanAmt)) {
 					alert("Current loan applied exceed maximum loan amount.");
 					packageFlag = false;
 				}
@@ -1625,540 +1628,540 @@
 				console.log(packageFlag)
 				return packageFlag;
 
-			$.ajax({
-				url: APIUrl + 'addRemark',
-				type: 'POST',
-				dataType: 'JSON',
-				beforeSend: function (xhr) { //Include the bearer token in header
-					xhr.setRequestHeader("Authorization", token);
-				},
+				$.ajax({
+					url: APIUrl + 'addRemark',
+					type: 'POST',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
 
-				data: {
-					"userId": userId,
-					"customerId": customerId,
-					"attentionTo": attentionTo,
-					"remarkContent": $("#NewRemark").val(),
-				},
+					data: {
+						"userId": userId,
+						"customerId": customerId,
+						"attentionTo": attentionTo,
+						"remarkContent": $("#NewRemark").val(),
+					},
 
-				//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
-				// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
+					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
+					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
-				success: function (data) {
-					alert("Remark add successful.");
-					return true;
-				},
+					success: function (data) {
+						alert("Remark add successful.");
+						return true;
+					},
 
-				error: function () {
-					alert("Remark add fail.");
-					return false;
+					error: function () {
+						alert("Remark add fail.");
+						return false;
+					}
+				});
+			}
+
+			function checkValidity() {
+				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
+					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank",
+					"AccountNo"
+				];
+
+				reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth",
+					"Company Name",
+					"Salary", "Deduction", "Eligible Deduction", "Loan Applied", "Agent Commission", "Tenure", "Profit Rate",
+					"Bank", "AccountNo"
+				];
+
+				check_redemption_data = ["RedemptionBankCoopOrg", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
+
+				reqField_redemption_data = ["Redemption Bank/Coop/Org", "Redemption Amount", "Redemption Expired Date",
+					"Redemption Status"
+				];
+
+				var datalength = data.length,
+					comma = true,
+					validInp = true,
+					reqField = "",
+					inp,
+					inpValue;
+
+				for (var i = 0; i < datalength; i++) {
+					inp = document.getElementById(data[i]);
+					if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
+						inpValue = document.getElementById(data[i]).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (data[i]);
+								comma = false;
+								validInp = false;
+							} else {
+								reqField += (", " + data[i]);
+							}
+						}
+					} else {
+						if (!inp.checkValidity()) {
+							if (comma) {
+								reqField += (data[i]);
+								comma = false;
+								validInp = false;
+							} else {
+								reqField += (", " + data[i]);
+							}
+						}
+					}
 				}
+
+				/* Checking for redemption field*/
+				datalength = check_redemption_data.length
+				for (var i = 0; i < datalength; i++) {
+					for (var j = 1; j <= redemption_count; j++) {
+						inpValue = document.getElementById(check_redemption_data[i] + j).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (reqField_redemption_data[i]);
+								comma = false;
+								validInp = false;
+								break;
+							} else {
+								reqField += (", " + reqField_redemption_data[i]);
+								break;
+							}
+						}
+					}
+				}
+
+				if (validInp == false) {
+					$("#lblMessages").text("Please fill up for " + reqField);
+				} else {
+					$("#lblMessages").text("");
+				}
+				return validInp;
+			}
+
+			function loadCustomerRemark(customerId) {
+				var arrayReturn = [];
+				$.ajax({
+					url: APIUrl + 'listAllRemarkCustId',
+					async: false,
+					dataType: 'json',
+					data: {
+						"customerId": customerId,
+						"userId": userId,
+						"role": role,
+
+					},
+					type: 'post',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					success: function (data) {
+						for (var i = 0, len = data.length; i < len; i++) {
+							//var desc = data[i].body; //to substring, limit the data to display 
+							arrayReturn.push([
+
+								data[i].createDateTime,
+								data[i].name, //marketting officer 
+								data[i].customerName,
+								'<a href="./edit-customer.html?customerId=' + data[i].customerId + '">' + data[i].newIC + '</a>',
+								data[i].packageName,
+								data[i].processor,
+								data[i].remarkContent,
+								//	
+								//'<a onClick="return confirm()">Logout</a>',
+
+								'<a href="" onClick="deleteRemark(' + data[i].remarkId + ')"><i class="fa fa-remove"></i></a>',
+								/* '<a href="edit-customer.html?remarkId='+data[i].remarkId+'" > <i class="fa fa-remove"></i></a>', */
+							]);
+						}
+						inittable(arrayReturn);
+						$(".custom-loader").hide();
+					}
+				});
+			}
+
+			function inittable(data) {
+				//console.log(data);
+				var table = $('#tableAllRemark').DataTable({
+					"aaData": data,
+					"order": [
+						[0, "desc"]
+					]
+				});
+
+				// Apply the search
+				table.columns().every(function () {
+					var that = this;
+
+					$('input', this.footer()).on('keyup change', function () {
+						if (that.search() !== this.value) {
+							that
+								.search(this.value)
+								.draw();
+						}
+					});
+				});
+			}
+
+			$("#addRedemption").click(function (event) {
+				event.preventDefault();
+				redemptionField();
 			});
-		}
 
-		function checkValidity() {
-			data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
-				"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank",
-				"AccountNo"
-			];
-
-			reqField_data = ["Name", "Marketing Officer", "Package", "Status", "Entry Date", "IC No", "Date Of Birth",
-				"Company Name",
-				"Salary", "Deduction", "Eligible Deduction", "Loan Applied", "Agent Commission", "Tenure", "Profit Rate",
-				"Bank", "AccountNo"
-			];
-
-			check_redemption_data = ["RedemptionBankCoopOrg", "RedemptionAmount", "RedemptionExpiredDate", "RedemptionStatus"];
-
-			reqField_redemption_data = ["Redemption Bank/Coop/Org", "Redemption Amount", "Redemption Expired Date",
-				"Redemption Status"
-			];
-
-			var datalength = data.length,
-				comma = true,
-				validInp = true,
-				reqField = "",
-				inp,
-				inpValue;
-
-			for (var i = 0; i < datalength; i++) {
-				inp = document.getElementById(data[i]);
-				if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
-					inpValue = document.getElementById(data[i]).value;
-					if (inpValue == 0) {
-						if (comma) {
-							reqField += (data[i]);
-							comma = false;
-							validInp = false;
-						} else {
-							reqField += (", " + data[i]);
+			function redemptionField() {
+				console.log(statusDD);
+				var redemption_container = "";
+				if (redemption_count < max_redemption_count) {
+					redemption_count++;
+					redemption_container += '<tr><td><input type="checkbox" id="RedemptionCheckBox" name="redemption_record"></td>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" class="form-control" rows="1" id="RedemptionDetails">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' +
+						statusDD +
+						'</td></div></tr>';
+					$("#redemption_table > tbody").append(redemption_container); //add input box
+					for (redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++) {
+						if (!(document.getElementById("RedemptionCode" + redemption_counter))) {
+							$('#RedemptionCheckBox').attr("id", "RedemptionCheckBox" + redemption_counter);
+							$('#RedemptionCode').attr("id", "RedemptionCode" + redemption_counter);
+							$('#RedemptionBankCoopOrg').attr("id", "RedemptionBankCoopOrg" + redemption_counter);
+							$('#RedemptionDetails').attr("id", "RedemptionDetails" + redemption_counter);
+							$('#RedemptionAmount').attr("id", "RedemptionAmount" + redemption_counter);
+							$('#RedemptionExpiredDate').attr("id", "RedemptionExpiredDate" + redemption_counter);
+							$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);
+							break;
 						}
 					}
 				} else {
-					if (!inp.checkValidity()) {
-						if (comma) {
-							reqField += (data[i]);
-							comma = false;
-							validInp = false;
-						} else {
-							reqField += (", " + data[i]);
+					alert('You have reached the limits. Maximum count is 5')
+				}
+			}
+
+			$("#deleteRedemption").click(function (event) {
+				var curRedemptionCheckBox,
+					curCount,
+					datalength;
+
+				event.preventDefault();
+				$("table tbody").find('input[name="redemption_record"]').each(function () {
+					if ($(this).is(":checked")) {
+						/* Get checkbox id and get the count */
+						curRedemptionCheckBox = $(this).attr('id');
+						curCount = curRedemptionCheckBox.replace(/[^0-9]/g, '');
+
+						/* Append the count to the redemption id to check for its existence. If redemption id is exist, add to totalDeleteRedemptionId*/
+						if ($('#RedemptionId' + curCount).length) {
+							datalength = totalDeleteRedemptionId.length;
+							totalDeleteRedemptionId[datalength] = $("#RedemptionId" + curCount).val();
+							$("#RedemptionId" + curCount).attr("id", "");
 						}
-					}
-				}
-			}
-
-			/* Checking for redemption field*/
-			datalength = check_redemption_data.length
-			for (var i = 0; i < datalength; i++) {
-				for (var j = 1; j <= redemption_count; j++) {
-					inpValue = document.getElementById(check_redemption_data[i] + j).value;
-					if (inpValue == 0) {
-						if (comma) {
-							reqField += (reqField_redemption_data[i]);
-							comma = false;
-							validInp = false;
-							break;
-						} else {
-							reqField += (", " + reqField_redemption_data[i]);
-							break;
-						}
-					}
-				}
-			}
-
-			if (validInp == false) {
-				$("#lblMessages").text("Please fill up for " + reqField);
-			} else {
-				$("#lblMessages").text("");
-			}
-			return validInp;
-		}
-
-		function loadCustomerRemark(customerId) {
-			var arrayReturn = [];
-			$.ajax({
-				url: APIUrl + 'listAllRemarkCustId',
-				async: false,
-				dataType: 'json',
-				data: {
-					"customerId": customerId,
-					"userId": userId,
-					"role": role,
-
-				},
-				type: 'post',
-				beforeSend: function (xhr) { //Include the bearer token in header
-					xhr.setRequestHeader("Authorization", token);
-				},
-				success: function (data) {
-					for (var i = 0, len = data.length; i < len; i++) {
-						//var desc = data[i].body; //to substring, limit the data to display 
-						arrayReturn.push([
-
-							data[i].createDateTime,
-							data[i].name, //marketting officer 
-							data[i].customerName,
-							'<a href="./edit-customer.html?customerId=' + data[i].customerId + '">' + data[i].newIC + '</a>',
-							data[i].packageName,
-							data[i].processor,
-							data[i].remarkContent,
-							//	
-							//'<a onClick="return confirm()">Logout</a>',
-
-							'<a href="" onClick="deleteRemark(' + data[i].remarkId + ')"><i class="fa fa-remove"></i></a>',
-							/* '<a href="edit-customer.html?remarkId='+data[i].remarkId+'" > <i class="fa fa-remove"></i></a>', */
-						]);
-					}
-					inittable(arrayReturn);
-					$(".custom-loader").hide();
-				}
-			});
-		}
-
-		function inittable(data) {
-			//console.log(data);
-			var table = $('#tableAllRemark').DataTable({
-				"aaData": data,
-				"order": [
-					[0, "desc"]
-				]
-			});
-
-			// Apply the search
-			table.columns().every(function () {
-				var that = this;
-
-				$('input', this.footer()).on('keyup change', function () {
-					if (that.search() !== this.value) {
-						that
-							.search(this.value)
-							.draw();
+						$(this).parents("tr").remove();
+						redemption_count--;
 					}
 				});
 			});
-		}
 
-		$("#addRedemption").click(function (event) {
-			event.preventDefault();
-			redemptionField();
-		});
-
-		function redemptionField() {
-			console.log(statusDD);
-			var redemption_container = "";
-			if (redemption_count < max_redemption_count) {
-				redemption_count++;
-				redemption_container += '<tr><td><input type="checkbox" id="RedemptionCheckBox" name="redemption_record"></td>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionCode" class="form-control" autocomplete="off" maxlength="20">' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionBankCoopOrg" class="form-control" autocomplete="off" maxlength="100" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" class="form-control" rows="1" id="RedemptionDetails">' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
-					'</td></div>' +
-					'<div class="controls"><td>' +
-					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' +
-					statusDD +
-					'</td></div></tr>';
-				$("#redemption_table > tbody").append(redemption_container); //add input box
-				for (redemption_counter = 1; redemption_counter <= redemption_count; redemption_counter++) {
-					if (!(document.getElementById("RedemptionCode" + redemption_counter))) {
-						$('#RedemptionCheckBox').attr("id", "RedemptionCheckBox" + redemption_counter);
-						$('#RedemptionCode').attr("id", "RedemptionCode" + redemption_counter);
-						$('#RedemptionBankCoopOrg').attr("id", "RedemptionBankCoopOrg" + redemption_counter);
-						$('#RedemptionDetails').attr("id", "RedemptionDetails" + redemption_counter);
-						$('#RedemptionAmount').attr("id", "RedemptionAmount" + redemption_counter);
-						$('#RedemptionExpiredDate').attr("id", "RedemptionExpiredDate" + redemption_counter);
-						$('#RedemptionStatus').attr("id", "RedemptionStatus" + redemption_counter);
-						break;
-					}
+			function setRedemptionArray() {
+				for (var i = 1; i <= redemption_count; i++) {
+					totalRedemptionCode[i - 1] = $("#RedemptionCode" + i).val();
+					totalRedemptionBankCoopOrg[i - 1] = $("#RedemptionBankCoopOrg" + i).val();
+					totalRedemptionDetails[i - 1] = $("#RedemptionDetails" + i).val();
+					totalRedemptionAmount[i - 1] = $("#RedemptionAmount" + i).val();
+					totalRedemptionExpiredDate[i - 1] = $("#RedemptionExpiredDate" + i).val();
+					totalRedemptionStatus[i - 1] = $("#RedemptionStatus" + i).val();
+					totalRedemptionId[i - 1] = $("#RedemptionId" + i).val();
 				}
-			} else {
-				alert('You have reached the limits. Maximum count is 5')
 			}
-		}
 
-		$("#deleteRedemption").click(function (event) {
-			var curRedemptionCheckBox,
-				curCount,
-				datalength;
+			function editCustomer() {
+				p = document.getElementById("processorDL");
+				processor = p.options[p.selectedIndex].value;
+				var jsonString_RedemptionCode = JSON.stringify(totalRedemptionCode),
+					jsonString_RedemptionBankCoopOrg = JSON.stringify(totalRedemptionBankCoopOrg),
+					jsonString_RedemptionDetails = JSON.stringify(totalRedemptionDetails),
+					jsonString_RedemptionAmount = JSON.stringify(totalRedemptionAmount),
+					jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
+					jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus),
+					jsonString_RedemptionId = JSON.stringify(totalRedemptionId);
+				jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
 
-			event.preventDefault();
-			$("table tbody").find('input[name="redemption_record"]').each(function () {
-				if ($(this).is(":checked")) {
-					/* Get checkbox id and get the count */
-					curRedemptionCheckBox = $(this).attr('id');
-					curCount = curRedemptionCheckBox.replace(/[^0-9]/g, '');
+				$.ajax({
+					url: APIUrl + 'editCustomer',
+					type: 'POST',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
 
-					/* Append the count to the redemption id to check for its existence. If redemption id is exist, add to totalDeleteRedemptionId*/
-					if ($('#RedemptionId' + curCount).length) {
-						datalength = totalDeleteRedemptionId.length;
-						totalDeleteRedemptionId[datalength] = $("#RedemptionId" + curCount).val();
-						$("#RedemptionId" + curCount).attr("id", "");
+					data: {
+						"customerId": customerID,
+						"customerName": $("#Name").val(),
+						"marketingOfficerId": $("#MarketingOfficerId").val(),
+						"packageId": $("#Package").val(),
+						"status": $("#Status").val(),
+						"entryDate": $("#EntryDate").val(),
+						"processor": processor,
+						"newIC": $("#ICNo").val(),
+						"oldIC": $("#OldICNo").val(),
+						"dob": $("#DateOfBirth").val(),
+						"gender": $("#Gender").val(),
+						"phoneNumber": $("#MobilePhoneNo").val(),
+						"customerEmail": $("#customerEmail").val(),
+						"nextContactName": $("#NextContactName").val(),
+						"nextContactRel": $("#NextContactRelationship").val(),
+						"nextContactPhone": $("#NextContactPhoneNo").val(),
+						"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
+						"addr1": $("#HomeAddressLine1").val(),
+						"addr2": $("#HomeAddressLine2").val(),
+						"city": $("#HomeAddressCity").val(),
+						"postCode": $("#HomeAddressPostCode").val(),
+						"state": $("#HomeAddressState").val(),
+						"homePhone": $("#HomePhoneNo").val(),
+						"companyName": $("#CompanyName").val(),
+						"position": $("#Position").val(),
+						"officePhone": $("#OfficePhoneNo").val(),
+						"faxNumber": $("#FaxPhoneNo").val(),
+						"compAddr1": $("#CompanyAddressLine1").val(),
+						"compAddr2": $("#CompanyAddressLine2").val(),
+						"compCity": $("#CompanyAddressCity").val(),
+						"compPostCode": $("#CompanyAddressPostCode").val(),
+						"compState": $("#CompanyAddressState").val(),
+						"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
+						"salary": $("#Salary").val(),
+						"allowance": $("#Allowance").val(),
+						"deduction": $("#Deduction").val(),
+						"inTransit": $("#InTransit").val(),
+						"amtBooked": $("#AmountBooked").val(),
+						"payslipMonth": $("#PayslipMonth").val(),
+						"installment": $("#Installment").val(),
+						"eligibleDeduction": $("#EligibleDeduction").val(),
+						"loanAppliedAmt": $("#LoanApplied").val(),
+						"agentCommision": $("#AgentCommission").val(),
+						"tenure": $("#Tenure").val(),
+						"profitRate": $("#ProfitRate").val(),
+						"approvalCode": $("#ApprovalCode").val(),
+						"loanApprovedAmt": $("#LoanApproved").val(),
+						"invoiceAmt": $("#InvoiceAmount").val(),
+						"approvalDate": $("#ApprovalDate").val(),
+						"netLoanApproved": $("#NetLoanApproved").val(),
+						"settleOwnLoan": $("#SettleOwnLoan").val(),
+						"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
+						"companyAdv": $("#CompanyAdvance").val(),
+						"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
+						"bankId": $("#Bank").val(),
+						"bankInName": $("#BankInName").val(),
+						"bankAcctNo": $("#AccountNo").val(),
+						"bankInAmt": $("#BankInAmount").val(),
+						"bankInDate": $("#BankInDate").val(),
+						"chequeNo": $("#BankChequeNo").val(),
+						"reconciliationDate": $("#ReconciliationDate").val(),
+						"dateToBank": $("#DateToBank").val(),
+						"bankRef": $("#BankReference").val(),
+						"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
+						"jsonString_RedemptionCode": jsonString_RedemptionCode,
+						"jsonString_RedemptionBankCoopOrg": jsonString_RedemptionBankCoopOrg,
+						"jsonString_RedemptionDetails": jsonString_RedemptionDetails,
+						"jsonString_RedemptionAmount": jsonString_RedemptionAmount,
+						"jsonString_RedemptionExpiredDate": jsonString_RedemptionExpiredDate,
+						"jsonString_RedemptionStatus": jsonString_RedemptionStatus,
+						"jsonString_RedemptionId": jsonString_RedemptionId,
+						"jsonString_DeleteRedemptionId": jsonString_DeleteRedemptionId,
+					},
+
+					//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
+					// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
+
+					success: function (data) {
+						alert(data.msg);
+						if (stay == false) {
+							window.location = "customer.html";
+						}
+					},
+
+					error: function () {
+						alert("Customer add fail.");
 					}
-					$(this).parents("tr").remove();
-					redemption_count--;
-				}
-			});
-		});
-
-		function setRedemptionArray() {
-			for (var i = 1; i <= redemption_count; i++) {
-				totalRedemptionCode[i - 1] = $("#RedemptionCode" + i).val();
-				totalRedemptionBankCoopOrg[i - 1] = $("#RedemptionBankCoopOrg" + i).val();
-				totalRedemptionDetails[i - 1] = $("#RedemptionDetails" + i).val();
-				totalRedemptionAmount[i - 1] = $("#RedemptionAmount" + i).val();
-				totalRedemptionExpiredDate[i - 1] = $("#RedemptionExpiredDate" + i).val();
-				totalRedemptionStatus[i - 1] = $("#RedemptionStatus" + i).val();
-				totalRedemptionId[i - 1] = $("#RedemptionId" + i).val();
+				});
 			}
-		}
 
-		function editCustomer() {
-			p = document.getElementById("processorDL");
-			processor = p.options[p.selectedIndex].value;
-			var jsonString_RedemptionCode = JSON.stringify(totalRedemptionCode),
-				jsonString_RedemptionBankCoopOrg = JSON.stringify(totalRedemptionBankCoopOrg),
-				jsonString_RedemptionDetails = JSON.stringify(totalRedemptionDetails),
-				jsonString_RedemptionAmount = JSON.stringify(totalRedemptionAmount),
-				jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
-				jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus),
-				jsonString_RedemptionId = JSON.stringify(totalRedemptionId);
-			jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
+			function loadCustomerData(customerId) {
+				var datalength;
 
-			$.ajax({
-				url: APIUrl + 'editCustomer',
-				type: 'POST',
-				dataType: 'JSON',
-				beforeSend: function (xhr) { //Include the bearer token in header
-					xhr.setRequestHeader("Authorization", token);
-				},
+				$.ajax({
+					url: APIUrl + 'loadCustomer',
+					type: 'POST',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					data: {
+						"customerId": customerId,
+					},
+					success: function (customerData) {
+						customerData.forEach(function (data) {
+							$customerId = data.customerId;
+							$("#Name").val(data.customerName);
+							$("#MarketingOfficerId").val(data.marketingOfficerId);
+							$("#MarketingOfficer").val(data.name);
+							$("#Package").val(data.packageId);
+							$("#Status").val(data.status);
+							$("#EntryDate").val(data.entryDate);
+							$("#processor").val(data.processor);
+							$("#ICNo").val(data.newIC);
+							$("#OldICNo").val(data.oldIC);
+							$("#DateOfBirth").val(data.dob);
+							$("#Gender").val(data.gender);
+							$("#MobilePhoneNo").val(data.phoneNumber);
+							$("#customerEmail").val(data.customerEmail);
+							$("#NextContactName").val(data.nextContactName);
+							$("#NextContactRelationship").val(data.nextContactRel);
+							$("#NextContactPhoneNo").val(data.nextContactPhone);
+							$("#NextContactOfficePhoneNo").val(data.nextContactOfficePhone);
+							$("#HomeAddressLine1").val(data.addr1);
+							$("#HomeAddressLine2").val(data.addr2);
+							$("#HomeAddressCity").val(data.city);
+							$("#HomeAddressPostCode").val(data.postCode);
+							$("#HomeAddressState").val(data.state);
+							$("#HomePhoneNo").val(data.homePhone);
+							$("#CompanyName").val(data.companyName);
+							$("#Position").val(data.position);
+							$("#OfficePhoneNo").val(data.officePhone);
+							$("#FaxPhoneNo").val(data.faxNumber);
+							$("#CompanyAddressLine1").val(data.compAddr1);
+							$("#CompanyAddressLine2").val(data.compAddr2);
+							$("#CompanyAddressCity").val(data.compCity);
+							$("#CompanyAddressPostCode").val(data.compPostCode);
+							$("#CompanyAddressState").val(data.compState);
+							$("#CompanyPhoneNo").val(data.CompanyPhoneNo);
+							$("#Salary").val(data.salary);
+							$("#Allowance").val(data.allowance);
+							$("#Deduction").val(data.deduction);
+							$("#InTransit").val(data.inTransit);
+							$("#AmountBooked").val(data.amtBooked);
+							$("#PayslipMonth").val(data.payslipMonth);
+							$("#Installment").val(data.installment);
+							$("#EligibleDeduction").val(data.eligibleDeduction);
+							$("#LoanApplied").val(data.loanAppliedAmt);
+							$("#AgentCommission").val(data.agentCommision);
+							$("#Tenure").val(data.tenure);
+							$("#ProfitRate").val(data.profitRate);
+							$("#ApprovalCode").val(data.approvalCode);
+							$("#LoanApproved").val(data.loanApprovedAmt);
+							$("#InvoiceAmount").val(data.invoiceAmt);
+							$("#ApprovalDate").val(data.approvalDate);
+							$("#NetLoanApproved").val(data.netLoanApproved);
+							$("#SettleOwnLoan").val(data.settleOwnLoan);
+							$("#MarketingOfficerAdvance").val(data.marketingOfficerAdv);
+							$("#CompanyAdvance").val(data.companyAdv);
+							$("#CommissionDeductionAmount").val(data.commissionDeductionAmt);
+							$("#Bank").val(data.bankId);
+							$("#BankInName").val(data.bankInName);
+							$("#AccountNo").val(data.bankAcctNo);
+							$("#BankInAmmount").val(data.bankInAmt);
+							$("#BankInDate").val(data.bankInDate);
+							$("#BankChequeNo").val(data.chequeNo);
+							$("#ReconciliationDate").val(data.reconciliationDate);
+							$("#DateToBank").val(data.dateToBank);
+							$("#BankReference").val(data.bankRef);
+							$("#CommissionDeductionSettlement").val(data.commissionDeductionSettlement);
+						});
+						$.each(customerData, function (i, value) {
+							redemptionField();
 
-				data: {
-					"customerId": customerID,
-					"customerName": $("#Name").val(),
-					"marketingOfficerId": $("#MarketingOfficerId").val(),
-					"packageId": $("#Package").val(),
-					"status": $("#Status").val(),
-					"entryDate": $("#EntryDate").val(),
-					"processor": processor,
-					"newIC": $("#ICNo").val(),
-					"oldIC": $("#OldICNo").val(),
-					"dob": $("#DateOfBirth").val(),
-					"gender": $("#Gender").val(),
-					"phoneNumber": $("#MobilePhoneNo").val(),
-					"customerEmail": $("#customerEmail").val(),
-					"nextContactName": $("#NextContactName").val(),
-					"nextContactRel": $("#NextContactRelationship").val(),
-					"nextContactPhone": $("#NextContactPhoneNo").val(),
-					"nextContactOfficePhone": $("#NextContactOfficePhoneNo").val(),
-					"addr1": $("#HomeAddressLine1").val(),
-					"addr2": $("#HomeAddressLine2").val(),
-					"city": $("#HomeAddressCity").val(),
-					"postCode": $("#HomeAddressPostCode").val(),
-					"state": $("#HomeAddressState").val(),
-					"homePhone": $("#HomePhoneNo").val(),
-					"companyName": $("#CompanyName").val(),
-					"position": $("#Position").val(),
-					"officePhone": $("#OfficePhoneNo").val(),
-					"faxNumber": $("#FaxPhoneNo").val(),
-					"compAddr1": $("#CompanyAddressLine1").val(),
-					"compAddr2": $("#CompanyAddressLine2").val(),
-					"compCity": $("#CompanyAddressCity").val(),
-					"compPostCode": $("#CompanyAddressPostCode").val(),
-					"compState": $("#CompanyAddressState").val(),
-					"CompanyPhoneNo": $("#CompanyPhoneNo").val(),
-					"salary": $("#Salary").val(),
-					"allowance": $("#Allowance").val(),
-					"deduction": $("#Deduction").val(),
-					"inTransit": $("#InTransit").val(),
-					"amtBooked": $("#AmountBooked").val(),
-					"payslipMonth": $("#PayslipMonth").val(),
-					"installment": $("#Installment").val(),
-					"eligibleDeduction": $("#EligibleDeduction").val(),
-					"loanAppliedAmt": $("#LoanApplied").val(),
-					"agentCommision": $("#AgentCommission").val(),
-					"tenure": $("#Tenure").val(),
-					"profitRate": $("#ProfitRate").val(),
-					"approvalCode": $("#ApprovalCode").val(),
-					"loanApprovedAmt": $("#LoanApproved").val(),
-					"invoiceAmt": $("#InvoiceAmount").val(),
-					"approvalDate": $("#ApprovalDate").val(),
-					"netLoanApproved": $("#NetLoanApproved").val(),
-					"settleOwnLoan": $("#SettleOwnLoan").val(),
-					"marketingOfficerAdv": $("#MarketingOfficerAdvance").val(),
-					"companyAdv": $("#CompanyAdvance").val(),
-					"commissionDeductionAmt": $("#CommissionDeductionAmount").val(),
-					"bankId": $("#Bank").val(),
-					"bankInName": $("#BankInName").val(),
-					"bankAcctNo": $("#AccountNo").val(),
-					"bankInAmt": $("#BankInAmount").val(),
-					"bankInDate": $("#BankInDate").val(),
-					"chequeNo": $("#BankChequeNo").val(),
-					"reconciliationDate": $("#ReconciliationDate").val(),
-					"dateToBank": $("#DateToBank").val(),
-					"bankRef": $("#BankReference").val(),
-					"commissionDeductionSettlement": $("#CommissionDeductionSettlement").val(),
-					"jsonString_RedemptionCode": jsonString_RedemptionCode,
-					"jsonString_RedemptionBankCoopOrg": jsonString_RedemptionBankCoopOrg,
-					"jsonString_RedemptionDetails": jsonString_RedemptionDetails,
-					"jsonString_RedemptionAmount": jsonString_RedemptionAmount,
-					"jsonString_RedemptionExpiredDate": jsonString_RedemptionExpiredDate,
-					"jsonString_RedemptionStatus": jsonString_RedemptionStatus,
-					"jsonString_RedemptionId": jsonString_RedemptionId,
-					"jsonString_DeleteRedemptionId": jsonString_DeleteRedemptionId,
-				},
+							/* Append redemption id for row that is retrieve from database*/
+							$("#redemption_table > tbody").append('<input type="hidden" id="RedemptionId" value="">');
+							$('#RedemptionId').attr("id", "RedemptionId" + redemption_counter);
 
-				//TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
-				// to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
-
-				success: function (data) {
-					alert(data.msg);
-					if (stay == false) {
-						window.location = "customer.html";
+							datalength = redemption_data.length;
+							for (var i = 0; i < datalength; i++) {
+								$("#RedemptionCode" + redemption_counter).val(value.code);
+								$("#RedemptionBankCoopOrg" + redemption_counter).val(value.bankCoopOrg);
+								$("#RedemptionDetails" + redemption_counter).val(value.details);
+								$("#RedemptionAmount" + redemption_counter).val(value.amount);
+								$("#RedemptionExpiredDate" + redemption_counter).val(value.expiredDate);
+								$("#RedemptionStatus" + redemption_counter).val(value.status);
+								$("#RedemptionId" + redemption_counter).val(value.redemptionId);
+							}
+						})
+						$(".custom-loader").hide();
 					}
-				},
+				});
+			}
 
-				error: function () {
-					alert("Customer add fail.");
-				}
-			});
-		}
+			$(document).ready(function () {
+				var customerId = $_GET('customerId');
+				customerID = customerId;
+				// TODO Yue Zong
+				// 2. Call the load customer function
+				function package() {
+					$.ajax({
+						url: APIUrl + 'package',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						success: function (package) {
+							packageDD = '<option value="">Select package first</option>';
+							$.each(package, function (key, value) {
+								packageDD += '<option value="' + value.packageId + '">' + value.packageName + '</option>';
+							})
+							$("#Package").html(packageDD);
 
-		function loadCustomerData(customerId) {
-			var datalength;
-
-			$.ajax({
-				url: APIUrl + 'loadCustomer',
-				type: 'POST',
-				dataType: 'JSON',
-				beforeSend: function (xhr) { //Include the bearer token in header
-					xhr.setRequestHeader("Authorization", token);
-				},
-				data: {
-					"customerId": customerId,
-				},
-				success: function (customerData) {
-					customerData.forEach(function (data) {
-						$customerId = data.customerId;
-						$("#Name").val(data.customerName);
-						$("#MarketingOfficerId").val(data.marketingOfficerId);
-						$("#MarketingOfficer").val(data.name);
-						$("#Package").val(data.packageId);
-						$("#Status").val(data.status);
-						$("#EntryDate").val(data.entryDate);
-						$("#processor").val(data.processor);
-						$("#ICNo").val(data.newIC);
-						$("#OldICNo").val(data.oldIC);
-						$("#DateOfBirth").val(data.dob);
-						$("#Gender").val(data.gender);
-						$("#MobilePhoneNo").val(data.phoneNumber);
-						$("#customerEmail").val(data.customerEmail);
-						$("#NextContactName").val(data.nextContactName);
-						$("#NextContactRelationship").val(data.nextContactRel);
-						$("#NextContactPhoneNo").val(data.nextContactPhone);
-						$("#NextContactOfficePhoneNo").val(data.nextContactOfficePhone);
-						$("#HomeAddressLine1").val(data.addr1);
-						$("#HomeAddressLine2").val(data.addr2);
-						$("#HomeAddressCity").val(data.city);
-						$("#HomeAddressPostCode").val(data.postCode);
-						$("#HomeAddressState").val(data.state);
-						$("#HomePhoneNo").val(data.homePhone);
-						$("#CompanyName").val(data.companyName);
-						$("#Position").val(data.position);
-						$("#OfficePhoneNo").val(data.officePhone);
-						$("#FaxPhoneNo").val(data.faxNumber);
-						$("#CompanyAddressLine1").val(data.compAddr1);
-						$("#CompanyAddressLine2").val(data.compAddr2);
-						$("#CompanyAddressCity").val(data.compCity);
-						$("#CompanyAddressPostCode").val(data.compPostCode);
-						$("#CompanyAddressState").val(data.compState);
-						$("#CompanyPhoneNo").val(data.CompanyPhoneNo);
-						$("#Salary").val(data.salary);
-						$("#Allowance").val(data.allowance);
-						$("#Deduction").val(data.deduction);
-						$("#InTransit").val(data.inTransit);
-						$("#AmountBooked").val(data.amtBooked);
-						$("#PayslipMonth").val(data.payslipMonth);
-						$("#Installment").val(data.installment);
-						$("#EligibleDeduction").val(data.eligibleDeduction);
-						$("#LoanApplied").val(data.loanAppliedAmt);
-						$("#AgentCommission").val(data.agentCommision);
-						$("#Tenure").val(data.tenure);
-						$("#ProfitRate").val(data.profitRate);
-						$("#ApprovalCode").val(data.approvalCode);
-						$("#LoanApproved").val(data.loanApprovedAmt);
-						$("#InvoiceAmount").val(data.invoiceAmt);
-						$("#ApprovalDate").val(data.approvalDate);
-						$("#NetLoanApproved").val(data.netLoanApproved);
-						$("#SettleOwnLoan").val(data.settleOwnLoan);
-						$("#MarketingOfficerAdvance").val(data.marketingOfficerAdv);
-						$("#CompanyAdvance").val(data.companyAdv);
-						$("#CommissionDeductionAmount").val(data.commissionDeductionAmt);
-						$("#Bank").val(data.bankId);
-						$("#BankInName").val(data.bankInName);
-						$("#AccountNo").val(data.bankAcctNo);
-						$("#BankInAmmount").val(data.bankInAmt);
-						$("#BankInDate").val(data.bankInDate);
-						$("#BankChequeNo").val(data.chequeNo);
-						$("#ReconciliationDate").val(data.reconciliationDate);
-						$("#DateToBank").val(data.dateToBank);
-						$("#BankReference").val(data.bankRef);
-						$("#CommissionDeductionSettlement").val(data.commissionDeductionSettlement);
+							loadCustomerData(customerId);
+							loadCustomerRemark(customerId);
+						},
 					});
-					$.each(customerData, function (i, value) {
-						redemptionField();
 
-						/* Append redemption id for row that is retrieve from database*/
-						$("#redemption_table > tbody").append('<input type="hidden" id="RedemptionId" value="">');
-						$('#RedemptionId').attr("id", "RedemptionId" + redemption_counter);
-
-						datalength = redemption_data.length;
-						for (var i = 0; i < datalength; i++) {
-							$("#RedemptionCode" + redemption_counter).val(value.code);
-							$("#RedemptionBankCoopOrg" + redemption_counter).val(value.bankCoopOrg);
-							$("#RedemptionDetails" + redemption_counter).val(value.details);
-							$("#RedemptionAmount" + redemption_counter).val(value.amount);
-							$("#RedemptionExpiredDate" + redemption_counter).val(value.expiredDate);
-							$("#RedemptionStatus" + redemption_counter).val(value.status);
-							$("#RedemptionId" + redemption_counter).val(value.redemptionId);
-						}
-					})
-					$(".custom-loader").hide();
 				}
-			});
-		}
 
-		$(document).ready(function () {
-			var customerId = $_GET('customerId');
-			customerID = customerId;
-			// TODO Yue Zong
-			// 2. Call the load customer function
-			function package() {
-				$.ajax({
-					url: APIUrl + 'package',
-					type: 'GET',
-					dataType: 'JSON',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					success: function (package) {
-						packageDD = '<option value="">Select package first</option>';
-						$.each(package, function (key, value) {
-							packageDD += '<option value="' + value.packageId + '">' + value.packageName + '</option>';
-						})
-						$("#Package").html(packageDD);
+				function statusDropDown(callback) {
 
-						loadCustomerData(customerId);
-						loadCustomerRemark(customerId);
-					},
+					$.ajax({
+						url: APIUrl + 'status',
+						type: 'GET',
+						dataType: 'JSON',
+						beforeSend: function (xhr) { //Include the bearer token in header
+							xhr.setRequestHeader("Authorization", token);
+						},
+						success: function (status) {
+							statusDD = '<option value="0">- Select One -</option>';
+							$.each(status, function (key, value) {
+
+								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
+							})
+
+						},
+					});
+
+				}
+
+				statusDropDown();
+				package();
+
+				$('#tableAllRemark tfoot th').each(function () {
+					var title = $(this).text();
+					if (title != '')
+						$(this).html('<input type="text" class="form-control" />');
+					else
+						$(this).html('Search');
+
 				});
 
-			}
-
-			function statusDropDown(callback) {
-
-				$.ajax({
-					url: APIUrl + 'status',
-					type: 'GET',
-					dataType: 'JSON',
-					beforeSend: function (xhr) { //Include the bearer token in header
-						xhr.setRequestHeader("Authorization", token);
-					},
-					success: function (status) {
-						statusDD = '<option value="0">- Select One -</option>';
-						$.each(status, function (key, value) {
-
-							statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
-						})
-
-					},
-				});
-
-			}
-
-			statusDropDown();
-			package();
-
-			$('#tableAllRemark tfoot th').each(function () {
-				var title = $(this).text();
-				if (title != '')
-					$(this).html('<input type="text" class="form-control" />');
-				else
-					$(this).html('Search');
+				// Load datepicker
 
 			});
-
-			// Load datepicker
-
-		});
 
 	</script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
