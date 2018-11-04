@@ -1539,16 +1539,22 @@
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
-					setRedemptionArray();
-					editCustomer();
+					if (checkPackageValidity()) {
+						setRedemptionArray();
+						editCustomer();
+					}
+
 				}
 			});
 
 			$("#Save").click(function (event) {
 				stay = false;
 				if (checkValidity()) {
-					setRedemptionArray();
-					editCustomer();
+					if (checkPackageValidity()) {
+						setRedemptionArray();
+						editCustomer();
+					}
+
 				}
 			});
 
@@ -1604,7 +1610,46 @@
 					}
 				});
 			}
+			function checkPackageValidity() {
+				packageFlag = true;
+				//customer details-start
+				currentLoanApplied = parseInt($("#LoanApplied").val())
+				currentTenure = parseInt($("#Tenure").val())
+				dob = new Date($("#DateOfBirth").val())
+				var diff_ms = Date.now() - dob.getTime();
+				var age_dt = new Date(diff_ms);
+				age = Math.abs(age_dt.getUTCFullYear() - 1970);//don't have to convert. it is int
+				//customer details end
 
+
+				if (currentTenure > parseInt(maxTenure)) {
+					alert("Current tenure exceed maximum tenure.");
+					packageFlag = false;
+				}
+				if (currentTenure < parseInt(minTenure)) {
+					alert("Current tenure is less than minimum tenure.");
+					packageFlag = false;
+				}
+				if (age > parseInt(maxAge)) {
+					alert("Customer age exceed maximum allowed age.");
+					packageFlag = false;
+				}
+				if (age < parseInt(minAge)) {
+					alert("Customer age is less than minimum allowed age.");
+					packageFlag = false;
+				} if (currentLoanApplied > parseInt(maxLoanAmt)) {
+					alert("Current loan applied exceed maximum loan amount.");
+					packageFlag = false;
+				}
+				if (currentLoanApplied < parseInt(minLoanAmt)) {
+					alert("Current loan applied is less than minimum loan allowed.");
+					packageFlag = false;
+				}
+				console.log(packageFlag)
+				return packageFlag;
+
+				//	console.log(	minTenure,maxTenure,maxAge,minLoanAmt,maxLoanAmt);
+			}
 			function checkValidity() {
 				data = ["Name", "MarketingOfficer", "Package", "Status", "EntryDate", "ICNo", "DateOfBirth", "CompanyName",
 					"Salary", "Deduction", "EligibleDeduction", "LoanApplied", "AgentCommission", "Tenure", "ProfitRate", "Bank",
@@ -2096,11 +2141,11 @@
 							loadCustomerRemark(customerId);
 						},
 					});
-				
+
 				}
 
 				function statusDropDown(callback) {
-			
+
 					$.ajax({
 						url: APIUrl + 'status',
 						type: 'GET',
@@ -2114,10 +2159,10 @@
 
 								statusDD += '<option value="' + value.code + '">' + value.description + '</option>';
 							})
-			
+
 						},
 					});
-			
+
 				}
 
 				statusDropDown();
