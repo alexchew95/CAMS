@@ -47,8 +47,8 @@
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
 	<!--JqueryUi CSS-->
 	<link href="./assets/css/jquery-ui.min.css" rel="stylesheet" />
-	<!--JQuery Modal CSS-->
-
+	<!-- AWS JS -->
+	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.233.1.min.js"></script>
 
 </head>
 
@@ -104,7 +104,8 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
+													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly
+													 required>
 													<input type="hidden" id="MarketingOfficerId" value="">
 												</td>
 											</tr>
@@ -175,7 +176,8 @@
 									<a href="#Work" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('work')">Work</a>
 								</li>
 								<li id="liSalaryAndDeduction">
-									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary & Deduction</a>
+									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary
+										& Deduction</a>
 								</li>
 								<li id="liLoan">
 									<a href="#Loan" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('loan')">Loan</a>
@@ -699,7 +701,8 @@
 
 															<div class="controls">
 																<td>
-																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00" required>
+																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00"
+																	 required>
 																</td>
 															</div>
 														</tr>
@@ -854,7 +857,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off" placeholder="0.00" required>
+																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off"
+																			 placeholder="0.00" required>
 																		</td>
 																	</div>
 																</tr>
@@ -870,7 +874,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00" required step="0.01">
+																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00"
+																			 required step="0.01">
 																		</td>
 																	</div>
 																</tr>
@@ -902,7 +907,8 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required autocomplete="off">
+																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required
+																			 autocomplete="off">
 																		</td>
 																	</div>
 																</tr>
@@ -1396,7 +1402,6 @@
 									</div>
 								</div>
 							</div>
-
 							<div class="container">
 								<br>
 								<div class="row">
@@ -1621,7 +1626,7 @@
 				alert("Current loan applied is less than minimum loan allowed.");
 				packageFlag = false;
 			}
-		/* 	console.log(packageFlag) */
+			/* 	console.log(packageFlag) */
 			return packageFlag;
 		}
 
@@ -1960,7 +1965,9 @@
 					alert("Customer add fail.");
 				}
 			});
-		} function getSelectedPackageData() {
+		}
+
+		function getSelectedPackageData() {
 
 			var selectedPackageId = $("#Package").val()
 
@@ -2100,13 +2107,92 @@
 			});
 		}
 
+
+		$("#btnUploadFiles").click(function () {
+			document.getElementById('lblUploadErrorMsg').innerHTML = "";
+			//$(".custom-loader").show();
+			var s3 = new AWS.S3({
+				accessKeyId: 'AKIAJD6ZHRWLICKOZ2AA',
+				secretAccessKey: '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'
+			});
+
+
+			var NRIC = $("#ICNo").val();
+			var docType = $("#docTypeDD").val()
+			var docName = $("#fileDocToUpload").get()[0].files[0].name;
+			var fileType = $("#fileDocToUpload").get()[0].files[0].type;
+			var userId = $("#txtUploadUserId").val();
+			var uploadFolder;
+			if (docType == "NRIC") {
+				uploadFolder = "nric/";
+			} else if (docType == "OTHER_DOC") {
+				uploadFolder = "other/";
+			} else if (docType == "PAYSLP") {
+				uploadFolder = "payslip/";
+			} else if (docType == "RDMPT") {
+				uploadFolder = "redemption/";
+			}
+
+			console.log($("#fileDocToUpload").get()[0].files[0]);
+			if ($("#fileDocToUpload").get()[0].files[0]) {
+				// if ($("#fileDocToUpload").get()[0].files[0].type === 'image/png') {
+				// 	fileName = NRIC + "_" + Date.now() + "_" + docType + ".png";
+				// } else if ($("#fileDocToUpload").get()[0].files[0].type === 'image/jpeg') {
+				// 	fileName = NRIC + "_" + Date.now() + "_" + docType + ".jpeg";
+				// } else if ($("#fileDocToUpload").get()[0].files[0].type === 'application/pdf') {
+				// 	fileName = NRIC + "_" + Date.now() + "_" + docType + ".pdf";
+				// } else {
+				// 	error = "Invalid file format ";
+				// 	document.getElementById('lblUploadErrorMsg').innerHTML = error;
+				// 	$(".custom-loader").hide();
+				// 	return;
+				// }
+				//var S3Key = "k91i8n26bb8g/" + fileName;
+				var S3Key = "k91i8n26bb8g/" + docName;
+
+				var uploadPreSignedUrl = s3.getSignedUrl('putObject', {
+					Bucket: 'cloud-cube',
+					Key: S3Key,
+					ACL: 'private',
+					// This must match with your ajax contentType parameter
+					ContentType: 'image/jpeg'
+					/* then add all the rest of your parameters to AWS puttObect here */
+				});
+
+				// now you have both urls
+				console.log(uploadPreSignedUrl);
+				$.ajax({
+					type: 'PUT',
+					url: uploadPreSignedUrl,
+					// Content type must much with the parameter you signed your URL with
+					contentType: 'binary/octet-stream',
+					// this flag is important, if not set, it will try to send data as a form
+					processData: false,
+					// the actual file is sent raw
+					data: $("#fileDocToUpload").get()[0].files[0],
+					success: function (data) {
+						var posting = $.post(APIUrl + "adm_insertDocDataToDB", {
+							"userId": userId,
+							"docType": docType,
+							"docURL": S3Key
+						});
+						posting.done(function (data) {
+							$(".custom-loader").hide();
+							alert("Upload Complete!");
+							//closeModal();
+						});
+					}
+				})
+			}
+		});
+
 		$(document).ready(function () {
 
 			var customerId = $_GET('customerId');
 			customerID = customerId;
 			// TODO Yue Zong
 			// 2. Call the load customer function
-			function package() {
+			function getPackageDD() {
 				$.ajax({
 					url: APIUrl + 'package',
 					type: 'GET',
@@ -2115,12 +2201,14 @@
 						xhr.setRequestHeader("Authorization", token);
 					},
 					success: function (package) {
-						packageDD = '<select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package"' +
+						packageDD =
+							'<select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package"' +
 							' required> <option value="">Select package first</option>';
 
 						$.each(package, function (key, value) {
 
-							packageDD += '<option value="' + value.packageId + '"id="' + value.packageId + ' ">' + value.packageName + '</option>';
+							packageDD += '<option value="' + value.packageId + '"id="' + value.packageId + ' ">' + value.packageName +
+								'</option>';
 						})
 						packageDD += '</select>';
 						$("#ddPackage").html(packageDD);
@@ -2131,7 +2219,7 @@
 
 			}
 
-			function statusDropDown(callback) {
+			function getStatusDD(callback) {
 
 				$.ajax({
 					url: APIUrl + 'status',
@@ -2152,9 +2240,18 @@
 
 			}
 
-			statusDropDown();
-			package();
+			function getDocTypeDD() {
+				$.get(APIUrl + "docTypeDD", function (data) {
+					docTypeDD = data.docTypeDD;
+					$.each(docTypeDD, function (key, value) {
+						$('#docTypeDD').append('<option value="' + value.code + '">' + value.description + '</option>');
+					});
+				}, "json");
+			}
 
+			getStatusDD();
+			getPackageDD();
+			getDocTypeDD();
 			$('#tableAllRemark tfoot th').each(function () {
 				var title = $(this).text();
 				if (title != '')
