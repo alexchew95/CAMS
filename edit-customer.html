@@ -38,7 +38,8 @@
 	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
 
 	<script src="./assets/js/main.js"></script>
-	<script src="./assets/js/datatables.min.js"></script> <!-- Jquery 1.12.14 is included -->
+	<script src="./assets/js/datatables.min.js"></script>
+	<!-- Jquery 1.12.14 is included -->
 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
@@ -103,8 +104,7 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly
-													 required>
+													<input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
 													<input type="hidden" id="MarketingOfficerId" value="">
 												</td>
 											</tr>
@@ -117,10 +117,9 @@
 												<td>
 													<label class="col-form-label float-right">Package* </label>
 												</td>
-												<td>
-													<select type="form-control custom-select" class="form-control" id="Package" maxlength="100" required>
-														<option value="">Select package first</option>
-													</select>
+												<td id="ddPackage">
+
+
 
 												</td>
 											</tr>
@@ -176,8 +175,7 @@
 									<a href="#Work" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('work')">Work</a>
 								</li>
 								<li id="liSalaryAndDeduction">
-									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary
-										& Deduction</a>
+									<a href="#SalaryAndDeduction" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('deduction')">Salary & Deduction</a>
 								</li>
 								<li id="liLoan">
 									<a href="#Loan" data-toggle="tab" class="nav-item text-dark" onclick="ResetActive('loan')">Loan</a>
@@ -701,8 +699,7 @@
 
 															<div class="controls">
 																<td>
-																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00"
-																	 required>
+																	<input type="number" id="Salary" class="form-control" autocomplete="off" step="0.01" placeholder="0.00" required>
 																</td>
 															</div>
 														</tr>
@@ -857,8 +854,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off"
-																			 placeholder="0.00" required>
+																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off" placeholder="0.00" required>
 																		</td>
 																	</div>
 																</tr>
@@ -874,8 +870,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00"
-																			 required step="0.01">
+																			<input type="number" id="AgentCommission" class="form-control" autocomplete="off" placeholder="0.00" required step="0.01">
 																		</td>
 																	</div>
 																</tr>
@@ -907,8 +902,7 @@
 
 																	<div class="controls">
 																		<td>
-																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required
-																			 autocomplete="off">
+																			<input type="number" max="100" id="ProfitRate" class="form-control" step="0.01" required autocomplete="off">
 																		</td>
 																	</div>
 																</tr>
@@ -1549,11 +1543,12 @@
 		var customerId = $_GET('customerId');
 
 		$("#SaveAndStay").click(function (event) {
+
 			event.preventDefault();
 			stay = true;
 			if (checkValidity() && checkPackageValidity()) {
 
-				editCustomer();
+
 				setRedemptionArray();
 				editCustomer();
 			}
@@ -1562,7 +1557,7 @@
 		$("#Save").click(function (event) {
 			stay = false;
 			if (checkValidity() && checkPackageValidity()) {
-				editCustomer();
+
 				setRedemptionArray();
 				editCustomer();
 			}
@@ -1626,7 +1621,7 @@
 				alert("Current loan applied is less than minimum loan allowed.");
 				packageFlag = false;
 			}
-			console.log(packageFlag)
+		/* 	console.log(packageFlag) */
 			return packageFlag;
 		}
 
@@ -1778,7 +1773,7 @@
 		});
 
 		function redemptionField() {
-			console.log(statusDD);
+			/* console.log(statusDD); */
 			var redemption_container = "";
 			if (redemption_count < max_redemption_count) {
 				redemption_count++;
@@ -1965,6 +1960,37 @@
 					alert("Customer add fail.");
 				}
 			});
+		} function getSelectedPackageData() {
+
+			var selectedPackageId = $("#Package").val()
+
+
+			$.ajax({
+
+				url: APIUrl + 'loadPackage',
+				type: 'POST',
+				dataType: 'JSON',
+				beforeSend: function (xhr) { //Include the bearer token in header
+					xhr.setRequestHeader("Authorization", token);
+				},
+				data: {
+					"packageId": selectedPackageId,
+				},
+				success: function (data) {
+					data.forEach(function (data) {
+						minTenure = data.minTenure //tenure
+						maxTenure = data.maxTenure //tenure
+						minAge = data.minAge
+						maxAge = data.maxAge
+						minLoanAmt = data.minLoanAmt
+						maxLoanAmt = data.maxLoanAmt
+
+
+
+					});
+					//	$(".custom-loader").hide();
+				}
+			});
 		}
 
 		function loadCustomerData(customerId) {
@@ -2066,12 +2092,16 @@
 							$("#RedemptionId" + redemption_counter).val(value.redemptionId);
 						}
 					})
+					getSelectedPackageData();
 					$(".custom-loader").hide();
+
+
 				}
 			});
 		}
 
 		$(document).ready(function () {
+
 			var customerId = $_GET('customerId');
 			customerID = customerId;
 			// TODO Yue Zong
@@ -2085,12 +2115,15 @@
 						xhr.setRequestHeader("Authorization", token);
 					},
 					success: function (package) {
-						packageDD = '<option value="">Select package first</option>';
-						$.each(package, function (key, value) {
-							packageDD += '<option value="' + value.packageId + '">' + value.packageName + '</option>';
-						})
-						$("#Package").html(packageDD);
+						packageDD = '<select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package"' +
+							' required> <option value="">Select package first</option>';
 
+						$.each(package, function (key, value) {
+
+							packageDD += '<option value="' + value.packageId + '"id="' + value.packageId + ' ">' + value.packageName + '</option>';
+						})
+						packageDD += '</select>';
+						$("#ddPackage").html(packageDD);
 						loadCustomerData(customerId);
 						loadCustomerRemark(customerId);
 					},
