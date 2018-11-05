@@ -43,38 +43,38 @@
 
 
 <script type="text/javascript">
-        function checkRole() {
+    function checkRole() {
 
-            /*  if (role == "BUSOWN" || role == "MASTER") {
-                 a = document.getElementById("dd-registerUser");
-                 a.setAttribute("href", "sign_up.html");
-                 b = document.getElementById("dd-viewUser");
-                 b.setAttribute("href", "user.html");
-             } */
+        /*  if (role == "BUSOWN" || role == "MASTER") {
+             a = document.getElementById("dd-registerUser");
+             a.setAttribute("href", "sign_up.html");
+             b = document.getElementById("dd-viewUser");
+             b.setAttribute("href", "user.html");
+         } */
 
-            /*  a = document.getElementById("registerUser");
-             a.setAttribute("href", "sign_up_subAgent.html");
-             a.style.display = "";
+        /*  a = document.getElementById("registerUser");
+         a.setAttribute("href", "sign_up_subAgent.html");
+         a.style.display = "";
  
-             b=document.getElementById("userList");
-             b.style.display = "none"; */
+         b=document.getElementById("userList");
+         b.style.display = "none"; */
 
 
-            if (role == "AGENT" || role == "SAGENT") {
+        if (role == "AGENT" || role == "SAGENT") {
 
-                $("#li-1").remove();
-
-            }
-            if (role == "STAFF") {
-
-                $("#li-1").remove();
-                $("#li-commission").remove();
-            }
+            $("#li-1").remove();
 
         }
+        if (role == "STAFF") {
 
-        //When the page has loaded.
-        $(document).ready(function () {
-            checkRole();
-        });
+            $("#li-1").remove();
+            $("#li-commission").remove();
+        }
+
+    }
+
+    //When the page has loaded.
+    $(document).ready(function () {
+        checkRole();
+    });
 </script>

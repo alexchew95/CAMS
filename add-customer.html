@@ -149,17 +149,7 @@
 															});
 														}
 													</script>
-													<!-- <select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package" maxlength="100"
-													 required>
-														<option value="">Select package first</option>
-													</select>
 													
-
-														function getSelectedPackageData() {
-															selectedPackageId = this.options[this.selectedIndex].id
-															getSelectedPackageDatav2(selectedPackageId);
-														}
- -->
 												</td>
 											</tr>
 										</div>
@@ -1837,7 +1827,7 @@
 
 
 							packageDD = '<select onchange="getSelectedPackageData()" type="form-control custom-select" class="form-control" id="Package"' +
-								'maxlength="100" required> <option value="">Select package first</option>';
+								' required> <option value="">Select package first</option>';
 
 							$.each(package, function (key, value) {
 

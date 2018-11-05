@@ -40,6 +40,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 </head>
+<div class="custom-loader"></div>
 
 <body class="">
 	<div class="page">
@@ -84,15 +85,61 @@
 									<label class="form-label">Password</label>
 									<input type="password" class="form-control" id="txtPwd" placeholder="Password" required/>
 									<label class="form-label">Roles</label>
-									<select class="form-control custom-select" id="rolesDD">
+									<select onchange="getMasterAgentId()" class="form-control custom-select" id="rolesDD">
 										<option value="BUSOWN">Business Owner</option>
 										<option value="MASTER">Master</option>
 										<option value="STAFF">Staff</option>
 										<option value="AGENT">Agent</option>
-
+										<option value="SUBAGENT">Sub Agent</option>
 									</select>
-								</div>
+									<label class="form-label">Master Agent ID</label>
+									<div id="divMasterAgentDD">
+										<select class="form-control custom-select" id="masterAgentIdDD">
+											<option value="0">Not Sub Agent</option>
 
+										</select>
+									</div>
+									<script type="text/javascript">
+										function getMasterAgentId() {
+											var selectedRole = $("#rolesDD").val()
+											if (selectedRole == "SUBAGENT") {
+												$(".custom-loader").show();
+
+												$.ajax({
+
+													url: APIUrl + 'listAllAgent',
+													type: 'POST',
+													dataType: 'JSON',
+													beforeSend: function (xhr) { //Include the bearer token in header
+														xhr.setRequestHeader("Authorization", token);
+													},
+													data: {
+														"role": "AGENT",
+													},
+													success: function (data) {
+														masterAgentDD = '<select  type="form-control custom-select" class="form-control" id="masterAgentIdDD"' +
+															' required> <option value="">Select Master Agent</option>';
+														$.each(data, function (key, value) {
+															name_masterAgent = value.name
+															id_masterAgent = value.userId
+															masterAgentDD += '<option value="' + id_masterAgent + '"id="' + id_masterAgent + ' ">' + id_masterAgent + ')' +
+																name_masterAgent + '</option>';
+														})
+														masterAgentDD += '</select>';
+														$("#divMasterAgentDD").html(masterAgentDD);
+														$(".custom-loader").hide();
+													}
+												});
+											}
+											else {
+												$(".custom-loader").show();
+												masterAgentDD = '<select class="form-control custom-select" id="masterAgentIdDD">' +
+													'<option value="0">Not Sub Agent</option></select>';
+												$("#divMasterAgentDD").html(masterAgentDD);
+												$(".custom-loader").hide();
+											}
+										}</script>
+								</div>
 								<label id="lblMessages" class="text-danger"></label>
 							</div>
 							<div class="form-footer">
@@ -130,6 +177,7 @@
 
 	<script type="text/javascript">
 		require(['mainjs', 'twbs', 'modal'], function () {
+
 			$("#btnSignUp").click(function (event) {
 				//check form if it is all valid
 				if ($("form")[0].checkValidity()) {
@@ -146,14 +194,15 @@
 
 						$.ajax({
 
-							url: APIUrl + 'signup',
+							url: APIUrl + 'signUp',
 							type: 'POST',
 
 							data: {
 								"name": $("#txtName").val(),
 								"email": $("#txtEmail").val(),
 								"password": hash,
-								"role": $("#rolesDD").val()
+								"role": $("#rolesDD").val(),
+								"masterAgentId": $("#masterAgentIdDD").val()
 							},
 							dataType: 'JSON',
 							success: function (data) {
@@ -181,7 +230,7 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
-				$("#txtAgent").val(userId); userId
+				$(".custom-loader").hide();
 
 			});
 		});
