@@ -166,6 +166,7 @@
                 });
                 /* To List all customer in Customer Homepage */
                 var arrayReturn = [];
+
                 $.ajax({
                     url: APIUrl + 'listAllCommission',
                     async: false,
@@ -191,7 +192,7 @@
                                 data[i].No,
                                 data[i].amount,
                                 data[i].adminFee,
-                                data[i].adjustmentAmount,
+                                data[i].totalAdjustmentAmount,
                                 data[i].netAmount,
                                 data[i].gstAmount,
                                 data[i].netGstAmount,

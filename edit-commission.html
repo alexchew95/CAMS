@@ -72,180 +72,228 @@
                     <form>
                         <!-- TOP ROW before Tabs-->
                         <div class="form-horizontal">
-                            <div id="commission-form" style="display:inline;">
-                                <table>
-                                    <div class="col-sm-11 col-md-12">
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Date </label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="createDate" class="form-control datepicker" autocomplete="off" maxlength="100" readonly required>
-                                                </td>
-                                            </tr>
+                            <div class="custom-loader"></div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <table>
+                                        <div class="col-sm-11 col-md-12">
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Date </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="createDate" class="form-control datepicker" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+
+                                            <div class="col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <tr>
+                                                        <td>
+                                                            <label class="col-form-label float-right">No. </label>
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" id="no" class="form-control" autocomplete="off" maxlength="100" required>
+                                                        </td>
+                                                    </tr>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Cheque No. </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="chequeNo" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Customer Name </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="customerName" class="form-control" autocomplete="off" maxlength="100" readonly required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Marketing Officer </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="amount" step="0.01" class="form-control" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Pay Customer Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="payCustomerAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Admin Fee (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="adminFee" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Total Adjustment Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="totalAdjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" readonly required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Net Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="netAmount" class="form-control" autocomplete="off" step="0.01" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">GST Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="gstAmount" class="form-control" autocomplete="off" step="0.01" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Net GST Amount (RM) </label>
+                                                    </td>
+                                                    <td>
+                                                        <input type="number" id="netGstAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
+                                                    </td>
+                                                </tr>
+                                            </div>
+                                            <div class="form-group">
+                                                <tr>
+                                                    <td>
+                                                        <label class="col-form-label float-right">Remarks </label>
+                                                    </td>
+                                                    <td>
+                                                        <textarea type="text" id="NewRemark" class="form-control" autocomplete="off"></textarea>
+                                                    </td>
+                                                </tr>
+
+                                            </div>
+
+
                                         </div>
-
-
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">No. </label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="no" class="form-control" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Cheque No. </label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="chequeNo" class="form-control" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Customer Name </label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="customerName" class="form-control" autocomplete="off" maxlength="100" readonly required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Marketing Officer </label>
-                                                </td>
-                                                <td>
-                                                    <input type="text" id="MarketingOfficer" class="form-control" autocomplete="off" maxlength="100" readonly required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="amount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Pay Customer Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="payCustomerAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Admin Fee (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="adminFee" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Adjustment Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="adjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Net Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="netAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">GST Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="gstAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Net GST Amount (RM) </label>
-                                                </td>
-                                                <td>
-                                                    <input type="number" id="netGstAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" required>
-                                                </td>
-                                            </tr>
-                                        </div>
-                                        <div class="form-group">
-                                            <tr>
-                                                <td>
-                                                    <label class="col-form-label float-right">Remarks </label>
-                                                </td>
-                                                <td>
-                                                    <textarea type="text" id="NewRemark" class="form-control" autocomplete="off"></textarea>
-                                                </td>
-                                            </tr>
-
-                                        </div>
-
-
-                                    </div>
-                                </table>
-                                <br>
-                                <br>
-                                <div class="container">
-                                    <div class="row">
-                                        <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
-                                        &nbsp; &nbsp;
-                                        <button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
-                                        &nbsp; &nbsp;
-                                        <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
-
-                                    </div>
-                                    <label id="lblMessages" class="text-danger"></label>
+                                    </table>
                                 </div>
+                                <div class="col-md-6">
+                                    <table>
+                                        <div class="col-md-12">
+                                            <legend>Adjustment</legend>
+                                            <table id="adjustmentTable">
+        
+                                                <div style="display:inline;">
+                                                    <div class="form-inline form-group" id=adjustmentContainer>
+                                                        <thead>
+                                                            <tr>
+                                                                <div class="container">
+                                                                    <td>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="control-label required disabled float-left">Description*</label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="control-label required disabled float-left">Amount*</label>
+                                                                    </td>
+                                                                    <td>
+                                                                        <label class="control-label required disabled float-left">Date*</label>
+                                                                    </td>
+                                                                    <td>
+                                                                        &ensp; &ensp;
+                                                                    </td>
+                                                                    <td>
+                                                                        <button class="btn btn-info" id="addAdjustment" data-loading-text>Add Adjustment</button>
+                                                                    </td>
+                                                                </div>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+        
+                                                            </tr>
+                                                        </tbody>
+                                                    </div>
+                                                </div>
+                                            </table>
+                                            <br>
+                                            <button class="btn btn-warning" id="deleteAdjustment" data-loading-text>Delete</button>
+                                        </div>
+                                    </table>
+                                </div>
+                            
                             </div>
+                            <br>
+                            <br>
+                            <div>
+                                <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
+                                &nbsp; &nbsp;
+                                <button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
+                                &nbsp; &nbsp;
+                                <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
+
+                            </div>
+                            <label id="lblMessages" class="text-danger"></label>
                         </div>
-
-                        <div class="footer">
-
-                        </div>
-
+                    </form>
+    
+    
+    
                 </div>
             </div>
         </div>
+    </div>
+    <div class="footer">
+
     </div>
     <footer class="footer">
         <div class="container">
@@ -265,40 +313,104 @@
     </footer>
     <script type="text/javascript">
         /////* Declare variables */////
+        var stay = false,
+            adjustmentCount = 0,
+            adjustmentCounter,
+			maxAdjustmentCount = 100,
+            customerId,
+            commissionId,
+			totalAdjustmentDescription = [],
+			totalAdjustmentAmount = [],
+			totalAdjustmentDate = [],
+            totalAdjustmentId = [],
+            totalDeleteAdjustmentId = [],
+            adjustmentData = ["adjustmentDescription", "adjustmentAmount", "adjustmentDate"];
 
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
 
             $("#SaveAndStay").click(function (event) {
                 event.preventDefault();
+                stay = true;
                 var customerId = $_GET('customerId');
                 if (checkValidity()) {
-
+                    setAdjustmentArray();
                     editCommission(customerId);
                 }
             });
 
             $("#Save").click(function (event) {
+                var customerId = $_GET('customerId');
                 if (checkValidity()) {
-
-                    var customerId = $_GET('customerId');
-
+                    setAdjustmentArray();
                     editCommission(customerId);
-
-
                 }
             });
 
             $("#Cancel").click(function (event) {
                 window.location = "home.html";
             });
+            
+            $("#addAdjustment").click(function (event) {
+				event.preventDefault();
+				adjustmentField();
+			});
+
+            $("#deleteAdjustment").click(function (event) {
+                let curAdjustmentCheckBox,
+				    curCount,
+				    datalength;
+
+				event.preventDefault();
+				$("table tbody").find('input[name="adjustmentRecord"]').each(function () {
+					if ($(this).is(":checked")) {
+                        /* Get checkbox id and get the count */
+                        curAdjustmentCheckBox = $(this).attr('id');
+                        curCount = curAdjustmentCheckBox.replace(/[^0-9]/g, '');
+                        
+                        /* Append the count to the adjustment id to check for its existence. If adjustment id is exist, add to totalDeleteAdjustmentId*/
+                        if ($('#adjustmentId' + curCount).length) {
+                            datalength = totalDeleteAdjustmentId.length;
+                            totalDeleteAdjustmentId[datalength] = $("#adjustmentId" + curCount).val();
+                            $("#adjustmentId" + curCount).attr("id", "");
+                        }
+						$(this).parents("tr").remove();
+						adjustmentCount--;
+					}
+				});
+                calculateTotalAdjustmentAmount();
+			});
+            
+            $("[id^=adjustment]").on('input', function() {
+                calculateTotalAdjustmentAmount();        
+            });
+            
+            function calculateTotalAdjustmentAmount(){
+                let calcAdjustmentAmount = 0,
+                    amount = 0;
+                $("[id^=adjustment]").each( function (i , t) {
+                    amount = $("#adjustmentAmount" + i).val();
+                    amount = parseFloat(amount);
+                    if(!isNaN(amount)){
+                        calcAdjustmentAmount += parseFloat(amount);                
+                    }                   
+                });
+                $("#totalAdjustmentAmount").val(calcAdjustmentAmount);
+            }
 
             function checkValidity() {
-                data = ["createDate", "no", "chequeNo", "amount", "payCustomerAmount", "adminFee", "adjustmentAmount", "netAmount",
+                commissionData = ["createDate", "no", "chequeNo", "amount", "payCustomerAmount", "adminFee", "totalAdjustmentAmount", "netAmount",
                     "gstAmount", "netGstAmount", "NewRemark"
                 ];
 
-                var datalength = data.length,
+                reqFieldCommissionData = ["Date", "No", "Cheque No", "Amount", "Pay Customer Amount", "Admin Fee", "Total Adjustment Amount","Net Amount",
+                    "GST Amount", "Net GST Amount", "New Remark"];
+
+                adjustmentData = ["adjustmentDescription", "adjustmentAmount", "adjustmentDate"];
+
+                reqFieldAdjustmentData = ["Adjustment Description", "Adjustment Amount", "Adjustment Date"];
+
+                var datalength = commissionData.length,
                     comma = true,
                     validInp = true,
                     reqField = "",
@@ -306,41 +418,52 @@
                     inpValue;
 
                 for (var i = 0; i < datalength; i++) {
-                    inp = document.getElementById(data[i]);
-                    if ((data[i] == "Package") || (data[i] == "Status") || (data[i] == "EligibleDeduction") || (data[i] == "Bank")) {
-                        inpValue = document.getElementById(data[i]).value;
-                        if (inpValue == 0) {
-                            if (comma) {
-                                reqField += (data[i]);
-                                comma = false;
-                                validInp = false;
-                            } else {
-                                reqField += (", " + data[i]);
-                            }
+                    inp = document.getElementById(commissionData[i]);
+                    if (!inp.checkValidity()) {
+                        if (comma) {
+                            reqField += (reqFieldCommissionData[i]);
+                            comma = false;
+                            validInp = false;
+                        } else {
+                            reqField += (", " + reqFieldCommissionData[i]);
                         }
-                    } else {
-                        if (!inp.checkValidity()) {
-                            if (comma) {
-                                reqField += (data[i]);
-                                comma = false;
-                                validInp = false;
-                            } else {
-                                reqField += (", " + data[i]);
-                            }
-                        }
-                    }
-                    if (validInp == false) {
-                        $("#lblMessages").text("Please fill up for " + reqField);
-                    } else {
-                        $("#lblMessages").text("");
                     }
                 }
+
+                /* Checking for adjustment field*/
+				datalength = adjustmentData.length;
+				for (var i = 0; i < datalength; i++) {
+					for (var j = 1; j <= adjustmentCount; j++) {
+						inpValue = document.getElementById(adjustmentData[i] + j).value;
+						if (inpValue == 0) {
+							if (comma) {
+								reqField += (reqFieldAdjustmentData[i]);
+								comma = false;
+								validInp = false;
+								break;
+							} else {
+								reqField += (", " + reqFieldAdjustmentData[i]);
+								break;
+							}
+						}
+					}
+				}
+
+                if (validInp == false) {
+                    $("#lblMessages").text("Please fill up for " + reqField);
+                } else {
+                    $("#lblMessages").text("");
+                }
+
                 return validInp;
             }
 
-            function editCommission(commissionId) {
-
-                var commissionId = $_GET('commissionId');
+            function editCommission() {
+                var jsonString_AdjustmentDescription = JSON.stringify(totalAdjustmentDescription),
+                    jsonString_AdjustmentAmount = JSON.stringify(totalAdjustmentAmount),
+                    jsonString_AdjustmentDate = JSON.stringify(totalAdjustmentDate),
+                    jsonString_AdjustmentId = JSON.stringify(totalAdjustmentId),
+			        jsonString_DeleteAdjustmentId = JSON.stringify(totalDeleteAdjustmentId);
 
                 $.ajax({
                     url: APIUrl + 'editCommission',
@@ -351,18 +474,24 @@
                     },
 
                     data: {
-                        "commissionId": $commissionId,
+                        "commissionId": commissionId,
+                        "customerId": customerId,
                         "createDate": $("#createDate").val(),
                         "no": $("#no").val(),
                         "chequeNo": $("#chequeNo").val(),
                         "amount": $("#amount").val(),
                         "payCustomerAmount": $("#payCustomerAmount").val(),
                         "adminFee": $("#adminFee").val(),
-                        "adjustmentAmount": $("#adjustmentAmount").val(),
+                        "adjustmentAmount": $("#totalAdjustmentAmount").val(),
                         "netAmount": $("#netAmount").val(),
                         "gstAmount": $("#gstAmount").val(),
                         "netGstAmount": $("#netGstAmount").val(),
                         "NewRemark": $("#NewRemark").val(),
+                        "jsonString_AdjustmentDescription": jsonString_AdjustmentDescription,
+						"jsonString_AdjustmentAmount": jsonString_AdjustmentAmount,
+						"jsonString_AdjustmentDate": jsonString_AdjustmentDate,
+                        "jsonString_AdjustmentId": jsonString_AdjustmentId,
+                        "jsonString_DeleteAdjustmentId": jsonString_DeleteAdjustmentId,
 
                     },
 
@@ -371,7 +500,9 @@
 
                     success: function (data) {
                         alert("Commission add successful.");
-                        window.location = "commission.html";
+                        if(stay == false){
+                            window.location = "commission.html";
+                        }
                     },
 
                     error: function () {
@@ -381,8 +512,9 @@
                 });
             }
             function loadCommissionData(commissionId) {
-                $.ajax({
+                var datalength;
 
+                $.ajax({
                     url: APIUrl + 'loadCommission',
                     type: 'POST',
                     dataType: 'JSON',
@@ -395,30 +527,48 @@
                     success: function (customerData) {
                         customerData.forEach(function (data) {
                             $("#createDate").val(data.createComDate);
-                            $commissionId = data.commissionId;
+                            customerId = data.customerId;
+                            commissionId = data.commissionId;
                             $("#no").val(data.No);
                             $("#chequeNo").val(data.chequeNo);
                             $("#amount").val(data.amount);
                             $("#payCustomerAmount").val(data.payCustomerAmount);
                             $("#adminFee").val(data.adminFee);
-                            $("#adjustmentAmount").val(data.adjustmentAmount);
+                            $("#adjustmentAmount").val(data.totalAdjustmentAmount);
                             $("#netAmount").val(data.netAmount);
                             $("#gstAmount").val(data.gstAmount);
                             $("#netGstAmount").val(data.netGstAmount);
                             $("#NewRemark").val(data.remarkContent);
                             $("#MarketingOfficer").val(data.name);
                             $("#customerName").val(data.customerName);
-
                         });
+
+                        $.each(customerData, function (i, value) {
+                            adjustmentField();
+
+                            /* Append adjustment id for row that is retrieve from database*/
+                            $("#adjustmentTable > tbody").append('<input type="hidden" id="adjustmentId" value="">');
+                            $('#adjustmentId').attr("id", "adjustmentId" + adjustmentCounter);
+
+                            datalength = adjustmentData.length;
+                            for (var j = 0; j < datalength; j++) {
+                                $("#adjustmentDescription" + adjustmentCounter).val(value.description);
+                                $("#adjustmentAmount" + adjustmentCounter).val(value.adjustmentAmount);
+                                $("#adjustmentDate" + adjustmentCounter).val(value.date);
+                                $("#adjustmentId" + adjustmentCounter).val(value.adjustmentAmountId);
+                            };
+					    });
+                        calculateTotalAdjustmentAmount();
+                        $(".custom-loader").hide();
                     }
                 });
                 /* if (role == "BUSOWN" || role == "MASTER") {
                     $("#commission-form :input").attr("disabled", false);
                 } */
             }
+            
             function loadCommissionDataV2(customerId) {
                 $.ajax({
-
                     url: APIUrl + 'loadCommissionV2',
                     type: 'POST',
                     dataType: 'JSON',
@@ -431,13 +581,14 @@
                     success: function (customerData) {
                         customerData.forEach(function (data) {
                             $("#createDate").val(data.createComDate);
-                            $commissionId = data.commissionId;
+                            commissionId = data.commissionId;
+                            customerId = data.customerId;
                             $("#no").val(data.No);
                             $("#chequeNo").val(data.chequeNo);
                             $("#amount").val(data.amount);
                             $("#payCustomerAmount").val(data.payCustomerAmount);
                             $("#adminFee").val(data.adminFee);
-                            $("#adjustmentAmount").val(data.adjustmentAmount);
+                            $("#adjustmentAmount").val(data.totalAdjustmentAmount);
                             $("#netAmount").val(data.netAmount);
                             $("#gstAmount").val(data.gstAmount);
                             $("#netGstAmount").val(data.netGstAmount);
@@ -446,25 +597,77 @@
                             $("#customerName").val(data.customerName);
 
                         });
+                        $.each(customerData, function (i, value) {
+                            adjustmentField();
+                            
+                            /* Append adjustment id for row that is retrieve from database*/
+                            $("#adjustmentTable > tbody").append('<input type="hidden" id="adjustmentId" value="">');
+                            $('#adjustmentId').attr("id", "adjustmentId" + adjustmentCounter);
+
+                            datalength = adjustmentData.length;
+                            for (var j = 0; j < datalength; j++) {
+                                $("#adjustmentDescription" + adjustmentCounter).val(value.description);
+                                $("#adjustmentAmount" + adjustmentCounter).val(value.adjustmentAmount);
+                                $("#adjustmentDate" + adjustmentCounter).val(value.date);
+                                $("#adjustmentId" + adjustmentCounter).val(value.adjustmentAmountId);
+                            }
+					    });
+                        calculateTotalAdjustmentAmount();
+                        $(".custom-loader").hide();
                     }
                 });
                /*  if (role == "BUSOWN" || role == "MASTER") {
                     $("#commission-form :input").attr("disabled", false);
                 } */
             }
-            $(document).ready(function () {
-               
 
-                var commissionId = $_GET('commissionId');
-                var customerId = $_GET('customerId');
+            function adjustmentField() {
+				var adjustmentContainer = "";
+				if (adjustmentCount < maxAdjustmentCount) {
+					adjustmentCount++;
+					adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="adjustmentDate" class="form-control datepicker" required>' +
+						'</td></div></tr>';
+					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
+					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
+						if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
+                            $('#adjustmentCheckBox').attr("id", "adjustmentCheckBox" + adjustmentCounter);
+							$('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
+							$('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
+							$('#adjustmentDate').attr("id", "adjustmentDate" + adjustmentCounter);
+							break;
+						}
+					}
+				}
+				else {
+					alert('You have reached the limits. Maximum count is 100')
+				}
+			}
+
+            function setAdjustmentArray() {
+				for (var i = 1; i <= adjustmentCount; i++) {
+					totalAdjustmentDescription[i - 1] = $("#adjustmentDescription" + i).val();
+			        totalAdjustmentAmount[i - 1] = $("#adjustmentAmount" + i).val();
+			        totalAdjustmentDate[i - 1] = $("#adjustmentDate" + i).val();
+                    totalAdjustmentId[i - 1] = $("#adjustmentId" + i).val();
+				}
+			}
+
+            $(document).ready(function () {
+                commissionId = $_GET('commissionId');
+                customerId = $_GET('customerId');
                 if (commissionId != "") {
                     loadCommissionData(commissionId);
                 } else {
                     loadCommissionDataV2(customerId);
                 }
-
-
-
                 /*  var MarketingOfficer = sessionStorage.getItem("name");
                  var userId = sessionStorage.getItem("userId");
                  $("#MarketingOfficer").attr("placeholder", MarketingOfficer);
