@@ -809,6 +809,38 @@
 												<div class="form-horizontal">
 													<legend>Loan Details</legend>
 													<table>
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Loan Applied (RM)*</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input onchange = calcInstallment() type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off"
+																			 placeholder="0.00" required>
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
+
+														<div style="display:inline;">
+															<div class="form-inline form-group">
+																<tr>
+																	<td>
+																		<label class="control-label required disabled float-right">Tenure (Month)*</label>
+																	</td>
+
+																	<div class="controls">
+																		<td>
+																			<input onchange = calcInstallment() type="number" id="Tenure" class="form-control" autocomplete="off" required>
+																		</td>
+																	</div>
+																</tr>
+															</div>
+														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
@@ -825,7 +857,6 @@
 																</tr>
 															</div>
 														</div>
-
 														<div style="display:inline;">
 															<div class="form-inline form-group">
 																<tr>
@@ -846,24 +877,6 @@
 																</tr>
 															</div>
 														</div>
-
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Loan Applied (RM)*</label>
-																	</td>
-
-																	<div class="controls">
-																		<td>
-																			<input type="number" id="LoanApplied" class="form-control" step="0.01" autocomplete="off"
-																			 placeholder="0.00" required>
-																		</td>
-																	</div>
-																</tr>
-															</div>
-														</div>
-
 														<div style="display:inline;">
 															<div class="form-inline form-group">
 																<tr>
@@ -881,21 +894,7 @@
 															</div>
 														</div>
 
-														<div style="display:inline;">
-															<div class="form-inline form-group">
-																<tr>
-																	<td>
-																		<label class="control-label required disabled float-right">Tenure (Month)*</label>
-																	</td>
 
-																	<div class="controls">
-																		<td>
-																			<input type="number" id="Tenure" class="form-control" autocomplete="off" required>
-																		</td>
-																	</div>
-																</tr>
-															</div>
-														</div>
 
 														<div style="display:inline;">
 															<div class="form-inline form-group">
