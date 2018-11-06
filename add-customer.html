@@ -1426,6 +1426,7 @@
 	<script type="text/javascript">
 		/////* Declare variables */////
 		var stay = true, // to change window location if set as false
+			highestCount = 0, // to store the highest count of the redemption
 			redemption_count = 0,
 			max_redemption_count = 5,
 			totalRedemptionCode = [],
@@ -1514,7 +1515,11 @@
 							break;
 						}
 					}
-				} else {
+					if(highestCount < redemption_counter){
+						highestCount = redemption_counter;
+					}
+				}
+				else {
 					alert('You have reached the limits. Maximum count is 5')
 				}
 			}
@@ -1626,17 +1631,19 @@
 				/* Checking for redemption field*/
 				datalength = redemption_data.length
 				for (var i = 0; i < datalength; i++) {
-					for (var j = 1; j <= redemption_count; j++) {
-						inpValue = document.getElementById(redemption_data[i] + j).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (reqField_redemption_data[i]);
-								comma = false;
-								validInp = false;
-								break;
-							} else {
-								reqField += (", " + reqField_redemption_data[i]);
-								break;
+					for (var j = 1; j <= highestCount; j++) {
+						if (document.getElementById(check_redemption_data[i] + j)){
+							inpValue = document.getElementById(redemption_data[i] + j).value;
+							if (inpValue == 0) {
+								if (comma) {
+									reqField += (reqField_redemption_data[i]);
+									comma = false;
+									validInp = false;
+									break;
+								} else {
+									reqField += (", " + reqField_redemption_data[i]);
+									break;
+								}
 							}
 						}
 					}
@@ -1651,13 +1658,17 @@
 			}
 
 			function setRedemptionArray() {
-				for (var i = 1; i <= redemption_count; i++) {
-					totalRedemptionCode[i - 1] = $("#RedemptionCode" + i).val();
-					totalRedemptionBankCoopOrg[i - 1] = $("#RedemptionBankCoopOrg" + i).val();
-					totalRedemptionDetails[i - 1] = $("#RedemptionDetails" + i).val();
-					totalRedemptionAmount[i - 1] = $("#RedemptionAmount" + i).val();
-					totalRedemptionExpiredDate[i - 1] = $("#RedemptionExpiredDate" + i).val();
-					totalRedemptionStatus[i - 1] = $("#RedemptionStatus" + i).val();
+				let j = 0;
+				for (var i = 1; i <= highestCount; i++) {
+					if (document.getElementById("RedemptionCode" + i)){
+						totalRedemptionCode[j] = $("#RedemptionCode" + i).val();
+						totalRedemptionBankCoopOrg[j] = $("#RedemptionBankCoopOrg" + i).val();
+						totalRedemptionDetails[j] = $("#RedemptionDetails" + i).val();
+						totalRedemptionAmount[j] = $("#RedemptionAmount" + i).val();
+						totalRedemptionExpiredDate[j] = $("#RedemptionExpiredDate" + i).val();
+						totalRedemptionStatus[j] = $("#RedemptionStatus" + i).val();
+						j++;
+					}
 				}
 			}
 
