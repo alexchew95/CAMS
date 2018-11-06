@@ -314,6 +314,7 @@
     <script type="text/javascript">
         /////* Declare variables */////
         var stay = false,
+            highestCount = 0, // to store the highest count of the adjustment
             adjustmentCount = 0,
             adjustmentCounter,
 			maxAdjustmentCount = 100,
@@ -433,19 +434,21 @@
                 /* Checking for adjustment field*/
 				datalength = adjustmentData.length;
 				for (var i = 0; i < datalength; i++) {
-					for (var j = 1; j <= adjustmentCount; j++) {
-						inpValue = document.getElementById(adjustmentData[i] + j).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (reqFieldAdjustmentData[i]);
-								comma = false;
-								validInp = false;
-								break;
-							} else {
-								reqField += (", " + reqFieldAdjustmentData[i]);
-								break;
-							}
-						}
+					for (var j = 1; j <= highestCount; j++) {
+                        if (document.getElementById(adjustmentData[i] + j)){
+                            inpValue = document.getElementById(adjustmentData[i] + j).value;
+                            if (inpValue == 0) {
+                                if (comma) {
+                                    reqField += (reqFieldAdjustmentData[i]);
+                                    comma = false;
+                                    validInp = false;
+                                    break;
+                                } else {
+                                    reqField += (", " + reqFieldAdjustmentData[i]);
+                                    break;
+                                }
+                            }
+                        }
 					}
 				}
 
@@ -645,6 +648,9 @@
 							break;
 						}
 					}
+                    if(highestCount < adjustmentCounter){
+                        highestCount = adjustmentCounter;
+                    }
 				}
 				else {
 					alert('You have reached the limits. Maximum count is 100')
@@ -652,11 +658,15 @@
 			}
 
             function setAdjustmentArray() {
-				for (var i = 1; i <= adjustmentCount; i++) {
-					totalAdjustmentDescription[i - 1] = $("#adjustmentDescription" + i).val();
-			        totalAdjustmentAmount[i - 1] = $("#adjustmentAmount" + i).val();
-			        totalAdjustmentDate[i - 1] = $("#adjustmentDate" + i).val();
-                    totalAdjustmentId[i - 1] = $("#adjustmentId" + i).val();
+                let j = 0;
+				for (var i = 1; i <= highestCount; i++) {
+                    if (document.getElementById("adjustmentDescription" + i)){
+                        totalAdjustmentDescription[j] = $("#adjustmentDescription" + i).val();
+                        totalAdjustmentAmount[j] = $("#adjustmentAmount" + i).val();
+                        totalAdjustmentDate[j] = $("#adjustmentDate" + i).val();
+                        totalAdjustmentId[j] = $("#adjustmentId" + i).val();
+                        j++;
+                    }
 				}
 			}
 
