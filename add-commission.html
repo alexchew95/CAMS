@@ -172,7 +172,8 @@
                                                         <label class="col-form-label float-right">Total Adjustment Amount (RM) </label>
                                                     </td>
                                                     <td>
-                                                        <input type="number" id="totalAdjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" readonly required>
+                                                        <input type="number" id="totalAdjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" readonly
+                                                            required>
                                                     </td>
                                                 </tr>
                                             </div>
@@ -229,7 +230,7 @@
                                         <div class="col-md-12">
                                             <legend>Adjustment</legend>
                                             <table id="adjustmentTable">
-        
+
                                                 <div style="display:inline;">
                                                     <div class="form-inline form-group" id=adjustmentContainer>
                                                         <thead>
@@ -257,7 +258,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-        
+
                                                             </tr>
                                                         </tbody>
                                                     </div>
@@ -268,10 +269,11 @@
                                         </div>
                                     </table>
                                 </div>
-                            
+
                             </div>
                             <br>
                             <br>
+
                             <div>
                                 <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
                                 &nbsp; &nbsp;
@@ -311,10 +313,10 @@
     <script type="text/javascript">
         /////* Declare variables */////
         var adjustmentCount = 0,
-			maxAdjustmentCount = 100,
-			totalAdjustmentDescription = [],
-			totalAdjustmentAmount = [],
-			totalAdjustmentDate = [];
+            maxAdjustmentCount = 100,
+            totalAdjustmentDescription = [],
+            totalAdjustmentAmount = [],
+            totalAdjustmentDate = [];
 
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
@@ -342,44 +344,44 @@
             });
 
             $("#addAdjustment").click(function (event) {
-				event.preventDefault();
-				adjustmentField();
-			});
+                event.preventDefault();
+                adjustmentField();
+            });
 
             $("#deleteAdjustment").click(function (event) {
-				event.preventDefault();
-				$("table tbody").find('input[name="adjustmentRecord"]').each(function () {
-					if ($(this).is(":checked")) {
-						$(this).parents("tr").remove();
-						adjustmentCount--;
-					}
-				});
+                event.preventDefault();
+                $("table tbody").find('input[name="adjustmentRecord"]').each(function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parents("tr").remove();
+                        adjustmentCount--;
+                    }
+                });
                 calculateTotalAdjustmentAmount();
-			});
-            
-            $("[id^=adjustment]").on('input', function() {
-                calculateTotalAdjustmentAmount();        
             });
-            
-            function calculateTotalAdjustmentAmount(){
+
+            $("[id^=adjustment]").on('input', function () {
+                calculateTotalAdjustmentAmount();
+            });
+
+            function calculateTotalAdjustmentAmount() {
                 let totalAdjustmentAmount = 0,
                     amount = 0;
-                $("[id^=adjustment]").each( function (i , t) {
+                $("[id^=adjustment]").each(function (i, t) {
                     amount = $("#adjustmentAmount" + i).val();
                     amount = parseFloat(amount);
-                    if(!isNaN(amount)){
-                        totalAdjustmentAmount += parseFloat(amount);                
-                    }                   
+                    if (!isNaN(amount)) {
+                        totalAdjustmentAmount += parseFloat(amount);
+                    }
                 });
                 $("#totalAdjustmentAmount").val(totalAdjustmentAmount);
             }
-            
+
             function checkValidity() {
                 commissionData = ["createDate", "no", "chequeNo", "amount", "payCustomerAmount", "adminFee", "totalAdjustmentAmount", "netAmount",
                     "gstAmount", "netGstAmount", "NewRemark"
                 ];
 
-                reqFieldCommissionData = ["Date", "No", "Cheque No", "Amount", "Pay Customer Amount", "Admin Fee", "Total Adjustment Amount","Net Amount",
+                reqFieldCommissionData = ["Date", "No", "Cheque No", "Amount", "Pay Customer Amount", "Admin Fee", "Total Adjustment Amount", "Net Amount",
                     "GST Amount", "Net GST Amount", "New Remark"];
 
                 adjustmentData = ["adjustmentDescription", "adjustmentAmount", "adjustmentDate"];
@@ -407,23 +409,23 @@
                 }
 
                 /* Checking for redemption field*/
-				datalength = adjustmentData.length
-				for (var i = 0; i < datalength; i++) {
-					for (var j = 1; j <= adjustmentCount; j++) {
-						inpValue = document.getElementById(adjustmentData[i] + j).value;
-						if (inpValue == 0) {
-							if (comma) {
-								reqField += (reqFieldAdjustmentData[i]);
-								comma = false;
-								validInp = false;
-								break;
-							} else {
-								reqField += (", " + reqFieldAdjustmentData[i]);
-								break;
-							}
-						}
-					}
-				}
+                datalength = adjustmentData.length
+                for (var i = 0; i < datalength; i++) {
+                    for (var j = 1; j <= adjustmentCount; j++) {
+                        inpValue = document.getElementById(adjustmentData[i] + j).value;
+                        if (inpValue == 0) {
+                            if (comma) {
+                                reqField += (reqFieldAdjustmentData[i]);
+                                comma = false;
+                                validInp = false;
+                                break;
+                            } else {
+                                reqField += (", " + reqFieldAdjustmentData[i]);
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 if (validInp == false) {
                     $("#lblMessages").text("Please fill up for " + reqField);
@@ -463,23 +465,24 @@
                         "netGstAmount": $("#netGstAmount").val(),
                         "NewRemark": $("#NewRemark").val(),
                         "jsonString_AdjustmentDescription": jsonString_AdjustmentDescription,
-						"jsonString_AdjustmentAmount": jsonString_AdjustmentAmount,
-						"jsonString_AdjustmentDate": jsonString_AdjustmentDate,
+                        "jsonString_AdjustmentAmount": jsonString_AdjustmentAmount,
+                        "jsonString_AdjustmentDate": jsonString_AdjustmentDate,
                     },
 
                     //TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
                     // to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
                     success: function (data) {
-                     //   alert("Commission add successful.");
-                     alert("Commission succesfully added.");
-                       
-                 
+                        //   alert("Commission add successful.");
+                        alert("Commission succesfully added.");
+
+
                     },
 
-                    error: function () {
-                        alert("Commission add fail.");
-                     
+                    error: function (data) {
+                        $("#lblMessages").text(data);
+
+
                     }
                 });
             }
@@ -509,50 +512,50 @@
                 $("#parent-selector :input").attr("disabled", true);
             }
 
-			function adjustmentField() {
-				var adjustmentContainer = "",
-					adjustmentCounter;
-				if (adjustmentCount < maxAdjustmentCount) {
-					adjustmentCount++;
-					adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
-						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
-						'</td></div>' +
-						'<div class="controls"><td>' +
-						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
-						'</td></div>' +
-						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDate" class="form-control datepicker" required>' +
-						'</td></div></tr>';
-					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
-					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
-						if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
+            function adjustmentField() {
+                var adjustmentContainer = "",
+                    adjustmentCounter;
+                if (adjustmentCount < maxAdjustmentCount) {
+                    adjustmentCount++;
+                    adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
+                        '<div class="controls"><td>' +
+                        '<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
+                        '</td></div>' +
+                        '<div class="controls"><td>' +
+                        '<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+                        '</td></div>' +
+                        '<div class="controls"><td>' +
+                        '<input type="text" id="adjustmentDate" class="form-control datepicker" required>' +
+                        '</td></div></tr>';
+                    $("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
+                    for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
+                        if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
                             $('#adjustmentCheckBox').attr("id", "adjustmentCheckBox" + adjustmentCounter);
-							$('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
-							$('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
-							$('#adjustmentDate').attr("id", "adjustmentDate" + adjustmentCounter);
-							break;
-						}
-					}
-				}
-				else {
-					alert('You have reached the limits. Maximum count is 100')
-				}
-			}
+                            $('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
+                            $('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
+                            $('#adjustmentDate').attr("id", "adjustmentDate" + adjustmentCounter);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    alert('You have reached the limits. Maximum count is 100')
+                }
+            }
 
             function setAdjustmentArray() {
-				for (var i = 1; i <= adjustmentCount; i++) {
-					totalAdjustmentDescription[i - 1] = $("#adjustmentDescription" + i).val();
-			        totalAdjustmentAmount[i - 1] = $("#adjustmentAmount" + i).val();
-			        totalAdjustmentDate[i - 1] = $("#adjustmentDate" + i).val();
-				}
-			}
+                for (var i = 1; i <= adjustmentCount; i++) {
+                    totalAdjustmentDescription[i - 1] = $("#adjustmentDescription" + i).val();
+                    totalAdjustmentAmount[i - 1] = $("#adjustmentAmount" + i).val();
+                    totalAdjustmentDate[i - 1] = $("#adjustmentDate" + i).val();
+                }
+            }
 
             $(document).ready(function () {
 
                 var customerId = $_GET('customerId');
                 loadCustomerData(customerId);
-                
+
                 // Load datepicker
                 require(['jquery', 'jqueryui'], function ($) {
                     $(function () {
