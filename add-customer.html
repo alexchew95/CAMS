@@ -93,7 +93,7 @@
 													<label class="col-form-label float-right">Marketing Officer* </label>
 												</td>
 												<td>
-													<select type="form-control custom-select" class="form-control" id="nameMarketingOfficer" maxlength="100" required>
+													<select type="form-control custom-select" class="form-control" id="nameMarketingOfficer"  required>
 														<option value="">Select Marketing Officer first</option>
 													</select>
 
@@ -1867,7 +1867,7 @@
 
 							$.each(MO, function (key, value) {
 
-								MO_DD += '<option  value="' + value.userId + '">' + value.userId + ') ' + value.name + '</option>';
+								MO_DD += '<option  value="' + value.userId + '">' + value.name + '('+ value.userId +')'+'</option>';
 							})
 
 							$("#nameMarketingOfficer").html(MO_DD);
