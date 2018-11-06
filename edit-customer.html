@@ -37,7 +37,7 @@
 	<!-- <script src="http://code.jquery.com/jquery-1.12.4.js"></script> -->
 	<script src="./assets/js/jquery.twbsPagination.min.js"></script>
 
-	<script src="./assets/js/main.js"></script>
+
 	<script src="./assets/js/datatables.min.js"></script>
 	<!-- Jquery 1.12.14 is included -->
 
@@ -49,7 +49,7 @@
 	<link href="./assets/css/jquery-ui.min.css" rel="stylesheet" />
 	<!-- AWS JS -->
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.233.1.min.js"></script>
-
+	<script src="./assets/js/main.js"></script>
 </head>
 
 <body class="">
@@ -2022,11 +2022,11 @@
 				success: function (data) {
 					$customerData = data.customerData;
 					$docData = data.docData;
-					console.log (data);
+					console.log(data);
 
 					$.each($customerData, function (key, value) {
 						$customerId = value.customerId;
-						console.log (value);
+						console.log(value);
 						$("#Name").val(value.customerName);
 						$("#MarketingOfficerId").val(value.marketingOfficerId);
 						$("#MarketingOfficer").val(value.name);
@@ -2111,6 +2111,25 @@
 						}
 					});
 
+					$('#tbl_documentInfo tbody').html('');
+					if ($docData) {
+						$.each($docData, function (key, value) {
+							var downloadPreSignedUrl = s3.getSignedUrl('getObject', {
+								Bucket: bucketeerId,
+								Key: value.docURL,
+								/* and all the rest of your parameters to AWS getObect here */
+							});
+							$("#docBody").append('<tr id = "docRow"><td>' + value.id + '</td><td>' + value.docType +
+								'</td><td>' +
+								"<input type='button' class='btn btn-link' value='Download' onclick='window.open(" + '"' +
+								downloadPreSignedUrl + '")' + "'" + "></td></tr>");
+
+						});
+					} else {
+						$("#docBody").append('<tr><td colspan=3>No files uploaded by user</td></tr>');
+
+					}
+
 
 					getSelectedPackageData();
 
@@ -2123,11 +2142,6 @@
 		$("#btnUploadFiles").click(function () {
 			document.getElementById('lblUploadErrorMsg').innerHTML = "";
 			//$(".custom-loader").show();
-			var s3 = new AWS.S3({
-				accessKeyId: 'AKIAI2EP3SH2WFHO3B7A',
-				secretAccessKey: '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'
-			});
-
 			var NRIC = $("#ICNo").val();
 			var docType = $("#docTypeDD").val()
 			var docName = $("#fileDocToUpload").get()[0].files[0].name;
@@ -2162,7 +2176,7 @@
 				var S3Key = docName;
 
 				var uploadPreSignedUrl = s3.getSignedUrl('putObject', {
-					Bucket: 'bucketeer-59642460-fde4-4f39-bd74-1ccf5b8d82b8',
+					Bucket: bucketeerId,
 					Key: S3Key,
 					ACL: 'authenticated-read',
 					// This must match with your ajax contentType parameter
