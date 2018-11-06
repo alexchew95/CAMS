@@ -69,17 +69,24 @@
 						<h1 class="page-title">
 							Packages
 						</h1>
-						<button id="addPackage_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-package.html';">Add Package</button>
+						<button id="addPackage_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-package.html';">Add
+							Package</button>
 					</div>
 					<div class="card-body">
 						<table class="display" id="tableAllPackages" style="width:100%">
 							<thead>
 								<tr>
-									<th id="headerID" class="text-center"></th>
-									<th width="10%" id="headerPackageId" class="text-center">Package ID</th>
-									<th id="headerPackageName">Package Name</th>
+									<th width="2%" id="headerAction"class="text-center"></th>
+									<th width="5%" id="headerPackageId" class="text-center">Package ID</th>
+									<th width="20%" id="headerPackageName">Package Name</th>
 									<th id="headerPackageInterest">Interest</th>
-									<th id="headerPackageStatus">Status</th>
+									<th id="headerMinLoanAmt">Min Loan</th>
+									<th id="headerMaxLoanAmt">Max Loan</th>
+									<th id="headerMinAge">Min Age</th>
+									<th id="headerMaxAge">Max Age</th>
+									<th id="headerMinTenure">Min Tenure</th>
+									<th id="headerMaxTenure">Max Tenure</th>
+									<th width="5%" class="text-center" id="headerStatus">Status</th>
 
 								</tr>
 							</thead>
@@ -92,7 +99,13 @@
 									<th>Package ID</th>
 									<th>Package Name</th>
 									<th>Interest</th>
-									<th>Status</th>
+									<th>Min Loan</th>
+									<th>Max Loan</th>
+									<th>Min Age</th>
+									<th>Max Age</th>
+									<th>Min Tenure</th>
+									<th>Max Tenure</th>
+									<th class="text-center"></th>
 
 								</tr>
 							</tfoot>
@@ -130,7 +143,7 @@
 		//When the page has loaded.
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
-				if (role == "BUSOWN"||role == "MASTER"||role == "STAFF") {
+				if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
 					var button = document.getElementById("addPackage_button");
 					button.disabled = false;
 				}
@@ -157,17 +170,27 @@
 					success: function (data) {
 
 						for (var i = 0, len = data.length; i < len; i++) {
-						
-								edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId + '"> <i class="fa fa-edit"></i></a>'
-							
+
+							edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId +
+								'"> <i class="fa fa-edit"></i></a>'
+							if (data[i].packageStatus == "ACTIVE")
+								status = '<i class="fa fa-circle" style="color:green">';
+							else
+								status = '<i class="fa fa-circle" style="color:red">';
+
 							//var desc = data[i].body; //to substring, limit the data to display 
 							arrayReturn.push([
 								edit_package,
 								data[i].packageId,
 								data[i].packageName,
 								data[i].packageInterest,
-								data[i].packageStatus,
-
+								data[i].minLoanAmt,
+								data[i].maxLoanAmt,
+								data[i].minAge,
+								data[i].maxAge,
+								data[i].minTenure,
+								data[i].maxTenure,
+								status
 							]);
 							$(".custom-loader").hide();
 						}
