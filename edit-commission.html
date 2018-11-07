@@ -350,8 +350,9 @@
             });
 
             $("#Cancel").click(function (event) {
-                window.location = "home.html";
+                window.location = "commission.html";
             });
+
 
             $("#addAdjustment").click(function (event) {
                 event.preventDefault();
@@ -515,11 +516,11 @@
                     }
                 });
             }
-            function loadCommissionData(commissionId) {
+            function loadCommission_fromComm(commissionId) {
                 var datalength;
 
                 $.ajax({
-                    url: APIUrl + 'loadCommission',
+                    url: APIUrl + 'loadCommission_fromComm',
                     type: 'POST',
                     dataType: 'JSON',
                     beforeSend: function (xhr) { //Include the bearer token in header
@@ -571,9 +572,9 @@
                 } */
             }
 
-            function loadCommissionDataV2(customerId) {
+            function loadCommission_fromCust(customerId) {
                 $.ajax({
-                    url: APIUrl + 'loadCommissionV2',
+                    url: APIUrl + 'loadCommission_fromCust',
                     type: 'POST',
                     dataType: 'JSON',
                     beforeSend: function (xhr) { //Include the bearer token in header
@@ -675,9 +676,9 @@
                 commissionId = $_GET('commissionId');
                 customerId = $_GET('customerId');
                 if (commissionId != "") {
-                    loadCommissionData(commissionId);
+                    loadCommission_fromComm(commissionId);
                 } else {
-                    loadCommissionDataV2(customerId);
+                    loadCommission_fromCust(customerId);
                 }
                 /*  var MarketingOfficer = sessionStorage.getItem("name");
                  var userId = sessionStorage.getItem("userId");

@@ -1560,8 +1560,6 @@
 			event.preventDefault();
 			stay = true;
 			if (checkValidity() && checkPackageValidity()) {
-
-
 				setRedemptionArray();
 				editCustomer();
 			}
@@ -1570,7 +1568,6 @@
 		$("#Save").click(function (event) {
 			stay = false;
 			if (checkValidity() && checkPackageValidity()) {
-
 				setRedemptionArray();
 				editCustomer();
 			}
@@ -1829,7 +1826,8 @@
 					highestCount = redemption_counter;
 				}
 			} else {
-				alert('You have reached the limits. Maximum count is 5')
+				$("#lblMessages").text("You have reached the limits. Maximum count is 5");
+
 			}
 		}
 
@@ -1979,7 +1977,7 @@
 				},
 
 				error: function () {
-					alert("Customer add fail.");
+				$("#lblMessages").text("Customer edit fail.");
 				}
 			});
 		}
@@ -2226,7 +2224,7 @@
 			// 2. Call the load customer function
 			function getPackageDD() {
 				$.ajax({
-					url: APIUrl + 'package',
+					url: APIUrl + 'getListofPackage',
 					type: 'GET',
 					dataType: 'JSON',
 					beforeSend: function (xhr) { //Include the bearer token in header

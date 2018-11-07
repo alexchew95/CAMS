@@ -321,7 +321,8 @@
 						error: function (xhr, ajaxOptions, thrownError) {
 							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
 							//console.log(errorMsg);
-							alert("Fail adding new package!");
+							$("#lblMessages").text('Fail adding new package!');
+
 						}
 					});
 				}

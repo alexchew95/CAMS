@@ -161,11 +161,11 @@
                             error: function (xhr, ajaxOptions, thrownError) {
                                 var errorMsg = 'Ajax request failed: ' + xhr.responseText;
                                 console.log(errorMsg);
+                                $("#lblMessages").text("Email change fail!");
                             }
                         });
                     });
                 }
-
                 elseconsole.log("invalid form"); //log error if invalid
 
             });

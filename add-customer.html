@@ -1450,9 +1450,7 @@
 					if (checkPackageValidity()) {
 						setRedemptionArray();
 						addCustomer();
-
 					}
-
 				}
 			});
 
@@ -1462,11 +1460,8 @@
 					if (checkPackageValidity()) {
 						setRedemptionArray();
 						addCustomer();
-
 					}
-
 				}
-
 			});
 
 			$("#Cancel").click(function (event) {
@@ -1520,7 +1515,7 @@
 					}
 				}
 				else {
-					alert('You have reached the limits. Maximum count is 5')
+					$("#lblMessages").text('You have reached the limits. Maximum count is 5');
 				}
 			}
 
@@ -1832,9 +1827,9 @@
 
 				}
 
-				function package() {
+				function getListofPackage() {
 					$.ajax({
-						url: APIUrl + 'package',
+						url: APIUrl + 'getListofPackage',
 						type: 'GET',
 						dataType: 'JSON',
 						beforeSend: function (xhr) { //Include the bearer token in header
@@ -1862,9 +1857,9 @@
 
 				}
 
-				function listMO() {
+				function getListOfMO() {
 					$.ajax({
-						url: APIUrl + 'MO',
+						url: APIUrl + 'getListOfMO',
 						type: 'GET',
 						dataType: 'JSON',
 						beforeSend: function (xhr) { //Include the bearer token in header
@@ -1888,9 +1883,9 @@
 					});
 
 				}
-				package();
+				getListofPackage();
 				statusDropDown();
-				listMO();
+				getListOfMO();
 			});
 		});
 

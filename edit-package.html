@@ -316,8 +316,7 @@
                     },
 
                     error: function () {
-                        alert("Package update status: FAIL");
-                        return false;
+                        $("#lblMessages").text("Package update status: FAIL.");
                     }
                 });
             }
