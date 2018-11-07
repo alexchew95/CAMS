@@ -206,8 +206,8 @@
 							//var desc = data[i].body; //to substring, limit the data to display 
 							commission_process = '<a> <i class="fa fa-money"></i></a>';
 							if (role == "BUSOWN" || role == "MASTER") {
-								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
-									'"> <i class="fe fe-edit-2"></i></a></div>';
+								edit_customer = '<a href="edit-customer.html?customerId=' + data[i].customerId +
+									'"> <i class="fa fa-edit"></i></a>';
 								if (data[i].commisionFlag == 0) {
 									commission_process = '<a href="add-commission.html?customerId=' + data[i].customerId +
 										'"> <i class="fa fa-money"></i></a>';
@@ -217,11 +217,11 @@
 										'"> <i class="fa fa-money"></i></a>';
 								}
 							} else if (role == "STAFF") {
-								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
-									'"> <i class="fe fe-edit-2"></i></a></div>';
+								edit_customer = '<span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
+									'"> <i class="fa fa-edit"></i></a>';
 							} else if (role == "AGENT" || role == "SAGENT") {
-								edit_customer = '<div class="selectgroup-item"><span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
-									'"> <i class="fe fe-edit-2"></i></a></div>';
+								edit_customer = '<span class="selectgroup-button-compact selectgroup-button-icon"><a href="edit-customer.html?customerId=' + data[i].customerId +
+									'"> <i class="fa fa-edit"></i></a>';
 								if (data[i].commisionFlag == 1) {
 									commission_process = '<a href="edit-commission.html?customerId=' + data[i].customerId +
 										'"> <i class="fa fa-money"></i></a>';
