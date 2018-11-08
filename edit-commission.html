@@ -516,7 +516,6 @@
             }
             function loadCommissionData(commissionId) {
                 var datalength;
-
                 $.ajax({
                     url: APIUrl + 'loadCommission',
                     type: 'POST',
@@ -527,8 +526,11 @@
                     data: {
                         "commissionId": commissionId,
                     },
-                    success: function (customerData) {
-                        customerData.forEach(function (data) {
+                    success: function (data) {
+                        $customerInfo = data.commissionInfo;
+                        $adjustmentInfo = data.adjustmentInfo;
+
+                        $.each($customerInfo, function (key, data) {
                             $("#createDate").val(data.createComDate);
                             customerId = data.customerId;
                             commissionId = data.commissionId;
@@ -545,8 +547,8 @@
                             $("#MarketingOfficer").val(data.name);
                             $("#customerName").val(data.customerName);
                         });
-
-                        $.each(customerData, function (i, value) {
+                        
+                        $.each($adjustmentInfo, function (i, value) {
                             adjustmentField();
 
                             /* Append adjustment id for row that is retrieve from database*/
@@ -561,6 +563,7 @@
                                 $("#adjustmentId" + adjustmentCounter).val(value.adjustmentAmountId);
                             };
 					    });
+
                         calculateTotalAdjustmentAmount();
                         $(".custom-loader").hide();
                     }
@@ -581,8 +584,11 @@
                     data: {
                         "customerId": customerId,
                     },
-                    success: function (customerData) {
-                        customerData.forEach(function (data) {
+                    success: function (data) {
+                        $customerInfo = data.commissionInfo;
+                        $adjustmentInfo = data.adjustmentInfo;
+
+                        $.each($customerInfo, function (key, data) {
                             $("#createDate").val(data.createComDate);
                             commissionId = data.commissionId;
                             customerId = data.customerId;
@@ -600,9 +606,9 @@
                             $("#customerName").val(data.customerName);
 
                         });
-                        $.each(customerData, function (i, value) {
-                            adjustmentField();
-                            
+
+                        $.each($adjustmentInfo, function (i, value) {
+                            adjustmentField();        
                             /* Append adjustment id for row that is retrieve from database*/
                             $("#adjustmentTable > tbody").append('<input type="hidden" id="adjustmentId" value="">');
                             $('#adjustmentId').attr("id", "adjustmentId" + adjustmentCounter);
@@ -614,9 +620,10 @@
                                 $("#adjustmentDate" + adjustmentCounter).val(value.date);
                                 $("#adjustmentId" + adjustmentCounter).val(value.adjustmentAmountId);
                             }
-					    });
-                        calculateTotalAdjustmentAmount();
+                        });
                         $(".custom-loader").hide();
+                        calculateTotalAdjustmentAmount();
+                        
                     }
                 });
                /*  if (role == "BUSOWN" || role == "MASTER") {
@@ -636,7 +643,7 @@
 						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDate" class="form-control datepicker" required>' +
+						'<input type="text" id="adjustmentDate" placeholder="YYYY-MM-DD" class="form-control datepicker" required>' +
 						'</td></div></tr>';
 					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
 					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {

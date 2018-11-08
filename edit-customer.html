@@ -1807,7 +1807,7 @@
 					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker" required>' +
+					'<input type="text" id="RedemptionExpiredDate" placeholder="YYYY-MM-DD" class="form-control datepicker" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
 					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' +
@@ -2031,11 +2031,10 @@
 				success: function (data) {
 					$customerData = data.customerData;
 					$docData = data.docData;
-					console.log(data);
+					$redemptionData = data.redemptionData;
 
 					$.each($customerData, function (key, value) {
 						$customerId = value.customerId;
-						console.log(value);
 						$("#Name").val(value.customerName);
 						$("#MarketingOfficerId").val(value.marketingOfficerId);
 						$("#MarketingOfficer").val(value.name);
@@ -2101,7 +2100,8 @@
 						$("#BankReference").val(value.bankRef);
 						$("#CommissionDeductionSettlement").val(value.commissionDeductionSettlement);
 					});
-					$.each($customerData, function (i, value) {
+
+					$.each($redemptionData, function (i, value) {
 						redemptionField();
 
 						/* Append redemption id for row that is retrieve from database*/
