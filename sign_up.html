@@ -122,8 +122,8 @@
 														$.each(data, function (key, value) {
 															name_masterAgent = value.name
 															id_masterAgent = value.userId
-															masterAgentDD += '<option value="' + id_masterAgent + '"id="' + id_masterAgent + ' ">' + id_masterAgent + ')' +
-																name_masterAgent + '</option>';
+															masterAgentDD += '<option value="' + id_masterAgent + '"id="' + id_masterAgent + ' ">' +
+																name_masterAgent +'('+ id_masterAgent+')'  + '</option>';
 														})
 														masterAgentDD += '</select>';
 														$("#divMasterAgentDD").html(masterAgentDD);

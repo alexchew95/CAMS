@@ -172,7 +172,8 @@
                                                         <label class="col-form-label float-right">Total Adjustment Amount (RM) </label>
                                                     </td>
                                                     <td>
-                                                        <input type="number" id="totalAdjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" readonly required>
+                                                        <input type="number" id="totalAdjustmentAmount" class="form-control" step="0.01" autocomplete="off" maxlength="100" readonly
+                                                            required>
                                                     </td>
                                                 </tr>
                                             </div>
@@ -229,7 +230,7 @@
                                         <div class="col-md-12">
                                             <legend>Adjustment</legend>
                                             <table id="adjustmentTable">
-        
+
                                                 <div style="display:inline;">
                                                     <div class="form-inline form-group" id=adjustmentContainer>
                                                         <thead>
@@ -257,7 +258,7 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr>
-        
+
                                                             </tr>
                                                         </tbody>
                                                     </div>
@@ -268,10 +269,11 @@
                                         </div>
                                     </table>
                                 </div>
-                            
+
                             </div>
                             <br>
                             <br>
+
                             <div>
                                 <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
                                 &nbsp; &nbsp;
@@ -343,44 +345,44 @@
             });
 
             $("#addAdjustment").click(function (event) {
-				event.preventDefault();
-				adjustmentField();
-			});
+                event.preventDefault();
+                adjustmentField();
+            });
 
             $("#deleteAdjustment").click(function (event) {
-				event.preventDefault();
-				$("table tbody").find('input[name="adjustmentRecord"]').each(function () {
-					if ($(this).is(":checked")) {
-						$(this).parents("tr").remove();
-						adjustmentCount--;
-					}
-				});
+                event.preventDefault();
+                $("table tbody").find('input[name="adjustmentRecord"]').each(function () {
+                    if ($(this).is(":checked")) {
+                        $(this).parents("tr").remove();
+                        adjustmentCount--;
+                    }
+                });
                 calculateTotalAdjustmentAmount();
-			});
-            
-            $("[id^=adjustment]").on('input', function() {
-                calculateTotalAdjustmentAmount();        
             });
-            
-            function calculateTotalAdjustmentAmount(){
+
+            $("[id^=adjustment]").on('input', function () {
+                calculateTotalAdjustmentAmount();
+            });
+
+            function calculateTotalAdjustmentAmount() {
                 let totalAdjustmentAmount = 0,
                     amount = 0;
-                $("[id^=adjustment]").each( function (i , t) {
+                $("[id^=adjustment]").each(function (i, t) {
                     amount = $("#adjustmentAmount" + i).val();
                     amount = parseFloat(amount);
-                    if(!isNaN(amount)){
-                        totalAdjustmentAmount += parseFloat(amount);                
-                    }                   
+                    if (!isNaN(amount)) {
+                        totalAdjustmentAmount += parseFloat(amount);
+                    }
                 });
                 $("#totalAdjustmentAmount").val(totalAdjustmentAmount);
             }
-            
+
             function checkValidity() {
                 commissionData = ["createDate", "no", "chequeNo", "amount", "payCustomerAmount", "adminFee", "totalAdjustmentAmount", "netAmount",
                     "gstAmount", "netGstAmount", "NewRemark"
                 ];
 
-                reqFieldCommissionData = ["Date", "No", "Cheque No", "Amount", "Pay Customer Amount", "Admin Fee", "Total Adjustment Amount","Net Amount",
+                reqFieldCommissionData = ["Date", "No", "Cheque No", "Amount", "Pay Customer Amount", "Admin Fee", "Total Adjustment Amount", "Net Amount",
                     "GST Amount", "Net GST Amount", "New Remark"];
 
                 adjustmentData = ["adjustmentDescription", "adjustmentAmount", "adjustmentDate"];
@@ -466,23 +468,24 @@
                         "netGstAmount": $("#netGstAmount").val(),
                         "NewRemark": $("#NewRemark").val(),
                         "jsonString_AdjustmentDescription": jsonString_AdjustmentDescription,
-						"jsonString_AdjustmentAmount": jsonString_AdjustmentAmount,
-						"jsonString_AdjustmentDate": jsonString_AdjustmentDate,
+                        "jsonString_AdjustmentAmount": jsonString_AdjustmentAmount,
+                        "jsonString_AdjustmentDate": jsonString_AdjustmentDate,
                     },
 
                     //TODO:: CompanyPhoneNo, Attention_MarketingOfficer, Attention_Company
                     // to do API.php user, createDateTime, completeUser, completeDateTime, attentionTo
 
                     success: function (data) {
-                     //   alert("Commission add successful.");
-                     alert("Commission succesfully added.");
-                       
-                 
+                        //   alert("Commission add successful.");
+                        alert("Commission succesfully added.");
+
+
                     },
 
-                    error: function () {
-                        alert("Commission add fail.");
-                     
+                    error: function (data) {
+                        $("#lblMessages").text(data);
+
+
                     }
                 });
             }
@@ -562,7 +565,7 @@
 
                 var customerId = $_GET('customerId');
                 loadCustomerData(customerId);
-                
+
                 // Load datepicker
                 require(['jquery', 'jqueryui'], function ($) {
                     $(function () {

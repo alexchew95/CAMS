@@ -1,7 +1,6 @@
 /////* Common Variable List */////
-
-//var APIUrl = 'http://localhost/lpts-ci/api/';
-var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+var APIUrl = 'http://localhost/lpts-ci/api/';
+//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 
 /* Common function call for most html page */
 
@@ -46,8 +45,6 @@ $(document).ready(function () {
 
 });
 
-
-
 /////* Common Function List */////
 
 /* 
@@ -60,10 +57,15 @@ function $_GET(q, s) {
 	return (s = s.replace(/^\?/, '&amp;').match(re)) ? s = s[1] : s = '';
 }
 
-/* 
-Function: Check login
-Usage:	var customerId = $_GET('customerId'); 
-*/
+function calcInstallment() {
+	var loanApplied =parseInt($("#LoanApplied").val());
+	var tenure =parseInt($("#Tenure").val());
+	if (tenure==null || tenure=="",loanApplied==null || loanApplied==""){
+		$("#Installment").val("-");
+	}
+	$("#Installment").val(loanApplied/tenure);
+
+}
 
 function roleControl() {
 	if (role == 'AGENT' || role == 'SAGENT') {
@@ -71,6 +73,7 @@ function roleControl() {
 	}
 
 }
+
 function closeModal() {
 	$.modal.close();
 }

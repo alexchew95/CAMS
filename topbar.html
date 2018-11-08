@@ -22,6 +22,10 @@
                 <a href="change_email.html" class="dropdown-item" href="#">
                     <i class="dropdown-icon fe fe-settings"></i> Change Email
                 </a>
+                <a href="master-setting.html" id="dd-masterSetting" class="dropdown-item" href="#">
+                    <i class="dropdown-icon fe fe-settings"></i> Master Setting
+                </a>
+              
             </div>
 
         </div>
@@ -41,13 +45,18 @@
     }
     else if(role=="MASTER"){
         real_role="Master"
+        $("#dd-masterSetting").remove();
     }else if(role=="STAFF"){
         real_role="Staff"
     }else if(role=="AGENT"){
         real_role="Agent"
+        $("#dd-masterSetting").remove();
+        
     }
     else if(role=="SAGENT"){
         real_role="Sub Agent"
+        $("#dd-masterSetting").remove();
+
     }
         a = document.getElementById("txt_username");
         a.innerHTML = name;

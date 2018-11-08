@@ -72,11 +72,8 @@
 						</ul>
 						<div class="row">
 							<div class="col-md-8" id="announcementContainer">
-
 							</div>
 							<div class=" panel-group col-md-4">
-
-
 								<div class="panel panel-default" id="addressContainer">
 								</div>
 							</div>
@@ -484,13 +481,13 @@
 
 							if(role=="BUSOWN"||role=="MASTER"||role=="STAFF"){
 								addressContainer = '<div class="panel-heading"><a class="fe fe-edit" href="#" onclick="viewEditCompanyDetail();"></a>&nbsp;' + month_lastMod + day_lastMod + year_lastMod + ': ' + data.companyName + '</div>'
-								+ '<div class="panel-body">' + data.companyName + '<br/>Tel: ' + data.companyPhone + ' Fax: ' + data.companyFax +
+								+ '<div class="panel-body">Tel: ' + data.companyPhone + ' <br/>Fax: ' + data.companyFax +
 								'<br/>GST Registration No.: ' + data.companyGST + '<br/>General Email: ' + data.companyEmail + '</div>' +
 								'<div class="panel-footer">Last Modified: ' + d + '</div>'
 							}
 							else{
 								addressContainer = '<div class="panel-heading">&nbsp;' + month_lastMod + day_lastMod + year_lastMod + ': ' + data.companyName + '</div>'
-								+ '<div class="panel-body">' + data.companyName + '<br/>Tel: ' + data.companyPhone + ' Fax: ' + data.companyFax +
+								+ '<div class="panel-body">'+ '<br/>Tel: ' + data.companyPhone + ' Fax: ' + data.companyFax +
 								'<br/>GST Registration No.: ' + data.companyGST + '<br/>General Email: ' + data.companyEmail + '</div>' +
 								'<div class="panel-footer">Last Modified: ' + d + '</div>'
 							}
