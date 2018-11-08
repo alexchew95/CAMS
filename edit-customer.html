@@ -1823,6 +1823,9 @@
 			event.preventDefault();
 			redemptionField();
 		});
+		$('body').on('focus', ".datepicker_recurring_start", function () {
+			$(this).datepicker();
+		});
 
 		function redemptionField() {
 			/* console.log(statusDD); */
@@ -1843,7 +1846,7 @@
 					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" placeholder="YYYY-MM-DD" class="form-control datepicker" required>' +
+					'<input type="text" id="RedemptionExpiredDate" placeholder="YYYY-MM-DD" class="form-control datepicker_recurring_start" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
 					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' +
@@ -2017,7 +2020,7 @@
 				},
 
 				error: function () {
-				$("#lblMessages").text("Customer edit fail.");
+					$("#lblMessages").text("Customer edit fail.");
 				}
 			});
 		}
@@ -2292,7 +2295,7 @@
 			function getStatusDD(callback) {
 
 				$.ajax({
-					url: APIUrl + 'status',
+					url: APIUrl + 'loanRdmpStatus',
 					type: 'GET',
 					dataType: 'JSON',
 					beforeSend: function (xhr) { //Include the bearer token in header
