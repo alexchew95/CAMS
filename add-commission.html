@@ -440,7 +440,7 @@
             }
 
             function addCommission(customerId) {
-
+                calculateTotalAdjustmentAmount();
                 var customerId = $_GET('customerId'),
                     jsonString_AdjustmentDescription = JSON.stringify(totalAdjustmentDescription),
                     jsonString_AdjustmentAmount = JSON.stringify(totalAdjustmentAmount),
@@ -513,24 +513,24 @@
                 $("#parent-selector :input").attr("disabled", true);
             }
 
-            function adjustmentField() {
-                var adjustmentContainer = "",
-                    adjustmentCounter;
-                if (adjustmentCount < maxAdjustmentCount) {
-                    adjustmentCount++;
-                    adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
-                        '<div class="controls"><td>' +
-                        '<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
-                        '</td></div>' +
-                        '<div class="controls"><td>' +
-                        '<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
-                        '</td></div>' +
-                        '<div class="controls"><td>' +
-                        '<input type="text" id="adjustmentDate" class="form-control datepicker" required>' +
-                        '</td></div></tr>';
-                    $("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
-                    for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
-                        if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
+			function adjustmentField() {
+				var adjustmentContainer = "",
+					adjustmentCounter;
+				if (adjustmentCount < maxAdjustmentCount) {
+					adjustmentCount++;
+					adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
+						'<div class="controls"><td>' +
+						'<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+						'</td></div>' +
+						'<div class="controls"><td>' +
+						'<input type="text" placeholder="YYYY-MM-DD" id="adjustmentDate" class="form-control datepicker" required>' +
+						'</td></div></tr>';
+					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
+					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
+						if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
                             $('#adjustmentCheckBox').attr("id", "adjustmentCheckBox" + adjustmentCounter);
 							$('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
 							$('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
