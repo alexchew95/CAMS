@@ -84,16 +84,7 @@
                                         </tr>
                                     </div>
 
-                                    <div class="form-group">
-                                        <tr>
-                                            <td>
-                                                <label class="form-label">Category</label>
-                                            </td>
-                                            <td>
-                                                <input type="text" class="form-control" id="masterCategory" autocomplete="off" value="status" placeholder="Status">
-                                            </td>
-                                        </tr>
-                                    </div>
+
 
                                     <div class="form-group">
                                         <tr>
@@ -185,7 +176,7 @@
 
             $("#btnAddStatus").click(function (event) {
                 event.preventDefault();
-
+                category = "loanRdmpStatus"
                 var inpCode = document.getElementById("masterCode")
                 var inpDescription = document.getElementById("masterDescription")
 
@@ -199,7 +190,7 @@
                         },
                         data: {
                             "code": $("#masterCode").val(),
-                            "category": $("#masterCategory").val(),
+                            "category": category,
                             "description": $("#masterDescription").val(),
 
                         },
