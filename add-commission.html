@@ -501,8 +501,8 @@
                 });
                 $("#parent-selector :input").attr("disabled", true);
             }
-            
-            $('body').on('focus', ".datepicker_recurring_start", function () {
+            var $j = jQuery.noConflict();
+            $j('body').on('focus', ".datepicker_recurring_start", function () {
 				$(this).datepicker();
 			});
 

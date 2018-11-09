@@ -376,8 +376,9 @@
             $("[id^=adjustment]").on('input', function () {
                 calculateTotalAdjustmentAmount();
             });
+            var $j = jQuery.noConflict();
 
-            $('body').on('focus', ".datepicker_recurring_start", function () {
+            $j('body').on('focus', ".datepicker_recurring_start", function () {
 				$(this).datepicker();
 			});
 
