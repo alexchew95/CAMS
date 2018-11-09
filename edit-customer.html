@@ -1823,6 +1823,7 @@
 			event.preventDefault();
 			redemptionField();
 		});
+
 		$('body').on('focus', ".datepicker_recurring_start", function () {
 			$(this).datepicker();
 		});
@@ -1846,7 +1847,7 @@
 					'<input type="number" id="RedemptionAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
-					'<input type="text" id="RedemptionExpiredDate" placeholder="YYYY-MM-DD" class="form-control datepicker_recurring_start" required>' +
+					'<input type="text" id="RedemptionExpiredDate" class="form-control datepicker_recurring_start" required>' +
 					'</td></div>' +
 					'<div class="controls"><td>' +
 					'<select type="form-control custom-select" class="form-control" id="RedemptionStatus" maxlength="100" required>' +
@@ -1924,7 +1925,7 @@
 				jsonString_RedemptionExpiredDate = JSON.stringify(totalRedemptionExpiredDate),
 				jsonString_RedemptionStatus = JSON.stringify(totalRedemptionStatus),
 				jsonString_RedemptionId = JSON.stringify(totalRedemptionId);
-			jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
+				jsonString_DeleteRedemptionId = JSON.stringify(totalDeleteRedemptionId);
 
 			$.ajax({
 				url: APIUrl + 'editCustomer',
@@ -2016,6 +2017,10 @@
 					alert(data.msg);
 					if (stay == false) {
 						window.location = "customer.html";
+					}
+					else
+					{
+						window.location = "add-customer.html";
 					}
 				},
 

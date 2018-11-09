@@ -276,8 +276,6 @@
                             <br>
                             <br>
                             <div>
-                                <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
-                                &nbsp; &nbsp;
                                 <button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
                                 &nbsp; &nbsp;
                                 <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
@@ -331,16 +329,6 @@
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
 
-            $("#SaveAndStay").click(function (event) {
-                event.preventDefault();
-                stay = true;
-                var customerId = $_GET('customerId');
-                if (checkValidity()) {
-                    setAdjustmentArray();
-                    editCommission(customerId);
-                }
-            });
-
             $("#Save").click(function (event) {
                 var customerId = $_GET('customerId');
                 if (checkValidity()) {
@@ -388,6 +376,10 @@
             $("[id^=adjustment]").on('input', function () {
                 calculateTotalAdjustmentAmount();
             });
+
+            $('body').on('focus', ".datepicker_recurring_start", function () {
+				$(this).datepicker();
+			});
 
             function calculateTotalAdjustmentAmount() {
                 let calcAdjustmentAmount = 0,
@@ -646,7 +638,7 @@
 						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDate" placeholder="YYYY-MM-DD" class="form-control datepicker" required>' +
+						'<input type="text" id="adjustmentDate" class="form-control datepicker_recurring_start" required>' +
 						'</td></div></tr>';
 					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
 					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
@@ -682,17 +674,29 @@
 
             $(document).ready(function () {
                 commissionId = $_GET('commissionId');
-                customerId = $_GET('customerId');
+                customerId = $_GET('customerId');                
                 if (commissionId != "") {
                     loadCommission_fromComm(commissionId);
                 } else {
                     loadCommission_fromCust(customerId);
                 }
+
+                // Load datepicker
+                require(['jquery', 'jqueryui'], function ($) {
+                    $(function () {
+                        var y = new Date().getFullYear();
+                        $(".datepicker").datepicker({
+                            changeMonth: true,
+                            changeYear: true,
+                            dateFormat: 'yy-mm-dd',
+                            yearRange: '1900:' + y
+                        });
+                    });
+                });
                 /*  var MarketingOfficer = sessionStorage.getItem("name");
                  var userId = sessionStorage.getItem("userId");
                  $("#MarketingOfficer").attr("placeholder", MarketingOfficer);
                  $("#MarketingOfficerId").val(userId); */
-
 
             });
         });

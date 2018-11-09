@@ -275,8 +275,6 @@
                             <br>
 
                             <div>
-                                <button class="btn btn-primary" id="SaveAndStay" data-loading-text>Save & Stay</button>
-                                &nbsp; &nbsp;
                                 <button class="btn btn-primary" id="Save" type="button" data-loading-text>Save</button>
                                 &nbsp; &nbsp;
                                 <button class="btn btn-white" id="Cancel" data-loading-text>Cancel</button>
@@ -321,15 +319,6 @@
 
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
-
-            $("#SaveAndStay").click(function (event) {
-                event.preventDefault();
-                var customerId = $_GET('customerId');
-                if (checkValidity()) {
-                    setAdjustmentArray();
-                    addCommission(customerId);
-                }
-            });
 
             $("#Save").click(function (event) {
                 var customerId = $_GET('customerId');
@@ -512,6 +501,10 @@
                 });
                 $("#parent-selector :input").attr("disabled", true);
             }
+            
+            $('body').on('focus', ".datepicker_recurring_start", function () {
+				$(this).datepicker();
+			});
 
 			function adjustmentField() {
 				var adjustmentContainer = "",
@@ -526,7 +519,7 @@
 						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
 						'</td></div>' +
 						'<div class="controls"><td>' +
-						'<input type="text" placeholder="YYYY-MM-DD" id="adjustmentDate" class="form-control datepicker" required>' +
+						'<input type="text" id="adjustmentDate" class="form-control datepicker_recurring_start" required>' +
 						'</td></div></tr>';
 					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
 					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
