@@ -284,7 +284,7 @@
             function loadCommissionData(commissionId) {
                 $.ajax({
 
-                    url: APIUrl + 'loadCommission',
+                    url: APIUrl + 'loadCommissionForPrint',
                     type: 'POST',
                     dataType: 'JSON',
                     beforeSend: function (xhr) { //Include the bearer token in header
@@ -293,8 +293,8 @@
                     data: {
                         "commissionId": commissionId,
                     },
-                    success: function (customerData) {
-                        customerData.forEach(function (data) {
+                    success: function (data) {
+                        data.forEach(function (data) {
                             $("#createDate").val(data.createComDate);
                             $commissionId = data.commissionId;
                             $("#no").val(data.No);
@@ -302,15 +302,14 @@
                             $("#amount").val(data.amount);
                             $("#payCustomerAmount").val(data.payCustomerAmount);
                             $("#adminFee").val(data.adminFee);
-                            $("#adjustmentAmount").val(data.adjustmentAmount);
+                            $("#adjustmentAmount").val(data.totalAdjustmentAmount);
                             $("#netAmount").val(data.netAmount);
                             $("#gstAmount").val(data.gstAmount);
                             $("#netGstAmount").val(data.netGstAmount);
                             $("#NewRemark").val(data.remarkContent);
                             $("#MarketingOfficer").val(data.name);
                             $("#customerName").val(data.customerName);
-
-                        });
+});
                     }
                 });
             }
