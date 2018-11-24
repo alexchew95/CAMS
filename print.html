@@ -136,6 +136,16 @@
                                         <div class="form-group">
                                             <tr>
                                                 <td>
+                                                    <label class="col-form-label float-right">Package </label>
+                                                </td>
+                                                <td>
+                                                    <input type="text" id="packageName" class="form-control" autocomplete="off" maxlength="100" readonly required>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        <div class="form-group">
+                                            <tr>
+                                                <td>
                                                     <label class="col-form-label float-right">Amount (RM) </label>
                                                 </td>
                                                 <td>
@@ -304,6 +314,7 @@
                             $("#adminFee").val(data.adminFee);
                             $("#adjustmentAmount").val(data.totalAdjustmentAmount);
                             $("#netAmount").val(data.netAmount);
+                            $("#packageName").val(data.packageName);
                             $("#gstAmount").val(data.gstAmount);
                             $("#netGstAmount").val(data.netGstAmount);
                             $("#NewRemark").val(data.remarkContent);
