@@ -206,7 +206,7 @@
 						</div>
 						<div class="card-footer text-right">
 							<button class="btn btn-primary" id="btnSaveCompanyDetails">Save changes</button>
-							<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
+							<button class="btn btn-primary" id="btnCloseEditCompanyForm">Close</button>
 						</div>
 						<label id="lblMessages" class="text-danger"></label>
 					</div>
@@ -305,6 +305,9 @@
 				closeModal();
 			});
 			$("#btnCloseAddNewAnnouncementForm").click(function (event) {
+				event.preventDefault();
+				closeModal();
+			});$("#btnCloseEditCompanyForm").click(function (event) {
 				event.preventDefault();
 				closeModal();
 			});
