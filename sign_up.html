@@ -90,7 +90,7 @@
 										<option value="MASTER">Master</option>
 										<option value="STAFF">Staff</option>
 										<option value="AGENT">Agent</option>
-										<option value="SUBAGENT">Sub Agent</option>
+										<option value="SAGENT">Sub Agent</option>
 									</select>
 									<label class="form-label">Master Agent ID</label>
 									<div id="divMasterAgentDD">
@@ -102,7 +102,7 @@
 									<script type="text/javascript">
 										function getMasterAgentId() {
 											var selectedRole = $("#rolesDD").val()
-											if (selectedRole == "SUBAGENT") {
+											if (selectedRole == "SAGENT") {
 												$(".custom-loader").show();
 
 												$.ajax({
