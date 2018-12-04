@@ -1571,7 +1571,7 @@
 		}
 
 		$("#SaveAndStay").click(function (event) {
-
+			buttonRoleControl();
 			event.preventDefault();
 			stay = true;
 			if (checkValidity() && checkPackageValidity()) {
@@ -1581,6 +1581,7 @@
 		});
 
 		$("#Save").click(function (event) {
+			buttonRoleControl();
 			stay = false;
 			if (checkValidity() && checkPackageValidity()) {
 				setRedemptionArray();

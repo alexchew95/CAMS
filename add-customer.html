@@ -1444,6 +1444,7 @@
 				console.log(selectedPackageId)
 			}
 			$("#SaveAndStay").click(function (event) {
+				buttonRoleControl();
 				event.preventDefault();
 				stay = true;
 				if (checkValidity()) {
@@ -1455,6 +1456,7 @@
 			});
 
 			$("#Save").click(function (event) {
+				buttonRoleControl();
 				stay = false;
 				if (checkValidity()) {
 					if (checkPackageValidity()) {

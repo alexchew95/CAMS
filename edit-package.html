@@ -276,11 +276,13 @@
 		require(['jquery', 'mainjs', 'datatables'], function () {
 			var packageId = $_GET('packageId');
 			$("#SaveAndStay").click(function (event) {
+				buttonRoleControl();
 				event.preventDefault();
 				editPackage(packageId);
 			});
 
 			$("#Save").click(function (event) {
+				buttonRoleControl();
 				stay = false;
 				editPackage(packageId);
 

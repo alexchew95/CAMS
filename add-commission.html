@@ -321,6 +321,7 @@
         require(['jquery', 'mainjs', 'datatables'], function () {
 
             $("#Save").click(function (event) {
+                buttonRoleControl();
                 var customerId = $_GET('customerId');
                 if (checkValidity()) {
                     setAdjustmentArray();
@@ -334,11 +335,13 @@
             });
 
             $("#addAdjustment").click(function (event) {
+                buttonRoleControl();
                 event.preventDefault();
                 adjustmentField();
             });
 
             $("#deleteAdjustment").click(function (event) {
+                buttonRoleControl();
                 event.preventDefault();
                 $("table tbody").find('input[name="adjustmentRecord"]').each(function () {
                     if ($(this).is(":checked")) {

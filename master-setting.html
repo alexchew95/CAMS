@@ -69,7 +69,7 @@
 						<h1 class="page-title">
 							Master Setting
 						</h1>
-						<button id="addCustomer_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-redemptionStatus.html';">Add Status
+						<button id="addStatus_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-redemptionStatus.html';">Add Status
 						</button>
 					</div>
 					<div class="card-body">
@@ -163,7 +163,7 @@
 			$(document).ready(function () {
 
 				if (role == "MASTER" || role == "BUSOWN") {
-					var button = document.getElementById("addCustomer_button");
+					var button = document.getElementById("addStatus_button");
 					button.disabled = false;
 				}
 				/* To setup the search tab for datatable - Nick */

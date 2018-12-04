@@ -330,6 +330,7 @@
         require(['jquery', 'mainjs', 'datatables'], function () {
 
             $("#Save").click(function (event) {
+				buttonRoleControl();
                 var customerId = $_GET('customerId');
                 if (checkValidity()) {
                     setAdjustmentArray();

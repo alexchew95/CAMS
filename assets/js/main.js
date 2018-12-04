@@ -73,6 +73,12 @@ function roleControl() {
 	}
 
 }
+function buttonRoleControl(){
+	if (role == 'AGENT' || role == 'SAGENT') {
+		alert("You are not authorized to perform such task.")
+		location.reload();
+	}
+}
 
 function closeModal() {
 	$.modal.close();

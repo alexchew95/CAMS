@@ -179,6 +179,7 @@
 		require(['mainjs', 'twbs', 'modal'], function () {
 
 			$("#btnSignUp").click(function (event) {
+				buttonRoleControl();
 				//check form if it is all valid
 				if ($("form")[0].checkValidity()) {
 					//your form execution code
