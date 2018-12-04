@@ -24,10 +24,10 @@
 
 	<script>
 		requirejs.config({
-            baseUrl: '.'
-        });
+			baseUrl: '.'
+		});
 
-    </script>
+	</script>
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
@@ -38,14 +38,14 @@
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
 	<!--JqueryUi CSS-->
 	<link href="./assets/css/jquery-ui.min.css" rel="stylesheet" />
-    <script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=d1ua2ywfkpupahmcy62nsinsixz9u6rhv3iht54gujvhrrnj'></script>
-    <script>
+	<script src='https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=d1ua2ywfkpupahmcy62nsinsixz9u6rhv3iht54gujvhrrnj'></script>
+	<script>
 		tinymce.init({
-        selector: 'textarea',
-        height: 300,
-        menubar: false
-        });
-    </script>
+			selector: 'textarea',
+			height: 300,
+			menubar: false
+		});
+	</script>
 </head>
 
 <body class="">
@@ -281,9 +281,10 @@
 			});
 
 			$("#Save").click(function (event) {
-
+				stay = false;
 				editPackage(packageId);
-                window.location = "package.html";
+
+
 			});
 
 			$("#Cancel").click(function (event) {
@@ -328,7 +329,9 @@
 
 					success: function (data) {
 						alert("Package update status: SUCCESS.");
-	
+						if (stay==false) {
+							window.location = "package.html";
+						}
 					},
 
 					error: function () {
@@ -364,7 +367,7 @@
 							$("#minLoanAmt").val(data.minLoanAmt);
 							$("#maxLoanAmt").val(data.maxLoanAmt);
 							$("#packageStatus").val(data.packageStatus);
-                            tinymce.get('moreDetails').setContent(data.moreDetails);
+							tinymce.get('moreDetails').setContent(data.moreDetails);
 						});
 						$(".custom-loader").hide();
 					}
