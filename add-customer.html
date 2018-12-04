@@ -1632,7 +1632,7 @@
 				datalength = redemption_data.length
 				for (var i = 0; i < datalength; i++) {
 					for (var j = 1; j <= highestCount; j++) {
-						if (document.getElementById(check_redemption_data[i] + j)){
+						if (document.getElementById(redemption_data[i] + j)){
 							inpValue = document.getElementById(redemption_data[i] + j).value;
 							if (inpValue == 0) {
 								if (comma) {
