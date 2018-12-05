@@ -312,10 +312,10 @@
         /////* Declare variables */////
         var adjustmentCount = 0,
             highestCount = 0, // to store the highest count of the adjustment
-			maxAdjustmentCount = 100,
-			totalAdjustmentDescription = [],
-			totalAdjustmentAmount = [],
-			totalAdjustmentDate = [];
+            maxAdjustmentCount = 100,
+            totalAdjustmentDescription = [],
+            totalAdjustmentAmount = [],
+            totalAdjustmentDate = [];
 
         token = sessionStorage.getItem("token");
         require(['jquery', 'mainjs', 'datatables'], function () {
@@ -402,10 +402,10 @@
                 }
 
                 /* Checking for redemption field*/
-				datalength = adjustmentData.length
-				for (var i = 0; i < datalength; i++) {
-					for (var j = 1; j <= highestCount; j++) {
-						if (document.getElementById(adjustmentData[i] + j)){
+                datalength = adjustmentData.length
+                for (var i = 0; i < datalength; i++) {
+                    for (var j = 1; j <= highestCount; j++) {
+                        if (document.getElementById(adjustmentData[i] + j)) {
                             inpValue = document.getElementById(adjustmentData[i] + j).value;
                             if (inpValue == 0) {
                                 if (comma) {
@@ -419,8 +419,8 @@
                                 }
                             }
                         }
-					}
-				}
+                    }
+                }
 
                 if (validInp == false) {
                     $("#lblMessages").text("Please fill up for " + reqField);
@@ -470,7 +470,7 @@
                     success: function (data) {
                         //   alert("Commission add successful.");
                         alert("Commission succesfully added.");
-
+                        window.location = "commission.html";
 
                     },
 
@@ -506,54 +506,54 @@
             }
             var $j = jQuery.noConflict();
             $j('body').on('focus', ".datepicker_recurring_start", function () {
-				$(this).datepicker();
-			});
+                $(this).datepicker();
+            });
 
-			function adjustmentField() {
-				var adjustmentContainer = "",
-					adjustmentCounter;
-				if (adjustmentCount < maxAdjustmentCount) {
-					adjustmentCount++;
-					adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
-						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
-						'</td></div>' +
-						'<div class="controls"><td>' +
-						'<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
-						'</td></div>' +
-						'<div class="controls"><td>' +
-						'<input type="text" id="adjustmentDate" class="form-control datepicker_recurring_start" required>' +
-						'</td></div></tr>';
-					$("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
-					for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
-						if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
+            function adjustmentField() {
+                var adjustmentContainer = "",
+                    adjustmentCounter;
+                if (adjustmentCount < maxAdjustmentCount) {
+                    adjustmentCount++;
+                    adjustmentContainer += '<tr><td><input type="checkbox" id="adjustmentCheckBox" name="adjustmentRecord"></td>' +
+                        '<div class="controls"><td>' +
+                        '<input type="text" id="adjustmentDescription" class="form-control" autocomplete="off" maxlength="100">' +
+                        '</td></div>' +
+                        '<div class="controls"><td>' +
+                        '<input type="number" id="adjustmentAmount" class="form-control" autocomplete="off" step="0.01" required>' +
+                        '</td></div>' +
+                        '<div class="controls"><td>' +
+                        '<input type="text" id="adjustmentDate" class="form-control datepicker_recurring_start" required>' +
+                        '</td></div></tr>';
+                    $("#adjustmentTable > tbody").append(adjustmentContainer); //add input box
+                    for (adjustmentCounter = 1; adjustmentCounter <= adjustmentCount; adjustmentCounter++) {
+                        if (!(document.getElementById("adjustmentDescription" + adjustmentCounter))) {
                             $('#adjustmentCheckBox').attr("id", "adjustmentCheckBox" + adjustmentCounter);
-							$('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
-							$('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
-							$('#adjustmentDate').attr("id", "adjustmentDate" + adjustmentCounter);
-							break;
-						}
-					}
-                    if(highestCount < adjustmentCounter){
+                            $('#adjustmentDescription').attr("id", "adjustmentDescription" + adjustmentCounter);
+                            $('#adjustmentAmount').attr("id", "adjustmentAmount" + adjustmentCounter);
+                            $('#adjustmentDate').attr("id", "adjustmentDate" + adjustmentCounter);
+                            break;
+                        }
+                    }
+                    if (highestCount < adjustmentCounter) {
                         highestCount = adjustmentCounter;
                     }
-				}
-				else {
-					alert('You have reached the limits. Maximum count is 100')
-				}
-			}
+                }
+                else {
+                    alert('You have reached the limits. Maximum count is 100')
+                }
+            }
 
             function setAdjustmentArray() {
-				let j = 0;
-				for (var i = 1; i <= highestCount; i++) {
-                    if (document.getElementById("adjustmentDescription" + i)){
+                let j = 0;
+                for (var i = 1; i <= highestCount; i++) {
+                    if (document.getElementById("adjustmentDescription" + i)) {
                         totalAdjustmentDescription[j] = $("#adjustmentDescription" + i).val();
                         totalAdjustmentAmount[j] = $("#adjustmentAmount" + i).val();
                         totalAdjustmentDate[j] = $("#adjustmentDate" + i).val();
                         j++
                     }
-				}
-			}
+                }
+            }
 
             $(document).ready(function () {
 
