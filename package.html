@@ -76,7 +76,7 @@
 						<table class="display" id="tableAllPackages" style="width:100%">
 							<thead>
 								<tr>
-									<th width="2%" id="headerAction"class="text-center"></th>
+									<th width="2%" id="headerAction" class="text-center"></th>
 									<th width="5%" id="headerPackageId" class="text-center">Package ID</th>
 									<th width="20%" id="headerPackageName">Package Name</th>
 									<th id="headerPackageInterest">Interest</th>
@@ -143,7 +143,7 @@
 		//When the page has loaded.
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
-				if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
+				if (role == "BUSOWN" || role == "MASTER") {
 					var button = document.getElementById("addPackage_button");
 					button.disabled = false;
 				}
@@ -170,9 +170,11 @@
 					success: function (data) {
 
 						for (var i = 0, len = data.length; i < len; i++) {
+						
+								edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId +
+									'"> <i class="fa fa-edit"></i></a>'
+							
 
-							edit_package = '<a href="edit-package.html?packageId=' + data[i].packageId +
-								'"> <i class="fa fa-edit"></i></a>'
 							if (data[i].packageStatus == "ACTIVE")
 								status = '<i class="fa fa-circle" style="color:green">';
 							else
@@ -198,7 +200,7 @@
 						inittable(arrayReturn);
 
 					}
-					
+
 				});
 
 				/* To initialise the datatable */

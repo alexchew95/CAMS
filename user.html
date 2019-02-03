@@ -2,40 +2,44 @@
 <html lang="en" dir="ltr">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta http-equiv="Content-Language" content="en" />
-    <meta name="msapplication-TileColor" content="#2d89ef">
-    <meta name="theme-color" content="#4188c9">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
-    <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
-    <!-- Generated: 2018-04-06 16:27:42 +0200 -->
-    <title>LPTS - List of User</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-    <script src="./assets/js/require.min.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta http-equiv="Content-Language" content="en" />
+	<meta name="msapplication-TileColor" content="#2d89ef">
+	<meta name="theme-color" content="#4188c9">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
+	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
+	<title>LPTS - Home</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 
-    <script>
-        requirejs.config({
-            baseUrl: '.'
-        });
+	<script src="./assets/js/require.min.js"></script>
 
-    </script>
+	<script>
+		requirejs.config({
+			baseUrl: '.'
+		});
 
+	</script>
+	<!--Needed for JQuery Modal
+	TODO: think how to move it to requireJS-->
 
-    <!-- Dashboard Core -->
-    <link href="./assets/css/dashboard.css" rel="stylesheet" />
-    <script src="./assets/js/dashboard.js"></script>
-    <!-- jQuery Modal -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <!--Datatable CSS-->
+	<!-- this JQEUERY had to be here in order for modal to work -->
+	<!-- Dashboard Core -->
+	<link href="./assets/css/dashboard.css" rel="stylesheet" />
+	<script src="./assets/js/dashboard.js"></script>
+	<!-- Input Mask Plugin -->
+	<script src="./assets/plugins/input-mask/plugin.js"></script>
+	<!-- jQuery Modal CSS-->
     <link href="./assets/css/datatables.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 </head>
 
@@ -47,6 +51,7 @@
                 <div class="container" id="topbar">
 
                 </div>
+                
             </div>
             <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
                 <div class="container" id="navbar">
@@ -80,6 +85,11 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Master Agent ID</th>
+                                    <th>Status</th>
+                                    <th>Change Email</th>
+                                    <th>Activate</th>
+                                    <th>Deactivate</th>
+
 
                                 </tr>
                             </thead>
@@ -93,7 +103,10 @@
                                     <th>Email</th>
                                     <th>Role</th>
                                     <th>Master Agent ID</th>
-
+                                    <th>Status</th>
+                                    <th>Change Email</th>
+                                    <th>Activate</th>
+                                    <th>Deactivate</th>
                                 </tr>
                             </tfoot>
 
@@ -126,9 +139,53 @@
 
     <script type="text/javascript">
         /////* Declare variables */////
+        name = "";
+        function activateUser(id, name) {
+            var txt = " "
+            var newStatus = 1
+            var r = confirm("Please confirm to activate selected user.\nName: " + name + "\nID: " + id)
+            if (r == true) {
+                statusChanger(id, newStatus)
+            }
 
+        }
+        
+        function deactivateUser(id, name) {
+            var txt = " "
+            var newStatus = 0
+
+            var r = confirm("Please confirm to deactivate selected user.\nName: " + name + "\nID: " + id)
+            if (r == true) {
+                statusChanger(id, newStatus)
+            }
+
+        }
+        function statusChanger(id, newStatus) {
+            $.ajax({
+                url: APIUrl + 'changeUserStatusController',
+                async: false,
+                dataType: 'json',
+                data: {
+
+                    "id": id,
+                    "newStatus": newStatus
+                },
+                type: 'post',
+                beforeSend: function (xhr) { //Include the bearer token in header
+                    xhr.setRequestHeader("Authorization", token);
+                },
+                success: function (data) {
+                    alert("Success")
+                    location.reload();
+                },
+
+            });
+        }
         //When the page has loaded.
-        require(['jquery', 'mainjs', 'datatables'], function ($) {
+
+
+        require(['jquery', 'mainjs', 'datatables', 'modal'], function ($) {
+           
             $(document).ready(function () {
 
                 role = sessionStorage.getItem("role");
@@ -153,27 +210,54 @@
                         xhr.setRequestHeader("Authorization", token);
                     },
                     success: function (data) {
-                        for (var i = 0, len = data.length; i < len; i++) {
 
+                        for (var i = 0, len = data.length; i < len; i++) {
+                            changeEmail = '<a href="change_user_email.html?userId=' + data[i].userId+'&userName='
+                                +data[i].name+'&userEmail='+data[i].email+'"> <i class="fa fa-money"></i></a>'
                             if (data[i].masterAgentId == 0) {
                                 var maID = " ";
                             }
                             else {
                                 var maID = data[i].masterAgentId + "(" + data[i].masterName + ")";
                             }
+
+                            if (data[i].activeStatus == 1) {
+                                f = data[i].name
+                                status = "ACTIVE"
+
+                                activateIcon = ""//false
+                                deactivateIcon = "<a href='#'onClick='deactivateUser(" + data[i].userId + ",\"" + f + "\")'><i class='fa fa-remove'></i></a>"//true
+                            }
+                            else if (data[i].activeStatus == 0) {
+                                status = "INACTIVE"
+                                f = data[i].name
+                                activateIcon = "<a href='#'onClick='activateUser(" + data[i].userId + ",\"" + f + "\")'><i class='fa fa-remove'></i></a>"//true
+                                deactivateIcon = ""//false
+                            }
+
                             arrayReturn.push([
                                 data[i].userId,
                                 data[i].name,
                                 data[i].email,
                                 data[i].role,
                                 maID,
+                                status,
+                                changeEmail,
+                                activateIcon,
+                                deactivateIcon,
                             ]);
                             $(".custom-loader").hide();
                         }
                         inittable(arrayReturn);
                     }
                 });
-
+                function viewChangeUserEmail() {
+                    document.getElementById("userName").value = "companyName";
+                    document.getElementById("userId").value = "companyName";
+                    document.getElementById("userOldEmail").value = "companyName";
+                    
+                    $('#changeUserEmailForm').modal();
+                }
                 /* To initialise the datatable */
                 function inittable(data) {
                     //console.log(data);

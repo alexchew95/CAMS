@@ -1,6 +1,6 @@
 /////* Common Variable List */////
-//var APIUrl = 'http://localhost/lpts-ci/api/';
-var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+var APIUrl = 'http://localhost/lpts-ci/api/';
+//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 
 /* Common function call for most html page */
 
@@ -14,7 +14,14 @@ $(document).ready(function () {
 	if (role == 'AGENT' || role == 'SAGENT') {
 		$('input[type="text"],input[type="number"],input[type="checkbox"], select').prop("disabled", true);
 	}
-
+	function activateUser(){
+		var txt=" "
+		var r =confirm("Please confirm to activate selected user")
+		if(r== true){
+			alert("User have been activated")
+		}
+		
+	}
 
 	// Check Admin Login
 

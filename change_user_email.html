@@ -62,16 +62,24 @@
 
                         <div class="card-body p-6">
 
-                            <div class="card-login">Change Email</div>
+                            <div class="card-login">Change User Email</div>
                             <div class="form-group">
-                                <label class="form-label">New Email</label>
-                                <input type="email" class="form-control" id="new_txtEmail" placeholder="New Email" required>
+                                <label class="form-label">User Name</label>
+                                <input type="email" class="form-control" id="userName"  disabled>
                             </div>
                             <div class="form-group">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-control" id="txtPwd" placeholder="Password" required>
+                                <label class="form-label">User ID</label>
+                                <input type="email" class="form-control" id="userId"  disabled>
                             </div>
-                            <label id="lblMessages" class="text-danger"></label>
+                            <div class="form-group">
+                                <label class="form-label">User Old Email</label>
+                                <input type="email" class="form-control" id="userOldEmail" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">User New Email</label>
+                                <input type="email" class="form-control" id="userNewEmail" placeholder="New Email" required>
+                            </div>
+                 
 
                         </div>
                         <div class="form-footer">
@@ -132,8 +140,7 @@
                             },
                             data: {
                                 "email": email,
-                                "password": hash,
-                                "new_email": $("#new_txtEmail").val()
+                             
 
                             },
                             dataType: 'JSON',

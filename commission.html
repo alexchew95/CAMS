@@ -208,7 +208,14 @@
                         $(".custom-loader").hide();
                     }
                 });
-
+                function activateUser(){
+                    var txt=" "
+                    var r =confirm("Please confirm to activate selected user")
+                    if(r== true){
+                        alert("User have been activated")
+                    }
+                    
+                }
                 /* To initialise the datatable */
                 function inittable(data) {
                     //console.log(data);

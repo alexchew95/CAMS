@@ -236,13 +236,6 @@
 						document.getElementById("companyNewGST").value = data.companyGST;
 						document.getElementById("companyNewEmail").value = data.companyEmail;
 
-
-
-
-
-
-
-
 					},
 				});
 			});
@@ -281,7 +274,9 @@
 				$('input[type="number"]').val('');
 				$('.custom-select').val('');
 			}
-
+			$("#btnAddNewAnnouncement").click(function () {
+				viewAddNewAnnouncement();
+			});
 			function viewAddNewAnnouncement() {
 				$('#addNewAnnouncementForm').modal();
 			}
@@ -292,12 +287,7 @@
 				window.location = "index.html";
 			});
 
-			$("#btnAddNewAnnouncement").click(function () {
-				viewAddNewAnnouncement();
-			});
-			$("#btnEditCompanyDetail").click(function () {
-				viewEditCompanyDetail();
-			});
+		
 
 
 			$("#btnSaveCompanyDetails").click(function (event) {
@@ -307,7 +297,7 @@
 			$("#btnCloseAddNewAnnouncementForm").click(function (event) {
 				event.preventDefault();
 				closeModal();
-			});$("#btnCloseEditCompanyForm").click(function (event) {
+			}); $("#btnCloseEditCompanyForm").click(function (event) {
 				event.preventDefault();
 				closeModal();
 			});
@@ -389,124 +379,126 @@
 							//console.log(errorMsg);
 						}
 					});
-				} 
-				 else {
+				}
+				else {
 					$("#lblMessages").text("Please fill up for both announcement title and content");
 				}
 			});
 
+
 			//When the page has loaded.
 			$(document).ready(function () {
+				if (role == "AGENT" || role== "SAGENT")
+				{ $("#btnAddNewAnnouncement").prop("disabled", true) }
+			currentPage = 1;
 
-				currentPage = 1;
+			/*load announcement - Start */
+			function announcement() {
+				$.ajax({
+					url: APIUrl + 'announcement',
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
 
-				/*load announcement - Start */
-				function announcement() {
-					$.ajax({
-						url: APIUrl + 'announcement',
-						type: 'GET',
-						dataType: 'JSON',
-						beforeSend: function (xhr) { //Include the bearer token in header
-							xhr.setRequestHeader("Authorization", token);
-						},
-
-						data: {
-							currentPage: currentPage
-						},
-						success: function (announcement) {
-							var announcementPerPage = 10,
-								totalAnnouncement = announcement.length,
-								announcementContainer = "";
-							totalPage = Math.ceil(totalAnnouncement / announcementPerPage)
-							$.each(announcement, function (key, value) {
-								if ((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage -
-									1))) {
-									announcementContainer += '<div class="col-md-12 ">' +
-										'<div class="card">' +
-										'<div class="card-header bg-blue">' +
-										'<h3 class="card-title text-white" id="announcementTitle">' +
-										value.dateCreated + ' ' + value.title +
-										'</h3>' +
-										'</div>' +
-										'<div class="card-body" id="announcementContent">' +
-										value.content +
-										'</div>' +
-										'</div>' +
-										'</div>'
-								}
-							})
-							var announceCont = document.getElementById('announcementContainer');
-							announceCont.innerHTML = announcementContainer;
-
-							if (pageFirstTimeLoad == true) {
-								pagination();
-								pageFirstTimeLoad = false;
+					data: {
+						currentPage: currentPage
+					},
+					success: function (announcement) {
+						var announcementPerPage = 10,
+							totalAnnouncement = announcement.length,
+							announcementContainer = "";
+						totalPage = Math.ceil(totalAnnouncement / announcementPerPage)
+						$.each(announcement, function (key, value) {
+							if ((key >= (currentPage * announcementPerPage - 10)) && key <= ((currentPage * announcementPerPage -
+								1))) {
+								announcementContainer += '<div class="col-md-12 ">' +
+									'<div class="card">' +
+									'<div class="card-header bg-blue">' +
+									'<h3 class="card-title text-white" id="announcementTitle">' +
+									value.dateCreated + ' ' + value.title +
+									'</h3>' +
+									'</div>' +
+									'<div class="card-body" id="announcementContent">' +
+									value.content +
+									'</div>' +
+									'</div>' +
+									'</div>'
 							}
-						},
-					});
+						})
+						var announceCont = document.getElementById('announcementContainer');
+						announceCont.innerHTML = announcementContainer;
 
-				}
-
-				function pagination() {
-					$('#pagination-demo').twbsPagination({
-						totalPages: totalPage,
-						visiblePages: 7,
-						onPageClick: function (event, page) {
-							if (pageFirstTimeLoad == false) {
-								currentPage = page;
-								announcement();
-							}
+						if (pageFirstTimeLoad == true) {
+							pagination();
+							pageFirstTimeLoad = false;
 						}
-					});
-				}
-				/*load announcement - End */
-				function compAddress() {
-					$.ajax({
-						url: APIUrl + 'compAddress',
-						type: 'GET',
-						dataType: 'JSON',
-						beforeSend: function (xhr) { //Include the bearer token in header
-							xhr.setRequestHeader("Authorization", token);
-						},
-						success: function (data) {
-							var monthNames = ["January", "February", "March", "April", "May", "June",
-								"July", "August", "September", "October", "November", "December"
-							];
+					},
+				});
 
-							d = new Date(data.last_modified);
-							var month_lastMod = monthNames[d.getMonth()];
-							month_lastMod += " ";
+			}
 
-							var year_lastMod = d.getFullYear();
-							year_lastMod += " ";
-							var day_lastMod = d.getDate();
-							day_lastMod += " ";
-							addressContainer = '<div class="panel-heading">' + month_lastMod + day_lastMod + year_lastMod +
-							 '<br/> ' + data.companyName + '</div>'
-								+ '<div class="panel-body">Tel: ' + data.companyPhone + ' <br/>Fax: ' + data.companyFax +
-								'<br/>GST Registration No.: ' + data.companyGST + '<br/>General Email: ' + data.companyEmail + '</div>' +
-								'<div class="panel-footer">Last Modified: ' + d + '</div>'
-						if(role=="BUSOWN"||role=="MASTER"||role=="STAFF"){
-								addressContainer = '<div class="panel-heading"> ' + data.companyName +
-								 '<a class="fe fe-edit" href="#" onclick="viewEditCompanyDetail();">&nbsp;Edit Company Details</a></div>'
+			function pagination() {
+				$('#pagination-demo').twbsPagination({
+					totalPages: totalPage,
+					visiblePages: 7,
+					onPageClick: function (event, page) {
+						if (pageFirstTimeLoad == false) {
+							currentPage = page;
+							announcement();
+						}
+					}
+				});
+			}
+			/*load announcement - End */
+			function compAddress() {
+				$.ajax({
+					url: APIUrl + 'compAddress',
+					type: 'GET',
+					dataType: 'JSON',
+					beforeSend: function (xhr) { //Include the bearer token in header
+						xhr.setRequestHeader("Authorization", token);
+					},
+					success: function (data) {
+						var monthNames = ["January", "February", "March", "April", "May", "June",
+							"July", "August", "September", "October", "November", "December"
+						];
+
+						d = new Date(data.last_modified);
+						var month_lastMod = monthNames[d.getMonth()];
+						month_lastMod += " ";
+
+						var year_lastMod = d.getFullYear();
+						year_lastMod += " ";
+						var day_lastMod = d.getDate();
+						day_lastMod += " ";
+						addressContainer = '<div class="panel-heading">' + month_lastMod + day_lastMod + year_lastMod +
+							'<br/> ' + data.companyName + '</div>'
+							+ '<div class="panel-body">Tel: ' + data.companyPhone + ' <br/>Fax: ' + data.companyFax +
+							'<br/>GST Registration No.: ' + data.companyGST + '<br/>General Email: ' + data.companyEmail + '</div>' +
+							'<div class="panel-footer">Last Modified: ' + d + '</div>'
+						if (role == "BUSOWN" || role == "MASTER" || role == "STAFF") {
+							addressContainer = '<div class="panel-heading"> ' + data.companyName +
+								'</br><a class="fe fe-edit" href="#" onclick="viewEditCompanyDetail();">&nbsp;Edit Company Details</a></div>'
 								+ '<div class="panel-body">Tel: ' + data.companyPhone + ' <br/>Fax: ' + data.companyFax +
 								'<br/>GST Registration No: ' + data.companyGST + '<br/>General Email: ' + data.companyEmail + '</div>' +
 								'<div class="panel-footer">Last Modified: ' + d + '</div>'
-							}
-							
+						}
 
-							var addressCont = document.getElementById('addressContainer');
-							addressCont.innerHTML = addressContainer;
-							$(".custom-loader").hide();
-						},
-					});
 
-				}
-				announcement();
-				compAddress();
-			});
+						var addressCont = document.getElementById('addressContainer');
+						addressCont.innerHTML = addressContainer;
+						$(".custom-loader").hide();
+					},
+				});
+
+			}
+			announcement();
+			compAddress();
 		});
-	
+		});
+
 	</script>
 </body>
 

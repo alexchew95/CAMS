@@ -173,7 +173,7 @@
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
-				if (role == "MASTER" || role == "BUSOWN") {
+				if (role == "MASTER" || role == "BUSOWN"||role=="STAFF") {
 					var button = document.getElementById("addCustomer_button");
 					button.disabled = false;
 				}

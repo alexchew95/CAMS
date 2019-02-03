@@ -379,6 +379,9 @@
 			$(document).ready(function () {
 				var packageId = $_GET('packageId');
 				loadPackage(packageId);
+				if (role == 'STAFF'||role == 'AGENT'||role == 'SAGENT') {
+		$('input[type="text"],input[type="number"],input[type="checkbox"], select,#SaveAndStay,#Save').prop("disabled", true);
+	}
 				/*  var MarketingOfficer = sessionStorage.getItem("name");
 				 var userId = sessionStorage.getItem("userId");
 				 $("#MarketingOfficer").attr("placeholder", MarketingOfficer);
