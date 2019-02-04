@@ -212,8 +212,7 @@
                     success: function (data) {
 
                         for (var i = 0, len = data.length; i < len; i++) {
-                            changeEmail = '<a href="change_user_email.html?userId=' + data[i].userId+'&userName='
-                                +data[i].name+'&userEmail='+data[i].email+'"> <i class="fa fa-money"></i></a>'
+                            changeEmail = '<a href="change_user_email.html?userId=' + data[i].userId+'"> <i class="fa fa-edit"></i></a>'
                             if (data[i].masterAgentId == 0) {
                                 var maID = " ";
                             }

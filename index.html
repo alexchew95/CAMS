@@ -59,7 +59,8 @@
 								<div class="card-login">User Login</div>
 								<div class="form-group">
 									<label class="form-label">Email address</label>
-									<input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+									<input type="email" class="form-control" id="txtEmail" aria-describedby="emailHelp" placeholder="Enter email"
+									 required>
 								</div>
 								<div class="form-group">
 									<label class="form-label">Password</label>
@@ -69,7 +70,8 @@
 
 							</div>
 							<div class="form-footer">
-								<button type="submit" id="btnLogin" class="btn btn-primary btn-block" data-loading-text="Processing...<span></span>">Sign in</button>
+								<button type="submit" id="btnLogin" class="btn btn-primary btn-block" data-loading-text="Processing...<span></span>">Sign
+									in</button>
 							</div>
 							<!-- <div class="form-footer">
 								<input type="button" onclick="location.href='sign_up.html';" class="btn btn-primary btn-block" value="New user? Click here to sign up!"
@@ -87,8 +89,8 @@
 
 	<!--Modal for sign up - End-->
 	<script>
-		//var APIUrl = 'http://localhost/lpts-ci/api/';
-		var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+		var APIUrl = 'http://localhost/lpts-ci/api/';
+		//var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 		$(document).ready(function () {
 			$("#btnLogin").click(function (event) {
 				var $this = $(this);
@@ -131,12 +133,22 @@
 								sessionStorage.setItem('role', data.role);
 								sessionStorage.setItem('userId', data.userId);
 
-								window.location = "home.html";
+							//	window.location = "home.html";
 								//name = sessionStorage.getItem("name");
 								// $("#lblMessages").text(name);  from storageSession
 								//  $("#lblMessages").text(data.name); from data(return from login_post)
 							},
 							statusCode: {
+								400: function (request, status, error) {
+									$(this).prop('disabled', false);
+
+									//console.log("401 - Login incorrect");
+									//console.log(error);
+									$("#lblMessages").text("Sorry, your account have been deactivated.");
+									$('.form-control').prop('disabled', false);
+									$this.html($this.data('original-text'));
+
+								},
 								401: function (request, status, error) {
 									$(this).prop('disabled', false);
 
