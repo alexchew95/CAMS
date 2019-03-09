@@ -1,5 +1,5 @@
 /////* Common Variable List */////
-//var APIUrl = 'http://localhost/lpts-ci/api/';
+// var APIUrl = "http://localhost/lpts-ci/api/";
 var APIUrl = "https://lpts-ci.herokuapp.com/api/";
 
 /* Common function call for most html page */
