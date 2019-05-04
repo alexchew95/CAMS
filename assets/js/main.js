@@ -4,7 +4,7 @@ var APIUrl = "https://lpts-ci.herokuapp.com/api/";
 
 /* Common function call for most html page */
 
-$(document).ready(function() {
+$(document).ready(function () {
 	// Load Session data
 	token = sessionStorage.getItem("token");
 	role = sessionStorage.getItem("role");
@@ -33,10 +33,10 @@ $(document).ready(function() {
 	}
 	window.onload = checkLogin;
 	// Load TopBar and NavBar
-	$("#topbar").load("topbar.html", function() {
+	$("#topbar").load("topbar.html", function () {
 		console.log("Topbar loaded");
 	});
-	$("#navbar").load("navbar.html", function() {
+	$("#navbar").load("navbar.html", function () {
 		//Add Underline to active html page. This will only work on LIVE SERVER
 		var url = document.location.href;
 		//this removes the anchor at the end, if there is one
@@ -73,7 +73,7 @@ function calcInstallment() {
 	var tenure = parseInt($("#Tenure").val());
 	if (
 		(tenure == null || tenure == "",
-		loanApplied == null || loanApplied == "")
+			loanApplied == null || loanApplied == "")
 	) {
 		$("#Installment").val("-");
 	}
@@ -111,12 +111,12 @@ function resetModalTextbox() {
 }
 
 /* Button Action */
-$("#btnLogout").click(function() {
+$("#btnLogout").click(function () {
 	sessionStorage.clear();
 	window.location = "index.html";
 });
 
-$("#btnCloseModal").click(function(event) {
+$("#btnCloseModal").click(function (event) {
 	event.preventDefault();
 	closeModal();
 });

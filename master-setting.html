@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<meta http-equiv="Content-Language" content="en" />
 	<meta name="msapplication-TileColor" content="#2d89ef">
@@ -18,7 +19,8 @@
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
 	<title>LPTS - Master Setting</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
 
 	<script>
@@ -69,18 +71,22 @@
 						<h1 class="page-title">
 							Master Setting
 						</h1>
-						<button id="addStatus_button" disabled class="btn btn-primary ml-auto" onclick="location.href='add-redemptionStatus.html';">Add Status
+						<button id="addStatus_button" disabled class="btn btn-primary ml-auto"
+							onclick="location.href='add-status.html';">Add Status
 						</button>
 					</div>
 					<div class="card-body">
 						<table class="table table-responsive" id="tableAllRedemptionStatus">
 							<thead>
 								<tr>
-							
-									
+
+
 									<th class="text-center" style="width: 5%">No</th>
+									<th class="text-center" style="width: 10%">Category</th>
 									<th class="text-center" style="width: 10%">Code</th>
 									<th class="text-center" style="width: 10%">Description</th>
+									<th class="text-center" style="width: 10%">Edit</th>
+
 								</tr>
 							</thead>
 							<tbody id="userListBody">
@@ -89,10 +95,12 @@
 
 							<tfoot>
 								<tr>
-								
-                                    <th>No</th>
+
+									<th>No</th>
+									<th>Category</th>
 									<th>Code</th>
 									<th>Description</th>
+									<th></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -121,40 +129,6 @@
 		</footer>
 	</div>
 
-	<!--Modal for add new remarks -Start -->
-	<div class="custom-loader"></div>
-	<form id="addNewAnnouncementForm" class="modal">
-		<div class="my-3 my-md-5">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12">
-						<div class="card-header">
-							<h3 class="card-title">New Remarks</h3>
-						</div>
-
-						<div class="col-sm-12 col-md-12">
-							<div class="form-group">
-								<label class="form-label">Announcement Title</label>
-								<input type="text" class="form-control" id="newAnnouncementTitle" autocomplete="off" required>
-							</div>
-						</div>
-						<div class="col-sm-12 col-md-12">
-							<div class="form-group">
-								<label class="form-label">Announcement Content</label>
-								<textarea class="form-control" rows="5" id="newAnnouncementContent" required></textarea>
-							</div>
-						</div>
-						<div class="card-footer text-right">
-							<button class="btn btn-primary" id="btnAddAnnouncement">Add</button>
-							<button class="btn btn-primary" id="btnCloseAddNewAnnouncementForm">Close</button>
-						</div>
-						<label id="lblMessages" class="text-danger"></label>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
-	<!--Modal for add new remarks -End -->
 	<script type="text/javascript">
 		/////* Declare variables */////
 
@@ -162,7 +136,7 @@
 		require(['jquery', 'mainjs', 'datatables'], function ($) {
 			$(document).ready(function () {
 
-				if (role == "MASTER" || role == "BUSOWN") {
+				if (role == "STAFF" || role == "BUSOWN") {
 					var button = document.getElementById("addStatus_button");
 					button.disabled = false;
 				}
@@ -179,7 +153,7 @@
 				/* To List all customer in Customer Homepage */
 				var arrayReturn = [];
 				$.ajax({
-					url: APIUrl + 'listRedemptionStatus',
+					url: APIUrl + 'listStatus',
 					async: false,
 					dataType: 'json',
 					data: {
@@ -191,12 +165,23 @@
 					},
 					success: function (data) {
 						for (var i = 0, len = data.length; i < len; i++) {
-                            no=i+1;
+							no = i + 1;
+							var category = "Unknown";
+							if (data[i].category == "loanRdmpStatus") {
+								category = "Redemption"
+							}
+							else if (data[i].category == "status") {
+								category = "General"
+							}
+							edit_status_url = '<a href="edit-status.html?code=' + data[i].code +
+								'"> <i class="fa fa-edit"></i></a>';
 							arrayReturn.push([
 								no,
+								category,
 								data[i].code,
 								data[i].description,
-							
+								edit_status_url,
+
 							]);
 						}
 						inittable(arrayReturn);
