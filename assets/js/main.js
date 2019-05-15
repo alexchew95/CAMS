@@ -1,5 +1,5 @@
 /////* Common Variable List */////
-// var APIUrl = "http://localhost/lpts-ci/api/";
+//var APIUrl = "http://localhost/lpts-ci/api/";
 var APIUrl = "https://lpts-ci.herokuapp.com/api/";
 
 /* Common function call for most html page */
@@ -52,7 +52,7 @@ $(document).ready(function () {
 		//this removes everything before the last slash in the path
 		url = url.substring(url.lastIndexOf("/") + 1, url.length);
 		$('.nav > li > a[href="' + url + '"]').addClass("active");
-		console.log(url);
+		//console.log(url);
 	});
 });
 
@@ -88,12 +88,18 @@ function roleControl() {
 	}
 }
 function buttonRoleControl() {
-	if (role == "AGENT" || role == "SAGENT") {
+	if (role == "MASTER" || role == "AGENT" || role == "SAGENT") {
+
 		alert("You are not authorized to perform such task.");
 		location.reload();
 	}
 }
-
+function buttonRoleControlEditCustomer() {
+	if (role == "MASTER" || role == "AGENT" || role == "SAGENT") {
+		alert("You are not authorized to perform such task.");
+		location.reload();
+	}
+}
 function closeModal() {
 	$.modal.close();
 }

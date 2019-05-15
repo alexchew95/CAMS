@@ -63,7 +63,7 @@
          b.style.display = "none"; */
 
 
-        if (role == "AGENT" || role == "SAGENT") {
+        if (role == "AGENT" || role == "MASTER" || role == "SAGENT") {
 
             $("#li-1").remove();
 
@@ -78,5 +78,6 @@
     //When the page has loaded.
     $(document).ready(function () {
         checkRole();
+
     });
 </script>

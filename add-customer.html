@@ -1691,7 +1691,7 @@
 			statusDD;
 
 		token = sessionStorage.getItem("token");
-		require(['mainjs', 'jquery'], function () {
+		require(['mainjs', 'jquery', 'jqueryui'], function () {
 			function test() {
 				selectedPackageId = this.options[this.selectedIndex].id
 				console.log(selectedPackageId)
@@ -1998,6 +1998,7 @@
 						"status": $("#Status").val(),
 						"entryDate": $("#EntryDate").val(),
 						"newIC": $("#ICNo").val(),
+						"processor": userId,
 						"oldIC": $("#OldICNo").val(),
 						"dob": $("#DateOfBirth").val(),
 						"gender": $("#Gender").val(),
@@ -2098,25 +2099,27 @@
 
 			$(document).ready(function () {
 				// Load datepicker
-				require(['jquery', 'jqueryui'], function ($) {
-					$(function () {
-						var d = new Date().getDate();
-						var m = new Date().getMonth() + 1; // JavaScript months are 0-11
-						var y = new Date().getFullYear();
-						$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
-						$("[id$=EntryDate]").datepicker({
-							weekStart: 1,
-							dateFormat: 'yy-mm-dd'
-						});
 
-						$(".datepicker").datepicker({
-							changeMonth: true,
-							changeYear: true,
-							dateFormat: 'yy-mm-dd',
-							yearRange: '1900:' + y
-						});
+				var userId = sessionStorage.getItem("userId");
+
+				$(function () {
+					var d = new Date().getDate();
+					var m = new Date().getMonth() + 1; // JavaScript months are 0-11
+					var y = new Date().getFullYear();
+					$("[id$=EntryDate]").val(y + "-" + m + "-" + d);
+					$("[id$=EntryDate]").datepicker({
+						weekStart: 1,
+						dateFormat: 'yy-mm-dd'
+					});
+
+					$(".datepicker").datepicker({
+						changeMonth: true,
+						changeYear: true,
+						dateFormat: 'yy-mm-dd',
+						yearRange: '1900:' + y
 					});
 				});
+
 
 				var MarketingOfficer = sessionStorage.getItem("name");
 				var userId = sessionStorage.getItem("userId");

@@ -18,10 +18,13 @@
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
 	<title>LPTS - Edit Customer</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
 	<!-- <script src="./assets/js/require.min.js"></script>
+
 
 	<script>
 		requirejs.config({
@@ -51,6 +54,11 @@
 	<!-- AWS JS -->
 	<script src="https://sdk.amazonaws.com/js/aws-sdk-2.233.1.min.js"></script>
 	<script src="./assets/js/s3.js"></script>
+
+
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 </head>
 
 <body class="">
@@ -63,6 +71,7 @@
 			</div>
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
+
 
 				</div>
 			</div>
@@ -255,14 +264,12 @@
 																			User</label>
 																	</td>
 
+
 																	<td>
-																		<select id="processorDL" class="form-control"
-																			size="1">
-																			<option value="">- Select One -</option>
-																			<option value="1" selected="selected">
-																				William</option>
-																			<option value="2">Linda</option>
-																		</select>
+																		<input type="text" id="processor"
+																			class="form-control" autocomplete="off"
+																			maxlength="100" readonly>
+
 																	</td>
 																</tr>
 															</div>
@@ -2523,8 +2530,8 @@
 		}
 
 		function editCustomer() {
-			p = document.getElementById("processorDL");
-			processor = p.options[p.selectedIndex].value;
+			/* 	p = document.getElementById("processorDL");
+				processor = p.options[p.selectedIndex].value; */
 			var jsonString_RedemptionCode = JSON.stringify(totalRedemptionCode),
 				jsonString_RedemptionBankCoopOrg = JSON.stringify(totalRedemptionBankCoopOrg),
 				jsonString_RedemptionDetails = JSON.stringify(totalRedemptionDetails),
@@ -2549,7 +2556,8 @@
 					"packageId": $("#Package").val(),
 					"status": $("#Status").val(),
 					"entryDate": $("#EntryDate").val(),
-					"processor": processor,
+					"processor": userId,
+					/* "processor": processor, */
 					"newIC": $("#ICNo").val(),
 					"oldIC": $("#OldICNo").val(),
 					"dob": $("#DateOfBirth").val(),
@@ -2701,7 +2709,7 @@
 						$("#Package").val(value.packageId);
 						$("#Status").val(value.status);
 						$("#EntryDate").val(value.entryDate);
-						$("#processorDL").val(value.processor);
+						$("#processor").val(value.processor_name);
 						$("#ICNo").val(value.newIC);
 						$("#OldICNo").val(value.oldIC);
 						$("#DateOfBirth").val(value.dob);

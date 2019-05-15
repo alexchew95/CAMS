@@ -19,13 +19,13 @@
                 <a href="change_password.html" class="dropdown-item" href="#">
                     <i class="dropdown-icon fe fe-user"></i> Change Password
                 </a>
-                <a href="change_email.html" class="dropdown-item" href="#">
+                <a href="change_email.html" id="dd-changeEmail" class="dropdown-item" href="#">
                     <i class="dropdown-icon fe fe-settings"></i> Change Email
                 </a>
                 <a href="master-setting.html" id="dd-masterSetting" class="dropdown-item" href="#">
                     <i class="dropdown-icon fe fe-settings"></i> Master Setting
                 </a>
-              
+
             </div>
 
         </div>
@@ -40,24 +40,30 @@
         window.location = "index.html";
     });
     function currentUser() {
-    if(role=="BUSOWN"){
-        real_role="Business Owner"
-    }
-    else if(role=="MASTER"){
-        real_role="Master"
-        $("#dd-masterSetting").remove();
-    }else if(role=="STAFF"){
-        real_role="Staff"
-    }else if(role=="AGENT"){
-        real_role="Agent"
-        $("#dd-masterSetting").remove();
-        
-    }
-    else if(role=="SAGENT"){
-        real_role="Sub Agent"
-        $("#dd-masterSetting").remove();
+        if (role == "BUSOWN") {
+            //for display purpose
+            real_role = "Business Owner"
+        }
+        else if (role == "MASTER") {
+            //for display purpose
+            real_role = "Master"
+            $("#dd-masterSetting").remove();
+            $("#dd-changeEmail").remove();
+        } else if (role == "STAFF") {
+            real_role = "Staff"
 
-    }
+        } else if (role == "AGENT") {
+            real_role = "Agent"
+            $("#dd-masterSetting").remove();
+            $("#dd-changeEmail").remove();
+
+        }
+        else if (role == "SAGENT") {
+            real_role = "Sub Agent"
+            $("#dd-masterSetting").remove();
+            $("#dd-changeEmail").remove();
+
+        }
         a = document.getElementById("txt_username");
         a.innerHTML = name;
 
