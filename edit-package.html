@@ -347,6 +347,7 @@
 
 					success: function (data) {
 						alert("Package update status: SUCCESS.");
+						
 						if (stay == false) {
 							window.location = "package.html";
 						}
@@ -395,7 +396,7 @@
 			$(document).ready(function () {
 				var packageId = $_GET('packageId');
 				loadPackage(packageId);
-				if (role == 'STAFF' || role == 'AGENT' || role == 'SAGENT') {
+				if (role == 'STAFF' || role == 'AGENT' || role == 'SAGENT'||role=="MASTER") {
 					$('input[type="text"],input[type="number"],input[type="checkbox"], select,#SaveAndStay,#Save').prop("disabled", true);
 				}
 				/*  var MarketingOfficer = sessionStorage.getItem("name");

@@ -90,7 +90,7 @@
 	<!--Modal for sign up - End-->
 	<script>
 		//var APIUrl = 'http://localhost/lpts-ci/api/';
-		var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
+	var APIUrl = 'https://lpts-ci.herokuapp.com/api/';
 		$(document).ready(function () {
 			$("#btnLogin").click(function (event) {
 				var $this = $(this);
@@ -154,7 +154,7 @@
 
 									//console.log("401 - Login incorrect");
 									//console.log(error);
-									$("#lblMessages").text("Login Incorrect - Please try again");
+									$("#lblMessages").text("Login Incorrect - Please try again!");
 									$('.form-control').prop('disabled', false);
 									$this.html($this.data('original-text'));
 
