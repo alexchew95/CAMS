@@ -23,6 +23,7 @@
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
 	<script src="./assets/js/firebase.js"></script>
 
 
@@ -147,12 +148,10 @@
 					} else {
 						alert(errorMessage);
 					}
-					document.getElementById('quickstart-sign-in').disabled = false;
 					// [END_EXCLUDE]
 				});
-				console.log(email)
-				
-				
+
+
 
 			});
 
@@ -171,26 +170,49 @@
 
 		});
 
-	
+
 
 		function initApp() {
-      //check user keep in cookie
-      // Listening for auth state changes.
-      // [START authstatelistener]
-      firebase.auth().onAuthStateChanged(function (user) {
+			//check user keep in cookie
+			// Listening for auth state changes.
+			// [START authstatelistener]
+			firebase.auth().onAuthStateChanged(function (user) {
+				if (user) {
+					
+					// User is signed in.
+					var db = firebase.firestore();//API firestore database
 
-        if (user) {
-			console.log(user.displayName)
-          /* // User is signed in.
-          if (user.displayName == null || user.photoURL == null)
-            window.location.href = "UserProfile.html";
-          else
-            window.location.href = "index.html"; */
+					//get data from Users table where created by current login user
+					db.collection("Users").where("Uid", "==", user.uid).onSnapshot(function (snapshot) {
+						snapshot.docChanges().forEach(function (change) {
+							if (change.type === "added") {//Get realtime new added data  with Cloud Firestore
 
-        }
-      });
-      // [END authstatelistener]
-    }
+								console.log(change.doc.data())
+								sessionStorage.setItem("name", change.doc.data().DisplayName)
+								sessionStorage.setItem("role", change.doc.data().Role)
+								sessionStorage.setItem("email", change.doc.data().Email)
+								sessionStorage.setItem("uid", change.doc.data().Uid)
+								sessionStorage.setItem("profilePicUrl", change.doc.data().Photo)
+								console.log(sessionStorage)
+					window.location="home.html"
+
+							}
+
+						});
+					});
+					console.log(user)
+					/* sessionStorage.setItem("name") = user.displayName
+					sessionStorage.setItem("role") = user.role
+					sessionStorage.setItem("email") = user.email
+					sessionStorage.setItem("uid") = user.uid */
+					// ...
+				} else {
+					// User is signed out.
+					// ...
+				}
+			});
+			// [END authstatelistener]
+		}
 	</script>
 </body>
 

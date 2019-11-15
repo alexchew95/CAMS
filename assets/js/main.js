@@ -1,41 +1,40 @@
-/////* Common Variable List */////
-//var APIUrl = "http://localhost/lpts-ci/api/";
-var APIUrl = "https://lpts-ci.herokuapp.com/api/";
 
-/* Common function call for most html page */
+var firebaseConfig = {
+	apiKey: "AIzaSyCHXvC3POJL7AACs6IsCbzm715PozUbaRc",
+	authDomain: "miniprojectarticlemanagement.firebaseapp.com",
+	databaseURL: "https://miniprojectarticlemanagement.firebaseio.com",
+	projectId: "miniprojectarticlemanagement",
+	storageBucket: "miniprojectarticlemanagement.appspot.com",
+	messagingSenderId: "543563658048",
+	appId: "1:543563658048:web:81eaa06410120eab6080a5"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
 
 $(document).ready(function () {
 	// Load Session data
-	token = sessionStorage.getItem("token");
+	uid = sessionStorage.getItem("uid");
 	role = sessionStorage.getItem("role");
 	name = sessionStorage.getItem("name");
-	userId = sessionStorage.getItem("userId");
 	email = sessionStorage.getItem("email");
-	if (role == "AGENT" || role == "SAGENT") {
-		$(
-			'input[type="text"],input[type="number"],input[type="checkbox"], select'
-		).prop("disabled", true);
-	}
-	function activateUser() {
-		var txt = " ";
-		var r = confirm("Please confirm to activate selected user");
-		if (r == true) {
-			alert("User have been activated");
-		}
-	}
+	profilePicUrl = sessionStorage.getItem("profilePicUrl");
+
+
 
 	// Check Admin Login
 
 	function checkLogin() {
-		if (!token) {
-			window.location = "index.html";
-		}
+		firebase.auth().onAuthStateChanged(function (user) {
+
+			if (user == null)
+				window.location.href = "Login.html";
+			else if (user.displayName == null || user.photoURL == null)
+				window.location.href = "UserProfile.html";
+
+		});
+
 	}
 	window.onload = checkLogin;
-	// Load TopBar and NavBar
-	$("#topbar").load("topbar.html", function () {
-		console.log("Topbar loaded");
-	});
 	$("#navbar").load("navbar.html", function () {
 		//Add Underline to active html page. This will only work on LIVE SERVER
 		var url = document.location.href;
@@ -54,6 +53,11 @@ $(document).ready(function () {
 		$('.nav > li > a[href="' + url + '"]').addClass("active");
 		//console.log(url);
 	});
+	// Load TopBar and NavBar
+	$("#topbar").load("topbar.html", function () {
+
+	});
+
 });
 
 /////* Common Function List */////
@@ -68,38 +72,9 @@ function $_GET(q, s) {
 	return (s = s.replace(/^\?/, "&amp;").match(re)) ? (s = s[1]) : (s = "");
 }
 
-function calcInstallment() {
-	var loanApplied = parseInt($("#LoanApplied").val());
-	var tenure = parseInt($("#Tenure").val());
-	if (
-		(tenure == null || tenure == "",
-			loanApplied == null || loanApplied == "")
-	) {
-		$("#Installment").val("-");
-	}
-	$("#Installment").val(loanApplied / tenure);
-}
 
-function roleControl() {
-	if (role == "AGENT" || role == "SAGENT") {
-		$(
-			'input[type="text"],input[type="number"],input[type="checkbox"], select'
-		).prop("disabled", true);
-	}
-}
-function buttonRoleControl() {
-	if (role == "MASTER" || role == "AGENT" || role == "SAGENT") {
 
-		alert("You are not authorized to perform such task.");
-		location.reload();
-	}
-}
-function buttonRoleControlEditCustomer() {
-	if (role == "MASTER" || role == "AGENT" || role == "SAGENT") {
-		alert("You are not authorized to perform such task.");
-		location.reload();
-	}
-}
+
 function closeModal() {
 	$.modal.close();
 }
@@ -116,11 +91,7 @@ function resetModalTextbox() {
 	$(".custom-select").val("");
 }
 
-/* Button Action */
-$("#btnLogout").click(function () {
-	sessionStorage.clear();
-	window.location = "index.html";
-});
+
 
 $("#btnCloseModal").click(function (event) {
 	event.preventDefault();

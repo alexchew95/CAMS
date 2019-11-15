@@ -3,9 +3,9 @@
         <img src="./demo/brand/lpts-logotype.png" class="header-brand-img" alt="tabler logo">
     </a>
     <div class="d-flex order-lg-2 ml-auto">
-        <div class="nav-item d-none d-md-flex">
-            <a class="btn btn-danger btn-outline-primary" id="btnLogout" target="_blank">Logout</a>
-        </div>
+
+        <span class="avatar mr-3 align-self-center" id="profilePic"></span>
+
         <div class="dropdown">
             <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
                 <span class="ml-2 d-none d-lg-block">
@@ -17,17 +17,14 @@
             </a>
             <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                 <a href="change_password.html" class="dropdown-item" href="#">
-                    <i class="dropdown-icon fe fe-user"></i> Change Password
-                </a>
-                <a href="change_email.html" id="dd-changeEmail" class="dropdown-item" href="#">
-                    <i class="dropdown-icon fe fe-settings"></i> Change Email
-                </a>
-                <a href="master-setting.html" id="dd-masterSetting" class="dropdown-item" href="#">
-                    <i class="dropdown-icon fe fe-settings"></i> Master Setting
+                    <i class="dropdown-icon fe fe-user"></i>My Profile
                 </a>
 
             </div>
 
+        </div>
+        <div class="nav-item d-none d-md-flex">
+            <a class="btn btn-danger btn-outline-primary" id="btnLogout">Logout</a>
         </div>
     </div>
     <a href="#" class="header-toggler d-lg-none ml-3 ml-lg-0" data-toggle="collapse" data-target="#headerMenuCollapse">
@@ -37,39 +34,21 @@
 <script type="text/javascript">
     $("#btnLogout").click(function () {
         sessionStorage.clear();
+        firebase.auth().signOut().then(function () {
+            console.log('Signed Out');
+        }, function (error) {
+            console.error('Sign Out Error', error);
+        });
         window.location = "index.html";
     });
     function currentUser() {
-        if (role == "BUSOWN") {
-            //for display purpose
-            real_role = "Business Owner"
-        }
-        else if (role == "MASTER") {
-            //for display purpose
-            real_role = "Master"
-            $("#dd-masterSetting").remove();
-            $("#dd-changeEmail").remove();
-        } else if (role == "STAFF") {
-            real_role = "Staff"
 
-        } else if (role == "AGENT") {
-            real_role = "Agent"
-            $("#dd-masterSetting").remove();
-            $("#dd-changeEmail").remove();
-
-        }
-        else if (role == "SAGENT") {
-            real_role = "Sub Agent"
-            $("#dd-masterSetting").remove();
-            $("#dd-changeEmail").remove();
-
-        }
         a = document.getElementById("txt_username");
         a.innerHTML = name;
 
         b = document.getElementById("txt_role");
-        b.innerHTML = real_role;
-
+        b.innerHTML = role;
+        $('#profilePic').css('background-image', 'url(' + profilePicUrl + ')')
 
     }
     $(document).ready(function () {
