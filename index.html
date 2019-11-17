@@ -17,7 +17,7 @@
 	<link rel="icon" href="./favicon.ico" type="image/x-icon" />
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-16 09:29:05 +0200 -->
-	<title>LPTS Login - Admin Page</title>
+	<title>CAMS Login</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
@@ -178,7 +178,7 @@
 			// [START authstatelistener]
 			firebase.auth().onAuthStateChanged(function (user) {
 				if (user) {
-					
+
 					// User is signed in.
 					var db = firebase.firestore();//API firestore database
 
@@ -194,7 +194,7 @@
 								sessionStorage.setItem("uid", change.doc.data().Uid)
 								sessionStorage.setItem("profilePicUrl", change.doc.data().Photo)
 								console.log(sessionStorage)
-					window.location="home.html"
+								window.location = "home.html"
 
 							}
 

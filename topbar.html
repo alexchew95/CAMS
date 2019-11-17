@@ -43,12 +43,12 @@
     });
     function currentUser() {
 
-        a = document.getElementById("txt_username");
-        a.innerHTML = name;
-
-        b = document.getElementById("txt_role");
-        b.innerHTML = role;
-        $('#profilePic').css('background-image', 'url(' + profilePicUrl + ')')
+   
+            $("#txt_username").text(name);
+            $("#txt_role").text(role);
+            $('#profilePic').css('background-image', 'url(' + profilePicUrl + ')')
+       
+      
 
     }
     $(document).ready(function () {

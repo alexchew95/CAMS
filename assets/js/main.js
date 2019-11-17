@@ -1,4 +1,6 @@
 
+// Check Admin Login
+
 var firebaseConfig = {
 	apiKey: "AIzaSyCHXvC3POJL7AACs6IsCbzm715PozUbaRc",
 	authDomain: "miniprojectarticlemanagement.firebaseapp.com",
@@ -11,8 +13,44 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+function checkLogin() {
+	console.log("Checking Login")
+	firebase.auth().onAuthStateChanged(function (user) {
+		if (user == null) {
+			window.location.href = "index.html";
+		} else if (user.displayName == null || user.photoURL == null) {
+			window.location.href = "UserProfile.html";
+		}
+		else if (sessionStorage.length == 0 && user) {
+			var db = firebase.firestore();//API firestore database
+			//get data from Users table where created by current login user
+			db.collection("Users").where("Uid", "==", user.uid).onSnapshot(function (snapshot) {
+				snapshot.docChanges().forEach(function (change) {
+					if (change.type === "added") {//Get realtime new added data  with Cloud Firestore
+						sessionStorage.setItem("name", change.doc.data().DisplayName)
+						sessionStorage.setItem("role", change.doc.data().Role)
+						sessionStorage.setItem("email", change.doc.data().Email)
+						sessionStorage.setItem("uid", change.doc.data().Uid)
+						sessionStorage.setItem("profilePicUrl", change.doc.data().Photo)
+						document.location.reload()
+					}
+
+				});
+			});
+		}
+		else if(user&&sessionStorage.length > 0){
+			$(".custom-loader").hide(500)
+		}
+	});
+
+}
+
+
 $(document).ready(function () {
+	checkLogin()
+	console.log(sessionStorage)
 	// Load Session data
+
 	uid = sessionStorage.getItem("uid");
 	role = sessionStorage.getItem("role");
 	name = sessionStorage.getItem("name");
@@ -21,20 +59,10 @@ $(document).ready(function () {
 
 
 
-	// Check Admin Login
 
-	function checkLogin() {
-		firebase.auth().onAuthStateChanged(function (user) {
 
-			if (user == null)
-				window.location.href = "Login.html";
-			else if (user.displayName == null || user.photoURL == null)
-				window.location.href = "UserProfile.html";
 
-		});
 
-	}
-	window.onload = checkLogin;
 	$("#navbar").load("navbar.html", function () {
 		//Add Underline to active html page. This will only work on LIVE SERVER
 		var url = document.location.href;
@@ -51,7 +79,7 @@ $(document).ready(function () {
 		//this removes everything before the last slash in the path
 		url = url.substring(url.lastIndexOf("/") + 1, url.length);
 		$('.nav > li > a[href="' + url + '"]').addClass("active");
-		//console.log(url);
+		console.log(url);
 	});
 	// Load TopBar and NavBar
 	$("#topbar").load("topbar.html", function () {
