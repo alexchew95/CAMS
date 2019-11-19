@@ -78,7 +78,7 @@
 					</h1>
 				  </div>
 
-			<div class="Add_Journal_Info">
+			<form id="Add_Journal_Info">
 				<fieldset class="form-fieldset">
 					<div class="form-group">
 					<label class="form-label">Artical Type:<span class="form-required">*</span></label>
@@ -90,7 +90,7 @@
 					</div>
 					<div class="form-group">
 					<label class="form-label">Full Title of Journal:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
+					<input type="text" id = "title" class="form-control" />
 					</div>
 					<div class="form-group mb-0">
 					<label class="form-label">Abstract:<span class="form-required">*</span></label>
@@ -98,11 +98,7 @@
 					</div>
 					<div class ="form-group">
 					<label class="form-label">Keywords:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
-					</div>
-					<div class ="form-group">
-					<label class="form-label">Keywords:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
+					<input type="text" id ="keywords" class="form-control" />
 					</div>
 					<div class ="form-group">
 							<label class="form-label">Upload Article:<span class="form-required">*</span></label>
@@ -111,11 +107,11 @@
 					<br />
 					<br />
 					<div class="btn-list">
-							<a href="#" class="btn btn-success">Save changes</a>
-							<a href="#" class="btn btn-danger">Cancel</a>
-						  </div>
+						<a href="#" class="btn btn-success" type="submit">Save changes</a>
+						<a href="#" class="btn btn-danger">Cancel</a>
+					</div>
 				</fieldset>
-			</div>
+			</form>
 
 
 		</div>
@@ -148,9 +144,37 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
+	
+
+				$("#Add_Journal_Info").submit(function( event ) {
+
+					var title1 = $("#title").val();//get content from textbox
+					var keywords = $("#keywords").val();//get content from textbox
+					var obj = new Object();//create table
+
+					obj.title = title1;//assign value to column 
+					obj.keywords1 = keywords;//assign value to column
+					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
+
+					var db = firebase.firestore()
+					db.collection("Article").doc().add(Obj)
+					.then(function() {
+    					console.log("Document successfully written!");
+					})
+					.catch(function(error) {
+    					console.error("Error writing document: ", error);
+					});
+				});
+		
 
 			});
+
+			
+			
+
 		});
+
+	
 
 	</script>
 </body>
