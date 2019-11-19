@@ -78,8 +78,9 @@
 					</h1>
 				  </div>
 
-			<form id="Add_Journal_Info">
-				<fieldset class="form-fieldset">
+			
+				<fieldset class="form-fieldset" id = "Add_Journal_Info">
+					<form id="Add_Journal_Info">
 					<div class="form-group">
 					<label class="form-label">Artical Type:<span class="form-required">*</span></label>
 					<input type="text" class="form-control" />
@@ -107,12 +108,11 @@
 					<br />
 					<br />
 					<div class="btn-list">
-						<a href="#" class="btn btn-success" type="submit">Save changes</a>
+						<a href="#" id ="add" class="btn btn-success" type="submit">Save changes</a>
 						<a href="#" class="btn btn-danger">Cancel</a>
 					</div>
+					</form>
 				</fieldset>
-			</form>
-
 
 		</div>
 		<div class="footer">
@@ -158,8 +158,8 @@
 
 					var db = firebase.firestore()
 					db.collection("Article").doc().add(Obj)
-					.then(function() {
-    					console.log("Document successfully written!");
+						.then(function() {
+    						console.log("Document successfully written!");
 					})
 					.catch(function(error) {
     					console.error("Error writing document: ", error);
