@@ -164,9 +164,10 @@
 									var html = "";
 									console.log(doc.data().uid);
 									if (doc.data().reviewStatus == false) {
-										html = ' <a disabled href="article_author.html?aid=' +doc.data().aid + '"> <i class="fa fa-comment"></i></a>'
+										html = ' <a  href="/"  disabled> <i class="fa fa-comment"  onclick="return false;"></i></a>'
 									}
 									else {
+										html = ' <a  href="article_author.html?aid=' +doc.data().aid + ' disabled"> <i class="fa fa-comment" disabled></i></a>'
 										
 									 }
 									articleDataArray.push([

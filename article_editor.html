@@ -144,7 +144,7 @@
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().uid == uid) {
+								if (doc.data().status == "pending") {
 									console.log(doc.data().uid);
 									articleDataArray.push([
 										doc.data().entryDate,
