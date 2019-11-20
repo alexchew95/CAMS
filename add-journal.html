@@ -40,7 +40,7 @@
 
 	<!-- this JQEUERY had to be here in order for modal to work -->
 	<!-- Dashboard Core -->
-	<link href="./assets/css/dashboard.css" rel="stylesheet" />
+	<link href="../assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
 	<!-- Input Mask Plugin -->
 	<script src="./assets/plugins/input-mask/plugin.js"></script>
@@ -72,8 +72,15 @@
 
 			</div>
 
-			<div class="Add_Journal_Info">
-				<fieldset class="form-fieldset">
+			<div class="page-header">
+					<h1 class="page-title">
+					  New Journal Submission
+					</h1>
+				  </div>
+
+			
+				<fieldset class="form-fieldset" id = "Add_Journal_Info">
+					<form id="Add_Journal_Info">
 					<div class="form-group">
 					<label class="form-label">Artical Type:<span class="form-required">*</span></label>
 					<input type="text" class="form-control" />
@@ -84,19 +91,28 @@
 					</div>
 					<div class="form-group">
 					<label class="form-label">Full Title of Journal:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
+					<input type="text" id = "title" class="form-control" />
 					</div>
 					<div class="form-group mb-0">
-					<label class="form-label">Abstract:</label>
+					<label class="form-label">Abstract:<span class="form-required">*</span></label>
 					<input type="text" class="form-control" />
 					</div>
 					<div class ="form-group">
-					<label class="form-label">Keywords:</label>
-					<input type="text" class="form-control" />
+					<label class="form-label">Keywords:<span class="form-required">*</span></label>
+					<input type="text" id ="keywords" class="form-control" />
 					</div>
+					<div class ="form-group">
+							<label class="form-label">Upload Article:<span class="form-required">*</span></label>
+					</div>
+					<button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
+					<br />
+					<br />
+					<div class="btn-list">
+						<a href="#" id ="add" class="btn btn-success" type="submit">Save changes</a>
+						<a href="#" class="btn btn-danger">Cancel</a>
+					</div>
+					</form>
 				</fieldset>
-			</div>
-
 
 		</div>
 		<div class="footer">
@@ -128,9 +144,37 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
+	
+
+				$("#Add_Journal_Info").submit(function( event ) {
+
+					var title1 = $("#title").val();//get content from textbox
+					var keywords = $("#keywords").val();//get content from textbox
+					var obj = new Object();//create table
+
+					obj.title = title1;//assign value to column 
+					obj.keywords1 = keywords;//assign value to column
+					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
+
+					var db = firebase.firestore()
+					db.collection("Article").doc().add(Obj)
+						.then(function() {
+    						console.log("Document successfully written!");
+					})
+					.catch(function(error) {
+    					console.error("Error writing document: ", error);
+					});
+				});
+		
 
 			});
+
+			
+			
+
 		});
+
+	
 
 	</script>
 </body>
