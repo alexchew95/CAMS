@@ -38,7 +38,7 @@ function checkLogin() {
 				});
 			});
 		}
-		else if(user&&sessionStorage.length > 0){
+		else if (user && sessionStorage.length > 0) {
 			$(".custom-loader").hide(500)
 		}
 	});

@@ -8,16 +8,20 @@
                 <a href='home.html' class="nav-link">
                     <i class="fe fe-home"></i> Home</a>
             </li>
+            <li class="nav-item" id="author_profile">
+                    <a href='my_info.html' class="nav-link ">
+                        <i class="fa fa-file-text"></i> My Info</a>
+            </li>
             <li class="nav-item" id="author_article">
-                <a href='author_article.html' class="nav-link ">
+                <a href='article_author.html' class="nav-link ">
                     <i class="fa fa-file-text"></i> My article</a>
             </li>
             <li class="nav-item" id="editor_article">
-                <a href='editor_article.html' class="nav-link ">
+                <a href='article_editor.html' class="nav-link ">
                     <i class="fa fa-file-text"></i> Submitted article</a>
             </li>
             <li class="nav-item" id="reviewer_article">
-                <a href='reviewer_article.html' class="nav-link ">
+                <a href='article_reviewer.html' class="nav-link ">
                     <i class="fa fa-file-text"></i> Assigned article</a>
             </li>
 
@@ -45,7 +49,7 @@
 <script type="text/javascript">
     function checkRole() {
       
-            if (role == "author") {
+           /*  if (role == "author") {
                 $("#editor_article").hide()
                 $("#reviewer_article").hide()
             }
@@ -57,7 +61,7 @@
             else if (role == "reviewer") {
                 $("#author_article").hide()
                 $("#editor_article").hide()
-            }
+            } */
         
 
     }
