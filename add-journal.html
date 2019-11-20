@@ -173,9 +173,6 @@
 					var db = firebase.firestore()
 					db.collection("Article").add(obj)
 						.then(function (docRef) {
-
-							//this.collection.doc("Article").set(obj.assign({}));
-
 							db.collection("Article").doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
 
 						})
