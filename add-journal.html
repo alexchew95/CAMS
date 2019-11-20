@@ -18,15 +18,13 @@
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
 	<title>CAMS - Home</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-	<link rel="stylesheet"
-		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
 
-	<!-- <script src="./assets/js/firebase.js"></script> -->
-
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
 
 	<script>
@@ -35,16 +33,10 @@
 		});
 
 	</script>
-	<!--Needed for JQuery Modal
-	TODO: think how to move it to requireJS-->
 
-	<!-- this JQEUERY had to be here in order for modal to work -->
-	<!-- Dashboard Core -->
-	<link href="../assets/css/dashboard.css" rel="stylesheet" />
+	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
-	<!-- Input Mask Plugin -->
 	<script src="./assets/plugins/input-mask/plugin.js"></script>
-	<!-- jQuery Modal CSS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
 </head>
@@ -58,7 +50,7 @@
 					<!--Header to auto load here-->
 				</div>
 			</div>
-		
+
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
 
@@ -67,52 +59,54 @@
 
 			<div class="my-3 my-md-5">
 				<div class="container">
-					
+					<div class="page-header">
+						<h1 class="page-title">
+							New Journal Submission
+						</h1>
+					</div>
+
+
+					<fieldset class="form-fieldset" id="add_Journal_Info">
+						<form id="Add_Journal_Info">
+							<div class="form-group">
+								<label class="form-label">Artical Type:<span class="form-required">*</span></label>
+								<input type="text" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label class="form-label">Main Subject Area of Artical:<span
+										class="form-required">*</span></label>
+								<input type="text" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label class="form-label">Full Title of Journal:<span
+										class="form-required">*</span></label>
+								<input type="text" id="title" class="form-control" />
+							</div>
+							<div class="form-group mb-0">
+								<label class="form-label">Abstract:<span class="form-required">*</span></label>
+								<input type="text" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label class="form-label">Keywords:<span class="form-required">*</span></label>
+								<input type="text" id="keywords" class="form-control" />
+							</div>
+							<div class="form-group">
+								<label class="form-label">Upload Article:<span class="form-required">*</span></label>
+							</div>
+							<button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
+							<br />
+							<br />
+							<div class="btn-list">
+								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
+								<a href="#" class="btn btn-danger">Cancel</a>
+							</div>
+						</form>
+					</fieldset>
 				</div>
 
 			</div>
 
-			<div class="page-header">
-					<h1 class="page-title">
-					  New Journal Submission
-					</h1>
-				  </div>
 
-			
-				<fieldset class="form-fieldset" id = "Add_Journal_Info">
-					<form id="Add_Journal_Info">
-					<div class="form-group">
-					<label class="form-label">Artical Type:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
-					</div>
-					<div class="form-group">
-					<label class="form-label">Main Subject Area of Artical:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
-					</div>
-					<div class="form-group">
-					<label class="form-label">Full Title of Journal:<span class="form-required">*</span></label>
-					<input type="text" id = "title" class="form-control" />
-					</div>
-					<div class="form-group mb-0">
-					<label class="form-label">Abstract:<span class="form-required">*</span></label>
-					<input type="text" class="form-control" />
-					</div>
-					<div class ="form-group">
-					<label class="form-label">Keywords:<span class="form-required">*</span></label>
-					<input type="text" id ="keywords" class="form-control" />
-					</div>
-					<div class ="form-group">
-							<label class="form-label">Upload Article:<span class="form-required">*</span></label>
-					</div>
-					<button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
-					<br />
-					<br />
-					<div class="btn-list">
-						<a href="#" id ="add" class="btn btn-success" type="submit">Save changes</a>
-						<a href="#" class="btn btn-danger">Cancel</a>
-					</div>
-					</form>
-				</fieldset>
 
 		</div>
 		<div class="footer">
@@ -123,7 +117,7 @@
 				<div class="row align-items-center flex-row-reverse">
 					<div class="col-auto ml-lg-auto">
 						<div class="row align-items-center">
-						
+
 						</div>
 					</div>
 					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
@@ -144,10 +138,10 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
-	
 
-				$("#Add_Journal_Info").submit(function( event ) {
 
+				$("#add").click(function (event) {
+		
 					var title1 = $("#title").val();//get content from textbox
 					var keywords = $("#keywords").val();//get content from textbox
 					var obj = new Object();//create table
@@ -157,24 +151,24 @@
 					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
 
 					var db = firebase.firestore()
-					db.collection("Article").doc().add(Obj)
-						.then(function() {
-    						console.log("Document successfully written!");
-					})
-					.catch(function(error) {
-    					console.error("Error writing document: ", error);
-					});
+					db.collection("Article").doc().add(obj)
+						.then(function () {
+							console.log("Document successfully written!");
+						})
+						.catch(function (error) {
+							console.error("Error writing document: ", error);
+						});
 				});
-		
+
 
 			});
 
-			
-			
+
+
 
 		});
 
-	
+
 
 	</script>
 </body>
