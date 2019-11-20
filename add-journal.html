@@ -141,7 +141,7 @@
 
 
 				$("#add").click(function (event) {
-		
+
 					var title1 = $("#title").val();//get content from textbox
 					var keywords = $("#keywords").val();//get content from textbox
 					var obj = new Object();//create table
@@ -151,9 +151,12 @@
 					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
 
 					var db = firebase.firestore()
-					db.collection("Article").doc().add(obj)
-						.then(function () {
-							console.log("Document successfully written!");
+					db.collection("Article").add(obj)
+						.then(function (docRef) {
+
+							db.collection("Article").doc(docRef.id).set(
+								{ aid: docRef.id, })
+
 						})
 						.catch(function (error) {
 							console.error("Error writing document: ", error);
