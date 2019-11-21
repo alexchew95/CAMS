@@ -66,6 +66,7 @@
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
+									<th>Review Status</th>
 									<th>Resubmit</th>
 
 								</tr>
@@ -79,6 +80,7 @@
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
+									<th>Review Status</th>
 									<th>Resubmit</th>
 
 								</tr>
@@ -144,12 +146,14 @@
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().status == "pending") {
+								if (doc.data().status == "Pending") {
 									console.log(doc.data().uid);
 									articleDataArray.push([
 										doc.data().entryDate,
 										doc.data().title,
 										doc.data().status,
+										doc.data().reviewStatus
+										,
 										doc.data().status,
 
 									]);
