@@ -23,7 +23,9 @@
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
+    <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
 	<!-- <script src="./assets/js/firebase.js"></script> -->
 
@@ -61,41 +63,66 @@
 		
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
-
+                    
 				</div>
 			</div>
 
 			<div class="my-3 my-md-5">
 				<div class="container">
+
+                        <div class="page-header">
+                                <h1 class="page-title">
+                                    Personal Information
+                                </h1>
+                            </div>
                     
                         <fieldset class="form-fieldset" id="add_Journal_Info">
                                 <form id="Add_Journal_Info">
                                     <div class="form-group">
-                                        <label class="form-label">Artical Type:<span class="form-required">*</span></label>
+                                        <label class="form-label">Name:<span class="form-required">*</span></label>
                                         <input type="text" id="ArticleType" class="form-control" />
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Main Subject Area of Artical:<span
-                                                class="form-required">*</span></label>
-                                        <input type="text" id="Area" class="form-control" />
+                                    <div class="dropdown">
+                                        <label class="form-label">Title:<span class="form-required">*</span></label>
+                                                <select name="AreaOfInterest" id = "Area">
+                                                        <option value="Dr.">Dr.</option>
+                                                        <option value="Mr.">Mr.</option>
+                                                        <option value="Mrs.">Mrs.</option>
+                                                        <option value="Ms.">Ms.</option>
+                                                        <option value="E-Commerce">Assist.Prof.</option>
+                                                        <option value="Assoc.Prof.">Assoc.Prof.</option>
+                                                        <option value="Prof.">Prof.</option>
+                                                        <option value="Ph.D">Ph.D</option>
+                                                        <option value="Specialist">Specialist</option>
+                                                </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Full Title of Journal:<span
+                                        <label class="form-label">Affiliation:<span
                                                 class="form-required">*</span></label>
                                         <input type="text" id="title" class="form-control" />
                                     </div>
                                     <div class="form-group mb-0">
-                                        <label class="form-label">Abstract:<span class="form-required">*</span></label>
+                                        <label class="form-label">Address:<span class="form-required">*</span></label>
                                         <input type="text" id="Abstract" class="form-control" />
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Keywords:<span class="form-required">*</span></label>
-                                        <input type="text" id="Keywords" class="form-control" />
+                                        <label class="form-label">Country:<span class="form-required">*</span></label>
+                                        <select name="country" class="countries" id="countryId">
+                                                <option value="">Select Country</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Upload Article:<span class="form-required">*</span></label>
+                                        <label class="form-label">State:<span class="form-required">*</span></label>
+                                        <select name="state" class="states" id="stateId">
+                                                <option value="">Select State</option>
+                                        </select>
                                     </div>
-                                    <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
+                                    <div class="form-group">
+                                            <label class="form-label">Cities:<span class="form-required">*</span></label>
+                                            <select name="city" class="cities" id="cityId">
+                                                    <option value="">Select City</option>
+                                            </select>
+                                        </div>
                                     <br />
                                     <br />
                                     <div class="btn-list">
