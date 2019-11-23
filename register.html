@@ -118,7 +118,6 @@
         // firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
         // firestore.collection('Users').doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
         firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
-          firebase.firestore().collection('Users').doc(currentUser.uid).set(currentUser)
 
         }).catch(function(error){
           // Handle Errors here.
