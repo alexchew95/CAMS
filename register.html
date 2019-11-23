@@ -129,9 +129,11 @@
           var user = firebase.auth().currentUser;
           obj.Uid = user.uid;
           
+
           var userRef = db.collection("Users").doc(user.uid).set(obj).then(function(){
             console.log("Saved into firestore")
           })
+          
 
         }).catch(function (error) {
           // Handle Errors here.
