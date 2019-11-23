@@ -108,7 +108,10 @@
         var email = $("#email").val();
         var password = $("#password").val();
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
+        firestore.collection('users').doc(userCredential.user.uid).set({
+          name, email
+        })
           // Register successful.
 
         }).catch(function(error){
