@@ -63,7 +63,7 @@
             </div>
             <form class="card" id="RegisterForm" action="">
               <div class="card-body p-6">
-                <div class="card-title">Create new account</div>
+                <div class="card-title">Create New Account</div>
                 <div class="form-group">
                   <label class="form-label">Name</label>
                   <input type="text" id="name" class="form-control" placeholder="Enter name">
@@ -76,12 +76,18 @@
                   <label class="form-label">Password</label>
                   <input type="password" id="password" class="form-control" placeholder="Password">
                 </div>
+                <!-- <div id = "hidden" class="form-group">
+                    <label class="form-label">Upload Profile Picture</label>
+                    
+                    <input type="file" onchange="uploadFile()" id="files" name="files[]" accept="image/*"/>
+                    </div> -->
                 <div class="form-group">
                   <label class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" />
+                    <input type="checkbox" class="custom-control-input" id = "myCheck"  />
                     <span class="custom-control-label">Agree the <a href="terms.html">terms and policy</a></span>
                   </label>
                 </div>
+              
                 <div class="form-footer">
                   <button type="submit" class="btn btn-primary btn-block">Create new account</button>
                 </div>
@@ -108,32 +114,49 @@
         var name = $("#name").val();//get content from textbox
         var email = $("#email").val();
         var password = $("#password").val();
+        var role = "author";
 
         var obj = new Object();//create table
 
-        obj.displayName = name;
+        obj.DisplayName = name;
         obj.Email = email;
+        obj.Role = role;
         
         obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
         var db = firebase.firestore();
 
-        // firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
-        // firestore.collection('Users').doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
         firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
           var user = firebase.auth().currentUser;
           obj.Uid = user.uid;
+          
 
           var userRef = db.collection("Users").doc(user.uid).set(obj).then(function(){
             console.log("Saved into firestore")
+            // window.location = 'add-journal.html';
           })
 
         }).catch(function (error) {
           // Handle Errors here.
         });
+
+        
       });
+
+      
 
     });
 
+    // function showHidden() {
+    //   var checkBox = document.getElementById("myCheck");
+    //   var text = document.getElementById("hidden");
+    //   if (checkBox.checked == true){
+    //   text.style.display = "block";
+    //   } else {
+    //   text.style.display = "none";
+    //   }
+    // }
+
+    
 
 
 

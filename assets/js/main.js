@@ -13,6 +13,7 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
+
 function checkLogin() {
 	console.log("Checking Login")
 	firebase.auth().onAuthStateChanged(function (user) {
