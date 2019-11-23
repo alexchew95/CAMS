@@ -105,23 +105,29 @@
       $("#RegisterForm").submit(function( event ){
         event.preventDefault();
 
+        var name = $("#name").val();//get content from textbox
         var email = $("#email").val();
         var password = $("#password").val();
+        var obj = new Object();//create table
 
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
-        firestore.collection('users').doc(userCredential.user.uid).set({
-          name, email
-        })
-          // Register successful.
+        obj.name = name;
+        obj.email = email;
+        obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
+        var db = firebase.firestore();
+
+        // firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
+        // firestore.collection('Users').doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
 
         }).catch(function(error){
           // Handle Errors here.
-
         });
       });
 
+      });
 
-    })
+
+    
 
 
     function initApp() {
