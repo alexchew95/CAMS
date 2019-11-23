@@ -74,7 +74,7 @@
 							</div>
 							<div class="form-group">
 								<label class="form-label">Abstract:<span class="form-required">*</span></label>
-								<textarea name="Abstract_R" rows="5" cols="20" class="form-control" ></textarea>
+								<textarea name="Abstract_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Keywords:<span class="form-required">*</span></label>
@@ -82,22 +82,25 @@
 							</div>
 							<div class="form-group">
 								<label class="form-label">Introduction:<span class="form-required">*</span></label>
-								<textarea name="Introduction_R" rows="5" cols="20" class="form-control" ></textarea>
+								<textarea name="Introduction_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Literature Review:<span class="form-required">*</span></label>
-								<textarea name="Literature_Review_R" rows="5" cols="20" class="form-control" ></textarea>
+								<textarea name="Literature_Review_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
-								<label class="form-label">Research Methodology:<span class="form-required">*</span></label>
-								<textarea name="Research_Methodology_R" rows="5" cols="20" class="form-control" ></textarea>
+								<label class="form-label">Research Methodology:<span
+										class="form-required">*</span></label>
+								<textarea name="Research_Methodology_R" rows="5" cols="20"
+									class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Conclusion:<span class="form-required">*</span></label>
-								<textarea name="Conclusion_R" rows="5" cols="20" class="form-control" ></textarea>
+								<textarea name="Conclusion_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
-								<label class="form-label">Contribution/Novelty:<span class="form-required">*</span></label>
+								<label class="form-label">Contribution/Novelty:<span
+										class="form-required">*</span></label>
 								<input type="text" id="Contribution_R" class="form-control" />
 							</div>
 							<div class="form-group">
@@ -105,25 +108,27 @@
 								<input type="text" id="References_R" class="form-control" />
 							</div>
 							<div class="form-group">
-								<label class="form-label">Overall quality of the paper:<span class="form-required">*</span></label>
-								<textarea name="Overall_R" rows="5" cols="20" class="form-control" ></textarea>
+								<label class="form-label">Overall quality of the paper:<span
+										class="form-required">*</span></label>
+								<textarea name="Overall_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
-								<label class="form-label">Note to the editor:<span class="form-required">*</span></label>
+								<label class="form-label">Note to the editor:<span
+										class="form-required">*</span></label>
 								<input type="text" id="NoteEditor_R" class="form-control" />
 							</div>
 
 							<div class="form-group">
-								<label class="form-label">Decision:<span
-										class="form-required">*</span></label>
+								<label class="form-label">Decision:<span class="form-required">*</span></label>
 								<!-- <input type="text" id="Area" class="form-control" /> -->
-										<select name="DecisionOfReviewer" id = "Decision_R">
-											<option value="Accept">Accept</option>
-											<option value="Accept with minor corrections">Accept with minor corrections</option>
-											<option value="Accept with major corrections">Accept with major corrections</option>
-											<option value="Reject with resubmission encouraged">Reject with resubmission encouraged</option>
-											<option value="Reject">Reject</option>
-										</select>
+								<select name="DecisionOfReviewer" id="Decision_R">
+									<option value="Accept">Accept</option>
+									<option value="Accept with minor corrections">Accept with minor corrections</option>
+									<option value="Accept with major corrections">Accept with major corrections</option>
+									<option value="Reject with resubmission encouraged">Reject with resubmission
+										encouraged</option>
+									<option value="Reject">Reject</option>
+								</select>
 							</div>
 
 							<br />
@@ -176,13 +181,25 @@
 				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 				var yyyy = today.getFullYear();
 				today = mm + '/' + dd + '/' + yyyy;
-			
-				//get uid from sessionStorage
-				var username = sessionStorage.getItem("uid");
-				//get aid from sessionStorage
-				var journal_R = sessionStorage.getItem("aid");
-				
 
+				//get aid from sessionStorage
+				//var articleId = sessionStorage.getItem("aid");
+				var db = firebase.firestore()
+				var o=Object();
+				o.test= "test"
+				//db.collection("Article").doc(articleId).
+				var articleRef = db.collection("Article").doc("2Ss9pEcpIDpgA32Phmvj").collection("reviews").doc(uid)
+			//	var articleRef = db.collection("Article").doc(articleId).collection("reviews").doc(uid)
+				articleRef.set(o)
+				/* articleRef.get().then(function (doc) {
+
+
+					// doc.data() will be undefined in this case
+					console.log("Document data:", doc.data());
+
+			}).catch(function (error) {
+				console.log("Error getting document:", error);
+			}); */
 
 				$("#add").click(function (event) {
 
@@ -199,7 +216,7 @@
 					var r_note = $("#NoteEditor_R").val();//get content from textbox
 					var r_decision = $("#Decision_R").val();//get content from textbox
 					var object = new Object();
-					
+
 
 					obj.title = r_title;//assign value to column
 					obj.abstract = r_abstract;//assign value to column
@@ -218,15 +235,7 @@
 					obj.uid = username;
 					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
 
-					var db = firebase.firestore()
-					db.collection("Article").add(obj)
-						.then(function (docRef) {
-							db.collection("Article").doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
 
-						})
-						.catch(function (error) {
-							console.error("Error writing document: ", error);
-						});
 				});
 
 
