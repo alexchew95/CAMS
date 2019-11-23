@@ -61,20 +61,20 @@
             <div class="text-center mb-6">
               <!-- <img src="./assets/brand/tabler.svg" class="h-6" alt=""> -->
             </div>
-            <form class="card" id ="RegisterForm" action="">
+            <form class="card" id="RegisterForm" action="">
               <div class="card-body p-6">
                 <div class="card-title">Create new account</div>
                 <div class="form-group">
                   <label class="form-label">Name</label>
-                  <input type="text" id ="name" class="form-control" placeholder="Enter name">
+                  <input type="text" id="name" class="form-control" placeholder="Enter name">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Email address</label>
-                  <input type="email" id = "email" class="form-control" placeholder="Enter email">
+                  <input type="email" id="email" class="form-control" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
-                  <input type="password" id = "password"class="form-control" placeholder="Password">
+                  <input type="password" id="password" class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
                   <label class="custom-control custom-checkbox">
@@ -95,39 +95,47 @@
       </div>
     </div>
   </div>
-  
+
   <!--Modal for sign up - End-->
   <script>
 
     $(document).ready(function () {
       initApp();
 
-      $("#RegisterForm").submit(function( event ){
+      $("#RegisterForm").submit(function (event) {
         event.preventDefault();
 
         var name = $("#name").val();//get content from textbox
         var email = $("#email").val();
         var password = $("#password").val();
+
         var obj = new Object();//create table
 
-        obj.name = name;
-        obj.email = email;
+        obj.displayName = name;
+        obj.Email = email;
+        
         obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
         var db = firebase.firestore();
 
         // firebase.auth().createUserWithEmailAndPassword(email, password).then(userCredential => {
         // firestore.collection('Users').doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
-        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function (user) {
+          var user = firebase.auth().currentUser;
+          obj.Uid = user.uid;
 
-        }).catch(function(error){
+          var userRef = db.collection("Users").doc(user.uid).set(obj).then(function(){
+            console.log("Saved into firestore")
+          })
+
+        }).catch(function (error) {
           // Handle Errors here.
         });
       });
 
-      });
+    });
 
 
-    
+
 
 
     function initApp() {
@@ -136,11 +144,11 @@
       // [START authstatelistener]
       firebase.auth().onAuthStateChanged(function (user) {
 
-         
-        });
-      }
 
-   
+      });
+    }
+
+
   </script>
 </body>
 
