@@ -66,15 +66,15 @@
                 <div class="card-title">Create new account</div>
                 <div class="form-group">
                   <label class="form-label">Name</label>
-                  <input type="text" class="form-control" placeholder="Enter name">
+                  <input type="text" id ="name" class="form-control" placeholder="Enter name">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Email address</label>
-                  <input type="email" class="form-control" placeholder="Enter email">
+                  <input type="email" id = "email" class="form-control" placeholder="Enter email">
                 </div>
                 <div class="form-group">
                   <label class="form-label">Password</label>
-                  <input type="password" class="form-control" placeholder="Password">
+                  <input type="password" id = "password"class="form-control" placeholder="Password">
                 </div>
                 <div class="form-group">
                   <label class="custom-control custom-checkbox">
@@ -100,11 +100,38 @@
   <script>
 
     $(document).ready(function () {
+      initApp();
 
+      $("#RegisterForm").submit(function( event ){
+        event.preventDefault();
+
+        var email = $("#email").val();
+        var password = $("#password").val();
+
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function(){
+          // Register successful.
+
+        }).catch(function(error){
+          // Handle Errors here.
+
+        });
+      });
 
 
     })
 
+
+    function initApp() {
+      //check user keep in cookie
+      // Listening for auth state changes.
+      // [START authstatelistener]
+      firebase.auth().onAuthStateChanged(function (user) {
+
+         
+        });
+      }
+
+   
   </script>
 </body>
 
