@@ -162,7 +162,7 @@
 							snapshot.forEach(doc => {
 								if (doc.data().uid == uid) {
 									var html = "";
-									console.log(doc.data().uid);
+									console.log(doc.data().aid);
 									if (doc.data().reviewStatus == false) {
 										html = ' <a  href="/"  disabled> <i class="fa fa-comment"  onclick="return false;"></i></a>'
 									}
