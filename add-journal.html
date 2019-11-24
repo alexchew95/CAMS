@@ -103,7 +103,7 @@
 								<input type="text" id="title" class="form-control" />
 							</div>
 
-							<form = "CA">
+							<form id = "CA">
 									<div class = "row" id = "dynamic_form">
 											<div class="col-md-5">
 													<label class="form-label">Corresponding Author(s):<span class="form-required">*</span></label>
@@ -111,7 +111,7 @@
 											</div>
 											<div class="col-md-5">
 													<label class="form-label">Email:<span class="form-required">*</span></label>
-													<input type="text" class="form-control"  id="email" placeholder="Email" onkeyup = "if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')";>
+													<input type="text" class="form-control"  id="email" placeholder="Email">
 											
 											</div>
 											<div class="btn-list">
@@ -120,6 +120,7 @@
 													<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
 											</div>		
 									</div>
+									<button id = "test" type="submit" class="btn btn-primary">Submit</button>
 							</form>
 							
 							
@@ -186,8 +187,10 @@
 		        formPrefix : "dynamic_form",
 		        normalizeFullForm : false
 				});
-				
-				dynamic_form.inject([{p_name: 'author1',quantity: 'email'},{p_name: 'author 2',quantity: 'email'}]);
+			
+			//dynamic_form.inject([{CA_Name: username,email: email}]);
+			document.getElementById('CA_Name0').value = sessionStorage.getItem("name");
+			document.getElementById('email0').value = sessionStorage.getItem("email");
 
 		    $("#dynamic_form #minus5").on('click', function(){
 		    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
@@ -197,14 +200,14 @@
 		    	$(this).closest('#dynamic_form').remove();
 		    });
 
-		    $('form').on('submit', function(event){
-	        	var values = {};
-				$.each($('form').serializeArray(), function(i, field) {
-				    values[field.name] = field.value;
-				});
-				console.log(values)
-        		event.preventDefault();
-        	})
+		    // $('form').on('submit', function(event){
+	        // 	var values = {};
+			// 	$.each($('form').serializeArray(), function(i, field) {
+			// 	    values[field.name] = field.value;
+			// 	});
+			// 	console.log(values)
+        	// 	event.preventDefault();
+        	// })
 	</script>
 
 
@@ -222,6 +225,15 @@
 			
 				//get uid from sessionStorage
 				var username = sessionStorage.getItem("uid");
+
+				$("#test").click(function (event){
+					var values = {};
+					$.each($('form').serializeArray(), function(i, field) {
+						values[field.name] = field.value;
+					});
+					console.log(values)
+					event.preventDefault();
+				});
 
 
 				$("#add").click(function (event) {
