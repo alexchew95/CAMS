@@ -24,10 +24,15 @@
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> -->
 
 	<!-- <script src="./assets/js/firebase.js"></script> -->
 
 	<script src="./assets/js/require.min.js"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/6.4.0/firebase.js"></script> -->
+	
+	
 
 	<script>
 		requirejs.config({
@@ -42,8 +47,6 @@
 	<!-- Dashboard Core -->
 	<link href="./assets/css/dashboard.css" rel="stylesheet" />
 	<script src="./assets/js/dashboard.js"></script>
-	<!-- Input Mask Plugin -->
-	<script src="./assets/plugins/input-mask/plugin.js"></script>
 	<!-- jQuery Modal CSS-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
@@ -58,7 +61,7 @@
 					<!--Header to auto load here-->
 				</div>
 			</div>
-		
+
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
 
@@ -67,7 +70,40 @@
 
 			<div class="my-3 my-md-5">
 				<div class="container">
-					
+
+					<div class="page-header">
+						<h1 class="page-title">
+							Personal Information
+						</h1>
+					</div>
+
+					<fieldset class="form-fieldset" id="add_Journal_Info">
+							<div class="form-group">
+									<label class="form-label">Name:</label>
+									
+								</div>
+								<div class="form-group">
+										<label class="form-label">Email:</label>
+										
+									</div>
+						<form id="Add_Journal_Info">
+							<div class="form-group">
+								<label class="form-label">Upload Profile Picture:</label>
+								<div class="custom-file">
+									<!-- <input type="file" class="custom-file-input" name="example-file-input-custom"> -->
+									<input type="file" value="upload" id="fileButton" name="files[]" />
+									<!-- <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button> -->
+								</div>
+							</div>
+							<br />
+							<br />
+							<div class="btn-list">
+								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
+								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
+							</div>
+						</form>
+					</fieldset>
+
 				</div>
 
 			</div>
@@ -82,7 +118,7 @@
 				<div class="row align-items-center flex-row-reverse">
 					<div class="col-auto ml-lg-auto">
 						<div class="row align-items-center">
-						
+
 						</div>
 					</div>
 					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
@@ -102,22 +138,55 @@
 		require(['mainjs', 'twbs', 'modal'], function () {
 
 			//When the page has loaded.
-			$(document).ready(function () {
-
+			// $(document).ready(function () {
+				
 				firebase.auth().onAuthStateChanged(function(user){
 					if (user) {
 						// User is signed in.
-						console.log(firebase.auth().currentUser)
+						var db = firebase.firestore();//API firestore database
+						console.log(firebase.auth().currentUser.user)
+						
+						
 					} else {
 						// No user is signed in.
 					}
 
 				});
 
+
+
+				var fileButton = document.getElementById('fileButton');
+
+				fileButton.addEventListener('change', function (e) {
+					console.log("button")
+					//get file
+					var file = e.target.files[0];
+					
+
+					//create a storage ref
 				
+					var storage = firebase.storage();
+					var storageRef = storage.ref();
+					var mountainImagesRef = storageRef.child('images/' + uid + 'jpg');
+
+
+					//upload file
+					mountainImagesRef.put(file).then(function (snapshot) {
+						console.log("upload success")
+					});
+
+				
+				});
+
+
 
 			});
-		});
+
+
+
+
+
+	
 
 	</script>
 </body>

@@ -19,8 +19,8 @@ function checkLogin() {
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user == null) {
 			window.location.href = "index.html";
-		} else if (user.displayName == null || user.photoURL == null) {
-			window.location.href = "UserProfile.html";
+		// } else if (user.displayName == null || user.photoURL == null) {
+		// 	window.location.href = "UserProfile.html";
 		}
 		else if (sessionStorage.length == 0 && user) {
 			var db = firebase.firestore();//API firestore database
