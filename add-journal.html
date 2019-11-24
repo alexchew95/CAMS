@@ -26,6 +26,11 @@
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js" 
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" 
+        crossorigin="anonymous">
+	</script>
+	<script src="./assets/js/dynamic-form.js"></script>
 
 	<script>
 		requirejs.config({
@@ -97,12 +102,27 @@
 										class="form-required">*</span></label>
 								<input type="text" id="title" class="form-control" />
 							</div>
-							<div class="form-group">
-									<label class="form-label">Corresponding Author(s):<span
-											class="form-required">*</span></label>
-											<!-- <button type="button" name="button" onclick="newinput()">+</button> -->
-									<input type="text" id="CA_Name" class="form-control" />
-								</div>
+
+							<form = "CA">
+									<div class = "row" id = "dynamic_form">
+											<div class="col-md-5">
+													<label class="form-label">Corresponding Author(s):<span class="form-required">*</span></label>
+													<input type="text" id="CA_Name" class="form-control" placeholder="Author"/>
+											</div>
+											<div class="col-md-5">
+													<label class="form-label">Email:<span class="form-required">*</span></label>
+													<input type="text" class="form-control"  id="email" placeholder="Email" onkeyup = "if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')";>
+											
+											</div>
+											<div class="btn-list">
+													<label class="form-label"><span style="opacity: 0 ;">This is transparent</span></label>
+													<a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add More</a>
+													<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
+											</div>		
+									</div>
+							</form>
+							
+							
 							<div class="form-group mb-0">
 								<label class="form-label">Abstract:<span class="form-required">*</span></label>
 								<input type="text" id="Abstract" class="form-control" />
@@ -158,7 +178,34 @@
 		</footer>
 	</div>
 
+	
 
+	<script>
+		var dynamic_form =  $("#dynamic_form").dynamicForm("#dynamic_form","#plus5", "#minus5", {
+		        limit:5,
+		        formPrefix : "dynamic_form",
+		        normalizeFullForm : false
+				});
+				
+				dynamic_form.inject([{p_name: 'author1',quantity: 'email'},{p_name: 'author 2',quantity: 'email'}]);
+
+		    $("#dynamic_form #minus5").on('click', function(){
+		    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
+		    	if (initDynamicId === 1) {
+		    		$(this).closest('#dynamic_form').next().find('#minus5').hide();
+		    	}
+		    	$(this).closest('#dynamic_form').remove();
+		    });
+
+		    $('form').on('submit', function(event){
+	        	var values = {};
+				$.each($('form').serializeArray(), function(i, field) {
+				    values[field.name] = field.value;
+				});
+				console.log(values)
+        		event.preventDefault();
+        	})
+	</script>
 
 
 	<script type="text/javascript">
@@ -175,21 +222,6 @@
 			
 				//get uid from sessionStorage
 				var username = sessionStorage.getItem("uid");
-
-				var id = 0;
-				function newinput(){
-					var parent = document.body
-					var field = document.createElement("input")
-					field.className = "form-control"
-					field.style = "display:block;"
-					field.id = "input" + id;
-					parent.appendChild(field);
-					id += 1;
-
-				}
-				
-			
-				
 
 
 				$("#add").click(function (event) {
