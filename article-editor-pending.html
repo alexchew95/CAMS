@@ -63,6 +63,7 @@
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
@@ -78,6 +79,7 @@
 
 							<tfoot>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
@@ -151,14 +153,15 @@
 								if (doc.data().status == "Pending") {
 									console.log(doc.data().uid);
 									articleDataArray.push([
+										doc.data().aid,
 										doc.data().entryDate,
 										doc.data().title,
 										doc.data().status,
 										doc.data().reviewStatus,
 										doc.data().status,
-										'<a href="editor-view-article.html?aid=' + doc.data().aid +
-										'"> <i class="fa fa-money"></i></a>',
-									]);
+										'<div class="btn-group" role="group" aria-label="Action Button">' +
+										'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Product" id="viewArticle">' +
+										'<i class="fa fa-edit" ></i></button></div>',]);
 								}
 
 							});
@@ -169,9 +172,22 @@
 						//console.log(data);
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
+							"columnDefs": [
+							{
+								"targets": [0],
+								"visible": false,
+								"searchable": false
+							},
+							]
 
 						});
-
+						$("#tableMyArticle").on('click', '#viewArticle', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log(data.row[0]);
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+						window.location.href = "editor-view-article.html";
+						});
 						// Apply the search
 						table.columns().every(function () {
 							var that = this;
