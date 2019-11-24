@@ -81,8 +81,8 @@
                                 </div>
 
                                 <div class="md-form">
-                                    <label for="articlename">Article Name:</label>
-                                    <input type="string" id="articlename" style="max-width:250px" class="form-control"
+                                    <label for="articleName">Article Name:</label>
+                                    <input type="string" id="articleName" style="max-width:250px" class="form-control"
                                         focus required><br>
                                 </div>
 
@@ -145,6 +145,8 @@
                     .get()
                     .then(function(doc)
                     {
+                        $("#articleName").val(doc.data().title)//id
+                       
                             console.log(doc.data());
                     })
                     .catch(function(error)
