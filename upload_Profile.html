@@ -78,9 +78,17 @@
 					</div>
 
 					<fieldset class="form-fieldset" id="add_Journal_Info">
+							<div class="form-group">
+									<label class="form-label">Name:</label>
+									
+								</div>
+								<div class="form-group">
+										<label class="form-label">Email:</label>
+										
+									</div>
 						<form id="Add_Journal_Info">
 							<div class="form-group">
-								<label class="form-label">LPP:</label>
+								<label class="form-label">Upload Profile Picture:</label>
 								<div class="custom-file">
 									<!-- <input type="file" class="custom-file-input" name="example-file-input-custom"> -->
 									<input type="file" value="upload" id="fileButton" name="files[]" />
@@ -131,6 +139,21 @@
 
 			//When the page has loaded.
 			// $(document).ready(function () {
+				
+				firebase.auth().onAuthStateChanged(function(user){
+					if (user) {
+						// User is signed in.
+						var db = firebase.firestore();//API firestore database
+						console.log(firebase.auth().currentUser.user)
+						
+						
+					} else {
+						// No user is signed in.
+					}
+
+				});
+
+
 
 				var fileButton = document.getElementById('fileButton');
 
