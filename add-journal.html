@@ -199,9 +199,11 @@
 					var title1 = $("#title").val();//get content from textbox
 					var abstract1 = $("#Abstract").val();//get content from textbox
 					var keywords = $("#Keywords").val();//get content from textbox
+					var CA = $('#CA_Name').val();
 					var obj = new Object();//create table
 
 					obj.article = article1;//assign value to column
+					obj.CA = CA;
 					obj.entryDate = today;
 					obj.reviewStatus = 'false';
 					obj.status = 'pending';
@@ -216,10 +218,11 @@
 					db.collection("Article").add(obj)
 						.then(function (docRef) {
 							db.collection("Article").doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
-
+							console.error("Done ");
 						})
 						.catch(function (error) {
 							console.error("Error writing document: ", error);
+							console.error("Done ");
 						});
 				});
 
