@@ -139,11 +139,13 @@
             //When the page has loaded.
             $(document).ready(function () {
                 aid = sessionStorage.getItem("uuid")
-                db.collection("Article").where("aid", true)
+                var db = firebase.firestore()
+
+                db.collection("Article").doc(aid)
                     .get()
-                    .then(function(querySnapshot)
+                    .then(function(doc)
                     {
-                        console.log(doc.id, " => ", doc.data());
+                            console.log(doc.data());
                     })
                     .catch(function(error)
                     {
