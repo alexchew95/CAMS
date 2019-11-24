@@ -170,7 +170,24 @@
 
 					//upload file
 					mountainImagesRef.put(file).then(function (snapshot) {
+						snapshot.ref.getDownloadURL().then(function(downloadURL) {
+							console.log("File available at", downloadURL);
+							//get uid from sessionStorage
+							var username = sessionStorage.getItem("uid");
+							var Photo = downloadURL;
+							var obj = new Object();
+							obj.Photo = Photo;
+
+							var db = firebase.firestore();
+							db.collection("Users").doc(firebase.auth().currentUser.uid).update({
+								Photo: downloadURL,
+							});
+							
+							
+						
+						});
 						console.log("upload success")
+						//window.location = "home.html";
 					});
 
 				
