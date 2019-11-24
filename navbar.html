@@ -17,8 +17,15 @@
                     <i class="fa fa-file-text"></i> My article</a>
             </li>
             <li class="nav-item" id="editor_article">
-                <a href='article_editor.html' class="nav-link ">
+                <a href='#' class="nav-link " data-toggle="dropdown">
                     <i class="fa fa-file-text"></i> Submitted article</a>
+
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                        <a id="dd-viewUser" href="article-editor-pending.html" class="dropdown-item" href="#">
+                         Submitted Article</a>
+                        <a id="dd-registerUser" href="article-editor-reviewed.html" class="dropdown-item" href="#">
+                         </i>Reviewed Article</a>
+                    </div>
             </li>
             <li class="nav-item" id="reviewer_article">
                 <a href='article_reviewer.html' class="nav-link ">
@@ -26,7 +33,7 @@
             </li>
 
 
-            <!--    <li id="li-1" class="nav-item">
+               <li id="li-1" class="nav-item">
                 <a href="#" class="nav-link " data-toggle="dropdown">
                     <i class="fe fe-user"></i>User</a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
@@ -36,7 +43,7 @@
                         <i class="fe fe-users"></i>View User</a>
                 </div>
 
-            </li> -->
+            </li>
             <!-- <li class="nav-item">
                 <a href='testemail.html' class="nav-link ">
                     <i class="fe fe-square"></i> Email</a>
