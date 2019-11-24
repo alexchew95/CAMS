@@ -5,25 +5,19 @@ mergedfile.addEventListener('change',function(e){
 
         let mergedfile=e.target.files[i];
 
-        let storageRef=firebase.storage().ref("article/ "+mergedfile.name);
+        let storage=firebase.storage();
 
-        let task=storageRef.put(mergedfile);
+        let storageRef=storage.ref();
 
-        task.on('state_changed',function progress(snapshot){
-            
-            let percentage=snapshot.bytesTransferred/snapshot.totalBytes *100;
-            
-            console.log("Upload is "+percentage+"%done");
-            switch(snapshot.state){
-                case firebase.storage.TaskState.PAUSED:
-                    console.log("Upload is Paused");
-                    break;
-                case firebase.storage.TaskState.RUNNING:
-                     console.log("Upload is Running");
-                     break;
-            }
-        })
+        let MERGDEDFILE=storageRef.child('article/'+mergedfile.name)
 
+        MERGDEDFILE.put(mergedfile).then(function (snapshot){
+            console.log("Upload success")
+            window.alert("Upload success")
+        })        
+
+       
+        
     }
 });
 
@@ -34,25 +28,16 @@ coverpdffile.addEventListener('change',function(e){
 
         let coverpdffile=e.target.files[i];
 
-        var storageRef=firebase.storage().ref('article/'+coverpdffile.name);
+        let storage=firebase.storage();
 
-        let task=storageRef.put(coverpdffile);
+        let storageRef=storage.ref();
 
-        task.on('state_changed',function progress(snapshot){
-            
-            let percentage=snapshot.bytesTransferred/snapshot.totalBytes *100;
-            
-            console.log("Upload is "+percentage+"%done");
-            switch(snapshot.state){
-                case firebase.storage.TaskState.PAUSED:
-                    console.log("Upload is Paused");
-                    break;
-                case firebase.storage.TaskState.RUNNING:
-                     console.log("Upload is Running");
-                     break;
-            }
-        })
+        let COVERFILE=storageRef.child('article/'+coverpdffile.name)
 
+        COVERFILE.put(coverpdffile).then(function (snapshot){
+            console.log("Upload success")
+            window.alert("ALL Upload Successful! An email will send to user's mailbox!")
+        })        
     }
 });
 
