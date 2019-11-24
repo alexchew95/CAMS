@@ -35,7 +35,7 @@
 	<script src="./assets/js/dashboard.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
-	
+
 </head>
 
 <body class="">
@@ -57,8 +57,8 @@
 				<!-- <div class="custom-loader"></div>
  -->
 				<div class="container">
-					
-				
+
+
 					<div class="card-body">
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
@@ -68,6 +68,7 @@
 									<th>Status</th>
 									<th>Review Status</th>
 									<th>Resubmit</th>
+									<th></th>
 
 								</tr>
 							</thead>
@@ -82,6 +83,7 @@
 									<th>Status</th>
 									<th>Review Status</th>
 									<th>Resubmit</th>
+									<th></th>
 
 								</tr>
 							</tfoot>
@@ -152,10 +154,10 @@
 										doc.data().entryDate,
 										doc.data().title,
 										doc.data().status,
-										doc.data().reviewStatus
-										,
+										doc.data().reviewStatus,
 										doc.data().status,
-
+										'<a href="editor-view-article.html?aid=' + doc.data().aid +
+										'"> <i class="fa fa-money"></i></a>',
 									]);
 								}
 
