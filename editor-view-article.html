@@ -74,11 +74,6 @@
                                     <strong>Editor</strong>
                                 </h3>
 
-                                <div class="md-form">
-                                    <label for="articleid">Article ID:</label>
-                                    <input type="string" id="articleid" style="max-width:250px" class="form-control"
-                                        focus required><br>
-                                </div>
 
                                 <div class="md-form">
                                     <label for="articleName">Article Name:</label>
@@ -86,7 +81,7 @@
                                         focus required><br>
                                 </div>
 
-                                <div class="md-form">
+                                <!-- <div class="md-form">
                                     <label for="reviewer1">First Reviewer:</label>
                                     <input type="string" id="reviewer1" style="max-width:250px" class="form-control"
                                         focus required><br>
@@ -101,7 +96,14 @@
                                 <div class="text-center">
                                     <button class="btn btn-indigo" id="AssignReviewer" type="submit">Assign
                                         Reviewer</button>
+                                </div> -->
+
+                                <div class="text-center">
+                                    <button id="accept" type"submit">Accept</button>
+                                    <button id="reject" type"submit">Reject</button>
                                 </div>
+
+                                
                         </div>
 
                     </div>
@@ -141,18 +143,18 @@
                 aid = sessionStorage.getItem("uuid")
                 var db = firebase.firestore()
 
-                db.collection("Article").doc(aid)
+               db.collection("Article").doc(aid)
                     .get()
                     .then(function(doc)
                     {
-                        $("#articleName").val(doc.data().title)//id
-                       
+                        $("#articleName").val(doc.data().title)
                             console.log(doc.data());
+                            
                     })
                     .catch(function(error)
                     {
                         console.log("Error getting document: ", error);
-                    })
+                    }) 
             });
         });
 
