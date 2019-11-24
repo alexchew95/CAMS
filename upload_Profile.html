@@ -21,11 +21,23 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
+<<<<<<< HEAD
 
 	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="./assets/js/require.min.js"></script>
+=======
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!-- <script src="//geodata.solutions/includes/countrystatecity.js"></script> -->
+	<!-- <script src="./assets/js/firebase.js"></script> -->
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
+	<script src="./assets/js/require.min.js"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script> -->
+	
+	
+>>>>>>> 879215299b29cb9cf526e26db271af7b546fdfda
 	
 
 	<script>
@@ -134,7 +146,24 @@
 			//When the page has loaded.
 			// $(document).ready(function () {
 				
+<<<<<<< HEAD
 		
+=======
+				// firebase.auth().onAuthStateChanged(function(user){
+				// 	if (user) {
+				// 		// User is signed in.
+				// 		var db = firebase.firestore();//API firestore database
+				// 		console.log(firebase.auth().currentUser.user)
+						
+						
+				// 	} else {
+				// 		// No user is signed in.
+				// 	}
+
+				// });
+
+
+>>>>>>> 879215299b29cb9cf526e26db271af7b546fdfda
 
 $("#add").click(function(){
 	console.log("test")
@@ -151,12 +180,29 @@ $("#add").click(function(){
 					//create a storage ref
 					var storage = firebase.storage();
 					var storageRef = storage.ref();
-					var mountainImagesRef = storageRef.child('images/' + uid + 'jpg');
+					var mountainImagesRef = storageRef.child('users-profile/' + uid + 'jpg');
 
 
 					//upload file
 					mountainImagesRef.put(file).then(function (snapshot) {
+						snapshot.ref.getDownloadURL().then(function(downloadURL) {
+							console.log("File available at", downloadURL);
+							//get uid from sessionStorage
+							var username = sessionStorage.getItem("uid");
+							var Photo = downloadURL;
+							var obj = new Object();
+							obj.Photo = Photo;
+
+							var db = firebase.firestore();
+							db.collection("Users").doc(firebase.auth().currentUser.uid).update({
+								Photo: downloadURL,
+							});
+							
+							
+						
+						});
 						console.log("upload success")
+						//window.location = "home.html";
 					});
 
 				

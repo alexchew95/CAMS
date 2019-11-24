@@ -115,12 +115,14 @@
         var email = $("#email").val();
         var password = $("#password").val();
         var role = "author";
+        var photo = "";
 
         var obj = new Object();//create table
 
         obj.DisplayName = name;
         obj.Email = email;
         obj.Role = role;
+        obj.Photo = photo;
         
         obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
         var db = firebase.firestore();
