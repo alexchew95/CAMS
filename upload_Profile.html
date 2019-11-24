@@ -88,9 +88,9 @@
 							<div class="form-group">
 								<label class="form-label">Upload Profile Picture:</label>
 								<div class="custom-file">
-									<!-- <input type="file" class="custom-file-input" name="example-file-input-custom"> -->
-									<input type="file" value="upload" id="fileButton" name="files[]" />
-									<!-- <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button> -->
+									
+									<input type="file" value="upload" id="fileButton" name="files[]" accept="image/*" data-type="image"/>
+								
 								</div>
 							</div>
 							<br />
@@ -156,6 +156,10 @@
 
 
 
+$("#add").click(function(){
+	console.log("test")
+	
+})
 				var fileButton = document.getElementById('fileButton');
 
 				fileButton.addEventListener('change', function (e) {
@@ -165,7 +169,6 @@
 					
 
 					//create a storage ref
-				
 					var storage = firebase.storage();
 					var storageRef = storage.ref();
 					var mountainImagesRef = storageRef.child('users-profile/' + uid + 'jpg');

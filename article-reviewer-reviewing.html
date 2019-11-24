@@ -35,7 +35,7 @@
 	<script src="./assets/js/dashboard.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
-
+	
 </head>
 
 <body class="">
@@ -57,18 +57,28 @@
 				<!-- <div class="custom-loader"></div>
  -->
 				<div class="container">
-
-
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="home.html">Home</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">Customer</li>
+						</ol>
+					</nav>
+					<div class="card-header">
+						<h1 class="page-title">
+							Accepted Article
+						</h1>
+					
+					</div>
 					<div class="card-body">
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
 								<tr>
-									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Review 1</th>
-									<th>Review 2</th>
-									<th></th>
+									<th>Status</th>
+									<th>Resubmit</th>
 
 								</tr>
 							</thead>
@@ -78,12 +88,10 @@
 
 							<tfoot>
 								<tr>
-									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Reviewer 1</th>
-									<th>Review 2</th>
-									<th></th>
+									<th>Status</th>
+									<th>Resubmit</th>
 
 								</tr>
 							</tfoot>
@@ -148,17 +156,15 @@
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().status == "Pending") {
-									console.log(doc.data());
+								if (doc.data().uid == uid) {
+									console.log(doc.data().uid);
 									articleDataArray.push([
-										doc.data().aid,
 										doc.data().entryDate,
-										doc.data().title,	
-										doc.data().reviewerOneStatus,//createlink to view it
-										doc.data().reviewerTwoStatus,//create link to view it
-										'<div class="btn-group" role="group" aria-label="Action Button">' +
-										'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Product" id="viewArticle">' +
-										'<i class="fa fa-edit" ></i></button></div>',]);
+										doc.data().title,
+										doc.data().status,
+										doc.data().status,
+
+									]);
 								}
 
 							});
@@ -169,22 +175,9 @@
 						//console.log(data);
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
-							"columnDefs": [
-							{
-								"targets": [0],
-								"visible": false,
-								"searchable": false
-							},
-							]
 
 						});
-						$("#tableMyArticle").on('click', '#viewArticle', function () {
-							var data = new Object();
-							data.row = table.row($(this).parents('tr')).data();
-							console.log(data.row[0]);
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
-						window.location.href = "editor-view-review.html";
-						});
+
 						// Apply the search
 						table.columns().every(function () {
 							var that = this;
