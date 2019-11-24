@@ -138,11 +138,15 @@
 
             //When the page has loaded.
             $(document).ready(function () {
-               var aid = $_GET("aid")
-               console.log(aid)
+                aid = sessionStorage.getItem("uuid")
+                console.log(aid)
             });
         });
+        function loadArticle() {
+            var aid = "2Ss9pEcpIDpgA32Phmvj"
+            //aid = sessionStorage.get("uuid")
 
+        }
     </script>
 </body>
 
