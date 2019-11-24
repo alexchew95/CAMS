@@ -35,7 +35,7 @@
 	<script src="./assets/js/dashboard.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
-	
+
 </head>
 
 <body class="">
@@ -155,18 +155,31 @@
 					function getCurrentUserArticle() {
 						var db = firebase.firestore()
 						var articleDataArray = []
-						db.collection("Article").get().then(snapshot => {
+						db.collection("Users").doc(uid).collection("AssignedArticle").get().then(snapshot => {
+
+							snapshot.forEach(doc => {
+							console.log(doc.data().aid)
+								db.collection("Article").doc(doc.data().aid)
+									.get()
+									.then(function (doc) {
+
+										console.log(doc.data());
+									})
+									.catch(function (error) {
+										console.log("Error getting document: ", error);
+									})
+							});
+
+						});
+					} function getAssignedArticle() {
+						var db = firebase.firestore()
+						var articleDataArray = []
+						db.collection("Users").doc(uid).get().then(snapshot => {
 
 							snapshot.forEach(doc => {
 								if (doc.data().uid == uid) {
-									console.log(doc.data().uid);
-									articleDataArray.push([
-										doc.data().entryDate,
-										doc.data().title,
-										doc.data().status,
-										doc.data().status,
+									console.log(doc.data().aid);
 
-									]);
 								}
 
 							});
