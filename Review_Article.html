@@ -174,6 +174,8 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
+				var db = firebase.firestore()
+
 				reviewFlag = false//false = first time review. true = review again
 				//var review_1 = db.collection("Article").doc(aid).collection()
 
@@ -189,21 +191,20 @@
 				var yyyy = today.getFullYear();
 				today = mm + '/' + dd + '/' + yyyy;
 
-				var db = firebase.firestore()
-				/* 	db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).get().then(function(data){
-						console.log(data.doc())
-					})
-					 */
+			
 
-				var aid = "0Ptk3LUfu5y7E1GmAz0P"//temporary
-				//aid=sessionStorage.get("aid");
-				console.log(uid)
-				console.log(aid)
+			//	var aid = "0Ptk3LUfu5y7E1GmAz0P"//temporary
+			aid=sessionStorage.get("aid");
+			reviewerNo=sessionStorage.get("reviewerNo");
+			console.log(aid)
+			console.log(reviewerNo)
+	
 
 
 				//retrieve data from firestore and update the field
 				db.collection("Article").doc(aid).collection("reviews").doc(uid).get().then(function (querySnapshot) {
-					if (querySnapshot.exist) {
+					console.log(querySnapshot.data())
+					if (querySnapshot.exists) {
 						reviewFlag = true
 						console.log(querySnapshot.data().Title)
 						$("#Title_R").val(querySnapshot.data().Title)
@@ -247,7 +248,6 @@
 
 				$("#r_update").click(function (event) {
 
-					var db = firebase.firestore()
 					var obj = Object();
 
 					obj.Title = $("#Title_R").val();
@@ -268,9 +268,11 @@
 					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(rid)
 
 					//update firestore
-					articleRef.set(obj)
+					articleRef.set(obj).then(function(data){
+						alert("Successful Update");
+console.log(aid)
+					})
 
-					alert("Successful Update");
 
 
 				});
