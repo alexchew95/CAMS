@@ -234,18 +234,6 @@
 				});
 
 
-
-
-				//update reviewStatus
-				/*	if (uid==rid)
-						{
-							db.collection(Article).doc(uid).update({
-								reviewOneStatus:"Reviewed"
-							});
-	
-						}
-	*/
-
 				$("#r_update").click(function (event) {
 
 					var db = firebase.firestore()
@@ -265,8 +253,7 @@
 					obj.Decision = $("#Decision_R").val();
 					obj.Date = today;
 
-
-					var articleRef = db.collection("Article").doc("2Ss9pEcpIDpgA32Phmvj").collection("reviews").doc(uid)
+					var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
 					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(rid)
 
 					//update firestore
@@ -298,8 +285,8 @@
 
 
 
-					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
 					var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
+					// articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
 
 					//update firestore
 					articleRef.update(obj)
