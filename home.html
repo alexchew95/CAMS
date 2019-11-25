@@ -21,7 +21,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-		<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
 
 
 	<!-- <script src="./assets/js/firebase.js"></script> -->
@@ -57,7 +57,7 @@
 					<!--Header to auto load here-->
 				</div>
 			</div>
-		
+
 			<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
 				<div class="container" id="navbar">
 
@@ -66,7 +66,7 @@
 
 			<div class="my-3 my-md-5">
 				<div class="container">
-					
+					<button id="sendEmailButton">Send email</button>
 				</div>
 
 			</div>
@@ -81,7 +81,7 @@
 				<div class="row align-items-center flex-row-reverse">
 					<div class="col-auto ml-lg-auto">
 						<div class="row align-items-center">
-						
+
 						</div>
 					</div>
 					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
@@ -103,7 +103,7 @@
 			//When the page has loaded.
 			$(document).ready(function () {
 
-				firebase.auth().onAuthStateChanged(function(user){
+				firebase.auth().onAuthStateChanged(function (user) {
 					if (user) {
 						// User is signed in.
 						console.log(firebase.auth().currentUser)
@@ -112,8 +112,36 @@
 					}
 
 				});
+				$("#sendEmailButton").click(function () {
+					console.log("email")
+					APIUrl="http://cincai-ams-ci.herokuapp.com/api/"
+					$.ajax({
+						url: APIUrl + 'sendE',
+						type: 'POST',
 
-				
+						data: {
+							"receiverEmail": "kuwasakized@gmail.com",//receiver
+							"currentuser": "CAMS",//receiver
+							"subject": "Yay",//receiver
+							"currentumessageser": "haha",//receiver
+
+							
+							//subject-
+							//message
+						},
+
+						dataType: 'JSON',
+						success: function (data) {
+
+						},
+						error: function (xhr, ajaxOptions, thrownError) {
+							var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+							//console.log(errorMsg);
+						}
+					});
+
+				})
+
 
 			});
 		});

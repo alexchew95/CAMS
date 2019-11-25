@@ -29,7 +29,10 @@ mergedfile.addEventListener('change',function(e){
                 var db = firebase.firestore();
 				db.collection("Article").doc(aid).update({
 				MergeURL: Merge,
-							});
+                });
+                
+                
+				
             
             });
         })        
@@ -69,13 +72,12 @@ coverpdffile.addEventListener('change',function(e){
                 var db = firebase.firestore();
 				db.collection("Article").doc(aid).update({
 				CoverURL: Cover,
-							});
+				});
             
             });
-
-          
-            })
-        }
+        
+        });
+    }
 });
 
     
