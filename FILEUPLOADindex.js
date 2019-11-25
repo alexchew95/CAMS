@@ -31,7 +31,9 @@ coverpdffile.addEventListener('change',function(e){
 
         let storageRef=storage.ref();
 
-        let COVERFILE=storageRef.child('article/'+sessionStorage.getItem(aid)+coverpdffile.name)
+        let AID=sessionStorage.getItem("aid");
+
+        let COVERFILE=storageRef.child('article/'+AID+coverpdffile.name)
 
         COVERFILE.put(coverpdffile).then(function (snapshot){
             console.log("Upload success")
