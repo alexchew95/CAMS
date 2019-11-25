@@ -83,6 +83,8 @@
 
 
                                 <div class="text-center">
+                                    <button id="download1" type"submit">Download Cover Letter</button>
+                                    <button id="download2" type"submit">Download File</button>
                                     <button id="accept" type"submit">Accept</button>
                                     <button id="reject" type"submit">Reject</button>
                                 </div>
@@ -145,6 +147,8 @@
 
     <script type="text/javascript">
         require(['mainjs', 'twbs', 'modal'], function () {
+            console.log(uid)
+            console.log(name)
 
             //When the page has loaded.
             $(document).ready(function () {
@@ -170,6 +174,8 @@
                 $("#accept").click(function (e) {
                     alert("Please assign reviewer");
                     $("#AssignReviewer").show();
+                    $("#download1").hide();
+                    $("#download2").hide();
                     $("#accept").hide();
                     $("#reject").hide();
                     loadReviewer();
@@ -189,7 +195,7 @@
                     obj.reviewerOneStatus = "Pending"
                     obj.reviewerTwo = reviewer2;
                     obj.reviewerTwoStatus = "Pending"
-                    obj.reviewStatus = "Reviewing"
+                    obj.reviewStatus = "Pending"
                     console.log(reviewer1)
                     console.log(reviewer2)
 
@@ -202,6 +208,10 @@
                     //alert("Assign successful");
                     e.preventDefault();
                 });
+
+                $("#download1").click(function (e) {
+                    var 
+                })
                 function loadReviewer() {
                     reviewerDD = ""
 
