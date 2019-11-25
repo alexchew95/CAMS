@@ -246,6 +246,8 @@
 								// The document probably doesn't exist.
 								console.error("Error updating Article document: ", error);
 							});
+							//update user assigned article
+
 							db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).update(obUser).then(function () {
 								console.log("User Document successfully updated!");
 							}).catch(function (error) {
@@ -256,13 +258,41 @@
 							//sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
 							//window.location.href = "editor-view-review.html";
 						});
+
 						$("#tableMyArticle").on('click', '#rejectArticle', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
-							console.log(data.row[0]);
+							aid = data.row[0]
 							console.log("Rejected");
-							//	sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							var obArticle = new Object()
+							var obUser = new Object()
+							if (reviewerNo == 1) {//point to article reviewerOne and reviewerStatus
+								obArticle.reviewerOneStatus = "ReviewerRejected"
+								obUser.status = "Rejected"
+							
+							}
+							else {//point to article reviewerTwo and reviewerStatus
+								obArticle.reviewerTwoStatus = "ReviewerReject"
+								obUser.status = "Rejected"
+								
+							}
+							//updatearticle
+							db.collection("Article").doc(aid).update(obArticle).then(function () {
+								console.log("Article Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating Article document: ", error);
+							});
 
+							//update user assigned article
+							db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).update(obUser).then(function () {
+								console.log("User Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating User document: ", error);
+							});
+							//update user assigned article
+							//sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
 							//window.location.href = "editor-view-review.html";
 						});
 					}
