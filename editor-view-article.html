@@ -199,15 +199,15 @@
                     console.log(reviewer2)
                     objUserAssignedArticle = new Object();
                     objUserAssignedArticle.status = "Pending"
-                    objUserAssignedArticle.aid = "4MFsGlG8xkL1epSIAZlV"//aid
-                    db.collection("Article").doc("4MFsGlG8xkL1epSIAZlV").update(objArticle).then(function (docRef) {
+                    objUserAssignedArticle.aid = aid
+                    db.collection("Article").doc(aid).update(objArticle).then(function (docRef) {
                         console.log("success article")
                     })
 
-                    db.collection("Users").doc(reviewer1).collection("AssignedArticle").doc("4MFsGlG8xkL1epSIAZlV").set(objUserAssignedArticle).then(function (docRef) {
+                    db.collection("Users").doc(reviewer1).collection("AssignedArticle").doc(aid).set(objUserAssignedArticle).then(function (docRef) {
                         console.log("success user 1")
                     })
-                    db.collection("Users").doc(reviewer2).collection("AssignedArticle").doc("4MFsGlG8xkL1epSIAZlV").set(objUserAssignedArticle).then(function (docRef) {
+                    db.collection("Users").doc(reviewer2).collection("AssignedArticle").doc(aid).set(objUserAssignedArticle).then(function (docRef) {
                         console.log("success user 2")
                     })
 
