@@ -15,7 +15,6 @@ mergedfile.addEventListener('change',function(e){
             console.log("Upload success")
             window.alert("Upload success")
         })        
-
        
         
     }
