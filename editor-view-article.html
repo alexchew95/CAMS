@@ -82,9 +82,11 @@
                                 </div>
 
 
-                                <div class="text-center">
-                                    <button id="accept" type"submit">Accept</button>
-                                    <button id="reject" type"submit">Reject</button>
+                                <div class="text-left">
+                                    <button id="download1" type"submit">Download Cover Letter</button><br><br>
+                                    <button id="download2" type"submit">Download File</button><br><br>
+                                    <button id="accept" type"submit">Accept</button><br><br>
+                                    <button id="reject" type"submit">Reject</button><br><br>
                                 </div>
                             </form>
 
@@ -145,6 +147,8 @@
 
     <script type="text/javascript">
         require(['mainjs', 'twbs', 'modal'], function () {
+            console.log(uid)
+            console.log(name)
 
             //When the page has loaded.
             $(document).ready(function () {
@@ -154,10 +158,10 @@
                     .get()
                     .then(function (doc) {
                         $("#articleName").val(doc.data().title)
-                       
+
                         $("#reviewer1").val(doc.data().reviewerOne)
                         $("#reviewer2").val(doc.data().reviewerTwo)
-                       
+
                         console.log(doc.data());
 
 
@@ -170,6 +174,8 @@
                 $("#accept").click(function (e) {
                     alert("Please assign reviewer");
                     $("#AssignReviewer").show();
+                    $("#download1").hide();
+                    $("#download2").hide();
                     $("#accept").hide();
                     $("#reject").hide();
                     loadReviewer();
@@ -177,31 +183,38 @@
                     e.preventDefault();
                 });
 
-                $("#assign").click(function (e)
-                {
+                $("#assign").click(function (e) {
                     var articleName = $("#articleName").val();
                     var reviewer1 = $("#assignReviewer").val();
                     var reviewer2 = $("#assignReviewer2").val();
 
-                    var obj = new Object();
-                    
-                    obj.reviewerOne = reviewer1;
-                    obj.reviewerOneStatus = "Pending"
-                    obj.reviewerTwo = reviewer2;
-                    obj.reviewerTwoStatus = "Pending"
-                    obj.reviewStatus = "Reviewing"
+                    var objArticle = new Object();
+
+                    objArticle.reviewerOne = reviewer1;
+                    objArticle.reviewerOneStatus = "Pending"
+                    objArticle.reviewerTwo = reviewer2;
+                    objArticle.reviewerTwoStatus = "Pending"
+                    objArticle.reviewStatus = "Reviewing"
                     console.log(reviewer1)
                     console.log(reviewer2)
-
-                    
-                    db.collection("Article").doc(aid).update(obj).then(function(docRef)
-                    {
-                       console.log("success")
+                    objUserAssignedArticle = new Object();
+                    objUserAssignedArticle.status = "Pending"
+                    objUserAssignedArticle.aid = "4MFsGlG8xkL1epSIAZlV"//aid
+                    db.collection("Article").doc("4MFsGlG8xkL1epSIAZlV").update(objArticle).then(function (docRef) {
+                        console.log("success article")
                     })
-                    
+
+                    db.collection("Users").doc(reviewer1).collection("AssignedArticle").doc("4MFsGlG8xkL1epSIAZlV").set(objUserAssignedArticle).then(function (docRef) {
+                        console.log("success user 1")
+                    })
+                    db.collection("Users").doc(reviewer2).collection("AssignedArticle").doc("4MFsGlG8xkL1epSIAZlV").set(objUserAssignedArticle).then(function (docRef) {
+                        console.log("success user 2")
+                    })
+
                     //alert("Assign successful");
                     e.preventDefault();
                 });
+
                 function loadReviewer() {
                     reviewerDD = ""
 
@@ -211,11 +224,10 @@
                             if (doc.data().Role == "Reviewer") {
                                 console.log(doc.data().Uid)
                                 reviewerDD += '<option  value="' + doc.data().Uid + '">' + doc.data().DisplayName + '</option>';
-
                             }
                         });
-                    $("#assignReviewer").html(reviewerDD);
-                  
+                        $("#assignReviewer").html(reviewerDD);
+
                     });
 
                 }
@@ -227,25 +239,22 @@
                         snapshot.forEach(doc => {
                             if (doc.data().Role == "Reviewer") {
                                 console.log(doc.data().Uid)
-                                if(reviewer1 != doc.data().Uid)
-                                {
+                                if (reviewer1 != doc.data().Uid) {
                                     reviewerDD += '<option  value="' + doc.data().Uid + '">' + doc.data().DisplayName + '</option>';
-
                                 }
-
                             }
                         });
-                   
-                    $("#assignReviewer2").html(reviewerDD);
+
+                        $("#assignReviewer2").html(reviewerDD);
                     });
 
                 }
-                $("#assignReviewer").change(function(){
+                $("#assignReviewer").change(function () {
                     var end = this.value;
                     console.log(end)
                     loadReviewer2(end)
                 })
-                
+
             });
         });
 
