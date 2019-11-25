@@ -140,13 +140,14 @@
             $(document).ready(function () {
                 $("#AssignReviewer").click()
                 aid = sessionStorage.getItem("uuid")
+                uid = sessionStorage.getItem("reviewerId")
                 var db = firebase.firestore()
 
-                db.collection("Article").doc(aid)
+                db.collection("Article").doc(aid).collection("reviews").doc(uid)
                     .get()
                     .then(function(doc)
                     {
-                        $("#articleName").val(doc.data().title)//id
+                       // $("#articleName").val(doc.data().title)//id
                        
                             console.log(doc.data());
                     })

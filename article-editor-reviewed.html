@@ -253,7 +253,7 @@
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log(data.row[0]);
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerNo", 1); //store data in localstorage for editing in next page
 
 							//window.location.href = "editor-view-review.html";
@@ -261,7 +261,7 @@
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log(data.row);
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerNo", 2); //store data in localstorage for editing in next page
 							//window.location.href = "editor-reassign-reviewer.html";
 						});
@@ -271,11 +271,10 @@
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log( $("#viewReview1").val());
-
 							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerId", $("#viewReview1").val()); //store data in localstorage for editing in next page
 
-							//window.location.href = "editor-view-review.html";
+							window.location.href = "editor-view-review.html";
 						}); $("#tableMyArticle").on('click', '#viewReview2', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
@@ -283,7 +282,7 @@
 							console.log( $("#viewReview2").val());
 							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerId", $("#viewReview2").val()); //store data in localstorage for editing in next page
-							//window.location.href = "editor-reassign-reviewer.html";
+							window.location.href = "editor-reassign-reviewer.html";
 						});
 						// Apply the search
 						table.columns().every(function () {
