@@ -69,7 +69,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col col-login mx-auto">
-                            <form id="AssignReviewer">
+                            <form id="EditorViewArticle">
                                 <h3 class="dark-grey-text text-center">
                                     <strong>Editor</strong>
                                 </h3>
@@ -102,8 +102,32 @@
                                     <button id="accept" type"submit">Accept</button>
                                     <button id="reject" type"submit">Reject</button>
                                 </div>
+                            </form>
 
-                                
+                            <form id="AssignReviewer">
+                                <div class="md-form">
+                                    <label for="assignReviewer">First Reviewer:</label>
+                                    <select id="assignReviewer" focus required>
+                                        <option id="reviewer1"></option>
+                                    </select>
+
+                                </div>
+                                <br><br><br>
+                                <div class="md-form">
+                                    <label for="assignReviewer2">Second Reviewer:</label>
+                                    <select id="assignReviewer2" focus required>
+                                        <option id="reviewer2"></option>
+                                    </select>
+                                </div>
+                                <br><br><br>
+                                <div class="text-center">
+                                    <button id="assign" type"submit">Assign</button>
+                                </div>
+                            </form>
+
+
+
+
                         </div>
 
                     </div>
@@ -142,19 +166,63 @@
             $(document).ready(function () {
                 aid = sessionStorage.getItem("uuid")
                 var db = firebase.firestore()
-
-               db.collection("Article").doc(aid)
+                db.collection("Article").doc(aid)
                     .get()
-                    .then(function(doc)
-                    {
+                    .then(function (doc) {
                         $("#articleName").val(doc.data().title)
-                            console.log(doc.data());
-                            
+                        $("#reviewer1").val(doc.data().reviewerOne)
+                        $("#reviewer2").val(doc.data().reviewerTwo)
+                        console.log(doc.data());
+
+
                     })
-                    .catch(function(error)
-                    {
+                    .catch(function (error) {
                         console.log("Error getting document: ", error);
-                    }) 
+                    })
+
+                $("#AssignReviewer").hide();
+                $("#accept").click(function (e) {
+                    alert("Please assign reviewer");
+                    $("#AssignReviewer").show();
+                    $("#accept").hide();
+                    $("#reject").hide();
+                    loadReviewer();
+
+                    e.preventDefault();
+                });
+
+                $("#assign").click(function (e)
+                {
+                    /*if(reviewer1 == reviewer2)
+                    {
+                        alert("Please assign different reviewer");
+                    }
+
+                    else if(reviewer1 != reviewer2)
+                    {
+                        alert("Assign successful");
+                    }
+                    e.preventDefault();*/
+                    alert("Assign successful");
+                    e.preventDefault();
+                });
+                function loadReviewer() {
+                    reviewerDD = ""
+
+                    db.collection("Users").get().then(snapshot => {
+
+                        snapshot.forEach(doc => {
+                            if (doc.data().Role == "Reviewer") {
+                                console.log(doc.data().Uid)
+                                reviewerDD += '<option  value="' + doc.data().Uid + '">' + doc.data().DisplayName + '</option>';
+
+                            }
+                        });
+                    $("#assignReviewer").html(reviewerDD);
+                    $("#assignReviewer2").html(reviewerDD);
+                    });
+
+                }
             });
         });
 
