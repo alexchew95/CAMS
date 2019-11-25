@@ -81,22 +81,6 @@
                                         focus required><br>
                                 </div>
 
-                                <!-- <div class="md-form">
-                                    <label for="reviewer1">First Reviewer:</label>
-                                    <input type="string" id="reviewer1" style="max-width:250px" class="form-control"
-                                        focus required><br>
-                                </div>
-
-                                <div class="md-form">
-                                    <label for="reviewer2">Second Reviewer:</label>
-                                    <input type="string" id="reviewer2" style="max-width:250px" class="form-control"
-                                        focus required><br>
-                                </div>
-
-                                <div class="text-center">
-                                    <button class="btn btn-indigo" id="AssignReviewer" type="submit">Assign
-                                        Reviewer</button>
-                                </div> -->
 
                                 <div class="text-center">
                                     <button id="accept" type"submit">Accept</button>
@@ -108,7 +92,7 @@
                                 <div class="md-form">
                                     <label for="assignReviewer">First Reviewer:</label>
                                     <select id="assignReviewer" focus required>
-                                        <option id="reviewer1"></option>
+                                        <option id="0">Please assign reviewer</option>
                                     </select>
 
                                 </div>
@@ -170,8 +154,10 @@
                     .get()
                     .then(function (doc) {
                         $("#articleName").val(doc.data().title)
+                       
                         $("#reviewer1").val(doc.data().reviewerOne)
                         $("#reviewer2").val(doc.data().reviewerTwo)
+                       
                         console.log(doc.data());
 
 
@@ -193,17 +179,27 @@
 
                 $("#assign").click(function (e)
                 {
-                    /*if(reviewer1 == reviewer2)
-                    {
-                        alert("Please assign different reviewer");
-                    }
+                    var articleName = $("#articleName").val();
+                    var reviewer1 = $("#assignReviewer").val();
+                    var reviewer2 = $("#assignReviewer2").val();
 
-                    else if(reviewer1 != reviewer2)
+                    var obj = new Object();
+                    
+                    obj.reviewerOne = reviewer1;
+                    obj.reviewerOneStatus = "Pending"
+                    obj.reviewerTwo = reviewer2;
+                    obj.reviewerTwoStatus = "Pending"
+                    obj.reviewStatus = "Reviewing"
+                    console.log(reviewer1)
+                    console.log(reviewer2)
+
+                    
+                    db.collection("Article").doc(aid).update(obj).then(function(docRef)
                     {
-                        alert("Assign successful");
-                    }
-                    e.preventDefault();*/
-                    alert("Assign successful");
+                       console.log("success")
+                    })
+                    
+                    //alert("Assign successful");
                     e.preventDefault();
                 });
                 function loadReviewer() {
@@ -219,10 +215,37 @@
                             }
                         });
                     $("#assignReviewer").html(reviewerDD);
+                  
+                    });
+
+                }
+                function loadReviewer2(reviewer1) {
+                    reviewerDD = ""
+
+                    db.collection("Users").get().then(snapshot => {
+
+                        snapshot.forEach(doc => {
+                            if (doc.data().Role == "Reviewer") {
+                                console.log(doc.data().Uid)
+                                if(reviewer1 != doc.data().Uid)
+                                {
+                                    reviewerDD += '<option  value="' + doc.data().Uid + '">' + doc.data().DisplayName + '</option>';
+
+                                }
+
+                            }
+                        });
+                   
                     $("#assignReviewer2").html(reviewerDD);
                     });
 
                 }
+                $("#assignReviewer").change(function(){
+                    var end = this.value;
+                    console.log(end)
+                    loadReviewer2(end)
+                })
+                
             });
         });
 
