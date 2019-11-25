@@ -131,7 +131,7 @@
                                     </div>
                                     <div class="form-group">
                                             <label class="form-label">Telephone:</label>
-                                            <input type="text" name="field-name" class="form-control" data-mask="000-000-0000" data-mask-clearifnotmatch="true" placeholder="000-000-0000" autocomplete="off" maxlength="10">
+                                            <input type="text" id = "tel" name="field-name" class="form-control" data-mask="000-000-0000" data-mask-clearifnotmatch="true" placeholder="000-000-0000" autocomplete="off" maxlength="10">
 									</div>
 									<div class="form-group">
 											<label class="form-label">Upload Profile Picture:</label>
@@ -142,8 +142,8 @@
 											</div>
 									</div>
                                     <div class="btn-list">
-                                        <a href="#" id="add" onclick="location.href = 'home.html';" class="btn btn-success" type="submit">Save changes</a>
-                                        <button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
+                                        <a href="#" id="add"  class="btn btn-success" type="submit">Save changes</a>
+                                        <button href='home.html' class="btn btn-danger">Back</button>
                                     </div>
                                 </form>
                             </fieldset>
@@ -205,6 +205,30 @@
 
 
 				// });
+
+				$("#add").click(function (event){
+					var db = firebase.firestore()
+					var obj = Object();
+
+					obj.DisplayName = $("#Username").val();
+					obj.Title = $("#title").val();
+					obj.InstituteBelong = $("#aff").val();
+					obj.Address = $("#address").val();
+					obj.Country = $("#countryId").val();
+					obj.Email = $("#email").val();
+					obj.TelephoneNum = $("#tel").val();
+
+					var users = db.collection("Users").doc(uid)
+					users.update(obj)
+					.catch(function (error) {
+						console.error("Error", error);
+					});
+
+					//alert("Successful Update");
+					
+
+				});
+
 
 				var fileButton = document.getElementById('fileButton');
 
