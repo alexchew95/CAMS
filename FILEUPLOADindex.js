@@ -16,6 +16,22 @@ mergedfile.addEventListener('change',function(e){
         MERGDEDFILE.put(mergedfile).then(function (snapshot){
             console.log("Upload success")
             window.alert("Upload success")
+
+            snapshot.ref.getDownloadURL().then(function(downloadURL) {
+                console.log("File available at", downloadURL);
+              
+                var merged = sessionStorage.getItem("aid");
+                var Merge = downloadURL;
+                // var obj = new Object();
+                // obj.Cover = Cover;
+                var aid = sessionStorage.getItem("aid");
+
+                var db = firebase.firestore();
+				db.collection("Article").doc(aid).update({
+				MergeURL: Merge,
+							});
+            
+            });
         })        
        
         
