@@ -116,6 +116,11 @@
         var password = $("#password").val();
         var role = "author";
         var photo = "";
+        var title = "";
+        var instituteBelong = "";
+        var addr = "";
+        var country = "";
+        var tel = "";
 
         var obj = new Object();//create table
 
@@ -123,6 +128,11 @@
         obj.Email = email;
         obj.Role = role;
         obj.Photo = photo;
+        obj.Title = title;
+        obj.InstituteBelong = instituteBelong;
+        obj.Address = addr;
+        obj.Country = country;
+        obj.TelephoneNum = tel;
         
         obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
         var db = firebase.firestore();

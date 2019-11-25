@@ -77,10 +77,10 @@
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Status</th>
-									<th>Resubmit</th>
+									<th>Decision</th>
 
 								</tr>
 							</thead>
@@ -90,10 +90,10 @@
 
 							<tfoot>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
-									<th>Resubmit</th>
 
 								</tr>
 							</tfoot>
@@ -143,6 +143,9 @@
 			require(['jquery', 'mainjs', 'datatables'], function ($) {
 				//When the page has loaded.
 				$(document).ready(function () {
+					var reviewerNo = 0
+					var db = firebase.firestore()
+
 					getCurrentUserArticle();
 					$('#tableMyArticle tfoot th').each(function () {
 						var title = $(this).text();
@@ -153,43 +156,57 @@
 
 					});
 					function getCurrentUserArticle() {
-						var db = firebase.firestore()
+						console.log(uid)
 						var articleDataArray = []
 						db.collection("Users").doc(uid).collection("AssignedArticle").get().then(snapshot => {
-
 							snapshot.forEach(doc => {
-							console.log(doc.data().aid)
-								db.collection("Article").doc(doc.data().aid)
-									.get()
-									.then(function (doc) {
+								console.log(doc.data())
+								if (doc.data().status == "Pending") {
+									db.collection("Article").doc(doc.data().aid)
+										.get()
+										.then(function (doc) {
+											if (doc.data().reviewerOne == uid) {
+												reviewerNo = 1
+											} if (doc.data().reviewerTwo == uid) {
+												reviewerNo = 2
+											}
+											reviewerDecisionHTML = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top" title="Edit Product" id="acceptArticle">' +
+												'<i class="fe fe-check" ></i></button>' + '&nbsp;&nbsp;<button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top" title="Edit Product" id="rejectArticle">' +
+												'<i class="fe fe-x" ></i></button></div > '
+											articleDataArray.push([
+												doc.data().aid,
+												doc.data().entryDate,
+												doc.data().title,
+												reviewerDecisionHTML,
+											]);
+											console.log(doc.data())
+											inittable(articleDataArray);
 
-										console.log(doc.data());
-									})
-									.catch(function (error) {
-										console.log("Error getting document: ", error);
-									})
-							});
-
-						});
-					} function getAssignedArticle() {
-						var db = firebase.firestore()
-						var articleDataArray = []
-						db.collection("Users").doc(uid).get().then(snapshot => {
-
-							snapshot.forEach(doc => {
-								if (doc.data().uid == uid) {
-									console.log(doc.data().aid);
-
+										})
+										.catch(function (error) {
+											console.log("Error getting document: ", error);
+										})
 								}
 
 							});
-							inittable(articleDataArray);
+
+
 						});
 					}
 					function inittable(data) {
 						//console.log(data);
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
+							"columnDefs": [
+								{
+									"targets": [0],
+									"visible": false,
+									"searchable": false
+								},
+							]
 
 						});
 
@@ -204,6 +221,79 @@
 										.draw();
 								}
 							});
+						});
+
+
+						$("#tableMyArticle").on('click', '#acceptArticle', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							aid = data.row[0]
+							console.log("Accepted");
+							var obArticle = new Object()
+							var obUser = new Object()
+							if (reviewerNo == 1) {//point to article reviewerOne and reviewerStatus
+								obArticle.reviewerOneStatus = "Reviewing"
+								obUser.status = "Reviewing"
+							}
+							else {//point to article reviewerTwo and reviewerStatus
+								obArticle.reviewerTwoStatus = "Reviewing"
+								obUser.status = "Reviewing"
+							}
+							//updatearticle
+							db.collection("Article").doc(aid).update(obArticle).then(function () {
+								console.log("Article Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating Article document: ", error);
+							});
+							//update user assigned article
+
+							db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).update(obUser).then(function () {
+								console.log("User Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating User document: ", error);
+							});
+							//update user assigned article
+							//sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							//window.location.href = "editor-view-review.html";
+						});
+
+						$("#tableMyArticle").on('click', '#rejectArticle', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							aid = data.row[0]
+							console.log("Rejected");
+							var obArticle = new Object()
+							var obUser = new Object()
+							if (reviewerNo == 1) {//point to article reviewerOne and reviewerStatus
+								obArticle.reviewerOneStatus = "ReviewerRejected"
+								obUser.status = "Rejected"
+							
+							}
+							else {//point to article reviewerTwo and reviewerStatus
+								obArticle.reviewerTwoStatus = "ReviewerReject"
+								obUser.status = "Rejected"
+								
+							}
+							//updatearticle
+							db.collection("Article").doc(aid).update(obArticle).then(function () {
+								console.log("Article Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating Article document: ", error);
+							});
+
+							//update user assigned article
+							db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).update(obUser).then(function () {
+								console.log("User Document successfully updated!");
+							}).catch(function (error) {
+								// The document probably doesn't exist.
+								console.error("Error updating User document: ", error);
+							});
+							//update user assigned article
+							//sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							//window.location.href = "editor-view-review.html";
 						});
 					}
 

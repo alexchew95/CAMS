@@ -158,7 +158,7 @@
 										doc.data().title,
 										doc.data().status,
 										doc.data().reviewStatus,
-										doc.data().status,
+										doc.data().resubmitStatus,
 										'<div class="btn-group" role="group" aria-label="Action Button">' +
 										'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" title="Edit Product" id="viewArticle">' +
 										'<i class="fa fa-edit" ></i></button></div>',]);
@@ -173,20 +173,22 @@
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
 							"columnDefs": [
-							{
-								"targets": [0],
-								"visible": false,
-								"searchable": false
-							},
+								{
+									"targets": [0],
+									"visible": false,
+									"searchable": false
+								},
 							]
 
 						});
-						$("#tableMyArticle").on('click', '#viewArticle', function () {
+						$("#tableMyArticle").on('click', '#assignReviewer1', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log(data.row[0]);
 							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
-						window.location.href = "editor-view-article.html";
+							sessionStorage.setItem("reviewerNo", 1); //store data in localstorage for editing in next page
+
+							//window.location.href = "editor-view-review.html";
 						});
 						// Apply the search
 						table.columns().every(function () {

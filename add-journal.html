@@ -122,22 +122,22 @@
 									<div class="col-md-5">
 										<label class="form-label">Corresponding Author(s):<span
 												class="form-required">*</span></label>
-										<input type="text" class="form-control" placeholder="Author" />
+										<input type="text" id = "C_Name" class="form-control" placeholder="Author" />
 									</div>
 									<div class="col-md-5">
 										<label class="form-label">Email:<span class="form-required">*</span></label>
-										<input type="text" class="form-control" placeholder="Email">
+										<input type="text" id = "C_Email" class="form-control" placeholder="Email">
 
 									</div>
 									<div class="btn-list">
 										<label class="form-label"><span style="opacity: 0 ;">This is
 												transparent</span></label>
-										<a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add More</a>
+										<a href="javascript:void(0)" class="btn btn-primary" id="plus5" onclick="add_element_to_array();">Add More</a>
 										<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
 									</div>
 								</div>
 								<br />
-								<button id="test" type="submit" class="btn btn-primary">Submit</button>
+								<!-- <button id="test" type="submit" class="btn btn-primary">Submit</button> -->
 							</form>
 
 
@@ -156,8 +156,8 @@
 							</div> -->
 							<div class="btn-list">
 								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
-								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
-								<button type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
+								<button href='#'  class="btn btn-danger">Back</button>
+								<button style="display: none;" id = "upload" type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
 										class="fe fe-upload mr-2"></i>Upload</button>
 							</div>
 
@@ -231,14 +231,20 @@
 			$(this).closest('#dynamic_form').remove();
 		});
 
-		    // $('form').on('submit', function(event){
-	        // 	var values = {};
-			// 	$.each($('form').serializeArray(), function(i, field) {
-			// 	    values[field.name] = field.value;
-			// 	});
-			// 	console.log(values)
-        	// 	event.preventDefault();
-        	// })
+		 x = 0;
+		var id = 0;
+		var array = Array();
+		var array1 = Array();
+		function add_element_to_array()
+			{
+				array[x] = document.getElementById("C_Name"+id).value;
+				array1[x] = document.getElementById("C_Email"+id).value;	
+				x++;
+				id++;
+				console.log(array)
+				console.log(array1)
+			}
+
 	</script>
 
 
@@ -247,6 +253,10 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
+
+				$("#add").on('click', function () {
+            $("#upload").show();
+        });
 
 				var today = new Date();
 				var dd = String(today.getDate()).padStart(2, '0');
@@ -277,6 +287,8 @@
 					var abstract1 = $("#Abstract").val();//get content from textbox
 					var keywords = $("#Keywords").val();//get content from textbox
 					var CA = $('#CA_Name').val();
+					var CoverURL = "";
+					var MergeURL = ""; 
 					//var aid = "";
 					var obj = new Object();//create table
 					
@@ -292,6 +304,8 @@
 					obj.abstract = abstract1;//assign value to column
 					obj.keywords = keywords;//assign value to column
 					obj.uid = username;
+					obj.CoverURL = CoverURL;
+					obj.MergeURL = MergeURL;
 					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
 
 					var db = firebase.firestore()
@@ -301,11 +315,25 @@
 							db.collection("Article").doc(docRef.id).update({
 								aid : docRef.id
 								
+								
 							})
+							console.log(x)
+							//run array add based on x size
+							for(a=0;a<=x;a++)
+							{
+								var authorsObj = new Object();
+								authorsObj.name = document.getElementById("C_Name"+a).value;
+								authorsObj.email = document.getElementById("C_Email"+a).value;
+console.log(authorsObj.name)
+								db.collection("Article").doc(docRef.id).collection("authors").add(authorsObj)
+							}
+							//db.collection("Article").doc(docRef.id).collection("authors").add(array)
+
 						/* 	db.collection("Article").doc(docRef.id).set({ aid: docRef.id }, obj.assign({})).then(function (doc) {
 								console
 							})
 							console.error("Done "); */
+							sessionStorage.setItem("aid", docRef.id);
 
 						})
 						.catch(function (error) {
@@ -314,7 +342,8 @@
 							console.error("Done x ");
 						});
 
-						sessionStorage.setItem("aid", docRef.id);
+						
+						// sessionStorage.setItem("aid", docRef.id);
 				});
 
 
