@@ -179,6 +179,7 @@
 				reviewFlag = false//false = first time review. true = review again
 				//var review_1 = db.collection("Article").doc(aid).collection()
 
+
 				$("#r_submit").on('click', function () {
 					$("#r_submit").hide();
 					$("#r_update").hide();
@@ -194,10 +195,11 @@
 			
 
 			//	var aid = "0Ptk3LUfu5y7E1GmAz0P"//temporary
-			aid=sessionStorage.get("aid");
-			reviewerNo=sessionStorage.get("reviewerNo");
+			aid=sessionStorage.getItem("aid");
+			reviewerNo=sessionStorage.getItem("reviewerNo");
 			console.log(aid)
 			console.log(reviewerNo)
+
 	
 
 
@@ -315,6 +317,15 @@ console.log(aid)
 						console.error("Error", error);
 					});
 
+					if(reviewerNo == 1){
+						db.collection("Article").doc(aid).update({reviewerOneStatus:"Reviewed"})
+
+					}
+					else 
+				{
+					db.collection("Article").doc(aid).update({reviewerTwoStatus:"Reviewed"})
+
+				}
 
 				});
 
