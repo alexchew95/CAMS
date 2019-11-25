@@ -302,11 +302,13 @@
 							db.collection("Article").doc(docRef.id).update({
 								aid : docRef.id
 								
+								
 							})
 						/* 	db.collection("Article").doc(docRef.id).set({ aid: docRef.id }, obj.assign({})).then(function (doc) {
 								console
 							})
 							console.error("Done "); */
+							sessionStorage.setItem("aid", docRef.id);
 
 						})
 						.catch(function (error) {
@@ -315,8 +317,8 @@
 							console.error("Done x ");
 						});
 
-						aid = sessionStorage.getItem("docRef.id");
-						//sessionStorage.setItem("aid", docRef.id);
+						
+						// sessionStorage.setItem("aid", docRef.id);
 				});
 
 
