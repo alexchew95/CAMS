@@ -157,7 +157,7 @@
 							<div class="btn-list">
 								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
 								<button href='#'  class="btn btn-danger">Back</button>
-								<button type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
+								<button style="display: none;" id = "upload" type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
 										class="fe fe-upload mr-2"></i>Upload</button>
 							</div>
 
@@ -253,6 +253,10 @@
 
 			//When the page has loaded.
 			$(document).ready(function () {
+
+				$("#add").on('click', function () {
+            $("#upload").show();
+        });
 
 				var today = new Date();
 				var dd = String(today.getDate()).padStart(2, '0');
