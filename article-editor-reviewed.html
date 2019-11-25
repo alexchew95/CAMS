@@ -153,6 +153,8 @@
 									//reviewr accept. editor cant do anyhting
 									reviewerOneStatus = doc.data().reviewerOneStatus;
 									reviewOneHtml = "";
+									editorReviewHtml=""
+									
 									if (reviewerOneStatus == "Reviewing") {
 										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
 											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
@@ -212,16 +214,19 @@
 											'data-placement="top" id="assignReviewer2">' +
 											'<i class="fe fe-x" ></i></button></div>'
 									}
+									if(reviewerOneStatus=="Reviewed"&&reviewerTwoStatus=="Reviewed"){
+										editorReviewHtml='<div class="btn-group" role="group" aria-label="Action Button">' +
+										'<button class="btn btn-sm" data-toggle="tooltip" ' +
+										'data-placement="top" title="Edit Product" id="viewArticle">' +
+										'<i class="fa fa-edit" ></i></button></div>';
+									}
 									articleDataArray.push([
 										doc.data().aid,
 										doc.data().entryDate,
 										doc.data().title,
 										reviewOneHtml,//createlink to view it
 										reviewTwoHtml,//create link to view it
-										'<div class="btn-group" role="group" aria-label="Action Button">' +
-										'<button class="btn btn-sm" data-toggle="tooltip" ' +
-										'data-placement="top" title="Edit Product" id="viewArticle">' +
-										'<i class="fa fa-edit" ></i></button></div>',]);
+										editorReviewHtml,]);
 								}
 
 							});
