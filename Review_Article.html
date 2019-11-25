@@ -18,9 +18,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
 	<!-- Generated: 2018-04-06 16:27:42 +0200 -->
 	<title>CAMS - Home</title>
-	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
@@ -61,7 +59,7 @@
 				<div class="container">
 					<div class="page-header">
 						<h1 class="page-title">
-							Journal Feedback
+							Article Feedback
 						</h1>
 					</div>
 
@@ -74,7 +72,7 @@
 							</div>
 							<div class="form-group">
 								<label class="form-label">Abstract:<span class="form-required">*</span></label>
-								<textarea name="Abstract_R" rows="5" cols="20" class="form-control"></textarea>
+								<textarea id="Abstract_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Keywords:<span class="form-required">*</span></label>
@@ -82,21 +80,21 @@
 							</div>
 							<div class="form-group">
 								<label class="form-label">Introduction:<span class="form-required">*</span></label>
-								<textarea name="Introduction_R" rows="5" cols="20" class="form-control"></textarea>
+								<textarea id="Introduction_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Literature Review:<span class="form-required">*</span></label>
-								<textarea name="Literature_Review_R" rows="5" cols="20" class="form-control"></textarea>
+								<textarea id="Literature_Review_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Research Methodology:<span
 										class="form-required">*</span></label>
-								<textarea name="Research_Methodology_R" rows="5" cols="20"
+								<textarea id="Research_Methodology_R" rows="5" cols="20"
 									class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Conclusion:<span class="form-required">*</span></label>
-								<textarea name="Conclusion_R" rows="5" cols="20" class="form-control"></textarea>
+								<textarea id="Conclusion_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Contribution/Novelty:<span
@@ -110,7 +108,7 @@
 							<div class="form-group">
 								<label class="form-label">Overall quality of the paper:<span
 										class="form-required">*</span></label>
-								<textarea name="Overall_R" rows="5" cols="20" class="form-control"></textarea>
+								<textarea id="Overall_R" rows="5" cols="20" class="form-control"></textarea>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Note to the editor:<span
@@ -134,7 +132,8 @@
 							<br />
 							<br />
 							<div class="btn-list">
-								<a href="#" id="add" class="btn btn-success" type="submit">Save</a>
+								<a href="#" id="r_update" class="btn btn-success" type="submit">Save</a>
+								<a href="#" id="r_submit" class="btn btn-success" type="submit">Submit</a>
 								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
 							</div>
 						</form>
@@ -176,64 +175,145 @@
 			//When the page has loaded.
 			$(document).ready(function () {
 
+				$("#r_submit").on('click', function () {
+					$("#r_submit").hide();
+					$("#r_update").hide();
+				});
+
+				//get today date
 				var today = new Date();
 				var dd = String(today.getDate()).padStart(2, '0');
 				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 				var yyyy = today.getFullYear();
 				today = mm + '/' + dd + '/' + yyyy;
 
-				//get aid from sessionStorage
-				//var articleId = sessionStorage.getItem("aid");
+				var aid = "2Ss9pEcpIDpgA32Phmvj"//temporary
+				//aid=sessionStorage.get("aid");
+				console.log(uid)
+				console.log(aid)
+
 				var db = firebase.firestore()
-				var o=Object();
-				o.test= "test"
-				//db.collection("Article").doc(articleId).
-				var articleRef = db.collection("Article").doc("2Ss9pEcpIDpgA32Phmvj").collection("reviews").doc(uid)
-			//	var articleRef = db.collection("Article").doc(articleId).collection("reviews").doc(uid)
-				articleRef.set(o)
-				/* articleRef.get().then(function (doc) {
+
+				//retrieve data from firestore and update the field
+				db.collection("Article").doc(aid).collection("reviews").doc(uid).get().then(function (querySnapshot) {
+					console.log(querySnapshot.data().Title)
+					$("#Title_R").val(querySnapshot.data().Title)
+
+					console.log(querySnapshot.data().Abstract)
+					$("#Abstract_R").val(querySnapshot.data().Abstract)
+
+					console.log(querySnapshot.data().Keywords)
+					$("#Keywords_R").val(querySnapshot.data().Keywords)
+
+					console.log(querySnapshot.data().Introduction)
+					$("#Introduction_R").val(querySnapshot.data().Introduction)
+
+					console.log(querySnapshot.data().Literature_Review)
+					$("#Literature_Review_R").val(querySnapshot.data().Literature_Review)
+
+					console.log(querySnapshot.data().Research_Methodology)
+					$("#Research_Methodology_R").val(querySnapshot.data().Research_Methodology)
+
+					console.log(querySnapshot.data().Conclusion)
+					$("#Conclusion_R").val(querySnapshot.data().Conclusion)
+
+					console.log(querySnapshot.data().Contribution)
+					$("#Contribution_R").val(querySnapshot.data().Contribution)
+
+					console.log(querySnapshot.data().References)
+					$("#References_R").val(querySnapshot.data().References)
+
+					console.log(querySnapshot.data().Overall)
+					$("#Overall_R").val(querySnapshot.data().Overall)
+
+					console.log(querySnapshot.data().NoteEditor)
+					$("#NoteEditor_R").val(querySnapshot.data().NoteEditor)
+
+					console.log(querySnapshot.data().Decision)
+					$("#Decision_R").val(querySnapshot.data().Decision)
+				});
 
 
-					// doc.data() will be undefined in this case
-					console.log("Document data:", doc.data());
-
-			}).catch(function (error) {
-				console.log("Error getting document:", error);
-			}); */
-
-				$("#add").click(function (event) {
-
-					var r_title = $("#Title_R").val();//get content from textbox
-					var r_abstract = $("#Abstract_R").val();//get content from textbox
-					var r_keywords = $("#Keywords_R").val();//get content from textbox
-					var r_introduction = $("#Introduction_R").val();//get content from textbox
-					var r_literature = $("#Literature_Review_R").val();//get content from textbox
-					var r_research = $("#Research_Methodology_R").val();//get content from textbox
-					var r_conclusion = $("#Conclusion_R").val();//get content from textbox
-					var r_contribution = $("#Contribution_R").val();//get content from textbox
-					var r_references = $("#References_R").val();//get content from textbox
-					var r_overall = $("#Overall_R").val();//get content from textbox
-					var r_note = $("#NoteEditor_R").val();//get content from textbox
-					var r_decision = $("#Decision_R").val();//get content from textbox
-					var object = new Object();
 
 
-					obj.title = r_title;//assign value to column
-					obj.abstract = r_abstract;//assign value to column
-					obj.keywords = r_keywords;//assign value to column
-					obj.introduction = r_introduction;//assign value to column
-					obj.literature = r_literature;//assign value to column
-					obj.research = r_research;//assign value to column
-					obj.conclusion = r_conclusion;//assign value to column
-					obj.contribution = r_contribution;//assign value to column
-					obj.references = r_references;//assign value to column
-					obj.overall = r_overall;//assign value to column
-					obj.notes = r_note;//assign value to column
-					obj.decision = r_decision;//assign value to column
+				//update reviewStatus
+				/*	if (uid==rid)
+						{
+							db.collection(Article).doc(uid).update({
+								reviewOneStatus:"Reviewed"
+							});
+	
+						}
+	*/
 
-					obj.aid = journal_R;
-					obj.uid = username;
-					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
+				$("#r_update").click(function (event) {
+
+					var db = firebase.firestore()
+					var obj = Object();
+
+					obj.Title = $("#Title_R").val();
+					obj.Abstract = $("#Abstract_R").val();
+					obj.Keywords = $("#Keywords_R").val();
+					obj.Introduction = $("#Introduction_R").val();
+					obj.Literature_Review = $("#Literature_Review_R").val();
+					obj.Research_Methodology = $("#Research_Methodology_R").val();
+					obj.Conclusion = $("#Conclusion_R").val();
+					obj.Contribution = $("#Contribution_R").val();
+					obj.References = $("#References_R").val();
+					obj.Overall = $("#Overall_R").val();
+					obj.NoteEditor = $("#NoteEditor_R").val();
+					obj.Decision = $("#Decision_R").val();
+					obj.Date = today;
+
+
+					var articleRef = db.collection("Article").doc("2Ss9pEcpIDpgA32Phmvj").collection("reviews").doc(uid)
+					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(rid)
+
+					//update firestore
+					articleRef.update(obj)
+
+					alert("Successful Update");
+
+
+				});
+
+				$("#r_submit").click(function (event) {
+
+					var db = firebase.firestore()
+					var obj = Object();
+
+					obj.Title = $("#Title_R").val();
+					obj.Abstract = $("#Abstract_R").val();
+					obj.Keywords = $("#Keywords_R").val();
+					obj.Introduction = $("#Introduction_R").val();
+					obj.Literature_Review = $("#Literature_Review_R").val();
+					obj.Research_Methodology = $("#Research_Methodology_R").val();
+					obj.Conclusion = $("#Conclusion_R").val();
+					obj.Contribution = $("#Contribution_R").val();
+					obj.References = $("#References_R").val();
+					obj.Overall = $("#Overall_R").val();
+					obj.NoteEditor = $("#NoteEditor_R").val();
+					obj.Decision = $("#Decision_R").val();
+					obj.Date = today;
+
+
+
+					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
+					var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(uid)
+
+					//update firestore
+					articleRef.update(obj)
+
+					//update article status to Reviewed
+					statusObj = new Object()
+					statusObj.status = "Reviewed"
+					alert("Submitted");
+
+					db.collection("Users").doc(uid).collection("AssignedArticle").doc(aid).update(statusObj).then(function () {
+						console.log("Document successfully updated!");
+					}).catch(function (error) {
+						console.error("Error", error);
+					});
 
 
 				});
