@@ -31,7 +31,7 @@ coverpdffile.addEventListener('change',function(e){
 
         let storageRef=storage.ref();
 
-        let AID=sessionStorage.getItem("aid");
+        let AID=sessionStorage.getItem("uid");
 
         let COVERFILE=storageRef.child('article/'+AID+coverpdffile.name)
 
