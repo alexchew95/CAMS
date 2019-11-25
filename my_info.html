@@ -218,7 +218,7 @@
 				
 					var storage = firebase.storage();
 					var storageRef = storage.ref();
-					var mountainImagesRef = storageRef.child('users-profile/' + uid + 'jpg');
+					var mountainImagesRef = storageRef.child('users-profile/' + uid + '.jpg');
 
 
 					//upload file
@@ -226,13 +226,13 @@
 						snapshot.ref.getDownloadURL().then(function(downloadURL) {
 							console.log("File available at", downloadURL);
 							//get uid from sessionStorage
-							var username = sessionStorage.getItem("uid");
+										console.log(uid)		
 							var Photo = downloadURL;
 							var obj = new Object();
 							obj.Photo = Photo;
 
 							var db = firebase.firestore();
-							db.collection("Users").doc(firebase.auth().currentUser.uid).update({
+							db.collection("Users").doc(uid).update({
 								Photo: downloadURL,
 							});
 							
