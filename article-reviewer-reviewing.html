@@ -35,7 +35,7 @@
 	<script src="./assets/js/dashboard.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
-	
+
 </head>
 
 <body class="">
@@ -67,18 +67,20 @@
 					</nav>
 					<div class="card-header">
 						<h1 class="page-title">
-							Accepted Article
+							My Article
 						</h1>
-					
+						<button id="addCustomer_button" class="btn btn-primary ml-auto"
+							onclick="location.href='add-journal.html';">Add Journal
+						</button>
 					</div>
 					<div class="card-body">
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Status</th>
-									<th>Resubmit</th>
+									<th>Decision</th>
 
 								</tr>
 							</thead>
@@ -88,10 +90,10 @@
 
 							<tfoot>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
 									<th>Status</th>
-									<th>Resubmit</th>
 
 								</tr>
 							</tfoot>
@@ -141,6 +143,9 @@
 			require(['jquery', 'mainjs', 'datatables'], function ($) {
 				//When the page has loaded.
 				$(document).ready(function () {
+					var reviewerNo = 0
+					var db = firebase.firestore()
+
 					getCurrentUserArticle();
 					$('#tableMyArticle tfoot th').each(function () {
 						var title = $(this).text();
@@ -151,30 +156,55 @@
 
 					});
 					function getCurrentUserArticle() {
-						var db = firebase.firestore()
+						console.log(uid)
 						var articleDataArray = []
-						db.collection("Article").get().then(snapshot => {
-
+						db.collection("Users").doc(uid).collection("AssignedArticle").get().then(snapshot => {
 							snapshot.forEach(doc => {
-								if (doc.data().uid == uid) {
-									console.log(doc.data().uid);
-									articleDataArray.push([
-										doc.data().entryDate,
-										doc.data().title,
-										doc.data().status,
-										doc.data().status,
+								console.log(doc.data())
+								if (doc.data().status == "Reviewing") {
+									db.collection("Article").doc(doc.data().aid)
+										.get()
+										.then(function (doc) {
+											if (doc.data().reviewerOne == uid) {
+												reviewerNo = 1
+											} if (doc.data().reviewerTwo == uid) {
+												reviewerNo = 2
+											}
+											reviewerDecisionHTML = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top" title="Edit Product" id="reviewArticle">' +
+												'<i class="fe fe-edit" ></i></button></div > '
+											articleDataArray.push([
+												doc.data().aid,
+												doc.data().entryDate,
+												doc.data().title,
+												reviewerDecisionHTML,
+											]);
+											console.log(reviewerNo);
+											inittable(articleDataArray);
 
-									]);
+										})
+										.catch(function (error) {
+											console.log("Error getting document: ", error);
+										})
 								}
 
 							});
-							inittable(articleDataArray);
+
+
 						});
 					}
 					function inittable(data) {
 						//console.log(data);
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
+							"columnDefs": [
+								{
+									"targets": [0],
+									"visible": false,
+									"searchable": false
+								},
+							]
 
 						});
 
@@ -190,6 +220,19 @@
 								}
 							});
 						});
+
+
+						$("#tableMyArticle").on('click', '#reviewArticle', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							aid = data.row[0]
+							sessionStorage.setItem("aid", data.row[0]);
+							sessionStorage.setItem("reviewerNo", reviewerNo);
+							console.log(reviewerNo)
+							window.location.href = "Review_Article.html";
+
+						});
+
 					}
 
 
