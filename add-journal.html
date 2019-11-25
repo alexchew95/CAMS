@@ -122,17 +122,17 @@
 									<div class="col-md-5">
 										<label class="form-label">Corresponding Author(s):<span
 												class="form-required">*</span></label>
-										<input type="text" class="form-control" placeholder="Author" />
+										<input type="text" id = "C_Name" class="form-control" placeholder="Author" />
 									</div>
 									<div class="col-md-5">
 										<label class="form-label">Email:<span class="form-required">*</span></label>
-										<input type="text" class="form-control" placeholder="Email">
+										<input type="text" id = "C_Email" class="form-control" placeholder="Email">
 
 									</div>
 									<div class="btn-list">
 										<label class="form-label"><span style="opacity: 0 ;">This is
 												transparent</span></label>
-										<a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add More</a>
+										<a href="javascript:void(0)" class="btn btn-primary" id="plus5" onclick="add_element_to_array();">Add More</a>
 										<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
 									</div>
 								</div>
@@ -156,7 +156,7 @@
 							</div> -->
 							<div class="btn-list">
 								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
-								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
+								<button href='#'  class="btn btn-danger">Back</button>
 								<button type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
 										class="fe fe-upload mr-2"></i>Upload</button>
 							</div>
@@ -231,14 +231,15 @@
 			$(this).closest('#dynamic_form').remove();
 		});
 
-		    // $('form').on('submit', function(event){
-	        // 	var values = {};
-			// 	$.each($('form').serializeArray(), function(i, field) {
-			// 	    values[field.name] = field.value;
-			// 	});
-			// 	console.log(values)
-        	// 	event.preventDefault();
-        	// })
+		var x = 0;
+		var array = Array();
+		function add_element_to_array()
+			{
+			array[x] = document.getElementById("C_Name0").value;
+			x++;
+			console.log(array)
+			}
+
 	</script>
 
 
