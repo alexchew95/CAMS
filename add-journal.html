@@ -26,10 +26,9 @@
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 	<script src="./assets/js/require.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.12.4.min.js" 
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" 
-        crossorigin="anonymous">
-	</script>
+	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+		integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous">
+		</script>
 	<script src="./assets/js/dynamic-form.js"></script>
 
 	<script>
@@ -78,52 +77,70 @@
 								<input type="text" id="ArticleType" class="form-control" />
 							</div>
 							<div class="form-group">
-								<label class="custom-file" >Main Subject Area of Artical:<span
+								<label class="custom-file">Main Subject Area of Artical:<span
 										class="form-required">*</span></label>
 								<!-- <input type="text" id="Area" class="form-control" /> -->
-										<select name="AreaOfInterest" id = "Area">
-											<option value="Algorithms">Algorithms</option>
-											<option value="Artificial Intelligence">Artificial Intelligence</option>
-											<option value="Circular Economy">Circular Economy</option>
-											<option value="Computer Vision">Computer Vision</option>
-											<option value="E-Commerce">E-Commerce</option>
-											<option value="Hospitality, Travel, and Tourism Management">Hospitality, Travel, and Tourism Management</option>
-											<option value="Intelligent Automation">Intelligent Automation</option>
-											<option value="Marketing">Marketing</option>
-											<option value="Mobile Apps">Mobile Apps</option>
-											<option value="Mobile Payment Systems">Mobile Payment Systems</option>
-											<option value="Sensor Technology">Sensor Technology</option>
-											<option value="Virtual Reality">Virtual Reality</option>
-											<option value="Web Technologies">Web Technologies</option>
-										</select>
+								<select name="AreaOfInterest" id="Area">
+									<option value="Algorithms">Algorithms</option>
+									<option value="Artificial Intelligence">Artificial Intelligence</option>
+									<option value="Circular Economy">Circular Economy</option>
+									<option value="Computer Vision">Computer Vision</option>
+									<option value="E-Commerce">E-Commerce</option>
+									<option value="Hospitality, Travel, and Tourism Management">Hospitality, Travel, and
+										Tourism Management</option>
+									<option value="Intelligent Automation">Intelligent Automation</option>
+									<option value="Marketing">Marketing</option>
+									<option value="Mobile Apps">Mobile Apps</option>
+									<option value="Mobile Payment Systems">Mobile Payment Systems</option>
+									<option value="Sensor Technology">Sensor Technology</option>
+									<option value="Virtual Reality">Virtual Reality</option>
+									<option value="Web Technologies">Web Technologies</option>
+								</select>
 							</div>
 							<div class="form-group">
 								<label class="form-label">Full Title of Journal:<span
 										class="form-required">*</span></label>
 								<input type="text" id="title" class="form-control" />
 							</div>
-
-							<form id = "CA">
-									<div class = "row" id = "dynamic_form">
-											<div class="col-md-5">
-													<label class="form-label">Corresponding Author(s):<span class="form-required">*</span></label>
-													<input type="text" id="CA_Name" class="form-control" placeholder="Author"/>
-											</div>
-											<div class="col-md-5">
-													<label class="form-label">Email:<span class="form-required">*</span></label>
-													<input type="text" class="form-control"  id="email" placeholder="Email">
-											
-											</div>
-											<div class="btn-list">
-													<label class="form-label"><span style="opacity: 0 ;">This is transparent</span></label>
-													<a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add More</a>
-													<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
-											</div>		
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-5">
+										<label class="form-label">Author:<span class="form-required">*</span></label>
+										<input type="text" id="CA_Name" class="form-control" placeholder="Disabled.."
+											disabled />
 									</div>
-									<button id = "test" type="submit" class="btn btn-primary">Submit</button>
+									<div class="col-md-5">
+										<label class="form-label">Email:<span class="form-required">*</span></label>
+										<input type="text" class="form-control" id="email" placeholder="Disabled.."
+											disabled>
+									</div>
+								</div>
+							</div>
+
+							<form id="CA">
+								<div class="row" id="dynamic_form">
+									<div class="col-md-5">
+										<label class="form-label">Corresponding Author(s):<span
+												class="form-required">*</span></label>
+										<input type="text" class="form-control" placeholder="Author" />
+									</div>
+									<div class="col-md-5">
+										<label class="form-label">Email:<span class="form-required">*</span></label>
+										<input type="text" class="form-control" placeholder="Email">
+
+									</div>
+									<div class="btn-list">
+										<label class="form-label"><span style="opacity: 0 ;">This is
+												transparent</span></label>
+										<a href="javascript:void(0)" class="btn btn-primary" id="plus5">Add More</a>
+										<a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a>
+									</div>
+								</div>
+								<br />
+								<button id="test" type="submit" class="btn btn-primary">Submit</button>
 							</form>
-							
-							
+
+
 							<div class="form-group mb-0">
 								<label class="form-label">Abstract:<span class="form-required">*</span></label>
 								<input type="text" id="Abstract" class="form-control" />
@@ -138,80 +155,81 @@
 									<button>Upload Article</button>
 							</div> -->
 							<div class="btn-list">
-									<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
-									<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
-									<button type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i class="fe fe-upload mr-2"></i>Upload</button>
-								</div>
-							
+								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
+								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
+								<button type="button" class="btn btn-dark"><a href="FILEUPLOADindex.html" /><i
+										class="fe fe-upload mr-2"></i>Upload</button>
+							</div>
+
 							<!-- <div class="form-group">
 									<div class="custom-file">
 									  <input type="file" class="custom-file-input" name="example-file-input-custom">
 									  <label class="custom-file-label">Choose file</label>
 									  <!-- <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button> -->
-									</div>
-							</div> -->
-							
-							<br />
-							<br />
-							<!-- <div class="btn-list">
+				</div>
+			</div> -->
+
+			<br />
+			<br />
+			<!-- <div class="btn-list">
 								<a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
 								<button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
 								<button href="FILEUPLOADindex.html" type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button>
 							</div> -->
 
-						
-						</form>
 
-						
-					</fieldset>
-				</div>
-
-			</div>
+			</form>
 
 
-
+			</fieldset>
 		</div>
-		<div class="footer">
 
-		</div>
-		<footer class="footer">
-			<div class="container">
-				<div class="row align-items-center flex-row-reverse">
-					<div class="col-auto ml-lg-auto">
-						<div class="row align-items-center">
-
-						</div>
-					</div>
-					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-						Copyright © 2018
-						<a href=".">CAMS Sdn Bhd</a>. Theme by
-						<a href="https://tentspark.com" target="_blank">tenstpark</a> All rights reserved.
-					</div>
-				</div>
-			</div>
-		</footer>
 	</div>
 
-	
+
+
+	</div>
+	<div class="footer">
+
+	</div>
+	<footer class="footer">
+		<div class="container">
+			<div class="row align-items-center flex-row-reverse">
+				<div class="col-auto ml-lg-auto">
+					<div class="row align-items-center">
+
+					</div>
+				</div>
+				<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+					Copyright © 2018
+					<a href=".">CAMS Sdn Bhd</a>. Theme by
+					<a href="https://tentspark.com" target="_blank">tenstpark</a> All rights reserved.
+				</div>
+			</div>
+		</div>
+	</footer>
+	</div>
+
+
 
 	<script>
-		var dynamic_form =  $("#dynamic_form").dynamicForm("#dynamic_form","#plus5", "#minus5", {
-		        limit:5,
-		        formPrefix : "dynamic_form",
-		        normalizeFullForm : false
-				});
-			
-			//dynamic_form.inject([{CA_Name: username,email: email}]);
-			document.getElementById('CA_Name0').value = sessionStorage.getItem("name");
-			document.getElementById('email0').value = sessionStorage.getItem("email");
+		var dynamic_form = $("#dynamic_form").dynamicForm("#dynamic_form", "#plus5", "#minus5", {
+			limit: 5,
+			formPrefix: "dynamic_form",
+			normalizeFullForm: false
+		});
 
-		    $("#dynamic_form #minus5").on('click', function(){
-		    	var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
-		    	if (initDynamicId === 1) {
-		    		$(this).closest('#dynamic_form').next().find('#minus5').hide();
-		    	}
-		    	$(this).closest('#dynamic_form').remove();
-		    });
+		//dynamic_form.inject([{CA_Name: username,email: email}]);
+		document.getElementById('CA_Name').value = sessionStorage.getItem("name");
+		document.getElementById('email').value = sessionStorage.getItem("email");
+
+		$("#dynamic_form #minus5").on('click', function () {
+			var initDynamicId = $(this).closest('#dynamic_form').parent().find("[id^='dynamic_form']").length;
+			if (initDynamicId == 1) {
+				$(this).closest('#dynamic_form').next().find('#minus5').hide();
+			}
+			$(this).closest('#dynamic_form').remove();
+		});
 
 		    // $('form').on('submit', function(event){
 	        // 	var values = {};
@@ -234,17 +252,19 @@
 				var dd = String(today.getDate()).padStart(2, '0');
 				var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
 				var yyyy = today.getFullYear();
+				var aid;
 				today = mm + '/' + dd + '/' + yyyy;
-			
+
 				//get uid from sessionStorage
 				var username = sessionStorage.getItem("uid");
 
-				$("#test").click(function (event){
+				$("#test").click(function (event) {
 					var values = {};
-					$.each($('form').serializeArray(), function(i, field) {
-						values[field.name] = field.value;
+					$.each($('form').serializeArray(), function (i, field) {
+						console.log(field)
+
+						//values[field.name] = field.value;
 					});
-					console.log(values)
 					event.preventDefault();
 				});
 
@@ -257,8 +277,11 @@
 					var abstract1 = $("#Abstract").val();//get content from textbox
 					var keywords = $("#Keywords").val();//get content from textbox
 					var CA = $('#CA_Name').val();
+					//var aid = "";
 					var obj = new Object();//create table
+					
 
+					//obj.aid = aid;
 					obj.article = article1;//assign value to column
 					obj.CA = CA;
 					obj.entryDate = today;
@@ -274,13 +297,24 @@
 					var db = firebase.firestore()
 					db.collection("Article").add(obj)
 						.then(function (docRef) {
-							db.collection("Article").doc(docRef.id).set({aid: docRef.id}, obj.assign({}))
-							console.error("Done ");
+							console.log(docRef.id)
+							db.collection("Article").doc(docRef.id).update({
+								aid : docRef.id
+								
+							})
+						/* 	db.collection("Article").doc(docRef.id).set({ aid: docRef.id }, obj.assign({})).then(function (doc) {
+								console
+							})
+							console.error("Done "); */
+
 						})
 						.catch(function (error) {
+
 							console.error("Error writing document: ", error);
-							console.error("Done ");
+							console.error("Done x ");
 						});
+
+						sessionStorage.setItem("aid", docRef.id);
 				});
 
 
