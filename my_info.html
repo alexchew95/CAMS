@@ -21,14 +21,15 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
-	<script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
+	<!-- <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.4.0/firebase-firestore.js"></script> -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> 
     <script src="//geodata.solutions/includes/countrystatecity.js"></script>
 
 	<!-- <script src="./assets/js/firebase.js"></script> -->
 
+	<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase.js"></script>
 	<script src="./assets/js/require.min.js"></script>
 
 	<script>
@@ -80,11 +81,11 @@
                                 <form id="Add_Journal_Info">
                                     <div class="form-group">
                                         <label class="form-label">Name:<span class="form-required">*</span></label>
-                                        <input type="text" id="ArticleType" class="form-control" />
+                                        <input type="text" id="Username" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                             <label class="form-label">Title:</label>
-                                            <select name="AreaOfInterest" id = "Area" class="form-control custom-select">
+                                            <select name="Title" id = "title" class="form-control custom-select">
                                                     <option class = "dropdown" value="Dr.">Dr.</option>
                                                     <option value="Mr.">Mr.</option>
                                                     <option value="Mrs.">Mrs.</option>
@@ -98,11 +99,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Affiliation:<span class="form-required">*</span></label>
-                                        <input type="text" id="title" class="form-control" />
+                                        <input type="text" id="aff" class="form-control" />
                                     </div>
                                     <div class="form-group mb-0">
                                         <label class="form-label">Address:<span class="form-required">*</span></label>
-                                        <input type="text" id="Abstract" class="form-control" />
+                                        <input type="text" id="address" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Country:<span class="form-required">*</span></label>
@@ -126,24 +127,22 @@
                                     </div> -->
                                     <div class="form-group mb-0">
                                             <label class="form-label">E-mail Address:<span class="form-required">*</span></label>
-                                            <input type="text" id="Abstract" class="form-control" />
+                                            <input type="text" id="email" class="form-control" />
                                     </div>
                                     <div class="form-group">
                                             <label class="form-label">Telephone:</label>
                                             <input type="text" name="field-name" class="form-control" data-mask="000-000-0000" data-mask-clearifnotmatch="true" placeholder="000-000-0000" autocomplete="off" maxlength="10">
 									</div>
 									<div class="form-group">
-											<label class="form-label">LPP:</label>
+											<label class="form-label">Upload Profile Picture:</label>
 											<div class="custom-file">
-													<input type="file" class="custom-file-input" name="example-file-input-custom">
-													<label class="custom-file-label" for="customFile" id="fileMessage">Choose file</label>
-													<!-- <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button> -->
-												  </div>
-										  </div>
-                                    <br />
-                                    <br />
+												<!-- <input type="file" class="custom-file-input" name="example-file-input-custom"> -->
+												<input type="file" value="upload" id="fileButton" name="files[]" />
+												<!-- <button type="button" class="btn btn-dark"><i class="fe fe-upload mr-2"></i>Upload</button> -->
+											</div>
+									</div>
                                     <div class="btn-list">
-                                        <a href="#" id="add" class="btn btn-success" type="submit">Save changes</a>
+                                        <a href="#" id="add" onclick="location.href = 'home.html';" class="btn btn-success" type="submit">Save changes</a>
                                         <button href='#' onclick="window.history.back()" class="btn btn-danger">Back</button>
                                     </div>
                                 </form>
@@ -185,23 +184,66 @@
 			//When the page has loaded.
 			$(document).ready(function () {
 
-				$('#file').on("change", function (evt) {
-					evt.stopPropagation();
-					evt.preventDefault();
-					file = evt.target.files[0];
+				document.getElementById('Username').value = sessionStorage.getItem("name");
+				document.getElementById('email').value = sessionStorage.getItem("email");
 
-					$("#fileMessage").text(file.name);
+				// $('#file').on("change", function (evt) {
+				// 	evt.stopPropagation();
+				// 	evt.preventDefault();
+				// 	file = evt.target.files[0];
+
+				// 	$("#fileMessage").text(file.name);
 
 
-					var metadata = {
-					'contentType': file.type
-					};
+				// 	var metadata = {
+				// 	'contentType': file.type
+				// 	};
 
-					var storageRef = firebase.storage().ref();
-					storageRef.child('users-profile/' + firebase.auth().currentUser.uid).put(file, metadata).then(function (snapshot) {
+				// 	var storageRef = firebase.storage().ref();
+				// 	storageRef.child('users-profile/' + firebase.auth().currentUser.uid).put(file, metadata).then(function (snapshot) {
+				// 	});
+
+
+				// });
+
+				var fileButton = document.getElementById('fileButton');
+
+				fileButton.addEventListener('change', function (e) {
+					console.log("button")
+					//get file
+					var file = e.target.files[0];
+					
+
+					//create a storage ref
+				
+					var storage = firebase.storage();
+					var storageRef = storage.ref();
+					var mountainImagesRef = storageRef.child('users-profile/' + uid + '.jpg');
+
+
+					//upload file
+					mountainImagesRef.put(file).then(function (snapshot) {
+						snapshot.ref.getDownloadURL().then(function(downloadURL) {
+							console.log("File available at", downloadURL);
+							//get uid from sessionStorage
+										console.log(uid)		
+							var Photo = downloadURL;
+							var obj = new Object();
+							obj.Photo = Photo;
+
+							var db = firebase.firestore();
+							db.collection("Users").doc(uid).update({
+								Photo: downloadURL,
+							});
+							
+							
+						
+						});
+						console.log("upload success")
+						//window.location = "home.html";
 					});
 
-
+				
 				});
 
 			});

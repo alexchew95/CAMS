@@ -35,7 +35,7 @@
 	<script src="./assets/js/dashboard.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 	<link href="./assets/css/datatables.min.css" rel="stylesheet" />
-	
+
 </head>
 
 <body class="">
@@ -57,17 +57,18 @@
 				<!-- <div class="custom-loader"></div>
  -->
 				<div class="container">
-					
-				
+
+
 					<div class="card-body">
 						<table class="table table-responsive" id="tableMyArticle">
 							<thead>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Status</th>
-									<th>Review Status</th>
-									<th>Resubmit</th>
+									<th>Review 1</th>
+									<th>Review 2</th>
+									<th></th>
 
 								</tr>
 							</thead>
@@ -77,11 +78,12 @@
 
 							<tfoot>
 								<tr>
+									<th></th>
 									<th>Entry Date</th>
 									<th>Title</th>
-									<th>Status</th>
-									<th>Review Status</th>
-									<th>Resubmit</th>
+									<th>Reviewer 1</th>
+									<th>Review 2</th>
+									<th></th>
 
 								</tr>
 							</tfoot>
@@ -146,17 +148,80 @@
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().status == "Pending") {
-									console.log(doc.data().uid);
+								if (doc.data().reviewStatus == "Reviewing") {
+									//reviewer 1
+									//reviewr accept. editor cant do anyhting
+									reviewerOneStatus = doc.data().reviewerOneStatus;
+									reviewOneHtml = "";
+									if (reviewerOneStatus == "Reviewing") {
+										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
+											'<i class="fe fe-lock" ></i></button></div>'
+									}
+									//reviewer finish reviewing
+									// bring editor to page to read the review
+									if (reviewerOneStatus == "Reviewed") {
+										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip"  ' +
+											'data-placement="top" value="' + doc.data().reviewerOne + '" id="viewReview1">' +
+											'<i class="fe fe-unlock" ></i></button></div>'
+									}
+									//reviewer havent accept or reject
+									//do nothing
+									if (reviewerOneStatus == "Pending") {
+										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
+											'<i class="fe fe-help-circle" ></i></button></div>'
+									}
+									//Reviewer reject the offer. need to assign new reviewer
+									if (reviewerOneStatus == "ReviewerReject") {
+										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" ' +
+											'data-placement="top" id="assignReviewer1">' +
+											'<i class="fe fe-x" ></i></button></div>'
+									}
+
+									//reviewer2
+									reviewerTwoStatus = doc.data().reviewerTwoStatus;
+									reviewTwoHtml = "";
+									//reviewr accept. editor cant do anyhting
+									if (reviewerTwoStatus == "Reviewing") {
+										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
+											'<i class="fe fe-lock" ></i></button></div>'
+									}
+									//reviewer finish reviewing
+									// bring editor to page to read the review
+									if (reviewerTwoStatus == "Reviewed") {
+										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip"' +
+											' data-placement="top" value="' + doc.data().reviewerTwo + '"id="viewReview2">' +
+											'<i class="fe fe-unlock" ></i></button></div>'
+									}
+									//reviewer havent accept or reject
+									//do nothing
+									if (reviewerTwoStatus == "Pending") {
+										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
+											'<i class="fe fe-help-circle" ></i></button></div>'
+									}
+									//Reviewer reject the offer. need to assign new reviewer
+									if (reviewerTwoStatus == "ReviewerReject") {
+										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+											'<button class="btn btn-sm" data-toggle="tooltip" ' +
+											'data-placement="top" id="assignReviewer2">' +
+											'<i class="fe fe-x" ></i></button></div>'
+									}
 									articleDataArray.push([
+										doc.data().aid,
 										doc.data().entryDate,
 										doc.data().title,
-										doc.data().status,
-										doc.data().reviewStatus
-										,
-										doc.data().status,
-
-									]);
+										reviewOneHtml,//createlink to view it
+										reviewTwoHtml,//create link to view it
+										'<div class="btn-group" role="group" aria-label="Action Button">' +
+										'<button class="btn btn-sm" data-toggle="tooltip" ' +
+										'data-placement="top" title="Edit Product" id="viewArticle">' +
+										'<i class="fa fa-edit" ></i></button></div>',]);
 								}
 
 							});
@@ -167,9 +232,59 @@
 						//console.log(data);
 						var table = $('#tableMyArticle').DataTable({
 							"aaData": data,
+							"columnDefs": [
+								{
+									"targets": [0],
+									"visible": false,
+									"searchable": false
+								},
+							]
 
 						});
+						$("#tableMyArticle").on('click', '#viewArticle', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log(data.row[0]);
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							window.location.href = "editor-view-review.html";
+						});
+						//for editor to reassign the reviewer
+						$("#tableMyArticle").on('click', '#assignReviewer1', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log(data.row[0]);
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("reviewerNo", 1); //store data in localstorage for editing in next page
 
+							//window.location.href = "editor-view-review.html";
+						}); $("#tableMyArticle").on('click', '#assignReviewer2', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log(data.row);
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("reviewerNo", 2); //store data in localstorage for editing in next page
+							//window.location.href = "editor-reassign-reviewer.html";
+						});
+
+						//for editor to view the review
+						$("#tableMyArticle").on('click', '#viewReview1', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log( $("#viewReview1").val());
+
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("reviewerId", $("#viewReview1").val()); //store data in localstorage for editing in next page
+
+							//window.location.href = "editor-view-review.html";
+						}); $("#tableMyArticle").on('click', '#viewReview2', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log( data.row);
+							console.log( $("#viewReview2").val());
+							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("reviewerId", $("#viewReview2").val()); //store data in localstorage for editing in next page
+							//window.location.href = "editor-reassign-reviewer.html";
+						});
 						// Apply the search
 						table.columns().every(function () {
 							var that = this;
