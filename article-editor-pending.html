@@ -181,14 +181,12 @@
 							]
 
 						});
-						$("#tableMyArticle").on('click', '#assignReviewer1', function () {
+						$("#tableMyArticle").on('click', '#viewArticle', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log(data.row[0]);
 							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
-							sessionStorage.setItem("reviewerNo", 1); //store data in localstorage for editing in next page
-
-							//window.location.href = "editor-view-review.html";
+							window.location.href = "editor-view-article.html";
 						});
 						// Apply the search
 						table.columns().every(function () {
