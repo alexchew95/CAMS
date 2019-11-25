@@ -80,11 +80,15 @@
                                     <input type="string" id="articleName" style="max-width:250px" class="form-control"
                                         focus required><br>
                                 </div>
+                                <div class="md-form">
+                                    <a target="_blank" href="" id="coverLink">Cover</a>
 
+                                </div>
+                                <div class="md-form">
+                                    <a target="_blank" href="" id="mergeLink">Biography/Paper File</a>
+                                </div>
 
                                 <div class="text-left">
-                                    <button id="download1" type"submit">Download Cover Letter</button><br><br>
-                                    <button id="download2" type"submit">Download File</button><br><br>
                                     <button id="accept" type"submit">Accept</button><br><br>
                                     <button id="reject" type"submit">Reject</button><br><br>
                                 </div>
@@ -94,7 +98,7 @@
                                 <div class="md-form">
                                     <label for="assignReviewer">First Reviewer:</label>
                                     <select id="assignReviewer" focus required>
-                                        <option id="0">Please assign reviewer</option>
+
                                     </select>
 
                                 </div>
@@ -110,9 +114,6 @@
                                     <button id="assign" type"submit">Assign</button>
                                 </div>
                             </form>
-
-
-
 
                         </div>
 
@@ -158,12 +159,9 @@
                     .get()
                     .then(function (doc) {
                         $("#articleName").val(doc.data().title)
-
-                        $("#reviewer1").val(doc.data().reviewerOne)
-                        $("#reviewer2").val(doc.data().reviewerTwo)
-
                         console.log(doc.data());
-
+                        $("#coverLink").prop("href", doc.data().CoverURL)
+                        $("#mergeLink").prop("href", doc.data().MergeURL)
 
                     })
                     .catch(function (error) {
@@ -216,7 +214,7 @@
                 });
 
                 function loadReviewer() {
-                    reviewerDD = ""
+                    reviewerDD = '<option id="0">Please assign reviewer</option>'
 
                     db.collection("Users").get().then(snapshot => {
 
