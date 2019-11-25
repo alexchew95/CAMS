@@ -46,12 +46,13 @@ coverpdffile.addEventListener('change',function(e){
               
                 var coverpdf = sessionStorage.getItem("aid");
                 var Cover = downloadURL;
-                var obj = new Object();
-                obj.Cover = Cover;
+                // var obj = new Object();
+                // obj.Cover = Cover;
+                var aid = sessionStorage.getItem("aid");
 
                 var db = firebase.firestore();
-				db.collection("Article").doc(firebase.auth().currentUser.aid).update({
-				Cover: downloadURL,
+				db.collection("Article").doc(aid).update({
+				CoverURL: Cover,
 							});
             
             });
