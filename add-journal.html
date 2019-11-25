@@ -137,7 +137,7 @@
 									</div>
 								</div>
 								<br />
-								<button id="test" type="submit" class="btn btn-primary">Submit</button>
+								<!-- <button id="test" type="submit" class="btn btn-primary">Submit</button> -->
 							</form>
 
 
@@ -231,13 +231,18 @@
 			$(this).closest('#dynamic_form').remove();
 		});
 
-		var x = 0;
+		 x = 0;
+		var id = 0;
 		var array = Array();
+		var array1 = Array();
 		function add_element_to_array()
 			{
-			array[x] = document.getElementById("C_Name0").value;
-			x++;
-			console.log(array)
+				array[x] = document.getElementById("C_Name"+id).value;
+				array1[x] = document.getElementById("C_Email"+id).value;	
+				x++;
+				id++;
+				console.log(array)
+				console.log(array1)
 			}
 
 	</script>
@@ -278,6 +283,8 @@
 					var abstract1 = $("#Abstract").val();//get content from textbox
 					var keywords = $("#Keywords").val();//get content from textbox
 					var CA = $('#CA_Name').val();
+					var CoverURL = "";
+					var MergeURL = ""; 
 					//var aid = "";
 					var obj = new Object();//create table
 					
@@ -293,6 +300,8 @@
 					obj.abstract = abstract1;//assign value to column
 					obj.keywords = keywords;//assign value to column
 					obj.uid = username;
+					obj.CoverURL = CoverURL;
+					obj.MergeURL = MergeURL;
 					//obj.CreatedDateTime = firebase.firestore.FieldValue.serverTimestamp();//assign value to CreatedDateTime  column 
 
 					var db = firebase.firestore()
@@ -304,6 +313,18 @@
 								
 								
 							})
+							console.log(x)
+							//run array add based on x size
+							for(a=0;a<=x;a++)
+							{
+								var authorsObj = new Object();
+								authorsObj.name = document.getElementById("C_Name"+a).value;
+								authorsObj.email = document.getElementById("C_Email"+a).value;
+console.log(authorsObj.name)
+								db.collection("Article").doc(docRef.id).collection("authors").add(authorsObj)
+							}
+							//db.collection("Article").doc(docRef.id).collection("authors").add(array)
+
 						/* 	db.collection("Article").doc(docRef.id).set({ aid: docRef.id }, obj.assign({})).then(function (doc) {
 								console
 							})
