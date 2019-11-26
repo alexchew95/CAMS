@@ -83,7 +83,7 @@
                                 </div>
                                 <br><br><br>
 
-                                <div class="text-center"> 
+                                <div class="text-center">
                                     <button id="save" type"submit">Save</button>
                                     <button id="cancel" type"submit">Cancel</button>
                                 </div>
@@ -177,16 +177,34 @@
 
                 }
 
-                $("#save").click(function(e){
-                    
+                $("#save").click(function (e) {
+                    var newReviewerObj = new Object();
+                    if (reviewerNo == 1) {
+                        newReviewerObj.reviewerOne = $("#reAssignReviewer").val()
+                        newReviewerObj.reviewerOneStatus = "Pending"
+                        console.log(newReviewerObj.reviewerOne)
+                    }
+                    else {
+                        newReviewerObj.reviewerTwo = $("#reAssignReviewer").val()
+                        newReviewerObj.reviewerTwoStatus = "Pending"
+                        console.log(newReviewerObj.reviewerTwo)
+                    }
 
-
-
-                    console.log("save successfully")
+                    db.collection("Article").doc(aid).update(newReviewerObj).then(function (docRef) {
+                        console.log("article updated")
+                        newRev = $("#reAssignReviewer").val()
+                        console.log(newRev)
+                        //update user assigned article
+                        userAAObj = new Object()
+                        userAAObj.aid = aid
+                        userAAObj.status = "Pending"
+                        db.collection("Users").doc(newRev).collection("AssignedArticle").doc(aid).update(userAAObj).then(function () {
+                            console.log("User AA updated")
+                        })
+                    })
                     e.preventDefault();
                 })
-
-                $("#cancel").click(function(e){
+                $("#cancel").click(function (e) {
                     window.location.href = "article-editor-reviewed.html";
                     e.preventDefault();
                 })
