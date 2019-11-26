@@ -94,6 +94,18 @@
                                 </div>
                             </form>
 
+                            <form id="CommentBox">
+                                <div class="md-form">
+                                    <label for="box">Comment:</label>
+                                    <input type="string" id="box" style="max-width:250px" class="form-control"
+                                        focus required><br>
+                                </div>
+
+                                <div class="text-left">
+                                    <button id="confirmReject" type"submit">Submit</button><br><br>
+                                </div>
+                            </form>
+
                             <form id="AssignReviewer">
                                 <div class="md-form">
                                     <label for="assignReviewer">First Reviewer:</label>
@@ -169,7 +181,8 @@
                     })
 
                 $("#AssignReviewer").hide();
-                $("#accept").click(function (e) {
+                $("#CommentBox").hide();
+                $("#accept").click(function (e){
                     alert("Please assign reviewer");
                     $("#AssignReviewer").show();
                     $("#download1").hide();
@@ -180,6 +193,28 @@
 
                     e.preventDefault();
                 });
+
+                $("#reject").click(function (e){
+                    $("#CommentBox").show();
+        
+                    console.log("show")
+                    e.preventDefault();
+
+                });
+
+                $("#confirmReject").click(function (e){
+                    var commentBox = $("#box").val();
+                    var boxObj = new Object();
+                    boxObj.comment = box;
+                    console.log(aid);
+
+                    /* db.collection("Article").doc(aid).add(boxObj).then(function (docRef) {
+                        console.log("success article")
+                    }) */
+                    
+                    e.preventDefault();
+
+                })
 
                 $("#assign").click(function (e) {
                     var articleName = $("#articleName").val();
