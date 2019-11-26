@@ -203,18 +203,17 @@
                 });
 
                 $("#confirmReject").click(function (e){
-                    var commentBox = $("#box").val();
+                    var box = $("#box").val();
                     var boxObj = new Object();
                     boxObj.comment = box;
                     console.log(aid);
 
-                    /* db.collection("Article").doc(aid).add(boxObj).then(function (docRef) {
+                    db.collection("Article").doc(aid).update(boxObj).then(function (docRef) {
                         console.log("success article")
-                    }) */
+                    })
                     
                     e.preventDefault();
-
-                })
+                });
 
                 $("#assign").click(function (e) {
                     var articleName = $("#articleName").val();
