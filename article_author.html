@@ -51,69 +51,75 @@
 
 			</div>
 		</div>
+
 		<body class="">
 
-		<div class="my-3 my-md-5">
-			<!-- <div class="custom-loader"></div>
+			<div class="my-3 my-md-5">
+				<!-- <div class="custom-loader"></div>
  -->
-			<div class="container">
-				<nav aria-label="breadcrumb">
-					<ol class="breadcrumb">
-						<li class="breadcrumb-item">
-							<a href="home.html">Home</a>
-						</li>
-						<li class="breadcrumb-item active" aria-current="page">My Article</li>
-					</ol>
-				</nav>
-				<div class="card-header">
-					<h1 class="page-title">
-						My Article
-					</h1>
-					<button id="addCustomer_button" class="btn btn-primary ml-auto"
-						onclick="location.href='add-journal.html';">Add Journal
-					</button>
+				<div class="container">
+					<nav aria-label="breadcrumb">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">
+								<a href="home.html">Home</a>
+							</li>
+							<li class="breadcrumb-item active" aria-current="page">My Article</li>
+						</ol>
+					</nav>
+					<div class="card-header">
+						<h1 class="page-title">
+							My Article
+						</h1>
+						<button id="addCustomer_button" class="btn btn-primary ml-auto"
+							onclick="location.href='add-journal.html';">Add Journal
+						</button>
+					</div>
+					<div class="card-body">
+						<table class="table table-responsive" id="tableMyArticle">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Entry Date</th>
+									<th>Title</th>
+									<th>Status</th>
+									<th>Resubmit</th>
+									<th>Review 1</th>
+									<th>Review 2</th>
+
+								</tr>
+							</thead>
+							<tbody id="userListBody">
+
+							</tbody>
+
+							<tfoot>
+								<tr>
+									<th></th>
+									<th>Entry Date</th>
+									<th>Title</th>
+									<th>Status</th>
+									<th>Resubmit</th>
+									<th>Review 1</th>
+									<th>Review 2</th>
+
+
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
-				<div class="card-body">
-					<table class="table table-responsive" id="tableMyArticle">
-						<thead>
-							<tr>
-								<th>Entry Date</th>
-								<th>Title</th>
-								<th>Status</th>
-								<th>Resubmit</th>
-								<th>Review</th>
 
-							</tr>
-						</thead>
-						<tbody id="userListBody">
 
-						</tbody>
-
-						<tfoot>
-							<tr>
-								<th>Entry Date</th>
-								<th>Title</th>
-								<th>Status</th>
-								<th>Resubmit</th>
-								<th>Review</th>
-
-							</tr>
-						</tfoot>
-					</table>
-				</div>
 			</div>
+			<div class="footer">
 
-
-		</div>
-		<div class="footer">
-
-		</div>
-		<footer class="footer">
-			<div class="container">
-				<div class="row align-items-center flex-row-reverse">
-					<div class="col-auto ml-lg-auto">
-						<div class="row align-items-center">
-							<!-- <div class="col-auto">
+			</div>
+			<footer class="footer">
+				<div class="container">
+					<div class="row align-items-center flex-row-reverse">
+						<div class="col-auto ml-lg-auto">
+							<div class="row align-items-center">
+								<!-- <div class="col-auto">
                 <ul class="list-inline list-inline-dots mb-0">
                   <li class="list-inline-item">
                     <a href="./docs/index.html">Documentation</a>
@@ -123,19 +129,19 @@
                   </li>
                 </ul>
               </div> -->
-							<!-- <div class="col-auto">
+								<!-- <div class="col-auto">
                 <a href="https://github.com/tabler/tabler" class="btn btn-outline-primary btn-sm">Source code</a>
               </div> -->
+							</div>
+						</div>
+						<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
+							Copyright © 2018
+							<a href=".">CAMS Sdn Bhd</a>. Theme by
+							<a href="https://tentspark.com" target="_blank">tenstpark</a> All rights reserved.
 						</div>
 					</div>
-					<div class="col-12 col-lg-auto mt-3 mt-lg-0 text-center">
-						Copyright © 2018
-						<a href=".">CAMS Sdn Bhd</a>. Theme by
-						<a href="https://tentspark.com" target="_blank">tenstpark</a> All rights reserved.
-					</div>
 				</div>
-			</div>
-		</footer>
+			</footer>
 	</div>
 
 
@@ -163,19 +169,27 @@
 							if (doc.data().uid == uid) {
 								var html = "";
 								console.log(doc.data().aid);
-								if (doc.data().reviewStatus == false) {
-									html = ' <a  href="/"  disabled> <i class="fa fa-comment"  onclick="return false;"></i></a>'
+								resubmitHtml = doc.data().resubmitStatus;
+								if (doc.data().reviewStatus == "Reviewed") {
+									reviewHtml = ' <a id="authorReviewButton1" "> <i class="fa fa-unlock" disabled></i></a>'
+									reviewHtml2 = ' <a id="authorReviewButton2" "> <i class="fa fa-unlock" disabled></i></a>'
 								}
 								else {
-									html = ' <a  href="article_author.html?aid=' + doc.data().aid + ' disabled"> <i class="fa fa-comment" disabled></i></a>'
 
+									reviewHtml = ' <a  href="/"  disabled> <i class="fa fa-lock"  onclick="return false;"></i></a>'
+									reviewHtml2 = ' <a  href="/"  disabled> <i class="fa fa-lock"  onclick="return false;"></i></a>'
+								}
+								if (doc.data().resubmitStatus == "Pending") {
+									resubmitHtml = ' <a id="authorResubmitButton" "> <i class="fe fe-file-plus" disabled></i></a>'
 								}
 								articleDataArray.push([
+									doc.data().aid,
 									doc.data().entryDate,
 									doc.data().title,
 									doc.data().status,
-									doc.data().reviewStatus,
-									html
+									resubmitHtml,
+									reviewHtml,
+									reviewHtml2
 
 								]);
 							}
@@ -188,9 +202,38 @@
 					//console.log(data);
 					var table = $('#tableMyArticle').DataTable({
 						"aaData": data,
-
+						"columnDefs": [
+							{
+								"targets": [0],
+								"visible": false,
+								"searchable": false
+							},
+						]
 					});
+					$("#tableMyArticle").on('click', '#authorReviewButton1', function () {
 
+						data.row = table.row($(this).parents('tr')).data();
+						sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
+						sessionStorage.setItem("reviewerNo", 1); //store data in localstorage for editing in next page
+						window.location.href = "editor-view-review.html";
+					});
+					$("#tableMyArticle").on('click', '#authorReviewButton2', function () {
+
+						data.row = table.row($(this).parents('tr')).data();
+
+						sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
+						sessionStorage.setItem("reviewerNo", 2); //store data in localstorage for editing in next page
+						window.location.href = "editor-view-review.html";
+					});
+					$("#tableMyArticle").on('click', '#authorResubmitButton', function () {
+
+						data.row = table.row($(this).parents('tr')).data();
+
+						sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
+						sessionStorage.setItem("resubmission", "true"); //store data in localstorage for editing in next page
+						window.location.href = "FILEUPLOADindex.html";
+					});
+					
 					// Apply the search
 					table.columns().every(function () {
 						var that = this;

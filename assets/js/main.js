@@ -19,8 +19,8 @@ function checkLogin() {
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user == null) {
 			window.location.href = "index.html";
-		// } else if (user.displayName == null || user.photoURL == null) {
-		// 	window.location.href = "UserProfile.html";
+			// } else if (user.displayName == null || user.photoURL == null) {
+			// 	window.location.href = "UserProfile.html";
 		}
 		else if (sessionStorage.length == 0 && user) {
 			var db = firebase.firestore();//API firestore database
@@ -126,3 +126,33 @@ $("#btnCloseModal").click(function (event) {
 	event.preventDefault();
 	closeModal();
 });
+
+function sendEmail(receiverEmail,subject,message) {
+	APIUrl = "http://cincai-ams-ci.herokuapp.com/api/"
+	console.log(message)
+	$.ajax({
+		url: APIUrl + 'sendE',
+		type: 'POST',
+
+		data: {
+			"receiverEmail": receiverEmail,//receiver
+			"currentuser": "CAMS",//receiver
+			"subject": subject,
+			"message":message,//receiver
+
+
+			//subject-
+			//message
+		},
+
+		dataType: 'JSON',
+		success: function (data) {
+
+		},
+		error: function (xhr, ajaxOptions, thrownError) {
+			var errorMsg = 'Ajax request failed: ' + xhr.responseText;
+			//console.log(errorMsg);
+		}
+	});
+
+}

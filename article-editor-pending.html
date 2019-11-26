@@ -68,7 +68,7 @@
 									<th>Title</th>
 									<th>Status</th>
 									<th>Review Status</th>
-									<th>Resubmit</th>
+									<th>Resubmit Status</th>
 									<th></th>
 
 								</tr>
@@ -84,7 +84,7 @@
 									<th>Title</th>
 									<th>Status</th>
 									<th>Review Status</th>
-									<th>Resubmit</th>
+									<th>Resubmit Status</th>
 									<th></th>
 
 								</tr>
@@ -150,7 +150,7 @@
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().status == "Pending") {
+								if (doc.data().status == "Pending"&& doc.data().reviewStatus=="Pending") {
 									console.log(doc.data().uid);
 									articleDataArray.push([
 										doc.data().aid,

@@ -133,6 +133,7 @@
 			require(['jquery', 'mainjs', 'datatables'], function ($) {
 				//When the page has loaded.
 				$(document).ready(function () {
+					var db = firebase.firestore()
 					getCurrentUserArticle();
 					$('#tableMyArticle tfoot th').each(function () {
 						var title = $(this).text();
@@ -143,90 +144,97 @@
 
 					});
 					function getCurrentUserArticle() {
-						var db = firebase.firestore()
 						var articleDataArray = []
 						db.collection("Article").get().then(snapshot => {
 
 							snapshot.forEach(doc => {
-								if (doc.data().reviewStatus == "Reviewing") {
-									//reviewer 1
-									//reviewr accept. editor cant do anyhting
-									reviewerOneStatus = doc.data().reviewerOneStatus;
-									reviewOneHtml = "";
-									editorReviewHtml=""
-									
-									if (reviewerOneStatus == "Reviewing") {
-										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
-											'<i class="fe fe-lock" ></i></button></div>'
-									}
-									//reviewer finish reviewing
-									// bring editor to page to read the review
-									if (reviewerOneStatus == "Reviewed") {
-										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip"  ' +
-											'data-placement="top" value="' + doc.data().reviewerOne + '" id="viewReview1">' +
-											'<i class="fe fe-unlock" ></i></button></div>'
-									}
-									//reviewer havent accept or reject
-									//do nothing
-									if (reviewerOneStatus == "Pending") {
-										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
-											'<i class="fe fe-help-circle" ></i></button></div>'
-									}
-									//Reviewer reject the offer. need to assign new reviewer
-									if (reviewerOneStatus == "ReviewerReject") {
-										reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" ' +
-											'data-placement="top" id="assignReviewer1">' +
-											'<i class="fe fe-x" ></i></button></div>'
-									}
+								console.log(doc.data())
+								if (doc.data().status == "Pending") {
+									if (doc.data().reviewStatus == "Reviewing") {
+										//reviewer 1
+										//reviewr accept. editor cant do anyhting
+										reviewerOneStatus = doc.data().reviewerOneStatus;
+										reviewOneHtml = "";
+										editorReviewHtml = ""
 
-									//reviewer2
-									reviewerTwoStatus = doc.data().reviewerTwoStatus;
-									reviewTwoHtml = "";
-									//reviewr accept. editor cant do anyhting
-									if (reviewerTwoStatus == "Reviewing") {
-										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
-											'<i class="fe fe-lock" ></i></button></div>'
+										if (reviewerOneStatus == "Reviewing") {
+											reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
+												'<i class="fe fe-lock" ></i></button></div>'
+										}
+										//reviewer finish reviewing
+										// bring editor to page to read the review
+										if (reviewerOneStatus == "Reviewed") {
+											reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip"  ' +
+												'data-placement="top" value="' + doc.data().reviewerOne + '" id="viewReview1">' +
+												'<i class="fe fe-unlock" ></i></button></div>'
+										}
+										//reviewer havent accept or reject
+										//do nothing
+										if (reviewerOneStatus == "Pending") {
+											reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
+												'<i class="fe fe-help-circle" ></i></button></div>'
+										}
+										//Reviewer reject the offer. need to assign new reviewer
+										if (reviewerOneStatus == "ReviewerReject") {
+											reviewOneHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top" id="assignReviewer1">' +
+												'<i class="fe fe-x" ></i></button></div>'
+										}
+
+										//reviewer2
+										reviewerTwoStatus = doc.data().reviewerTwoStatus;
+										reviewTwoHtml = "";
+										//reviewr accept. editor cant do anyhting
+										if (reviewerTwoStatus == "Reviewing") {
+											reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" >' +
+												'<i class="fe fe-lock" ></i></button></div>'
+										}
+										//reviewer finish reviewing
+										// bring editor to page to read the review
+										if (reviewerTwoStatus == "Reviewed") {
+											reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip"' +
+												' data-placement="top" value="' + doc.data().reviewerTwo + '"id="viewReview2">' +
+												'<i class="fe fe-unlock" ></i></button></div>'
+										}
+										//reviewer havent accept or reject
+										//do nothing
+										if (reviewerTwoStatus == "Pending") {
+											reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
+												'<i class="fe fe-help-circle" ></i></button></div>'
+										}
+										//Reviewer reject the offer. need to assign new reviewer
+										if (reviewerTwoStatus == "ReviewerReject") {
+											reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
+												'<button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top" id="assignReviewer2">' +
+												'<i class="fe fe-x" ></i></button></div>'
+										}
+										if (reviewerOneStatus == "Reviewed" && reviewerTwoStatus == "Reviewed") {
+											editorReviewHtml = ' <select id="' + doc.data().aid + '" focus required><option id="0">' +
+												'Choose a decision</option>	<option value="Accept">Accept</option>' +
+												'<option value="Accept with minor corrections">Accept with minor corrections</option>' +
+												'<option value="Accept with major corrections">Accept with major corrections</option>' +
+												'<option value="Reject with resubmission encouraged">Reject with resubmission encouraged' +
+												'</option><option value="Reject">Reject</option></select><div class="btn-group" role="group" ' +
+												'aria-label="Action Button"><button class="btn btn-sm" data-toggle="tooltip" ' +
+												'data-placement="top"  id="saveDecision">' +
+												'<i class="fe fe-check" ></i></button></div>';
+										}
+										articleDataArray.push([
+											doc.data().aid,
+											doc.data().entryDate,
+											doc.data().title,
+											reviewOneHtml,//createlink to view it
+											reviewTwoHtml,//create link to view it
+											editorReviewHtml,]);
 									}
-									//reviewer finish reviewing
-									// bring editor to page to read the review
-									if (reviewerTwoStatus == "Reviewed") {
-										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip"' +
-											' data-placement="top" value="' + doc.data().reviewerTwo + '"id="viewReview2">' +
-											'<i class="fe fe-unlock" ></i></button></div>'
-									}
-									//reviewer havent accept or reject
-									//do nothing
-									if (reviewerTwoStatus == "Pending") {
-										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" data-placement="top" id="">' +
-											'<i class="fe fe-help-circle" ></i></button></div>'
-									}
-									//Reviewer reject the offer. need to assign new reviewer
-									if (reviewerTwoStatus == "ReviewerReject") {
-										reviewTwoHtml = '<div class="btn-group" role="group" aria-label="Action Button">' +
-											'<button class="btn btn-sm" data-toggle="tooltip" ' +
-											'data-placement="top" id="assignReviewer2">' +
-											'<i class="fe fe-x" ></i></button></div>'
-									}
-									if(reviewerOneStatus=="Reviewed"&&reviewerTwoStatus=="Reviewed"){
-										editorReviewHtml='<div class="btn-group" role="group" aria-label="Action Button">' +
-										'<button class="btn btn-sm" data-toggle="tooltip" ' +
-										'data-placement="top" title="Edit Product" id="viewArticle">' +
-										'<i class="fa fa-edit" ></i></button></div>';
-									}
-									articleDataArray.push([
-										doc.data().aid,
-										doc.data().entryDate,
-										doc.data().title,
-										reviewOneHtml,//createlink to view it
-										reviewTwoHtml,//create link to view it
-										editorReviewHtml,]);
 								}
 
 							});
@@ -250,7 +258,7 @@
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
 							console.log(data.row[0]);
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
 							window.location.href = "editor-view-review.html";
 						});
 						//for editor to reassign the reviewer
@@ -275,19 +283,48 @@
 						$("#tableMyArticle").on('click', '#viewReview1', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
-							console.log( $("#viewReview1").val());
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							console.log($("#viewReview1").val());
+							sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerId", $("#viewReview1").val()); //store data in localstorage for editing in next page
 
 							window.location.href = "editor-view-review.html";
 						}); $("#tableMyArticle").on('click', '#viewReview2', function () {
 							var data = new Object();
 							data.row = table.row($(this).parents('tr')).data();
-							console.log( data.row);
-							console.log( $("#viewReview2").val());
-							sessionStorage.setItem("uuid", data.row[0]); //store data in localstorage for editing in next page
+							console.log(data.row);
+							console.log($("#viewReview2").val());
+							sessionStorage.setItem("aid", data.row[0]); //store data in localstorage for editing in next page
 							sessionStorage.setItem("reviewerId", $("#viewReview2").val()); //store data in localstorage for editing in next page
-							window.location.href = "editor-reassign-reviewer.html";
+							console.log(sessionStorage.getItem("reviewerId"))
+							window.location.href = "editor-view-review.html";
+
+						});
+						$("#tableMyArticle").on('click', '#saveDecision', function () {
+							var data = new Object();
+							data.row = table.row($(this).parents('tr')).data();
+							console.log($("#" + data.row[0]).val());
+							var editorDecObj = new Object();
+							editorDecObj.status = $("#" + data.row[0]).val();
+							editorDecObj.reviewStatus = "Reviewed"
+							articleId = data.row[0]
+
+							db.collection("Article").doc(articleId).update(editorDecObj).then(function () {
+								console.log("Editor Decision Updated")
+								db.collection("Article").doc(articleId).get().then(function (data) {
+									receiverEmail = data.data().CAemail
+									subject = "Article Submission Status."
+									message = "Your article submission hase been and the result is : " + editorDecObj.status;
+									console.log(message)
+									sendEmail(receiverEmail, subject, message)
+									db.collection("Article").doc(articleId).collection("authors").get().then(snapshot => {
+										snapshot.forEach(doc => {
+											sendEmail(doc.data().email, subject, message)
+										})
+									})
+								})
+							})
+
+
 						});
 						// Apply the search
 						table.columns().every(function () {

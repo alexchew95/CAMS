@@ -65,6 +65,17 @@
 
 
 					<fieldset class="form-fieldset" id="add_Feedback">
+						<div class="form-group">
+							<label class="form-label">DOCUMENT:</label>
+							<div class="md-form">
+								<a target="_blank" href="" id="coverLink">Cover</a>
+
+							</div>
+							<div class="md-form">
+								<a target="_blank" href="" id="mergeLink">Biography/Paper File</a>
+							</div>
+						</div>
+
 						<form id="add_Feedback">
 							<div class="form-group">
 								<label class="form-label">Title:<span class="form-required">*</span></label>
@@ -192,15 +203,26 @@
 				var yyyy = today.getFullYear();
 				today = mm + '/' + dd + '/' + yyyy;
 
-			
 
-			//	var aid = "0Ptk3LUfu5y7E1GmAz0P"//temporary
-			aid=sessionStorage.getItem("aid");
-			reviewerNo=sessionStorage.getItem("reviewerNo");
-			console.log(aid)
-			console.log(reviewerNo)
 
-	
+				//	var aid = "0Ptk3LUfu5y7E1GmAz0P"//temporary
+				aid = sessionStorage.getItem("aid");
+				reviewerNo = sessionStorage.getItem("reviewerNo");
+				console.log(aid)
+				console.log(reviewerNo)
+
+				db.collection("Article").doc(aid)
+					.get()
+					.then(function (doc) {
+						$("#articleName").val(doc.data().title)
+						console.log(doc.data());
+						$("#coverLink").prop("href", doc.data().CoverURL)
+						$("#mergeLink").prop("href", doc.data().MergeURL)
+
+					})
+					.catch(function (error) {
+						console.log("Error getting document: ", error);
+					})
 
 
 				//retrieve data from firestore and update the field
@@ -270,9 +292,9 @@
 					//var articleRef = db.collection("Article").doc(aid).collection("reviews").doc(rid)
 
 					//update firestore
-					articleRef.set(obj).then(function(data){
+					articleRef.set(obj).then(function (data) {
 						alert("Successful Update");
-console.log(aid)
+						console.log(aid)
 					})
 
 
@@ -317,15 +339,14 @@ console.log(aid)
 						console.error("Error", error);
 					});
 
-					if(reviewerNo == 1){
-						db.collection("Article").doc(aid).update({reviewerOneStatus:"Reviewed"})
+					if (reviewerNo == 1) {
+						db.collection("Article").doc(aid).update({ reviewerOneStatus: "Reviewed" })
 
 					}
-					else 
-				{
-					db.collection("Article").doc(aid).update({reviewerTwoStatus:"Reviewed"})
+					else {
+						db.collection("Article").doc(aid).update({ reviewerTwoStatus: "Reviewed" })
 
-				}
+					}
 
 				});
 
